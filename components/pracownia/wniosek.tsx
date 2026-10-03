@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import { FileText, Loader2, Printer, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Postep } from "@/components/ui/postep";
 
 type Nabor = { id: string; nazwa: string; temat: string | null; przyklad: boolean; otwarty_do: string | null; schemat: { limity: string } } | null;
 type Pole = { nr: number; pole: string; podpowiedz: string; limit: number | null; tresc: string; doUzupelnienia: boolean };
@@ -67,8 +68,8 @@ export function Wniosek({ dane }: { dane: string }) {
           {t("przygotujWniosek")}
         </Button>
       )}
-      <div aria-live="polite">
-        {stan === "pracuje" && <p className="text-lg">{t("wniosekPracuje")}</p>}
+      <div>
+        {stan === "pracuje" && <Postep kroki={t("wniosekPostepKroki")} sekund={30} />}
         {stan === "blad" && <p role="alert" className="font-semibold text-primary">{t("wniosekBlad")}</p>}
       </div>
       {pola && (

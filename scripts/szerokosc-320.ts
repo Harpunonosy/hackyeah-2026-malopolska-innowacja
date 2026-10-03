@@ -3,21 +3,19 @@
  *   npx tsx --env-file=.env.local scripts/szerokosc-320.ts [adres]
  */
 import { chromium } from "playwright-core";
+import { ADMIN, PUBLICZNE, zalogujAdmina, zalogujEksperta, znajdzDynamiczne } from "./strony";
 
 const BAZA = process.argv[2] ?? "http://localhost:3000";
-const PUBLICZNE = ["/", "/problem", "/wiedza/biblioteka", "/wiedza/biblioteka/straznik", "/wiedza/malopolska", "/moje", "/pomysl", "/testy", "/rynek", "/wdrozenie"];
-const ADMIN = ["/centrala/zgloszenia", "/centrala/radar", "/centrala/pomysly", "/centrala/nabory", "/centrala/tresci"];
 
 async function main() {
   const przegladarka = await chromium.launch({ executablePath: "/usr/bin/google-chrome", args: ["--no-sandbox"] });
   const kontekst = await przegladarka.newContext({ viewport: { width: 320, height: 700 }, locale: "pl-PL" });
   const strona = await kontekst.newPage();
-  await strona.goto(`${BAZA}/centrala/logowanie`);
-  await strona.fill("#haslo", process.env.DEMO_ADMIN_PASSWORD ?? "");
-  await strona.click("button[type=submit]");
-  await strona.waitForURL("**/centrala/zgloszenia");
+  await zalogujAdmina(strona, BAZA);
+  await zalogujEksperta(strona, BAZA);
+  const dynamiczne = await znajdzDynamiczne(strona, BAZA);
   let zle = 0;
-  for (const sciezka of [...PUBLICZNE, ...ADMIN]) {
+  for (const sciezka of [...PUBLICZNE, ...ADMIN, "/ekspert", ...dynamiczne]) {
     await strona.goto(`${BAZA}${sciezka}`, { waitUntil: "load" });
     await strona.waitForTimeout(1200);
     const wynik = await strona.evaluate(() => {

@@ -3,6 +3,7 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Wybor } from "@/components/ui/wybor";
 import { OBSZARY } from "@/lib/obszary";
 
 export function DodajOgloszenie() {
@@ -43,8 +44,8 @@ export function DodajOgloszenie() {
         </div>
       </fieldset>
       <div className="space-y-1"><label htmlFor="og-tytul" className="block text-lg font-bold">{t("tytulOgl")}</label><input id="og-tytul" value={tytul} onChange={(e) => setTytul(e.target.value)} className="block min-h-12 w-full rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" /></div>
-      <div className="flex flex-wrap gap-4">
-        <div className="space-y-1"><label htmlFor="og-obszar" className="block text-lg font-bold">{t("obszarPole")}</label><select id="og-obszar" value={obszar} onChange={(e) => setObszar(e.target.value)} className="block min-h-12 rounded-xl border-2 border-line bg-card px-3 text-lg hover:border-fg">{OBSZARY.map((o) => <option key={o.id} value={o.id}>{o.nazwa}</option>)}</select></div>
+      <div className="space-y-4">
+        <Wybor nazwa="og-obszar" legenda={t("obszarPole")} opcje={OBSZARY.map((o): [string, string] => [o.id, o.nazwa])} wartosc={obszar} zmien={setObszar} />
         <div className="space-y-1"><label htmlFor="og-powiat" className="block text-lg font-bold">{t("powiatPole")}</label><input id="og-powiat" value={powiat} onChange={(e) => setPowiat(e.target.value)} className="block min-h-12 w-56 rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" /></div>
       </div>
       <div className="space-y-1"><label htmlFor="og-opis" className="block text-lg font-bold">{t("opisOgl")}</label><textarea id="og-opis" rows={3} value={opis} onChange={(e) => setOpis(e.target.value.slice(0, 800))} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" /></div>

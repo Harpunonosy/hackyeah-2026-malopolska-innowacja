@@ -6,6 +6,7 @@ import { useLocale, useTranslations } from "next-intl";
 import { CircleCheck, CircleX, Loader2, Sparkles } from "lucide-react";
 import { Mikrofon } from "@/components/a11y/mikrofon";
 import { Button } from "@/components/ui/button";
+import { Postep } from "@/components/ui/postep";
 import { Kanwa, wskaznikiDojrzalosci, type KanwaStan } from "@/components/pracownia/kanwa";
 import { Asystent } from "@/components/pracownia/asystent";
 import { KanwaPelna, type KanwaPelnaStan } from "@/components/pracownia/kanwa-pelna";
@@ -89,8 +90,8 @@ export function FormularzPomyslu() {
           </Button>
         </div>
         {!fiszka && <p><Button type="button" wariant="cichy" onClick={trybReczny}>{t("trybReczny")}</Button></p>}
-        <div aria-live="polite">
-          {stan === "pracuje" && <p className="text-lg">{t("pracuje")}</p>}
+        <div>
+          {stan === "pracuje" && <Postep kroki={t("postepKroki")} sekund={30} />}
           {stan === "blad" && <p role="alert" className="font-semibold text-primary">{komunikat}</p>}
         </div>
       </form>

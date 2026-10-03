@@ -5,6 +5,8 @@ import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { Loader2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Postep } from "@/components/ui/postep";
+import { Wybor } from "@/components/ui/wybor";
 import { BUDZETY, TYPY_INSTYTUCJI } from "@/lib/krawiec-stale";
 import { POWIATY_IOSS } from "@/lib/powiaty";
 import { cn } from "@/lib/utils";
@@ -18,22 +20,6 @@ function Krok({ n, tytul }: { n: number; tytul: string }) {
       <span aria-hidden className="flex size-7 items-center justify-center rounded-full bg-primary text-sm text-primary-fg">{n}</span>
       {tytul}
     </p>
-  );
-}
-
-function Wybor<T extends string>({ nazwa, legenda, opcje, wartosc, zmien }: { nazwa: string; legenda: string; opcje: [T, string][]; wartosc: T; zmien: (v: T) => void }) {
-  return (
-    <fieldset className="space-y-2">
-      <legend className="text-lg font-bold">{legenda}</legend>
-      <div className="flex flex-wrap gap-2">
-        {opcje.map(([v, e]) => (
-          <label key={v} className="flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border-2 border-line-soft bg-card px-4 hover:border-fg has-[:checked]:border-fg has-[:checked]:bg-accent has-[:checked]:text-accent-fg">
-            <input type="radio" name={nazwa} checked={wartosc === v} onChange={() => zmien(v)} className="size-4 accent-current" />
-            {e}
-          </label>
-        ))}
-      </div>
-    </fieldset>
   );
 }
 
@@ -154,8 +140,8 @@ export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { i
           {stan === "pracuje" && <Loader2 aria-hidden className="size-5 animate-spin" />}
           {t("przygotuj")}
         </Button>
-        <div aria-live="polite">
-          {stan === "pracuje" && <p className="text-lg">{t("pracuje")}</p>}
+        <div>
+          {stan === "pracuje" && <Postep kroki={t("postepKroki")} sekund={60} />}
           {stan === "blad" && <p role="alert" className="font-semibold text-primary">{komunikat}</p>}
         </div>
       </div>

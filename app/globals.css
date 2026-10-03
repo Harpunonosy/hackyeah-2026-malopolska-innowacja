@@ -92,6 +92,8 @@ body {
 
 @layer base {
   a { color: var(--link); text-underline-offset: 0.2em; }
+  /* Link w zdaniu musi się wyróżniać nie tylko kolorem (WCAG 1.4.1). */
+  :where(p, li > span, dd) > a { text-decoration-line: underline; }
   /* Reflow przy 320 px (WCAG 1.4.10): nic nie wypycha strony w poziomie. */
   body { overflow-wrap: break-word; }
   select, input, textarea { max-width: 100%; }

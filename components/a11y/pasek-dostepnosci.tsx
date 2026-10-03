@@ -11,16 +11,17 @@ import { cn } from "@/lib/utils";
 
 function Przelacznik({ id, etykieta, wlaczony, zmien }: { id: string; etykieta: string; wlaczony: boolean; zmien: (v: boolean) => void }) {
   return (
-    <div className="flex min-h-12 items-center gap-2.5">
+    <div className="flex min-h-12 items-center">
       <Switch.Root
         id={id}
         checked={wlaczony}
         onCheckedChange={zmien}
-        className="relative h-7 w-12 shrink-0 rounded-full border-2 border-hero-fg/70 bg-transparent data-[state=checked]:border-accent data-[state=checked]:bg-accent"
+        className="relative h-8 w-14 shrink-0 rounded-full border-2 border-hero-fg/70 bg-transparent data-[state=checked]:border-accent data-[state=checked]:bg-accent"
       >
-        <Switch.Thumb className="block size-4 translate-x-1 rounded-full bg-hero-fg transition-transform data-[state=checked]:translate-x-6 data-[state=checked]:bg-accent-fg" />
+        <Switch.Thumb className="block size-5 translate-x-1 rounded-full bg-hero-fg transition-transform data-[state=checked]:translate-x-7 data-[state=checked]:bg-accent-fg" />
       </Switch.Root>
-      <label htmlFor={id} className="cursor-pointer text-sm font-semibold">
+      {/* Cała etykieta (48 px wysokości) przełącza ustawienie, nie tylko mały suwak. */}
+      <label htmlFor={id} className="flex min-h-12 cursor-pointer items-center ps-2.5 text-sm font-semibold">
         {etykieta}
       </label>
     </div>
@@ -117,7 +118,7 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
                 key={r.v}
                 value={r.v}
                 aria-label={r.opis}
-                className="h-9 min-w-11 px-2 text-sm font-bold data-[state=on]:bg-accent data-[state=on]:text-accent-fg"
+                className="h-12 min-w-12 px-2 text-sm font-bold data-[state=on]:bg-accent data-[state=on]:text-accent-fg"
               >
                 {r.etykieta}
               </ToggleGroup.Item>
@@ -146,7 +147,7 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
                   document.cookie = `${COOKIE_JEZYK}=${kod}; path=/; max-age=31536000; samesite=lax`;
                   router.refresh();
                 }}
-                className="h-9 min-w-11 px-2 text-sm font-bold aria-pressed:bg-accent aria-pressed:text-accent-fg"
+                className="h-12 min-w-12 px-2 text-sm font-bold aria-pressed:bg-accent aria-pressed:text-accent-fg"
               >
                 {skrot}
               </button>

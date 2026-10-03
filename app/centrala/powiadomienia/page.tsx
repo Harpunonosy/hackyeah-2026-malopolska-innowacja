@@ -37,7 +37,7 @@ export default async function Page() {
             <li key={r.id} className={`karta-mala space-y-1 p-4 ${r.przeczytane_at ? "" : "border-l-8 border-l-primary"}`}>
               <p className="font-bold">{r.tytul}</p>
               <p>{r.tresc}</p>
-              <p className="text-sm text-muted">{fmt(r.created_at)}{r.link && <> · <Link href={r.link}>otwórz</Link></>}</p>
+              <p className="text-sm text-muted">{fmt(r.created_at)}{r.link && <> · <Link href={r.link} className="underline">otwórz</Link></>}</p>
             </li>
           ))}
           {rops.length === 0 && <li className="text-lg">Brak powiadomień.</li>}
@@ -50,7 +50,7 @@ export default async function Page() {
             <li key={r.id} className="karta-mala space-y-1 p-4">
               <p className="flex flex-wrap items-center gap-2"><strong>{r.tytul}</strong> <Chip>{r.kanal === "email" ? "e-mail" : r.kanal === "sms" ? "SMS" : "w aplikacji"}</Chip>{r.symulowane && <Chip>symulacja</Chip>}</p>
               <p>{r.tresc}</p>
-              <p className="text-sm text-muted">{fmt(r.created_at)}{r.link && <> · <Link href={r.link}>{r.link}</Link></>}</p>
+              <p className="text-sm text-muted">{fmt(r.created_at)}{r.link && <> · <Link href={r.link} className="underline">{r.link}</Link></>}</p>
             </li>
           ))}
           {autorzy.length === 0 && <li className="text-lg">Brak wysłanych powiadomień.</li>}

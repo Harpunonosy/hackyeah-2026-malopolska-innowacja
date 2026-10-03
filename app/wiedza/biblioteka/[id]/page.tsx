@@ -5,7 +5,7 @@ import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { ArrowLeft, Download, ExternalLink, Video } from "lucide-react";
+import { ArrowLeft, Download, ExternalLink } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
 import { innowacje } from "@/lib/biblioteka";

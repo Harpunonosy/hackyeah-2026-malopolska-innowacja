@@ -271,7 +271,13 @@
     "odbiorcy": "Odbiorcy",
     "ktoWdraza": "Kto może wdrożyć",
     "wyczysc": "Wyczyść porównanie",
-    "porownaj": "Porównaj (do 3)"
+    "porownaj": "Porównaj (do 3)",
+    "mapa": {
+      "obszar": "Obszar",
+      "wskaznik": "Wskaźnik",
+      "wartosci": "Wartości wskaźnika w powiatach",
+      "legenda": "Im ciemniejszy kafelek, tym wyższa wartość wskaźnika. Źródło: Internetowy Obserwator Statystyk Społecznych ROPS, najnowszy rok."
+    }
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",
@@ -386,7 +392,8 @@
     "zrodlo": "Źródło",
     "wdroz": "Wdróż u siebie",
     "wskaznikiLokalne": "Dane z Obserwatora Statystyk (IOSS)",
-    "sredniaRegionu": "średnia regionu"
+    "sredniaRegionu": "średnia regionu",
+    "postepKroki": "Czytam opis innowacji i warunki naboru|Sprawdzam dane powiatu (IOSS)|Liczę budżet i koszt na odbiorcę|Układam harmonogram i ryzyka|Sprawdzam zgodność z naborem|Składam plan do wydruku"
   },
   "pracownia": {
     "nadtytul": "Pracownia: kreator pomysłów",
@@ -515,7 +522,10 @@
     "propozycje": "Propozycje (kliknij, aby dodać)",
     "drukujKanwe": "Drukuj kanwę (A4)",
     "trybReczny": "Wolę wypełnić sam lub sama, bez AI",
-    "trybRecznyInfo": "Wypełnij pola fiszki ręcznie. Wstępna ocena AI nie będzie dostępna, ale możesz wysłać pomysł do ROPS."
+    "trybRecznyInfo": "Wypełnij pola fiszki ręcznie. Wstępna ocena AI nie będzie dostępna, ale możesz wysłać pomysł do ROPS.",
+    "postepKroki": "Maskuję dane osobowe|Czytam pomysł|Porównuję ze 115 innowacjami ROPS|Wypełniam fiszkę i kanwę|Sprawdzam, czego brakuje",
+    "wniosekPostepKroki": "Czytam fiszkę i kanwę|Czytam formularz naboru|Wypełniam pola wniosku|Sprawdzam limity znaków",
+    "scenorysPostepKroki": "Czytam pomysł|Wymyślam bohatera i sytuację|Rysuję kadry scenorysu"
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",
@@ -665,5 +675,10 @@
     "prosty": "Prosty język",
     "kontrast": "Wysoki kontrast",
     "gotowe": "Gotowe, nie pokazuj więcej"
+  },
+  "postep": {
+    "zrobione": "zrobione",
+    "minelo": "Minęło {n} s z około {z} s.",
+    "dluzej": "To trwa dłużej niż zwykle. Prosimy jeszcze chwilę poczekać. Nie zamykaj strony."
   }
 }

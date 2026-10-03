@@ -4,6 +4,7 @@ import * as React from "react";
 import { useRouter } from "next/navigation";
 import { Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Wybor } from "@/components/ui/wybor";
 
 type Szkic = { nazwa: string; kategoria: string; na_czym_polega: string; problem: string; grupa_docelowa: string; kto_moze_skorzystac: string; czy_to_dziala: string; autor_organizacja: string };
 const POLA: [keyof Szkic, string, number][] = [
@@ -60,12 +61,7 @@ export function ImportInnowacji({ kategorie }: { kategorie: string[] }) {
       ) : (
         <div className="karta space-y-4 p-6">
           <p className="karta-mala border-2 border-accent p-3">Karta przygotowana z pomocą AI. Sprawdź i popraw każde pole przed publikacją.</p>
-          <div className="space-y-1">
-            <label htmlFor="im-kat" className="block text-lg font-bold">Kategoria</label>
-            <select id="im-kat" value={szkic.kategoria} onChange={(e) => setSzkic({ ...szkic, kategoria: e.target.value })} className="min-h-12 rounded-xl border-2 border-line bg-card px-3 text-lg hover:border-fg">
-              {kategorie.map((k) => <option key={k}>{k}</option>)}
-            </select>
-          </div>
+          <Wybor nazwa="im-kat" legenda="Kategoria" opcje={kategorie.map((k): [string, string] => [k, k])} wartosc={szkic.kategoria} zmien={(v) => setSzkic({ ...szkic, kategoria: v })} />
           {POLA.map(([k, e, w]) => (
             <div key={k} className="space-y-1">
               <label htmlFor={`im-${k}`} className="block text-lg font-bold">{e}</label>

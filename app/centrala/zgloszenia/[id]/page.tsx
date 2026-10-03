@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Odpowiedz } from "@/components/centrala/odpowiedz";
+import { Odswiezaj } from "@/components/centrala/odswiezaj";
 import { PrzekazEksperta } from "@/components/centrala/przekaz-eksperta";
 import { ZmienStatus } from "@/components/centrala/zmien-status";
 import { Chip } from "@/components/ui/chip";
@@ -77,7 +78,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
             <p className="text-sm text-muted">To propozycja do zatwierdzenia przez pracownika ROPS.</p>
           </div>
         ) : (
-          <p role="status">Ocena AI jest w toku. Odśwież stronę za kilka sekund.</p>
+          <Odswiezaj>Ocena AI jest w toku. Strona odświeży się sama.</Odswiezaj>
         )}
       </section>
 

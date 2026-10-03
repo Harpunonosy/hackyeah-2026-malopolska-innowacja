@@ -6,18 +6,10 @@
 import { mkdirSync } from "node:fs";
 import AxeBuilder from "@axe-core/playwright";
 import { chromium } from "playwright-core";
+import { ADMIN, PUBLICZNE, zalogujAdmina, zalogujEksperta, znajdzDynamiczne } from "./strony";
 
 const BAZA = process.argv[2] ?? "http://localhost:3100";
-const STRONY: { sciezka: string; nazwa: string; admin?: boolean; szerokosc?: number }[] = [
-  { sciezka: "/", nazwa: "start" },
-  { sciezka: "/problem", nazwa: "problem" },
-  { sciezka: "/wiedza/biblioteka", nazwa: "biblioteka" },
-  { sciezka: "/wiedza/biblioteka/straznik", nazwa: "innowacja" },
-  { sciezka: "/moje", nazwa: "moje" },
-  { sciezka: "/centrala/logowanie", nazwa: "centrala-logowanie" },
-  { sciezka: "/centrala/zgloszenia", nazwa: "centrala-skrzynka", admin: true },
-  { sciezka: "/centrala/radar", nazwa: "centrala-radar", admin: true },
-];
+const TRYBY = process.argv.includes("--tryby");
 
 async function main() {
   mkdirSync("docs/zrzuty", { recursive: true });
@@ -25,22 +17,31 @@ async function main() {
   const kontekst = await przegladarka.newContext({ viewport: { width: 1280, height: 900 }, locale: "pl-PL" });
   const strona = await kontekst.newPage();
 
-  await strona.goto(`${BAZA}/centrala/logowanie`);
-  await strona.fill("#haslo", process.env.DEMO_ADMIN_PASSWORD ?? "");
-  await strona.click("button[type=submit]");
-  await strona.waitForURL("**/centrala/zgloszenia");
+  await zalogujAdmina(strona, BAZA);
+  await zalogujEksperta(strona, BAZA);
+  const STRONY = [...PUBLICZNE, ...ADMIN, "/ekspert", ...(await znajdzDynamiczne(strona, BAZA))];
 
   let bledy = 0;
-  for (const s of STRONY) {
-    await strona.goto(`${BAZA}${s.sciezka}`, { waitUntil: "networkidle" });
+  const warianty: { przyrostek: string; ciastko?: string; szerokosc?: number }[] = [{ przyrostek: "" }];
+  if (TRYBY) warianty.push(
+    { przyrostek: "-kontrast", ciastko: JSON.stringify({ prosty: true, rozmiar: "bardzo-duzy", kontrast: "wysoki" }) },
+    { przyrostek: "-320", szerokosc: 320 },
+  );
+  for (const w of warianty) {
+    await kontekst.addCookies([{ name: "splot_a11y", value: encodeURIComponent(w.ciastko ?? JSON.stringify({ prosty: false, rozmiar: "normalny", kontrast: "normalny" })), url: BAZA }]);
+    await strona.setViewportSize({ width: w.szerokosc ?? 1280, height: 900 });
+  for (const sciezka of STRONY) {
+    const s = { sciezka, nazwa: (sciezka === "/" ? "start" : sciezka.slice(1).replaceAll("/", "-")) + w.przyrostek };
+    await strona.goto(`${BAZA}${s.sciezka}`, { waitUntil: "load", timeout: 90000 }); await strona.waitForTimeout(1200);
     const wynik = await new AxeBuilder({ page: strona }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
-    await strona.screenshot({ path: `docs/zrzuty/${s.nazwa}.png`, fullPage: true });
+    if (!w.przyrostek) await strona.screenshot({ path: `docs/zrzuty/${s.nazwa}.png`, fullPage: true });
     bledy += wynik.violations.length;
-    console.log(`${wynik.violations.length === 0 ? "OK " : "BŁĄD"} ${s.sciezka}  (${wynik.violations.length} naruszeń, ${wynik.passes.length} reguł zaliczonych)`);
+    console.log(`${wynik.violations.length === 0 ? "OK " : "BŁĄD"} ${s.nazwa}  (${wynik.violations.length} naruszeń, ${wynik.passes.length} reguł zaliczonych)`);
     for (const v of wynik.violations) {
       console.log(`   - [${v.impact}] ${v.id}: ${v.help} (${v.nodes.length} elementów)`);
       for (const n of v.nodes.slice(0, 2)) console.log(`       ${n.target.join(" ")}  ${n.failureSummary?.split("\n")[1] ?? ""}`);
     }
+  }
   }
   await przegladarka.close();
   console.log(bledy === 0 ? "\naxe: 0 naruszeń na wszystkich stronach" : `\naxe: ${bledy} naruszeń`);

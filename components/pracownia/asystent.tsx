@@ -5,6 +5,7 @@ import { useTranslations } from "next-intl";
 import QRCode from "qrcode";
 import { Building2, Home, GraduationCap, HeartHandshake, Heart, Loader2, MessagesSquare, Phone, Printer, Smartphone, Sparkles, Stethoscope, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Postep } from "@/components/ui/postep";
 
 type Kadr = { tytul: string; kto: string; gdzie: string; co_sie_dzieje: string; emocja: string; ikona: string };
 const IKONY: Record<string, React.ElementType> = { dom: Home, spotkanie: Users, telefon: Phone, serce: Heart, miasto: Building2, szkola: GraduationCap, lekarz: Stethoscope, rodzina: Users, aplikacja: Smartphone, wsparcie: HeartHandshake };
@@ -91,6 +92,7 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
           <Button type="button" wariant="zloty" disabled={stan === "scenorys"} onClick={generujScenorys}>{stan === "scenorys" ? <Loader2 aria-hidden className="size-5 animate-spin" /> : <Sparkles aria-hidden className="size-5" />}{stan === "scenorys" ? t("scenorysPracuje") : t("scenorysPrzycisk")}</Button>
           <Button type="button" wariant="obrys" onClick={drukujPlakat}><Printer aria-hidden className="size-5" />{t("plakat")}</Button>
         </div>
+        {stan === "scenorys" && <Postep kroki={t("scenorysPostepKroki")} sekund={20} />}
         {kadry && (
           <ol className="grid gap-4 sm:grid-cols-2" aria-label={t("scenorysTytul")}>
             {kadry.map((k, i) => {

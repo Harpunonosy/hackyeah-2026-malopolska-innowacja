@@ -4,6 +4,7 @@ import * as React from "react";
 import { VolumeX } from "lucide-react";
 import type { RadarDane } from "@/lib/radar";
 import { OBSZARY } from "@/lib/obszary";
+import { Wybor } from "@/components/ui/wybor";
 
 // Układ kafelkowy zbliżony do mapy Małopolski (kolumna, wiersz).
 const POZYCJE: Record<string, [number, number]> = {
@@ -53,19 +54,7 @@ export function Kartogram({ dane }: { dane: RadarDane }) {
             ))}
           </div>
         </fieldset>
-        <div className="space-y-1">
-          <label htmlFor="obszar" className="block font-bold">
-            Obszar
-          </label>
-          <select id="obszar" value={obszar} onChange={(e) => setObszar(e.target.value)} className="min-h-12 rounded-lg border-2 border-fg bg-card px-3 text-base">
-            <option value="wszystkie">Wszystkie obszary</option>
-            {OBSZARY.map((o) => (
-              <option key={o.id} value={o.id}>
-                {o.nazwa}
-              </option>
-            ))}
-          </select>
-        </div>
+        <Wybor nazwa="obszar" malaLegenda legenda="Obszar" opcje={[["wszystkie", "Wszystkie obszary"], ...OBSZARY.map((o): [string, string] => [o.id, o.nazwa])]} wartosc={obszar} zmien={setObszar} />
       </div>
       <p className="text-muted">{opis.opis}. Kafelki układają się w przybliżony kształt regionu.</p>
 

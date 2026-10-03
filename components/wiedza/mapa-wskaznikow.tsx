@@ -1,6 +1,8 @@
 "use client";
 
 import * as React from "react";
+import { useTranslations } from "next-intl";
+import { Wybor } from "@/components/ui/wybor";
 import { OBSZARY } from "@/lib/obszary";
 import type { WskaznikMapy } from "@/lib/wiedza";
 import { POZYCJE_KAFELKOW } from "@/components/wiedza/uklad";
@@ -9,6 +11,7 @@ const krotka = (p: string) => p.replace("powiat ", "");
 const liczba = (n: number) => n.toLocaleString("pl-PL", { maximumFractionDigits: 2 });
 
 export function MapaWskaznikow({ powiaty, obszary }: { powiaty: string[]; obszary: Record<string, WskaznikMapy[]> }) {
+  const t = useTranslations("wiedza.mapa");
   const [obszar, setObszar] = React.useState("seniorzy");
   const [wskId, setWskId] = React.useState<number | null>(null);
   const lista = obszary[obszar] ?? [];
@@ -20,21 +23,11 @@ export function MapaWskaznikow({ powiaty, obszary }: { powiaty: string[]; obszar
 
   return (
     <div className="space-y-4">
-      <div className="flex flex-wrap gap-4">
-        <div className="space-y-1">
-          <label htmlFor="mw-obszar" className="block font-bold">Obszar</label>
-          <select id="mw-obszar" value={obszar} onChange={(e) => { setObszar(e.target.value); setWskId(null); }} className="min-h-12 rounded-xl border-2 border-line bg-card px-3 text-lg hover:border-fg">
-            {OBSZARY.map((o) => <option key={o.id} value={o.id}>{o.nazwa}</option>)}
-          </select>
-        </div>
-        <div className="space-y-1">
-          <label htmlFor="mw-wsk" className="block font-bold">Wskaźnik</label>
-          <select id="mw-wsk" value={wsk?.id} onChange={(e) => setWskId(Number(e.target.value))} className="min-h-12 max-w-full rounded-xl border-2 border-line bg-card px-3 text-lg hover:border-fg">
-            {lista.map((w) => <option key={w.id} value={w.id}>{w.nazwa}</option>)}
-          </select>
-        </div>
+      <div className="space-y-4">
+        <Wybor nazwa="mw-obszar" malaLegenda legenda={t("obszar")} opcje={OBSZARY.map((o) => [o.id, o.nazwa])} wartosc={obszar} zmien={(v) => { setObszar(v); setWskId(null); }} />
+        <Wybor nazwa="mw-wsk" malaLegenda legenda={t("wskaznik")} opcje={lista.map((w) => [String(w.id), w.nazwa])} wartosc={String(wsk?.id ?? "")} zmien={(v) => setWskId(Number(v))} />
       </div>
-      <ul className="grid max-w-3xl grid-cols-6 gap-1.5 sm:gap-2" aria-label="Wartości wskaźnika w powiatach">
+      <ul className="grid max-w-3xl grid-cols-6 gap-1.5 sm:gap-2" aria-label={t("wartosci")}>
         {powiaty.map((p) => {
           const [kol, wier] = POZYCJE_KAFELKOW[p] ?? [0, 0];
           const v = wsk?.wartosci[p];
@@ -46,7 +39,7 @@ export function MapaWskaznikow({ powiaty, obszary }: { powiaty: string[]; obszar
           );
         })}
       </ul>
-      <p className="text-sm text-muted">Im ciemniejszy kafelek, tym wyższa wartość wskaźnika. Źródło: Internetowy Obserwator Statystyk Społecznych ROPS, najnowszy rok.</p>
+      <p className="text-sm text-muted">{t("legenda")}</p>
     </div>
   );
 }

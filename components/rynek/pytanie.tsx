@@ -4,6 +4,7 @@ import * as React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
+import { Wybor } from "@/components/ui/wybor";
 
 export function Pytanie({ eksperci }: { eksperci: { id: string; nazwa: string }[] }) {
   const t = useTranslations("rynek");
@@ -48,13 +49,7 @@ export function Pytanie({ eksperci }: { eksperci: { id: string; nazwa: string }[
         <label htmlFor="ry-pytanie" className="block text-xl font-bold">{t("pytanie")}</label>
         <textarea id="ry-pytanie" rows={5} value={tekst} onChange={(e) => setTekst(e.target.value.slice(0, 1500))} placeholder={t("pytaniePlaceholder")} className="block w-full rounded-xl border-2 border-line bg-card p-4 text-lg hover:border-fg" />
       </div>
-      <div className="space-y-1">
-        <label htmlFor="ry-kogo" className="block text-lg font-bold">{t("doKogo")}</label>
-        <select id="ry-kogo" value={doKogo} onChange={(e) => setDoKogo(e.target.value)} className="block min-h-12 w-full max-w-md rounded-xl border-2 border-line bg-card px-3 text-lg hover:border-fg">
-          <option value="">{t("rops")}</option>
-          {eksperci.map((x) => <option key={x.id} value={x.id}>{x.nazwa}</option>)}
-        </select>
-      </div>
+      <Wybor nazwa="ry-kogo" legenda={t("doKogo")} opcje={[["", t("rops")], ...eksperci.map((x): [string, string] => [x.id, x.nazwa])]} wartosc={doKogo} zmien={setDoKogo} />
       <div className="space-y-1">
         <label htmlFor="ry-email" className="block text-lg font-bold">{t("email")}</label>
         <input id="ry-email" type="email" autoComplete="email" value={email} onChange={(e) => setEmail(e.target.value)} className="block min-h-12 w-full max-w-md rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" />

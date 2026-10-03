@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { useLocale, useTranslations } from "next-intl";
 import { Contrast, Languages, Mic, Type, Volume2, Wand2 } from "lucide-react";
 import { COOKIE_JEZYK, odczytajUstawienia, type UstawieniaDostepnosci } from "@/lib/dostepnosc";
-import { zastosujUstawienia } from "@/lib/dostepnosc-klient";
+import { ZDARZENIE_A11Y, zastosujUstawienia } from "@/lib/dostepnosc-klient";
 import { Button } from "@/components/ui/button";
 
 const COOKIE_WYBOR = "splot_a11y_wybor";
@@ -23,7 +23,12 @@ export function JakWolisz() {
   const [ukryty, setUkryty] = React.useState(false);
   const [u, setU] = React.useState<UstawieniaDostepnosci>({ prosty: false, rozmiar: "normalny", kontrast: "normalny" });
   const [czyta, setCzyta] = React.useState(false);
-  React.useEffect(() => setU(biezace()), []);
+  React.useEffect(() => {
+    const synchronizuj = () => setU(biezace());
+    const klatka = requestAnimationFrame(synchronizuj);
+    window.addEventListener(ZDARZENIE_A11Y, synchronizuj);
+    return () => { cancelAnimationFrame(klatka); window.removeEventListener(ZDARZENIE_A11Y, synchronizuj); };
+  }, []);
   if (ukryty) return null;
 
   const ustaw = (zmiana: Partial<UstawieniaDostepnosci>) => {
