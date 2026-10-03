@@ -84,6 +84,13 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <p className="max-w-xl">{t("stopka.ai")}</p>
               <Link href="/centrala" className="inline-flex min-h-12 items-center font-semibold text-hero-fg">{t("stopka.centrala")}</Link>
             </div>
+            <nav aria-label={t("stopka.zaufanie")} className="kontener pb-8">
+              <ul className="flex flex-wrap gap-x-6">
+                {[["/ocena", t("stopka.ocena")], ["/zaufanie", t("stopka.zaufanieLink")], ["/dostepnosc", t("stopka.dostepnoscLink")], ["/latwy", t("stopka.latwyLink")], ["/ekspert", t("stopka.ekspert")]].map(([href, etykieta]) => (
+                  <li key={href}><Link href={href} className="inline-flex min-h-12 items-center font-semibold text-hero-fg">{etykieta}</Link></li>
+                ))}
+              </ul>
+            </nav>
           </footer>
         </NextIntlClientProvider>
       </body>

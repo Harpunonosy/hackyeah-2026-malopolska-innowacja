@@ -40,7 +40,12 @@
     "dla": "Dla mieszkańców",
     "dlaRops": "Dla pracowników ROPS",
     "centrala": "Panel dla pracowników ROPS",
-    "hasloMarki": "Cyfrowe serce Małopolskiego Hubu Innowacji Społecznych."
+    "hasloMarki": "Cyfrowe serce Małopolskiego Hubu Innowacji Społecznych.",
+    "ocena": "Jak ocenić Splot",
+    "zaufanieLink": "Karta systemu AI i prywatność",
+    "dostepnoscLink": "Deklaracja dostępności",
+    "latwyLink": "Tekst łatwy do czytania",
+    "ekspert": "Panel eksperta"
   },
   "start": {
     "tytul": "Co chcesz zrobić?",

@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
+import { ResetDemo } from "@/components/centrala/reset-demo";
 import { EdytorNaboru, NowyNabor } from "@/components/centrala/nabory";
 import { schematNaboru } from "@/lib/nabor-schemat";
 import { PrzelaczNabor } from "@/components/centrala/przelacz-nabor";
@@ -36,6 +37,7 @@ export default async function Nabory() {
         </ul>
       </section>
       <NowyNabor />
+      <ResetDemo />
       <ul className="space-y-5">
         {nabory.rows.map((n) => {
           const w = wnioski.rows.filter((x) => x.nabor_id === n.id);
