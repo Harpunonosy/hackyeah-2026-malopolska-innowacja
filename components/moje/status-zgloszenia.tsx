@@ -11,7 +11,7 @@ type Dane = {
   numer: string;
   status: Status;
   historia: { status: Status; notatka: string | null; at: string }[];
-  wiadomosci: { tresc: string; created_at: string; wygenerowane_przez_ai: boolean }[];
+  wiadomosci: { tresc: string; created_at: string; wygenerowane_przez_ai: boolean; od: string }[];
   dopasowania: { id: string; nazwa: string; dlaczego: string | null }[];
   ocena_pomocy: number | null;
 };
@@ -23,6 +23,8 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
   const [dane, setDane] = React.useState<Dane | null>(null);
   const [brak, setBrak] = React.useState(false);
   const [ocena, setOcena] = React.useState<number | null>(null);
+  const [odp, setOdp] = React.useState("");
+  const [wyslano, setWyslano] = React.useState(false);
 
   React.useEffect(() => {
     let aktywny = true;
@@ -90,11 +92,22 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
             <article key={w.created_at} className="space-y-2 karta p-5">
               <p className="whitespace-pre-line text-lg">{w.tresc}</p>
               <p className="text-sm text-muted">
-                {fmt(w.created_at)}
+                {w.od === "autor" ? "Ty · " : "ROPS · "}{fmt(w.created_at)}
                 {w.wygenerowane_przez_ai ? ` · ${t("aiOdpowiedz")}` : ""}
               </p>
             </article>
           ))}
+          <form className="space-y-2" onSubmit={async (e) => {
+            e.preventDefault();
+            if (odp.trim().length < 2) return;
+            const r = await fetch(`/api/zgloszenia/${numer}/wiadomosc`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tresc: odp }) });
+            if (r.ok) { setOdp(""); setWyslano(true); }
+          }}>
+            <label htmlFor="odp-autora" className="block text-lg font-bold">{t("napisz")}</label>
+            <textarea id="odp-autora" rows={3} value={odp} onChange={(e) => setOdp(e.target.value)} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
+            <Button type="submit" disabled={odp.trim().length < 2}>{t("wyslijOdp")}</Button>
+            {wyslano && <p role="status" className="font-semibold text-ok">{t("wyslanoOdp")}</p>}
+          </form>
           <div className="space-y-2">
             <p className="font-semibold" id="ocena-pyt">
               {t("ocenaPytanie")}

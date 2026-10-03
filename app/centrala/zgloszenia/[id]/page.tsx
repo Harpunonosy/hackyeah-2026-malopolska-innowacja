@@ -29,7 +29,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
   const [dop, hist, wiad, pow] = await Promise.all([
     c.query("select i.id, i.nazwa, i.kategoria, d.trafnosc, d.dlaczego from dopasowania d join innowacje i on i.id=d.innowacja_id where d.zgloszenie_id=$1 order by d.pozycja", [id]),
     c.query("select status, notatka, at from historia_statusu where zgloszenie_id=$1 order by at", [id]),
-    c.query("select w.tresc, w.created_at, w.wygenerowane_przez_ai from wiadomosci w join watki t on t.id=w.watek_id where t.typ='zgloszenie' and t.obiekt_id=$1 order by w.created_at", [id]),
+    c.query("select w.tresc, w.created_at, w.wygenerowane_przez_ai, w.od from wiadomosci w join watki t on t.id=w.watek_id where t.typ='zgloszenie' and t.obiekt_id=$1 order by w.created_at", [id]),
     z.autor_id ? c.query("select typ, tresc, kanal, created_at from powiadomienia where uzytkownik_id=$1 order by created_at desc limit 5", [z.autor_id]) : Promise.resolve({ rows: [] }),
   ]);
 
@@ -92,11 +92,11 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
 
       {wiad.rows.length > 0 && (
         <section aria-labelledby="wyslane-h" className="space-y-2">
-          <h2 id="wyslane-h" className="text-2xl font-bold">Wysłane odpowiedzi</h2>
+          <h2 id="wyslane-h" className="text-2xl font-bold">Wątek z autorem</h2>
           {wiad.rows.map((w) => (
             <p key={w.created_at} className="whitespace-pre-line karta-mala p-3">
               {w.tresc}
-              <span className="mt-1 block text-sm text-muted">{fmt(w.created_at)}{w.wygenerowane_przez_ai ? " · ze szkicu AI" : ""}</span>
+              <span className="mt-1 block text-sm text-muted">{w.od === "autor" ? "Autor zgłoszenia · " : "ROPS · "}{fmt(w.created_at)}{w.wygenerowane_przez_ai ? " · ze szkicu AI" : ""}</span>
             </p>
           ))}
           {pow.rows.map((p) => (

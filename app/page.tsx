@@ -12,7 +12,7 @@ const KAFELKI: { klucz: string; ikona: LucideIcon; href?: string }[] = [
   { klucz: "pomysl", ikona: Lightbulb, href: "/pomysl" },
   { klucz: "testy", ikona: FlaskConical, href: "/testy" },
   { klucz: "instytucja", ikona: Building2, href: "/wdrozenie" },
-  { klucz: "rozmowa", ikona: MessagesSquare },
+  { klucz: "rozmowa", ikona: MessagesSquare, href: "/rynek" },
 ];
 
 export default async function Start() {

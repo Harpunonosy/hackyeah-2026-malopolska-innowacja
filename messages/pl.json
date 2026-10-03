@@ -62,7 +62,7 @@
       },
       "rozmowa": {
         "tytul": "Zapytaj eksperta",
-        "opis": "Porozmawiaj z ROPS"
+        "opis": "Pytania i partnerzy"
       },
       "moje": {
         "tytul": "Moje sprawy",
@@ -254,7 +254,10 @@
     "dopasowania": "Rozwiązania, które Ci podpowiedzieliśmy",
     "ocenaPytanie": "Czy odpowiedź Ci pomogła?",
     "ocenaDzieki": "Dziękujemy za ocenę.",
-    "odswiezanie": "Status odświeża się sam co kilka sekund."
+    "odswiezanie": "Status odświeża się sam co kilka sekund.",
+    "napisz": "Chcesz coś dopisać?",
+    "wyslijOdp": "Wyślij wiadomość",
+    "wyslanoOdp": "Wiadomość wysłana. ROPS ją zobaczy."
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -412,5 +415,37 @@
     "wysylam": "Wysyłam…",
     "dzieki": "Dziękujemy za opinię!",
     "blad": "Nie udało się wysłać opinii."
+  },
+  "rynek": {
+    "nadtytul": "Rynek: rozmowa i współpraca",
+    "tytul": "Zapytaj ROPS lub eksperta",
+    "opis": "Zadaj pytanie, znajdź eksperta albo partnera do wspólnego działania.",
+    "pytanie": "Twoje pytanie",
+    "pytaniePlaceholder": "Na przykład: Jak przygotować wniosek o dofinansowanie dziennego domu pomocy w małej gminie?",
+    "doKogo": "Do kogo kierujesz pytanie?",
+    "rops": "Do ROPS (dobierzemy eksperta)",
+    "zgoda": "Zgadzam się na przekazanie pytania pracownikom ROPS i ekspertom.",
+    "email": "Adres e-mail (nieobowiązkowo)",
+    "wyslij": "Wyślij pytanie",
+    "wysylam": "Wysyłam…",
+    "gotowe": "Pytanie wysłane",
+    "numerPomoc": "Odpowiedź zobaczysz pod tym numerem w zakładce „Moje sprawy”.",
+    "sprawdz": "Sprawdź status",
+    "blad": "Nie udało się wysłać. Spróbuj ponownie.",
+    "eksperci": "Eksperci",
+    "dyzury": "Dyżury",
+    "partnerzy": "Tablica „Szukam partnera”",
+    "partnerzyOpis": "Ogłoszenia organizacji i instytucji, które szukają współpracy. Dodaj własne.",
+    "szukaTaniej": "Jak taniej",
+    "szukaDotrzec": "Jak dotrzeć do odbiorców",
+    "szukaWartosc": "Jak dać lepszą wartość",
+    "dodaj": "Dodaj ogłoszenie",
+    "tytulOgl": "Tytuł ogłoszenia",
+    "czego": "Czego szukasz?",
+    "obszarPole": "Obszar",
+    "powiatPole": "Powiat (nieobowiązkowo)",
+    "opisOgl": "Opis",
+    "opublikuj": "Opublikuj ogłoszenie",
+    "opublikowano": "Ogłoszenie dodane. Odśwież stronę, aby je zobaczyć."
   }
 }

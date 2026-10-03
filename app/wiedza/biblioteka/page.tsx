@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
 import { ListaBiblioteki } from "@/components/biblioteka/lista";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
@@ -15,6 +17,7 @@ export default async function Biblioteka() {
   return (
     <Strona>
       <NaglowekStrony tytul={t("tytul")} nadtytul="Skarbnica wiedzy" opis={t("podtytul")} />
+      <Button asChild wariant="obrys" className="w-fit"><Link href="/wiedza/malopolska">Kondycja Małopolski: raporty i mapa wskaźników</Link></Button>
       <ListaBiblioteki pozycje={pozycje} kategorie={KATEGORIE} />
     </Strona>
   );

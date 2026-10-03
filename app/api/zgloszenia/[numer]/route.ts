@@ -12,7 +12,7 @@ export async function GET(_req: Request, ctx: { params: Promise<{ numer: string 
   const [hist, wiad, dop] = await Promise.all([
     db().query("select status, notatka, at from historia_statusu where zgloszenie_id=$1 order by at", [id]),
     db().query(
-      `select w.tresc, w.created_at, w.wygenerowane_przez_ai from wiadomosci w join watki t on t.id=w.watek_id
+      `select w.tresc, w.created_at, w.wygenerowane_przez_ai, w.od from wiadomosci w join watki t on t.id=w.watek_id
        where t.typ='zgloszenie' and t.obiekt_id=$1 order by w.created_at`,
       [id],
     ),
