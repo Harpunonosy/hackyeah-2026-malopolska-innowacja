@@ -429,7 +429,14 @@
     "znaki": "{n} znaków",
     "numerSprawy": "Numer sprawy",
     "sprawdzStatus": "Sprawdź status",
-    "zachowajNumer": "Zapisz ten numer albo zrób zdjęcie ekranu."
+    "zachowajNumer": "Zapisz ten numer albo zrób zdjęcie ekranu.",
+    "limityNaboru": "Limity naboru",
+    "znakiLimit": "{n} z {limit} znaków",
+    "sprawdzWniosek": "Sprawdź wniosek według karty tego naboru",
+    "oceniamWniosek": "Oceniam…",
+    "ocenaWniosku": "Wstępna ocena wniosku",
+    "ocenaWnioskuInfo": "To pomoc przygotowana z udziałem AI według kryteriów tego naboru, a nie decyzja komisji.",
+    "wybierzNabor": "Wybierz nabór"
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",

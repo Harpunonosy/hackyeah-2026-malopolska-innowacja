@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
+import { EdytorNaboru, NowyNabor } from "@/components/centrala/nabory";
+import { schematNaboru } from "@/lib/nabor-schemat";
 import { PrzelaczNabor } from "@/components/centrala/przelacz-nabor";
 import { Chip } from "@/components/ui/chip";
 import { db } from "@/lib/db";
@@ -15,7 +17,7 @@ const fmt = (d: Date) => d.toLocaleString("pl-PL", { dateStyle: "short", timeSty
 export default async function Nabory() {
   if (!(await czyAdmin())) redirect("/centrala/logowanie");
   const c = db();
-  const nabory = await c.query("select id, nazwa, program, opis, temat, aktywny, przyklad, otwarty_od, otwarty_do, formularz from nabory order by aktywny desc, nazwa");
+  const nabory = await c.query("select id, nazwa, program, opis, temat, aktywny, przyklad, otwarty_od, otwarty_do, formularz, schemat from nabory order by aktywny desc, nazwa");
   const wnioski = await c.query("select id, nabor_id, pola, status, created_at from wnioski order by created_at desc limit 100");
   return (
     <div className="space-y-10">
@@ -33,6 +35,7 @@ export default async function Nabory() {
           <li><a className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/api/v1/innowacje">Katalog innowacji, API tylko do odczytu (JSON)</a></li>
         </ul>
       </section>
+      <NowyNabor />
       <ul className="space-y-5">
         {nabory.rows.map((n) => {
           const w = wnioski.rows.filter((x) => x.nabor_id === n.id);
@@ -46,6 +49,7 @@ export default async function Nabory() {
               <h2 className="font-display text-2xl font-bold">{n.nazwa}</h2>
               <p className="text-muted">{n.temat ?? n.opis}</p>
               {n.formularz?.uzasadnienie && <details className="karta-mala px-4 py-2"><summary className="min-h-10 cursor-pointer font-semibold">Uzasadnienie szkicu (z Radaru)</summary><p className="py-2">{n.formularz.uzasadnienie}</p></details>}
+              <EdytorNaboru id={n.id} schemat={schematNaboru(n.schemat)} otwartyDo={n.otwarty_do ? new Date(n.otwarty_do).toISOString().slice(0, 10) : null} />
               <PrzelaczNabor id={n.id} aktywny={n.aktywny} />
               {w.length > 0 && (
                 <ul className="space-y-2">
