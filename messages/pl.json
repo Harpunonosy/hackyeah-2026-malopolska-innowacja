@@ -223,7 +223,7 @@
     "problem": "Jakich problemów dotyczy?",
     "grupa": "Do kogo jest skierowane?",
     "ktoMoze": "Kto może z niego skorzystać (wdrożyć)?",
-    "czyDziala": "Czy to działa?",
+    "czyDziala": "Czy to działa",
     "autor": "Autor",
     "wybrane": "Wybrane do upowszechniania w projekcie",
     "materialy": "Materiały do pobrania",
@@ -246,7 +246,15 @@
     "nieaktualneDzieki": "Dziękujemy. Zespół ROPS sprawdzi i zaktualizuje kartę.",
     "nieaktualnePytanie": "Co jest nieaktualne lub błędne?",
     "wyslij": "Wyślij",
-    "nieaktualneBlad": "Nie udało się wysłać. Spróbuj ponownie."
+    "nieaktualneBlad": "Nie udało się wysłać. Spróbuj ponownie.",
+    "filtryDodatkowe": "Dodatkowe filtry",
+    "doWdrozenia": "Do wdrożenia przez instytucję",
+    "porownanie": "Porównanie innowacji",
+    "kategoria": "Kategoria",
+    "odbiorcy": "Odbiorcy",
+    "ktoWdraza": "Kto może wdrożyć",
+    "wyczysc": "Wyczyść porównanie",
+    "porownaj": "Porównaj (do 3)"
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",

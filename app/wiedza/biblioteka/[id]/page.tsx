@@ -1,3 +1,4 @@
+import { Film } from "@/components/biblioteka/film";
 import { ZglosNieaktualne } from "@/components/biblioteka/zglos-nieaktualne";
 import { czyWdrazalna } from "@/lib/swatka";
 import type { Metadata } from "next";
@@ -72,12 +73,7 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
             </Button>
             <ZglosNieaktualne id={i.id} nazwa={i.nazwa} />
             {i.film.map((f, n) => (
-              <Button key={f} asChild wariant="obrys" className="w-full">
-                <a href={f} target="_blank" rel="noopener noreferrer">
-                  <Video aria-hidden className="size-5" />
-                  {t("filmy")} {i.film.length > 1 ? n + 1 : ""} (nowa karta)
-                </a>
-              </Button>
+              <Film key={f} url={f} tytul={i.nazwa} etykieta={`${t("filmy")}${i.film.length > 1 ? ` ${n + 1}` : ""}`} />
             ))}
           </section>
           {(i.folderPdf.length > 0 || i.materialyZip.length > 0) && (

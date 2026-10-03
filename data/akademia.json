@@ -1,0 +1,124 @@
+{
+  "uwaga": "Mikrolekcje przygotowane na podstawie dokumentów ROPS Kraków (Przewodnik po innowacjach społecznych, karta oceny IWS 2.0, ogłoszenie naboru Usługa Wrażliwa, Regionalny Plan Rozwoju Usług Społecznych i Deinstytucjonalizacji 2026-2028). Streszczenia własne, bez kopiowania dużych fragmentów.",
+  "lekcje": [
+    {
+      "slug": "czym-jest-innowacja-spoleczna",
+      "tytul": "Czym jest innowacja społeczna",
+      "minuty": 3,
+      "akapity": [
+        "Innowacja społeczna to nowe rozwiązanie problemu, z którym ludzie borykają się na co dzień. Jest lepsze od tego, co już jest, albo odpowiada na potrzebę, której dotąd nikt nie zauważył.",
+        "Nie musi być wysokiej technologii. Może to być nowy sposób organizacji pracy, usługa, spotkanie, aplikacja albo zmiana zasad. Ważne, żeby naprawdę poprawiała życie odbiorców i żeby dało się ją powtórzyć w innym miejscu.",
+        "W Małopolsce ROPS wspiera takie rozwiązania w inkubatorach. Najlepsze trafiają do Biblioteki Innowacji, skąd mogą z nich skorzystać gminy, ośrodki pomocy i organizacje.",
+        "Dobra innowacja ma cztery cechy: odpowiada na prawdziwy problem, jest nowa lub inaczej zrobiona, została sprawdzona w praktyce i da się ją upowszechnić."
+      ],
+      "latwe": [
+        "Innowacja społeczna to nowy sposób na rozwiązanie problemu ludzi.",
+        "Nowy sposób jest lepszy od starego. Pomaga ludziom w życiu.",
+        "To nie musi być skomplikowana technika. Może to być spotkanie, usługa albo nowa zasada.",
+        "Dobra innowacja działa naprawdę. Można ją zrobić także w innym miejscu."
+      ],
+      "quiz": [
+        { "pytanie": "Czy innowacja społeczna musi być aplikacją albo nowoczesną technologią?", "odpowiedzi": ["Tak, zawsze", "Nie, może być usługą, spotkaniem albo nowym sposobem pracy"], "poprawna": 1 },
+        { "pytanie": "Co jest ważne w dobrej innowacji społecznej?", "odpowiedzi": ["Że odpowiada na prawdziwy problem i da się ją powtórzyć gdzie indziej", "Że jest bardzo droga"], "poprawna": 0 },
+        { "pytanie": "Gdzie ROPS zbiera sprawdzone innowacje?", "odpowiedzi": ["W Bibliotece Innowacji", "W kalendarzu wydarzeń"], "poprawna": 0 }
+      ],
+      "zrodla": [{ "nazwa": "Przewodnik po innowacjach społecznych, ROPS Kraków", "url": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan" }]
+    },
+    {
+      "slug": "jak-przetestowac-pomysl-z-5-osobami",
+      "tytul": "Jak przetestować pomysł z 5 osobami",
+      "minuty": 3,
+      "akapity": [
+        "Zanim wydasz pieniądze na pomysł, sprawdź go na małej grupie. Już pięć osób z grupy docelowej pokaże ci większość problemów.",
+        "Krok 1. Zapisz, co dokładnie chcesz sprawdzić: czy ludzie rozumieją pomysł, czy chcą z niego korzystać, czy potrafią to zrobić sami.",
+        "Krok 2. Znajdź 5 osób, które naprawdę są odbiorcami. W Splocie możesz ogłosić test w Próbowni, a system zaprosi osoby z twojego obszaru i powiatu.",
+        "Krok 3. Poproś każdą osobę o wypróbowanie pomysłu i obserwuj, bez podpowiadania. Zapisz, co było łatwe, co trudne i co zmieniliby.",
+        "Krok 4. Popraw pomysł i sprawdź ponownie. Dopiero potem planuj większy test lub wniosek o grant."
+      ],
+      "latwe": [
+        "Najpierw sprawdź pomysł na małej grupie. Wystarczy pięć osób.",
+        "Zapisz, co chcesz sprawdzić.",
+        "Znajdź osoby, dla których jest ten pomysł.",
+        "Poproś je, żeby spróbowały. Nie podpowiadaj.",
+        "Popraw pomysł i sprawdź jeszcze raz."
+      ],
+      "quiz": [
+        { "pytanie": "Ile osób wystarczy na pierwszy test?", "odpowiedzi": ["Około pięciu osób z grupy docelowej", "Co najmniej 500"], "poprawna": 0 },
+        { "pytanie": "Co robisz podczas obserwacji testu?", "odpowiedzi": ["Podpowiadasz, jak to zrobić", "Obserwujesz bez podpowiadania i zapisujesz uwagi"], "poprawna": 1 },
+        { "pytanie": "Gdzie w Splocie ogłosisz test?", "odpowiedzi": ["W Próbowni", "W Radarze"], "poprawna": 0 }
+      ],
+      "zrodla": [{ "nazwa": "Próbownia w Splocie", "url": "/testy" }]
+    },
+    {
+      "slug": "deinstytucjonalizacja-w-5-minut",
+      "tytul": "Deinstytucjonalizacja w 5 minut",
+      "minuty": 4,
+      "akapity": [
+        "Deinstytucjonalizacja (DI) to przechodzenie od opieki w dużych instytucjach, takich jak domy pomocy społecznej, do usług blisko domu, w lokalnej społeczności.",
+        "Chodzi o to, żeby osoby starsze, z niepełnosprawnościami albo w kryzysie mogły jak najdłużej mieszkać u siebie i decydować o swoim życiu. Pomagają w tym usługi opiekuńcze, asystencja, dzienne formy wsparcia, mieszkania wspomagane i wsparcie rodzin.",
+        "Województwo Małopolskie ma Regionalny Plan Rozwoju Usług Społecznych i Deinstytucjonalizacji na lata 2026–2028. Opisuje on standardy usług, między innymi mieszkań z usługami.",
+        "Dlaczego to ważne dla pomysłodawców? Karta oceny pomysłów ROPS pyta, jak innowacja wpisuje się w ideę deinstytucjonalizacji. Dobry pomysł wzmacnia niezależność odbiorców i usługi w społeczności."
+      ],
+      "latwe": [
+        "Deinstytucjonalizacja to trudne słowo.",
+        "Znaczy: pomoc blisko domu, a nie w dużym ośrodku.",
+        "Osoba starsza lub chora może mieszkać u siebie i dostaje pomoc na miejscu.",
+        "Taki jest plan dla Małopolski na lata 2026–2028."
+      ],
+      "quiz": [
+        { "pytanie": "Co oznacza deinstytucjonalizacja?", "odpowiedzi": ["Usługi blisko domu zamiast opieki w dużych instytucjach", "Zamykanie ośrodków pomocy"], "poprawna": 0 },
+        { "pytanie": "Który plan opisuje standardy usług w Małopolsce na lata 2026–2028?", "odpowiedzi": ["Regionalny Plan Rozwoju Usług Społecznych i Deinstytucjonalizacji", "Plan Zagospodarowania Przestrzennego"], "poprawna": 0 },
+        { "pytanie": "Co pomaga osobie mieszkać u siebie?", "odpowiedzi": ["Usługi opiekuńcze i asystencja", "Przeprowadzka do dużego ośrodka"], "poprawna": 0 }
+      ],
+      "zrodla": [{ "nazwa": "Regionalny Plan Rozwoju Usług Społecznych i Deinstytucjonalizacji, ROPS Kraków", "url": "https://rops.krakow.pl/programy-i-modele/regionalny-plan-rozwoju-uslug-spolecznych-i-deinstytucjonalizacji-wojewodztwa-malopolskiego" }]
+    },
+    {
+      "slug": "jak-napisac-wniosek-do-iws",
+      "tytul": "Jak napisać wniosek do IWS",
+      "minuty": 4,
+      "akapity": [
+        "Formularz naboru Inkubatora Włączenia Społecznego 2.0 ma 11 pól do wypełnienia: od tytułu innowacji, przez opis, innowacyjność, diagnozę problemu i odbiorców, po plan działania z kosztami, kwotę grantu i opis zespołu. Dwunaste pole to oświadczenia.",
+        "Komisja ocenia pomysł w pięciu kryteriach: innowacyjność, adekwatność (w tym zgodność z Mapą Wyzwań Społecznych), efektywność kosztowa, uniwersalność i wizja rozwoju. Za każde można dostać do 10 punktów.",
+        "Aby przejść dalej, potrzebujesz co najmniej 21 punktów z 50. Innowacyjność musi mieć co najmniej 5 punktów, a pozostałe kryteria co najmniej 4.",
+        "Wskazówki: opisz problem liczbami i źródłami, pokaż, czym twój pomysł różni się od tego, co już jest w Bibliotece, i policz koszty zgodnie z planem. W Pracowni dostaniesz wstępną ocenę według tej karty i projekt wniosku do uzupełnienia."
+      ],
+      "latwe": [
+        "Formularz ma 11 pól. Wypełniasz je po kolei.",
+        "Komisja daje punkty w pięciu sprawach, od 0 do 10.",
+        "Potrzebujesz razem 21 punktów z 50.",
+        "Opisz problem liczbami. Pokaż, co jest nowe w twoim pomyśle.",
+        "W Pracowni sprawdzisz swój pomysł przed wysłaniem."
+      ],
+      "quiz": [
+        { "pytanie": "Ile punktów łącznie potrzebujesz w ocenie merytorycznej?", "odpowiedzi": ["Co najmniej 21 z 50", "Co najmniej 5 z 50"], "poprawna": 0 },
+        { "pytanie": "Który z progów jest najwyższy?", "odpowiedzi": ["Innowacyjność, co najmniej 5 punktów", "Efektywność kosztowa, co najmniej 8 punktów"], "poprawna": 0 },
+        { "pytanie": "Gdzie w Splocie sprawdzisz pomysł według tej karty?", "odpowiedzi": ["W Pracowni", "W Rynku pytań"], "poprawna": 0 }
+      ],
+      "zrodla": [{ "nazwa": "Nabór IWS 2.0, ROPS Kraków", "url": "https://rops.krakow.pl/nabory-szkolenia-granty-dotacje-wizyty-studyjne-studia-specjalizacje-superwizje/granty-na-innowacje-spoleczne,nabor-aplikacji-wnioskow-na-innowacje-spoleczne-w-ramach-projektu-pn-inkubator-wlaczenia-spolecznego-20" }]
+    },
+    {
+      "slug": "jak-gmina-wdraza-innowacje",
+      "tytul": "Jak gmina wdraża innowację",
+      "minuty": 4,
+      "akapity": [
+        "Gmina, ośrodek pomocy albo organizacja może wdrożyć innowację z Biblioteki. Zacznij od pytania: jaki problem mamy u siebie? Dane z Obserwatora Statystyk Społecznych (w Splocie w profilu powiatu) pomagają pokazać skalę.",
+        "Następnie wybierz innowację, którą ROPS wskazał do upowszechniania, i skontaktuj się z autorem. W Splocie Krawiec przygotuje szkic planu: budżet, harmonogram, wskaźniki i ryzyka.",
+        "Źródła pieniędzy to między innymi własny budżet, zlecanie zadań organizacjom i granty. W projekcie Usługa Wrażliwa grant wynosił do 600 tysięcy złotych na wdrożenie wybranych innowacji: do 6 miesięcy na przygotowanie i do 18 miesięcy na wdrożenie.",
+        "Uwaga: nabór 2025/2026 obejmował tylko pięć wskazanych innowacji i jest zakończony. Plan z Krawca przygotowuje cię do kolejnego naboru albo do innego źródła finansowania."
+      ],
+      "latwe": [
+        "Najpierw sprawdź, jaki problem jest u ciebie w gminie.",
+        "Wybierz innowację z Biblioteki. Napisz do jej autora.",
+        "Krawiec w Splocie przygotuje plan: pieniądze, termin, ryzyka.",
+        "Pieniądze mogą być z gminy, z umowy z organizacją albo z grantu.",
+        "Ostatni nabór na grant jest już zamknięty. Sprawdzaj nowe ogłoszenia ROPS."
+      ],
+      "quiz": [
+        { "pytanie": "Co przygotowuje Krawiec w Splocie?", "odpowiedzi": ["Szkic planu wdrożenia z budżetem i harmonogramem", "Gotową decyzję o grancie"], "poprawna": 0 },
+        { "pytanie": "Ile maksymalnie wynosił grant w projekcie Usługa Wrażliwa?", "odpowiedzi": ["Do 600 tysięcy złotych", "Do 6 milionów złotych"], "poprawna": 0 },
+        { "pytanie": "Czy nabór 2025/2026 jest nadal otwarty?", "odpowiedzi": ["Nie, jest zakończony", "Tak, do końca roku"], "poprawna": 0 }
+      ],
+      "zrodla": [{ "nazwa": "Usługa Wrażliwa, ROPS Kraków", "url": "https://rops.krakow.pl/realizowane-projekty-i-zadania/usluga-wrazliwa-upowszechnianie-innowacji-spolecznych-w-srodowiskach-lokalnych,o-projekcie" }]
+    }
+  ]
+}
