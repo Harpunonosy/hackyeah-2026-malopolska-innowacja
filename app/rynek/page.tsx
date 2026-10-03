@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CalendarClock } from "lucide-react";
@@ -22,7 +23,9 @@ export default async function Rynek() {
   const szuka: Record<string, string> = { taniej: t("szukaTaniej"), dotrzec: t("szukaDotrzec"), wartosc: t("szukaWartosc") };
   return (
     <Strona>
-      <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")} />
+      <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")}>
+        <p className="karta-mala border-2 border-accent p-4 text-lg"><Link href="/siec" className="font-semibold underline">{t("siecLink")}</Link></p>
+      </NaglowekStrony>
       <div className="max-w-3xl"><Pytanie eksperci={eks.rows.map((e) => ({ id: e.id, nazwa: e.nazwa }))} /></div>
 
       <section aria-labelledby="eks-h" className="space-y-5">

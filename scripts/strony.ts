@@ -4,7 +4,7 @@ import type { Page } from "playwright-core";
 export const PUBLICZNE = [
   "/", "/problem", "/latwy", "/rozmowa", "/moje", "/pomysl", "/testy", "/rynek", "/wdrozenie", "/galeria",
   "/wiedza/biblioteka", "/wiedza/biblioteka/straznik", "/wiedza/malopolska", "/wiedza/powiat", "/wiedza/powiat/olkuski",
-  "/wiedza/akademia", "/ocena", "/zaufanie", "/dostepnosc", "/centrala/logowanie", "/asystowane", "/integracje", "/widzet?powiat=olkuski",
+  "/wiedza/akademia", "/ocena", "/zaufanie", "/dostepnosc", "/centrala/logowanie", "/asystowane", "/integracje", "/siec", "/widzet?powiat=olkuski",
 ];
 export const ADMIN = [
   "/centrala/zgloszenia", "/centrala/radar", "/centrala/pomysly", "/centrala/nabory", "/centrala/tresci", "/centrala/powiadomienia", "/centrala/integracje", "/centrala/puls",

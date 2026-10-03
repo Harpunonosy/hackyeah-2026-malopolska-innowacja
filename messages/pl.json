@@ -46,7 +46,8 @@
     "dostepnoscLink": "Deklaracja dostępności",
     "latwyLink": "Tekst łatwy do czytania",
     "ekspert": "Panel eksperta",
-    "integracjeLink": "Dla integratorów (API)"
+    "integracjeLink": "Dla integratorów (API)",
+    "siecLink": "Sieć liderów innowacji"
   },
   "start": {
     "tytul": "Co chcesz zrobić?",
@@ -295,7 +296,8 @@
     "rzadWybrane": "Polecane do wdrożenia",
     "rzadFilmy": "Zobacz na filmie",
     "zobaczWszystkie": "Zobacz wszystkie ({n})",
-    "rzadPrzewin": "{nazwa}: przewiń w bok, aby zobaczyć więcej"
+    "rzadPrzewin": "{nazwa}: przewiń w bok, aby zobaczyć więcej",
+    "autorWSieci": "skontaktuj przez Sieć liderów"
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",
@@ -700,7 +702,8 @@
     "powiatPole": "Powiat (nieobowiązkowo)",
     "opisOgl": "Opis",
     "opublikuj": "Opublikuj ogłoszenie",
-    "opublikowano": "Ogłoszenie dodane. Odśwież stronę, aby je zobaczyć."
+    "opublikowano": "Ogłoszenie dodane. Odśwież stronę, aby je zobaczyć.",
+    "siecLink": "Szukasz partnera do projektu? Zobacz Sieć liderów innowacji: organizacje, samorządy, uczelnie i firmy z Małopolski."
   },
   "galeria": {
     "nadtytul": "Dobre praktyki i pomysły",
@@ -977,5 +980,69 @@
     "nav": "Puls (raport)",
     "min": "{n} min",
     "naPodstawie": "na podstawie {n, plural, one {# odpowiedzi} other {# odpowiedzi}}"
+  },
+  "siec": {
+    "nadtytul": "Sieć liderów innowacji",
+    "tytul": "Kto w Małopolsce tworzy i wdraża innowacje",
+    "opis": "Organizacje, samorządy, uczelnie i firmy, które stworzyły innowacje z Biblioteki ROPS albo chcą je rozwijać razem. Znajdź partnera i skontaktuj się przez Hub.",
+    "liderow": "liderów",
+    "innowacji": "innowacji w Bibliotece",
+    "wdrozen": "planów wdrożenia",
+    "sektorow": "sektorów",
+    "mapaTytul": "Gdzie przygotowuje się wdrożenia",
+    "mapaOpis": "Liczba planów wdrożenia przygotowanych w Krawcu przez gminy, ośrodki pomocy i organizacje w każdym powiecie.",
+    "mapaEtykieta": "Liczba planów wdrożenia w powiatach",
+    "planow": "{n, plural, =0 {brak} one {# plan} few {# plany} other {# planów}}",
+    "ostatnieWdrozenia": "Ostatnio przygotowane plany",
+    "brakWdrozen": "Nie ma jeszcze planów wdrożenia. Instytucja może przygotować plan w Krawcu.",
+    "planuje": "{instytucja}, {powiat}:",
+    "filtry": "Znajdź partnera",
+    "sektorLegenda": "Sektor (poczwórna helisa)",
+    "wszystkie": "Wszystkie",
+    "obszarLegenda": "Obszar",
+    "szukaj": "Szukaj po nazwie",
+    "wynikow": "{n, plural, one {# organizacja} few {# organizacje} other {# organizacji}}",
+    "sektor_ngo": "Organizacja pozarządowa",
+    "sektor_samorzad": "Samorząd i jego jednostki",
+    "sektor_nauka": "Nauka",
+    "sektor_biznes": "Biznes",
+    "sektor_es": "Ekonomia społeczna",
+    "sektor_grupa": "Inne i grupy nieformalne",
+    "zBiblioteki": "Autor innowacji z Biblioteki",
+    "oferuje": "Oferujemy",
+    "szukaJ": "Szukamy",
+    "innowacjeAutora": "Innowacje",
+    "kontakt": "Skontaktuj przez Hub",
+    "kontaktOpis": "Wiadomość trafi do ROPS. Pracownik przekaże ją organizacji i połączy was. Nie podawaj danych wrażliwych.",
+    "kontaktTresc": "Twoja wiadomość",
+    "kontaktEmail": "Twój e-mail do odpowiedzi (opcjonalnie)",
+    "wyslij": "Wyślij przez Hub",
+    "anuluj": "Anuluj",
+    "wyslano": "Wysłano. Numer sprawy: {numer}.",
+    "blad": "Nie udało się wysłać. Spróbuj ponownie.",
+    "dolaczTytul": "Dołącz do sieci",
+    "dolaczOpis": "Twoja organizacja tworzy albo wdraża rozwiązania społeczne? Dodaj krótki opis. Po weryfikacji przez ROPS pojawi się w sieci. E-mail widzi tylko ROPS.",
+    "nazwa": "Nazwa organizacji",
+    "powiat": "Powiat",
+    "oferujePole": "Co możecie zaoferować partnerom?",
+    "szukaPole": "Kogo lub czego szukacie? (opcjonalnie)",
+    "email": "E-mail kontaktowy (widzi tylko ROPS)",
+    "zgoda": "Zgadzam się na publikację nazwy i opisu organizacji w sieci liderów.",
+    "dolacz": "Wyślij do weryfikacji",
+    "dolaczono": "Dziękujemy. Pracownik ROPS sprawdzi wpis i opublikuje go w sieci.",
+    "brak": "Nie znaleziono organizacji. Zmień filtry.",
+    "malopolska": "Małopolska",
+    "pokazWiecej": "Pokaż więcej ({n})",
+    "nav": "Sieć liderów",
+    "mojeLink": "Moje sprawy",
+    "krawiecLink": "Przygotuj plan w Krawcu"
+  },
+  "siecCentrala": {
+    "tytul": "Sieć liderów: wpisy do weryfikacji",
+    "opis": "Organizacje, które chcą dołączyć do sieci. E-mail widzi tylko ROPS.",
+    "brak": "Brak nowych wpisów.",
+    "zatwierdz": "Opublikuj w sieci",
+    "odrzuc": "Odrzuć",
+    "zobacz": "Zobacz sieć liderów"
   }
 }

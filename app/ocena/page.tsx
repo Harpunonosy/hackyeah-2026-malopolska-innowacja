@@ -15,7 +15,7 @@ const MODULY = [
   ["II. Zasobnik wiedzy", "/wiedza/biblioteka", "115 innowacji z filmami, Akademia, Kondycja Małopolski, profile powiatów"],
   ["III. Kreator pomysłów", "/pomysl", "Fiszka, kanwa INNO AGH, asystent i scenorys, wniosek dopasowany do naboru"],
   ["IV. Tester innowacji", "/testy", "Zapis na test, ocena rozwiązań, ogłoszenia testów"],
-  ["V. Platforma komunikacji", "/rynek", "Pytania do ekspertów, tablica partnerów, galeria pomysłów, panel eksperta"],
+  ["V. Platforma komunikacji", "/rynek", "Pytania do ekspertów, tablica partnerów, Sieć liderów innowacji (kontakt przez Hub), galeria pomysłów, panel eksperta"],
   ["VI. Panel administratora", "/centrala", "Skrzynka spraw, Radar, nabory i ocena wniosków, treści, powiadomienia, integracje (hasło w opisie zgłoszenia)"],
   ["VII. Middleman Innowacji", "/wdrozenie", "Krawiec: plan wdrożenia w dwóch wariantach, kompas deinstytucjonalizacji, kwalifikowalność, pakiet startowy"],
 ] as const;

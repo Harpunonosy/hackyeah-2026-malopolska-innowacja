@@ -1,5 +1,6 @@
 import { Film } from "@/components/biblioteka/film";
 import { Prosciej } from "@/components/biblioteka/prosciej";
+import { idAutora } from "@/lib/siec-stale";
 import { ZglosNieaktualne } from "@/components/biblioteka/zglos-nieaktualne";
 import { czyWdrazalna } from "@/lib/swatka";
 import type { Metadata } from "next";
@@ -50,7 +51,7 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
             {i.upowszechnianaW.length > 0 && <Chip className="bg-accent text-accent-fg">{t("wybraneKrotko")}</Chip>}
           </div>
           <h1 className="max-w-4xl text-[clamp(2rem,1.2rem+2.6vw,3.25rem)] font-bold">{i.nazwa}</h1>
-          {i.autor && <p className="text-lg text-muted">{t("autor")}: {i.autor}</p>}
+          {i.autor && <p className="text-lg text-muted">{t("autor")}: {i.autor} · <Link href={`/siec#${idAutora(i.autor)}`} className="font-semibold">{t("autorWSieci")}</Link></p>}
         </div>
       </header>
 

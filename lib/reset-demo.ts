@@ -27,6 +27,7 @@ export async function przywrocDaneDemo(): Promise<Record<string, number>> {
     await wykonaj("innowacje", "delete from innowacje where zrodlo in ('dodana','nadpisana')");
     await wykonaj("dziennik", "delete from dziennik");
     await wykonaj("webhooki", "delete from webhooki");
+    await wykonaj("liderzy", "delete from liderzy");
     await wykonaj("uzytkownicy", "delete from uzytkownicy where rola <> 'ekspert'");
     await c.query("commit");
   } catch (e) {

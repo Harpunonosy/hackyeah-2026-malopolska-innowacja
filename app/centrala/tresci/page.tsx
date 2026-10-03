@@ -1,7 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
+import { getTranslations } from "next-intl/server";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
+import { DecyzjaLidera } from "@/components/centrala/weryfikacja-liderow";
 import { Odbiorcy } from "@/components/centrala/odbiorcy";
 import { AkcjeDodanej, ImportInnowacji } from "@/components/centrala/import-innowacji";
 import { Chip } from "@/components/ui/chip";
@@ -19,6 +21,9 @@ export default async function Tresci() {
   const { rows } = await db().query("select id, nazwa, kategoria, status, updated_at from innowacje where zrodlo='dodana' order by updated_at desc");
   const { lista } = await katalog();
   const dziennik = await db().query("select at, kto, akcja, obiekt, opis from dziennik order by at desc limit 15");
+  const liderzy = await db().query("select id, nazwa, sektor, powiat, oferuje, szuka, email, created_at from liderzy where status='oczekuje' order by created_at").catch(() => ({ rows: [] as Record<string, string>[] }));
+  const ts = await getTranslations("siecCentrala");
+  const tsiec = await getTranslations("siec");
   return (
     <div className="space-y-10">
       <div>
@@ -47,6 +52,24 @@ export default async function Tresci() {
             </li>
           ))}
         </ul>
+      </section>
+      <section aria-labelledby="siec-h" className="space-y-3">
+        <h2 id="siec-h" className="text-3xl font-extrabold">{ts("tytul")} ({liderzy.rows.length})</h2>
+        <p className="text-muted">{ts("opis")} <Link href="/siec" className="underline">{ts("zobacz")}</Link></p>
+        {liderzy.rows.length === 0 ? <p>{ts("brak")}</p> : (
+          <ul className="space-y-3">
+            {liderzy.rows.map((l) => (
+              <li key={l.id} className="karta space-y-2 p-5">
+                <p className="flex flex-wrap gap-2"><Chip>{tsiec(`sektor_${l.sektor}` as "sektor_ngo")}</Chip>{l.powiat && <Chip>{l.powiat}</Chip>}</p>
+                <h3 className="text-xl font-bold">{l.nazwa}</h3>
+                <p><strong>{tsiec("oferuje")}:</strong> {l.oferuje}</p>
+                {l.szuka && <p><strong>{tsiec("szukaJ")}:</strong> {l.szuka}</p>}
+                <p className="text-sm text-muted">{l.email}</p>
+                <DecyzjaLidera id={l.id} nazwa={l.nazwa} />
+              </li>
+            ))}
+          </ul>
+        )}
       </section>
       <section aria-labelledby="dz-h" className="space-y-3">
         <h2 id="dz-h" className="text-3xl font-extrabold">Dziennik zmian</h2>
