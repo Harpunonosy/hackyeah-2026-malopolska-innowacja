@@ -31,15 +31,8 @@ export type ProfilInstytucji = z.infer<typeof ProfilInstytucji>;
 export type WynikWarunku = "spelnia" | "nie_spelnia" | "do_sprawdzenia";
 export type Kwalifikowalnosc = { id: string; warunek: string; wynik: WynikWarunku; uwaga: string }[];
 
-// Innowacje z kategorii naboru "Usługa Wrażliwa" 2025/2026 (data/nabory_rops.json, kategorie_naboru_2025_2026).
-export const INNOWACJE_NABORU: Record<string, string> = {
-  "bez-presji-z-depresji": "Bez presji z depresji",
-  straznik: "Strażnik (Alarm Ally)",
-  "himalaje-autyzmu": "Himalaje Autyzmu",
-  "rodzina-adopcyjna-dorasta": "Rodzina Adopcyjna Dorasta",
-  "gluchy-czytelnik-w-bibliotece": "Głuchy czytelnik w bibliotece",
-};
-export const NABOR_ETYKIETA = "Na zasadach naboru „Usługa Wrażliwa” 2025/2026";
+import { INNOWACJE_NABORU, NABOR_ETYKIETA } from "./krawiec-nabor";
+export { INNOWACJE_NABORU, NABOR_ETYKIETA };
 
 export function sprawdzKwalifikowalnosc(p: ProfilInstytucji): Kwalifikowalnosc {
   const opisy = Object.fromEntries(nabory.usluga_wrazliwa_wdrozenia.warunki_kwalifikowalnosci.map((w) => [w.id, w.warunek]));

@@ -1,6 +1,7 @@
 "use client";
 
 import * as React from "react";
+import Link from "next/link";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 
@@ -10,9 +11,10 @@ export function Zapis({ id, wolne }: { id: string; wolne: number }) {
   const [email, setEmail] = React.useState("");
   const [stan, setStan] = React.useState<"" | "pracuje" | "ok" | "blad" | "pelny">("");
   const [komunikat, setKomunikat] = React.useState("");
+  const [numer, setNumer] = React.useState("");
 
   if (wolne <= 0 && stan !== "ok") return <p className="font-bold text-muted">{t("pelny")}</p>;
-  if (stan === "ok") return <p role="status" className="font-bold text-ok">{t("zapisano")}</p>;
+  if (stan === "ok") return <p role="status" className="font-bold text-ok">{t("zapisano")}{numer && <> {t("numerZapisu")}: <Link href={`/moje/${numer}`} className="font-mono">{numer}</Link></>}</p>;
   if (!otwarty) return <Button type="button" onClick={() => setOtwarty(true)}>{t("chce")}</Button>;
 
   return (
@@ -22,7 +24,7 @@ export function Zapis({ id, wolne }: { id: string; wolne: number }) {
         e.preventDefault();
         setStan("pracuje");
         const r = await fetch(`/api/testy/${id}/zapis`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email }) });
-        if (r.ok) return setStan("ok");
+        if (r.ok) { setNumer((await r.json().catch(() => ({}))).numer ?? ""); return setStan("ok"); }
         const d = await r.json().catch(() => ({}));
         setKomunikat(r.status === 409 ? t("pelny") : d.komunikat ?? t("blad"));
         setStan("blad");

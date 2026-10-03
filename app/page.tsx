@@ -30,14 +30,6 @@ export default async function Start() {
           <div className="absolute inset-[6%] rounded-full bg-soft" />
           <div className="absolute inset-0 rounded-full border-[3px] border-dotted border-accent" />
           <Logo className="absolute left-1/2 top-[44%] size-[62%] -translate-x-1/2 -translate-y-1/2 text-fg" />
-          <div className="karta absolute -bottom-2 -left-4 w-72 space-y-2 p-5 text-fg">
-            <p className="flex items-center gap-2 text-sm font-semibold text-muted">
-              <span className="flex gap-1">{[0, 1, 2].map((i) => <span key={i} className="size-3 rounded-full bg-fg" />)}</span>
-              Bardzo dobre dopasowanie
-            </p>
-            <p className="font-display text-xl font-bold leading-tight">Inteligentny organizer do leków</p>
-            <p className="rounded-lg bg-primary-soft px-3 py-2 text-sm">{t("hero.przykladTekst")}</p>
-          </div>
         </div>
       </section>
 

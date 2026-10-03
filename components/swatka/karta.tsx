@@ -14,7 +14,7 @@ function poziomDopasowania(trafnosc: number | null) {
   return trafnosc >= 85 ? 3 : trafnosc >= 70 ? 2 : 1;
 }
 
-export function KartaInnowacji({ k, obszar }: { k: KartaDopasowania; obszar?: string }) {
+export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopasowania; obszar?: string; instytucja?: boolean }) {
   const zapisz = (wartosc: 1 | -1) => {
     void fetch("/api/swatka/reakcja", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ innowacjaId: k.id, obszar, wartosc }) }).catch(() => {});
   };
@@ -59,9 +59,11 @@ export function KartaInnowacji({ k, obszar }: { k: KartaDopasowania; obszar?: st
             <ArrowRight aria-hidden className="size-5" />
           </Link>
         </Button>
-        <Button asChild wariant="obrys" className="zaawansowane">
-          <Link href={`/wdrozenie?innowacja=${k.id}`}>{t("wdroz")}</Link>
-        </Button>
+        {instytucja && k.wdrazalna && (
+          <Button asChild wariant="obrys" className="zaawansowane">
+            <Link href={`/wdrozenie?innowacja=${k.id}`}>{t("wdroz")}</Link>
+          </Button>
+        )}
         {k.film && (
           <Button asChild wariant="obrys">
             <a href={k.film} target="_blank" rel="noopener noreferrer">

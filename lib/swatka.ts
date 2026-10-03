@@ -10,6 +10,7 @@ import { wykryjKryzys, type RodzajKryzysu } from "./kryzys";
 import { zamaskuj } from "./maskowanie";
 import { nazwaObszaru, OBSZARY, OBSZAR_IDS, type ObszarId } from "./obszary";
 import { szukaj } from "./szukaj";
+import { INNOWACJE_NABORU } from "./krawiec-nabor";
 import { coPomoglo, podobnePrzypadki, type CoPomoglo, type PodobnePrzypadki } from "./swatka-kontekst";
 
 export const PROG_DOPASOWANIA = 55;
@@ -54,6 +55,8 @@ export type KartaDopasowania = {
   ktoMozeWdrozyc: string;
   czyToDziala: string;
   film: string | null;
+  /** Czy to rzetelna, sprawdzona innowacja, którą instytucja może wdrożyć (wybrana do upowszechniania lub w naborze). */
+  wdrazalna: boolean;
 };
 
 export type WynikSwatki = {
@@ -81,6 +84,10 @@ export type WynikSwatki = {
 
 const POLE_DOWOD = 420;
 
+export function czyWdrazalna(i: Innowacja): boolean {
+  return i.upowszechnianaW.length > 0 || i.id in INNOWACJE_NABORU;
+}
+
 function karta(mapa: Map<string, Innowacja>, id: string, trafnosc: number | null, dlaczego: string): KartaDopasowania {
   const i = mapa.get(id)!;
   return {
@@ -92,6 +99,7 @@ function karta(mapa: Map<string, Innowacja>, id: string, trafnosc: number | null
     ktoMozeWdrozyc: skroc(i.ktoMozeSkorzystac, 300),
     czyToDziala: skroc(i.czyToDziala, POLE_DOWOD),
     film: i.film[0] ?? null,
+    wdrazalna: czyWdrazalna(i),
   };
 }
 

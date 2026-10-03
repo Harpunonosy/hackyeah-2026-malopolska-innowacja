@@ -1,3 +1,4 @@
+import { czyWdrazalna } from "@/lib/swatka";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
 import Link from "next/link";
@@ -60,9 +61,11 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
         </div>
         <aside className="space-y-4 lg:sticky lg:top-28">
           <section className="karta space-y-3 p-5">
-            <Button asChild className="w-full">
-              <Link href={`/wdrozenie?innowacja=${i.id}`}>{t("wdroz")}</Link>
-            </Button>
+            {czyWdrazalna(i) && (
+              <Button asChild className="w-full">
+                <Link href={`/wdrozenie?innowacja=${i.id}`}>{t("wdroz")}</Link>
+              </Button>
+            )}
             <Button asChild wariant="obrys" className="w-full">
               <Link href={`/testy?innowacja=${i.id}`}>{t("ocen")}</Link>
             </Button>

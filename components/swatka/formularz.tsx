@@ -221,7 +221,7 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
         )}
       </div>
 
-      {stan.typ === "wynik" && <Wyniki wynik={stan.wynik} />}
+      {stan.typ === "wynik" && <Wyniki wynik={stan.wynik} instytucja={rola === "instytucja"} />}
     </div>
     <aside className="space-y-4 lg:sticky lg:top-6" aria-label="Informacje pomocnicze">
       {stan.typ === "wynik" && <WyslijZgloszenie tekst={tekst} rola={rola} powiat={powiat} wynik={stan.wynik} />}
@@ -232,7 +232,7 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
   );
 }
 
-function Wyniki({ wynik }: { wynik: WynikSwatki }) {
+function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean }) {
   const t = useTranslations("swatka");
   const tk = useTranslations("kryzys");
   const z = wynik.zrozumiano;
@@ -300,20 +300,20 @@ function Wyniki({ wynik }: { wynik: WynikSwatki }) {
           {wynik.nici.map((n, i) => (
             <section key={n.potrzeba} aria-labelledby={`nic-${i}`} className="space-y-4 border-l-8 border-l-primary pl-4 sm:pl-6">
               <h2 id={`nic-${i}`} className="text-2xl font-bold"><span className="text-primary">{t("sprawaNr", { n: i + 1 })}:</span> {n.potrzeba}</h2>
-              {n.karty.length === 0 ? <p className="text-muted">{t("niciBrak")}</p> : n.karty.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />)}
+              {n.karty.length === 0 ? <p className="text-muted">{t("niciBrak")}</p> : n.karty.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />)}
             </section>
           ))}
           {pozostale.length > 0 && (
             <section aria-labelledby="jeszcze-h" className="space-y-4">
               <h2 id="jeszcze-h" className="text-2xl font-bold">{t("jeszczePasuje")}</h2>
-              {pozostale.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />)}
+              {pozostale.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />)}
             </section>
           )}
         </>
       ) : (
         <div className="space-y-5">
           {karty.map((k) => (
-            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />
+            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />
           ))}
         </div>
       )}
@@ -322,7 +322,7 @@ function Wyniki({ wynik }: { wynik: WynikSwatki }) {
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">{t("najblizsze")}</h2>
           {wynik.najblizsze.slice(0, 2).map((k) => (
-            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />
+            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />
           ))}
         </div>
       )}
