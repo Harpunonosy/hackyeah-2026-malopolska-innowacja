@@ -24,7 +24,13 @@
     "kontrast": "Wysoki kontrast",
     "czytaj": "Czytaj na głos",
     "zatrzymaj": "Zatrzymaj czytanie",
-    "czytanieNiedostepne": "Czytanie na głos nie działa w tej przeglądarce."
+    "czytanieNiedostepne": "Czytanie na głos nie działa w tej przeglądarce.",
+    "jezyk": "Język",
+    "jezykPl": "Polski",
+    "jezykUk": "Українська",
+    "jezykPlOpis": "Zmień język na polski",
+    "jezykUkOpis": "Змінити мову на українську",
+    "latwy": "Tekst łatwy do czytania"
   },
   "stopka": {
     "dane": "Dane demonstracyjne. Prototyp na HackYeah 2026.",
@@ -148,7 +154,7 @@
     "mikrofonInfo": "Dyktowanie obsługuje przeglądarka (w Chrome może korzystać z usługi Google).",
     "wyniki": "Wyniki",
     "znalezionoN": "{ile, plural, one {Znaleziono # rozwiązanie} few {Znaleziono # rozwiązania} many {Znaleziono # rozwiązań} other {Znaleziono # rozwiązania}}",
-    "zrozumialemTak": "Zrozumiałem to tak",
+    "zrozumialemTak": "Tak rozumiemy Twój opis",
     "obszar": "Obszar",
     "grupa": "Dla kogo",
     "potrzeby": "Twoje potrzeby",
@@ -206,7 +212,13 @@
     "daneDemoKrotko": "dane demo",
     "coPomoglo": "Co pomogło innym w tej sytuacji:",
     "pomoglo": "pomogło {n} osobom",
-    "kondycjaLink": "Zobacz dane o Małopolsce w Kondycji Małopolski"
+    "kondycjaLink": "Zobacz dane o Małopolsce w Kondycji Małopolski",
+    "przyklady_lista": [
+      "Od kiedy zmarł mąż, rzadko wychodzę z domu i gubię się w lekach.",
+      "Opiekuję się chorą mamą, która wróciła ze szpitala. Nie daję rady.",
+      "Mój syn zamknął się w sobie i całe dni siedzi przy komputerze.",
+      "głusi alarm pożarowy"
+    ]
   },
   "kryzys": {
     "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",
@@ -575,5 +587,49 @@
     "dlaKogo": "Dla kogo",
     "wyniki": "Wyniki testu",
     "cochcesz": "Co chcesz zrobić?"
+  },
+  "rozmowaGlosowa": {
+    "nadtytul": "Rozmowa głosowa",
+    "tytul": "Powiedz, a Splot zapyta",
+    "opis": "Dla osób, którym łatwiej mówić niż pisać. Splot zadaje pytania na głos i zapisuje je też na ekranie. Odpowiadasz głosem albo dużymi przyciskami. Nie ma limitu czasu.",
+    "start": "Zacznij rozmowę",
+    "stop": "Zatrzymaj",
+    "tekstZamiast": "Wolę napisać",
+    "wyslijTekst": "Dalej",
+    "pytaniePoczatek": "Dzień dobry! Powiedz własnymi słowami, co się dzieje. Mów swobodnie, nie spiesz się.",
+    "potwierdz": "Zrozumiałem tak: {tekst}. Czy dobrze?",
+    "tak": "Tak",
+    "nie": "Nie, powtórzę",
+    "powtorz": "Powtórz",
+    "szukam": "Szukam rozwiązań. To potrwa kilka sekund.",
+    "brak": "Nie mamy jeszcze gotowego rozwiązania dla tej sytuacji. Mogę przekazać Twoją sprawę do ROPS, żeby zobaczyli, czego brakuje.",
+    "znalazlem": "Znalazłem {ile, plural, one {# rozwiązanie} few {# rozwiązania} other {# rozwiązań}}.",
+    "propozycja": "Propozycja numer {n}: {nazwa}. {dlaczego}",
+    "kryzys": "Jeśli ktoś jest w niebezpieczeństwie albo myślisz o odebraniu sobie życia, zadzwoń teraz pod numer 112 lub 116 123.",
+    "czyWyslac": "Czy wysłać zgłoszenie do ROPS? Pracownicy odpowiedzą w systemie. Wysyłając, zgadzasz się na przekazanie opisu do ROPS.",
+    "wyslij": "Tak, wyślij",
+    "niewysylaj": "Nie, dziękuję",
+    "wyslano": "Zgłoszenie wysłane. Twój numer to: {numer}. Zapisz go albo zrób zdjęcie ekranu.",
+    "koniec": "Dziękuję za rozmowę. Możesz zamknąć stronę albo zacząć od nowa.",
+    "odNowa": "Zacznij od nowa",
+    "slucham": "Słucham…",
+    "niedostepne": "Rozpoznawanie mowy działa w Chrome i Edge. Możesz napisać odpowiedź poniżej.",
+    "blad": "Coś poszło nie tak. Spróbuj jeszcze raz albo napisz odpowiedź.",
+    "napisCoSie": "Napisz, co się dzieje",
+    "wypowiedzi": "Przebieg rozmowy",
+    "splot": "Splot",
+    "ty": "Ty",
+    "otworzStatus": "Sprawdź status zgłoszenia",
+    "wynikLink": "Zobacz szczegóły rozwiązania"
+  },
+  "jakWolisz": {
+    "tytul": "Jak wolisz korzystać ze strony?",
+    "info": "Zmienisz to w każdej chwili w pasku na górze.",
+    "wieksze": "Większe litery",
+    "czytaj": "Czytaj mi na głos",
+    "mow": "Mów zamiast pisać",
+    "prosty": "Prosty język",
+    "kontrast": "Wysoki kontrast",
+    "gotowe": "Gotowe, nie pokazuj więcej"
   }
 }

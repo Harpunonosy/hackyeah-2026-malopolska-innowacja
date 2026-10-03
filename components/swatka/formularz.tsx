@@ -20,12 +20,7 @@ const POWIATY = [
   "myślenicki", "nowosądecki", "nowotarski", "olkuski", "oświęcimski", "proszowicki", "suski", "tarnowski",
   "tatrzański", "wadowicki", "wielicki", "m. Kraków", "m. Nowy Sącz", "m. Tarnów",
 ];
-const PRZYKLADY = [
-  "Od kiedy zmarł mąż, rzadko wychodzę z domu i gubię się w lekach.",
-  "Opiekuję się chorą mamą, która wróciła ze szpitala. Nie daję rady.",
-  "Mój syn zamknął się w sobie i całe dni siedzi przy komputerze.",
-  "głusi alarm pożarowy",
-];
+
 
 function Krok({ n, tytul }: { n: number; tytul: string }) {
   return (
@@ -144,7 +139,7 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
           <div className="space-y-2 pt-2">
             <p className="font-semibold">{t("przyklady")}</p>
             <ul className="flex flex-wrap gap-2">
-              {PRZYKLADY.map((p) => (
+              {(t.raw("przyklady_lista") as string[]).map((p) => (
                 <li key={p}>
                   <button
                     type="button"

@@ -2,6 +2,8 @@ import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { ArrowRight, BookOpen, Building2, ClipboardList, FlaskConical, Lightbulb, MessagesSquare } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { cookies } from "next/headers";
+import { JakWolisz } from "@/components/a11y/jak-wolisz";
 import { PoleOpisu } from "@/components/home/pole-opisu";
 import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
@@ -17,8 +19,10 @@ const KAFELKI: { klucz: string; ikona: LucideIcon; href?: string }[] = [
 
 export default async function Start() {
   const t = await getTranslations("start");
+  const pokazWybor = !(await cookies()).get("splot_a11y_wybor");
   return (
     <>
+      {pokazWybor && <JakWolisz />}
       <section className="kontener grid items-center gap-12 py-12 lg:grid-cols-[1.15fr_0.85fr] lg:py-16">
         <div className="space-y-7">
           <h1 className="text-balance text-[clamp(2.5rem,1.4rem+3.6vw,4.25rem)] font-extrabold leading-[1.05]">{t("hero.tytul")}</h1>

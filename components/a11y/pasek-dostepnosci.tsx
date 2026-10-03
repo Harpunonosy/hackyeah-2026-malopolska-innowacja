@@ -1,19 +1,13 @@
 "use client";
 
 import * as React from "react";
-import { useTranslations } from "next-intl";
+import { useRouter } from "next/navigation";
+import { useLocale, useTranslations } from "next-intl";
 import { Switch, ToggleGroup } from "radix-ui";
 import { Accessibility, Volume2, VolumeX } from "lucide-react";
-import { COOKIE_DOSTEPNOSC, type RozmiarTekstu, type UstawieniaDostepnosci } from "@/lib/dostepnosc";
+import { COOKIE_JEZYK, type RozmiarTekstu, type UstawieniaDostepnosci } from "@/lib/dostepnosc";
+import { ZDARZENIE_A11Y, zastosujUstawienia as zastosuj } from "@/lib/dostepnosc-klient";
 import { cn } from "@/lib/utils";
-
-function zastosuj(u: UstawieniaDostepnosci) {
-  const el = document.documentElement;
-  el.dataset.prosty = u.prosty ? "tak" : "nie";
-  el.dataset.rozmiar = u.rozmiar;
-  el.dataset.kontrast = u.kontrast;
-  document.cookie = `${COOKIE_DOSTEPNOSC}=${encodeURIComponent(JSON.stringify(u))}; path=/; max-age=31536000; samesite=lax`;
-}
 
 function Przelacznik({ id, etykieta, wlaczony, zmien }: { id: string; etykieta: string; wlaczony: boolean; zmien: (v: boolean) => void }) {
   return (
@@ -35,6 +29,8 @@ function Przelacznik({ id, etykieta, wlaczony, zmien }: { id: string; etykieta: 
 
 export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepnosci }) {
   const t = useTranslations("dostepnosc");
+  const router = useRouter();
+  const jezyk = useLocale();
   const [u, setU] = React.useState(poczatkowe);
   const [czyta, setCzyta] = React.useState(false);
   const [blad, setBlad] = React.useState(false);
@@ -72,6 +68,11 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
   }
 
   React.useEffect(() => () => window.speechSynthesis?.cancel(), []);
+  React.useEffect(() => {
+    const nasluch = (e: Event) => setU((e as CustomEvent<UstawieniaDostepnosci>).detail);
+    window.addEventListener(ZDARZENIE_A11Y, nasluch);
+    return () => window.removeEventListener(ZDARZENIE_A11Y, nasluch);
+  }, []);
 
   const rozmiary: { v: RozmiarTekstu; etykieta: string; opis: string }[] = [
     { v: "normalny", etykieta: "A", opis: t("rozmiarNormalny") },
@@ -130,6 +131,28 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
           wlaczony={u.kontrast === "wysoki"}
           zmien={(v) => ustaw({ kontrast: v ? "wysoki" : "normalny" })}
         />
+
+        <div role="group" aria-label={t("jezyk")} className="flex min-h-12 items-center gap-2.5">
+          <span className="text-sm font-semibold" aria-hidden="true">{t("jezyk")}</span>
+          <div className="flex overflow-hidden rounded-lg border-2 border-hero-fg/70">
+            {([["pl", "PL", t("jezykPlOpis"), "pl"], ["uk", "UA", t("jezykUkOpis"), "uk"]] as const).map(([kod, skrot, opis, lang]) => (
+              <button
+                key={kod}
+                type="button"
+                lang={lang}
+                aria-label={opis}
+                aria-pressed={jezyk === kod}
+                onClick={() => {
+                  document.cookie = `${COOKIE_JEZYK}=${kod}; path=/; max-age=31536000; samesite=lax`;
+                  router.refresh();
+                }}
+                className="h-9 min-w-11 px-2 text-sm font-bold aria-pressed:bg-accent aria-pressed:text-accent-fg"
+              >
+                {skrot}
+              </button>
+            ))}
+          </div>
+        </div>
 
         <button
           type="button"
