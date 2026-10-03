@@ -37,15 +37,15 @@ function Krok({ n, tytul }: { n: number; tytul: string }) {
 
 type Stan = { typ: "start" } | { typ: "laduje" } | { typ: "wynik"; wynik: WynikSwatki } | { typ: "blad"; komunikat: string };
 
-export function FormularzSwatki({ poczatkowy = "", auto = false, children }: { poczatkowy?: string; auto?: boolean; children?: React.ReactNode }) {
+export function FormularzSwatki({ auto = false, children }: { auto?: boolean; children?: React.ReactNode }) {
   const t = useTranslations("swatka");
   const jezyk = useLocale();
-  const [tekst, setTekst] = React.useState(poczatkowy);
+  const [tekst, setTekst] = React.useState("");
   const [edycja, setEdycja] = React.useState(false);
   const autoUruchomiono = React.useRef(false);
   const [rola, setRola] = React.useState<"mieszkaniec" | "instytucja">("mieszkaniec");
   const [powiat, setPowiat] = React.useState("");
-  const [stan, setStan] = React.useState<Stan>(auto && poczatkowy.trim().length >= 3 ? { typ: "laduje" } : { typ: "start" });
+  const [stan, setStan] = React.useState<Stan>(auto ? { typ: "laduje" } : { typ: "start" });
   const naglowekWynikow = React.useRef<HTMLDivElement>(null);
 
   React.useEffect(() => {
@@ -53,23 +53,33 @@ export function FormularzSwatki({ poczatkowy = "", auto = false, children }: { p
   }, [stan]);
 
   React.useEffect(() => {
-    if (auto && poczatkowy.trim().length >= 3 && !autoUruchomiono.current) {
-      autoUruchomiono.current = true;
-      void wyslij();
+    if (!auto || autoUruchomiono.current) return;
+    autoUruchomiono.current = true;
+    let zapisany = "";
+    try {
+      zapisany = sessionStorage.getItem("splot_opis") ?? "";
+      sessionStorage.removeItem("splot_opis");
+    } catch {}
+    if (zapisany.trim().length >= 3) {
+      setTekst(zapisany);
+      void wyslij(undefined, zapisany);
+    } else {
+      setStan({ typ: "start" });
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
-  async function wyslij(e?: React.FormEvent) {
+  async function wyslij(e?: React.FormEvent, nadpisz?: string) {
     e?.preventDefault();
-    if (tekst.trim().length < 3) return;
+    const opis = nadpisz ?? tekst;
+    if (opis.trim().length < 3) return setStan({ typ: "blad", komunikat: t("zaKrotki") });
     setEdycja(false);
     setStan({ typ: "laduje" });
     try {
       const odp = await fetch("/api/swatka/dopasuj", {
         method: "POST",
         headers: { "content-type": "application/json" },
-        body: JSON.stringify({ tekst, rola, powiat: powiat || undefined, jezyk }),
+        body: JSON.stringify({ tekst: opis, rola, powiat: powiat || undefined, jezyk }),
       });
       if (odp.status === 429) return setStan({ typ: "blad", komunikat: t("zaDuzo") });
       const dane = await odp.json();
@@ -86,7 +96,9 @@ export function FormularzSwatki({ poczatkowy = "", auto = false, children }: { p
   const tytul =
     stan.typ === "wynik" && !edycja
       ? stan.wynik.brakDopasowania
-        ? t("brakTytul")
+        ? stan.wynik.najblizsze.some((k) => (k.trafnosc ?? 0) >= 45)
+          ? t("brakTytulCzesciowy")
+          : t("brakTytul")
         : t("przykladDla", { ile: Math.min(3, stan.wynik.dopasowania.length) })
       : laduje
         ? t("szukamTytul")
@@ -186,7 +198,7 @@ export function FormularzSwatki({ poczatkowy = "", auto = false, children }: { p
 
         <div className="space-y-3">
           <Krok n={3} tytul={t("krok3")} />
-          <Button type="submit" rozmiar="lg" disabled={laduje || tekst.trim().length < 3} className="w-full sm:w-auto">
+          <Button type="submit" rozmiar="lg" disabled={laduje} className="w-full sm:w-auto">
             {laduje ? <Loader2 aria-hidden className="size-5 animate-spin" /> : <Search aria-hidden className="size-5" />}
             {t("szukaj")}
           </Button>
@@ -258,7 +270,9 @@ function Wyniki({ wynik }: { wynik: WynikSwatki }) {
         </div>
       )}
 
-      {wynik.brakDopasowania && wynik.tryb === "ai" && <p className="text-lg">{t("brakOpis")}</p>}
+      {wynik.brakDopasowania && wynik.tryb === "ai" && (
+        <p className="text-lg">{wynik.najblizsze.some((k) => (k.trafnosc ?? 0) >= 45) ? t("czesciowoOpis") : t("brakOpis")}</p>
+      )}
 
       {wynik.pytanie && (
         <p className="karta-mala border-2 border-accent p-4 text-lg">

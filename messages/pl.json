@@ -93,7 +93,8 @@
       "p3": {
         "chip": "Dziecko w kryzysie",
         "tekst": "Mój syn zamknął się w sobie i całe dni siedzi przy komputerze."
-      }
+      },
+      "zaKrotki": "Napisz kilka słów o swojej sytuacji (co najmniej 3 znaki), a potem kliknij „Znajdź pomoc”."
     },
     "liczby": {
       "innowacje": "innowacji w Bibliotece ROPS",
@@ -187,7 +188,10 @@
     "przykladDla": "Znaleźliśmy {ile, plural, one {# rozwiązanie} few {# rozwiązania} many {# rozwiązań} other {# rozwiązania}} dla Ciebie",
     "szukamTytul": "Szukamy rozwiązań dla Ciebie",
     "wdroz": "Wdróż u siebie",
-    "podobne": "Nie jesteś sam ani sama: w ciągu ostatnich 6 miesięcy {liczba} osób {zakres} zgłosiło podobną sprawę."
+    "podobne": "Nie jesteś sam ani sama: w ciągu ostatnich 6 miesięcy {liczba} osób {zakres} zgłosiło podobną sprawę.",
+    "zaKrotki": "Napisz kilka słów o swojej sytuacji (co najmniej 3 znaki), a potem kliknij „Znajdź pomoc”.",
+    "brakTytulCzesciowy": "Te rozwiązania mogą pomóc w części Twojej sytuacji",
+    "czesciowoOpis": "Nie znaleźliśmy rozwiązania, które pasuje w całości, ale poniższe odpowiadają na część Twojej sytuacji. Twoje zgłoszenie pomoże ROPS zobaczyć, czego jeszcze brakuje."
   },
   "kryzys": {
     "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",

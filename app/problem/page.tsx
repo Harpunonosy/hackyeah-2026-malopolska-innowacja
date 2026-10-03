@@ -8,11 +8,10 @@ export const metadata: Metadata = { title: "Mam problem" };
 
 export default async function Problem(props: PageProps<"/problem">) {
   const sp = await props.searchParams;
-  const q = typeof sp.q === "string" ? sp.q.slice(0, 1500) : "";
   const t = await getTranslations("swatka");
   return (
     <Strona>
-      <FormularzSwatki poczatkowy={q} auto={sp.auto === "1" && q.length >= 3}>
+      <FormularzSwatki auto={sp.auto === "1"}>
         <section className="karta space-y-3 border-2 border-primary p-5">
           <h2 className="flex items-center gap-2 text-lg font-bold">
             <Phone aria-hidden className="size-5 text-primary" />

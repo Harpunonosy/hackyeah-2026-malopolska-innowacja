@@ -14,11 +14,18 @@ export function PoleOpisu() {
   const router = useRouter();
   const jezyk = useLocale();
   const [tekst, setTekst] = React.useState("");
+  const [blad, setBlad] = React.useState(false);
 
   function idz(e: React.FormEvent) {
     e.preventDefault();
-    if (tekst.trim().length < 3) return;
-    router.push(`/problem?q=${encodeURIComponent(tekst)}&auto=1`);
+    if (tekst.trim().length < 3) return setBlad(true);
+    // Opis nie trafia do adresu URL (logi hostingu, historia przeglądarki): przekazujemy go przez sessionStorage.
+    try {
+      sessionStorage.setItem("splot_opis", tekst);
+      router.push("/problem?auto=1");
+    } catch {
+      router.push("/problem");
+    }
   }
 
   return (
@@ -28,14 +35,17 @@ export function PoleOpisu() {
         <textarea
           id="start-opis"
           value={tekst}
-          onChange={(e) => setTekst(e.target.value.slice(0, MAX))}
+          onChange={(e) => { setBlad(false); setTekst(e.target.value.slice(0, MAX)); }}
           rows={4}
           placeholder={t("placeholder")}
+          aria-describedby={blad ? "start-blad" : undefined}
+          aria-invalid={blad || undefined}
           className="block w-full rounded-2xl border-2 border-line-soft bg-bg p-4 text-xl placeholder:text-muted/80 hover:border-fg"
         />
+        {blad && <p id="start-blad" role="alert" className="font-semibold text-primary">{t("zaKrotki")}</p>}
         <div className="flex flex-wrap items-start gap-3">
           <Mikrofon jezyk={jezyk} onZdanie={(z) => setTekst((p) => (p ? `${p} ${z}` : z).slice(0, MAX))} etykieta={t("powiedz")} />
-          <Button type="submit" rozmiar="lg" disabled={tekst.trim().length < 3} className="min-w-52 flex-1">
+          <Button type="submit" rozmiar="lg" className="min-w-52 flex-1">
             {t("szukaj")}
             <ArrowRight aria-hidden className="size-5" />
           </Button>

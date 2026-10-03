@@ -5,8 +5,15 @@ import { cookies } from "next/headers";
 const NAZWA = "splot_admin";
 const WAZNOSC_S = 12 * 3600;
 
+function sekret(): string {
+  const s = process.env.SESSION_SECRET;
+  if (s && s.length >= 16) return s;
+  if (process.env.NODE_ENV === "production") throw new Error("Brak SESSION_SECRET (min. 16 znaków) w środowisku produkcyjnym.");
+  return "tylko-lokalnie-dev-sekret";
+}
+
 function podpis(wartosc: string): string {
-  return createHmac("sha256", process.env.SESSION_SECRET ?? "brak-sekretu").update(wartosc).digest("hex");
+  return createHmac("sha256", sekret()).update(wartosc).digest("hex");
 }
 
 export function haslaZgodne(podane: string): boolean {
