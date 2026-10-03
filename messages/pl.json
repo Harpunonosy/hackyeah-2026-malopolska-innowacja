@@ -591,7 +591,22 @@
     "trybRecznyInfo": "Wypełnij pola fiszki ręcznie. Wstępna ocena AI nie będzie dostępna, ale możesz wysłać pomysł do ROPS.",
     "postepKroki": "Maskuję dane osobowe|Czytam pomysł|Porównuję ze 115 innowacjami ROPS|Wypełniam fiszkę i kanwę|Sprawdzam, czego brakuje",
     "wniosekPostepKroki": "Czytam fiszkę i kanwę|Czytam formularz naboru|Wypełniam pola wniosku|Sprawdzam limity znaków",
-    "scenorysPostepKroki": "Czytam pomysł|Wymyślam bohatera i sytuację|Rysuję kadry scenorysu"
+    "scenorysPostepKroki": "Czytam pomysł|Wymyślam bohatera i sytuację|Rysuję kadry scenorysu",
+    "szkicTytul": "Szkic rozwiązania",
+    "szkicOpis": "Asystent narysuje koncepcyjny szkic: przedmiot, ekran aplikacji, miejsce albo schemat usługi. Opisze części i zaproponuje dwa nietuzinkowe warianty.",
+    "szkicPrzycisk": "Narysuj szkic",
+    "szkicPracuje": "Rysuję…",
+    "szkicPostepKroki": "Czytam pomysł|Wybieram, co narysować|Rysuję kształty|Dodaję podpisy|Opisuję części i warianty",
+    "szkicCzesci": "Części i ich funkcje",
+    "szkicMaterialy": "Materiały",
+    "szkicWarianty": "Nietuzinkowe warianty",
+    "szkicBrakRysunku": "Tym razem rysunek się nie udał. Poniżej opis szkicu. Możesz spróbować jeszcze raz.",
+    "szkicPobierz": "Pobierz szkic (SVG)",
+    "szkicAi": "Szkic koncepcyjny przygotowany przez AI. To inspiracja, a nie projekt techniczny.",
+    "szkicRodzaj_przedmiot": "Przedmiot",
+    "szkicRodzaj_usluga": "Schemat usługi",
+    "szkicRodzaj_aplikacja": "Ekran aplikacji",
+    "szkicRodzaj_miejsce": "Miejsce"
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",

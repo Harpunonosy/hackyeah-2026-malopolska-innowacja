@@ -3,10 +3,12 @@
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import QRCode from "qrcode";
-import { Building2, Home, GraduationCap, HeartHandshake, Heart, Loader2, MessagesSquare, Phone, Printer, Smartphone, Sparkles, Stethoscope, Users } from "lucide-react";
+import { Building2, Home, GraduationCap, HeartHandshake, Heart, Loader2, MessagesSquare, PenTool, Phone, Printer, Smartphone, Sparkles, Stethoscope, Users } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Postep } from "@/components/ui/postep";
 
+type Szkic = { rodzaj: "przedmiot" | "usluga" | "aplikacja" | "miejsce"; nazwa: string; opis_wygladu: string; czesci: { nazwa: string; funkcja: string }[]; materialy: string[]; warianty: string[]; svg: string | null };
+const svgDoUrl = (svg: string) => `data:image/svg+xml;charset=utf-8,${encodeURIComponent(svg)}`;
 type Kadr = { tytul: string; kto: string; gdzie: string; co_sie_dzieje: string; emocja: string; ikona: string };
 const IKONY: Record<string, React.ElementType> = { dom: Home, spotkanie: Users, telefon: Phone, serce: Heart, miasto: Building2, szkola: GraduationCap, lekarz: Stethoscope, rodzina: Users, aplikacja: Smartphone, wsparcie: HeartHandshake };
 const esc = (s: string) => s.replace(/[&<>"]/g, (c) => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;" })[c]!);
@@ -16,7 +18,9 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
   const [pytanie, setPytanie] = React.useState("");
   const [odpowiedz, setOdpowiedz] = React.useState<{ pytanie: string; odpowiedz: string }[]>([]);
   const [kolejne, setKolejne] = React.useState<string[]>([]);
-  const [stan, setStan] = React.useState<"" | "pytanie" | "scenorys" | "blad">("");
+  const [stan, setStan] = React.useState<"" | "pytanie" | "scenorys" | "szkic" | "blad">("");
+  const [szkic, setSzkic] = React.useState<Szkic | null>(null);
+  const naglowekSzkicu = React.useRef<HTMLHeadingElement>(null);
   const [kadry, setKadry] = React.useState<Kadr[] | null>(null);
   const gotowe = t.raw("asystentPytania") as string[];
 
@@ -38,6 +42,14 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
     setKadry((await r.json()).kadry);
     setStan("");
   }
+  async function narysuj() {
+    setStan("szkic");
+    const r = await fetch("/api/pracownia/asystent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tryb: "szkic", fiszka: fiszkaTekst }) });
+    if (!r.ok) return setStan("blad");
+    setSzkic(await r.json());
+    setStan("");
+    requestAnimationFrame(() => naglowekSzkicu.current?.focus());
+  }
   async function drukujPlakat() {
     const link = typeof window !== "undefined" ? (numer ? `${window.location.origin}/moje/${numer}` : window.location.origin) : "";
     const qr = await QRCode.toDataURL(link, { margin: 1, width: 220 });
@@ -50,6 +62,7 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
       .qr{display:flex;align-items:center;gap:12pt;margin-top:14pt;font-size:11pt}.stopka{margin-top:10pt;font-size:9pt;color:#555}</style></head><body>
       <h1>${esc(tytul)}</h1><div class="opis">${esc(opis)}</div>
       <div class="wsk">${wskazniki.map((w) => `<div>${esc(w.nazwa)}<b>${w.v}/${w.max}</b></div>`).join("")}</div>
+      ${szkic?.svg ? `<div style="display:flex;gap:12pt;align-items:flex-start;margin:10pt 0"><img src="${svgDoUrl(szkic.svg)}" alt="${esc(szkic.opis_wygladu)}" style="width:60%;border:2px solid #14213d;border-radius:8pt"><div style="font-size:11pt"><b>${esc(szkic.nazwa)}</b><ul>${szkic.czesci.map((c) => `<li><b>${esc(c.nazwa)}</b>: ${esc(c.funkcja)}</li>`).join("")}</ul></div></div>` : ""}
       ${kadry ? `<div class="kadry">${kadry.map((k, i) => `<div class="kadr"><h3>${i + 1}. ${esc(k.tytul)}</h3><div><b>${esc(k.kto)}</b>, ${esc(k.gdzie)}</div><div>${esc(k.co_sie_dzieje)}</div><div><i>Czuje: ${esc(k.emocja)}</i></div></div>`).join("")}</div>` : ""}
       <div class="qr"><img src="${qr}" width="110" height="110" alt="Kod QR do pomysłu"><div>Zeskanuj, aby sprawdzić status pomysłu${numer ? ` (numer ${esc(numer)})` : ""} w Splocie.</div></div>
       <div class="stopka">Plakat przygotowany w Splocie, Małopolski Hub Innowacji Społecznych. Treści scenorysu i oceny przygotowano z pomocą AI.</div>
@@ -112,6 +125,34 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
           </ol>
         )}
         {kadry && <p className="text-sm text-muted">{t("scenorysAi")}</p>}
+      </div>
+
+      <div className="space-y-3 border-t-2 border-line-soft pt-5">
+        <h3 className="text-xl font-bold">{t("szkicTytul")}</h3>
+        <p className="text-muted">{t("szkicOpis")}</p>
+        <Button type="button" wariant="zloty" disabled={stan === "szkic"} onClick={narysuj}>{stan === "szkic" ? <Loader2 aria-hidden className="size-5 animate-spin" /> : <PenTool aria-hidden className="size-5" />}{stan === "szkic" ? t("szkicPracuje") : t("szkicPrzycisk")}</Button>
+        {stan === "szkic" && <Postep kroki={t("szkicPostepKroki")} sekund={25} />}
+        {szkic && (
+          <div className="grid gap-5 lg:grid-cols-[minmax(0,3fr)_minmax(0,2fr)]">
+            <figure className="space-y-2">
+              {szkic.svg ? (
+                // eslint-disable-next-line @next/next/no-img-element -- szkic SVG jako data URL (bez wykonywania skryptów)
+                <img src={svgDoUrl(szkic.svg)} alt={szkic.opis_wygladu} className="w-full rounded-2xl border-2 border-fg bg-white" />
+              ) : (
+                <p className="karta-mala p-4">{t("szkicBrakRysunku")}</p>
+              )}
+              <figcaption className="text-sm text-muted">{szkic.svg ? szkic.opis_wygladu : ""} {t("szkicAi")}</figcaption>
+              {szkic.svg && <a href={svgDoUrl(szkic.svg)} download="szkic-pomyslu.svg" className="inline-flex min-h-12 items-center font-semibold underline">{t("szkicPobierz")}</a>}
+            </figure>
+            <div className="space-y-3">
+              <h4 ref={naglowekSzkicu} tabIndex={-1} className="text-xl font-bold outline-none"><span className="text-sm font-bold uppercase text-muted">{t(`szkicRodzaj_${szkic.rodzaj}`)}</span><span className="block">{szkic.nazwa}</span></h4>
+              <p className="font-bold">{t("szkicCzesci")}</p>
+              <dl className="space-y-2">{szkic.czesci.map((c) => <div key={c.nazwa}><dt className="font-semibold">{c.nazwa}</dt><dd className="text-muted">{c.funkcja}</dd></div>)}</dl>
+              {szkic.materialy.length > 0 && <p><strong>{t("szkicMaterialy")}:</strong> {szkic.materialy.join(", ")}</p>}
+              {szkic.warianty.length > 0 && <><p className="font-bold">{t("szkicWarianty")}</p><ul className="list-disc space-y-1 pl-6">{szkic.warianty.map((w) => <li key={w}>{w}</li>)}</ul></>}
+            </div>
+          </div>
+        )}
       </div>
     </section>
   );
