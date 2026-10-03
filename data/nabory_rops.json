@@ -1,0 +1,75 @@
+{
+  "uwaga": "Rzeczywiste formularze i kryteria ROPS Kraków. Używamy ich w Pracowni (generator wniosków, wstępna ocena) i w Krawcu (sprawdzenie kwalifikowalności). Nabory w demo oznaczamy jako przykładowe.",
+  "iws2_inkubacja": {
+    "nazwa": "Nabór pomysłów na innowacje społeczne – Inkubator Włączenia Społecznego 2.0 (IWS 2.0)",
+    "program": "FERS 2021-2027, Działanie 5.1 Innowacje społeczne; partner: Krakowskie Centrum Innowacyjnych Technologii INNOAGH",
+    "url": "https://rops.krakow.pl/nabory-szkolenia-granty-dotacje-wizyty-studyjne-studia-specjalizacje-superwizje/granty-na-innowacje-spoleczne,nabor-aplikacji-wnioskow-na-innowacje-spoleczne-w-ramach-projektu-pn-inkubator-wlaczenia-spolecznego-20",
+    "obecny_kanal_skladania": "formularz w serwisie Webankieta + załączniki PDF",
+    "etapy": ["ocena formalna", "ocena merytoryczna formularza (część A)", "prezentacja/pitching wnioskodawcy (część B)", "inkubacja: okres przygotowawczy max 3 mies.", "testowanie max 9 mies. (faza I i II)", "wybór do upowszechniania (Rada Innowacji Społecznych)"],
+    "formularz_pola": [
+      {"nr": 1, "pole": "Tytuł innowacji", "podpowiedz": "Krótki i kojarzący się z przedmiotem innowacji."},
+      {"nr": 2, "pole": "Dane pomysłodawcy", "podpowiedz": "Osoba fizyczna / podmiot (KRS, REGON, NIP, reprezentant, osoba do kontaktu) / grupa nieformalna (do 5 partnerów + reprezentant)."},
+      {"nr": 3, "pole": "Opis innowacji", "podpowiedz": "Na czym polega? Jaki ma charakter (produkt, aplikacja, model pracy, rozwiązanie technologiczne)? Jak realizuje cel: włączenie społeczne / przeciwdziałanie wykluczeniu? Jak wpisuje się w ideę deinstytucjonalizacji?"},
+      {"nr": 4, "pole": "Innowacyjność rozwiązania", "podpowiedz": "Czy podobne rozwiązania są stosowane w Polsce lub na świecie? Jaką nową wartość wnosi? Czym się wyróżnia?"},
+      {"nr": 5, "pole": "Diagnoza problemu", "podpowiedz": "Na jaki problem odpowiada? Dane statystyczne o skali problemu, podstawy diagnozy (raporty, badania). Czy problem jest zgodny z Mapą Wyzwań Społecznych, a jeśli tak, to z jakim tematem?"},
+      {"nr": 6, "pole": "Opis odbiorców innowacji", "podpowiedz": "Do kogo jest skierowana? Co wyróżnia tę grupę? Jakie ma potrzeby? Dlaczego są to osoby wykluczone lub zagrożone wykluczeniem?"},
+      {"nr": 7, "pole": "Zmiana, jaką wprowadza innowacja", "podpowiedz": "Jak wpłynie na problem? Co zmieni w życiu odbiorców? Jak wpłynie na ich włączenie społeczne?"},
+      {"nr": 8, "pole": "Wizja przyszłości innowacji", "podpowiedz": "Potencjał zastosowania na dużą skalę, rozszerzenie na inne grupy, konteksty i miejsca. Łatwość stosowania i wdrażalność."},
+      {"nr": 9, "pole": "Plan działania i koszty", "podpowiedz": "Okres przygotowawczy (max 3 mies.): działanie, termin, koszt. Okres testowania (max 9 mies., faza I i II): jak przebiega test, kogo zaangażować, ile osób testuje, jak uzyskać wiarygodne wyniki."},
+      {"nr": 10, "pole": "Wnioskowana kwota grantu", "podpowiedz": "Całościowa kwota, zgodna z kosztami z planu działania."},
+      {"nr": 11, "pole": "Zespół projektowy i jego doświadczenie", "podpowiedz": "Kto odpowiada za realizację? Doświadczenie w pracy z odbiorcami, planowaniu i wdrażaniu innowacji społecznych."},
+      {"nr": 12, "pole": "Oświadczenia", "podpowiedz": "M.in.: innowacja nie powiela standardowych form wsparcia ani innowacji już wdrożonych lub inkubowanych w Polsce; max 2 aplikacje w naborze; brak opłat od testujących; zasady równościowe, dostępność, DNSH; RODO."}
+    ],
+    "karta_oceny_merytorycznej_czesc_A": {
+      "skala": "0-10 pkt za kryterium", "max": 50, "min_do_pozytywnej": 21,
+      "progi": {"innowacyjnosc": 5, "pozostale": 4},
+      "kryteria": [
+        {"id": "innowacyjnosc", "nazwa": "Innowacyjność rozwiązania", "opis": "Potencjał rozwiązania problemów w nowy lub znacząco zmieniony sposób; oceniana na poziomie krajowym dla danej grupy docelowej."},
+        {"id": "adekwatnosc", "nazwa": "Adekwatność do potrzeb odbiorców i użytkowników", "opis": "Adekwatność do diagnozy potrzeb grupy docelowej w skali kraju, responsywność na potrzeby, potencjał zmiany społecznej. Czy pomysł odpowiada na wyzwanie zgodne z Mapą Wyzwań Społecznych?"},
+        {"id": "efektywnosc_kosztowa", "nazwa": "Efektywność kosztowa", "opis": "Optymalizacja, stosunek nakładów do efektów, bilans skutków pozytywnych i negatywnych, racjonalność kosztów czasowych, finansowych i zasobów."},
+        {"id": "uniwersalnosc", "nazwa": "Uniwersalność", "opis": "Możliwość zastosowania w różnych miejscach, łatwość stosowania, wdrażalność, możliwość upowszechnienia i wyskalowania."},
+        {"id": "wizja_rozwoju", "nazwa": "Wizja rozwoju pomysłu w przyszłości", "opis": "Pomysły na wykorzystanie innowacji po inkubacji i testach."}
+      ]
+    },
+    "karta_oceny_prezentacji_czesc_B": {
+      "skala": "0-5 pkt za kryterium", "max": 15, "min_w_kazdym": 3,
+      "kryteria": [
+        {"id": "koncepcja_testowania", "nazwa": "Koncepcja testowania innowacji", "opis": "Założenia weryfikacji rozwiązania w praktyce i prowadzenia testu."},
+        {"id": "potencjal_wnioskodawcy", "nazwa": "Potencjał wnioskodawcy", "opis": "Doświadczenie w podobnych zadaniach dla danej grupy docelowej."},
+        {"id": "deinstytucjonalizacja", "nazwa": "Zgodność z ideą deinstytucjonalizacji", "opis": "Stopień realizacji idei deinstytucjonalizacji wsparcia."}
+      ]
+    },
+    "definicja_innowacji_rops": "Nowe (w skali kraju) rozwiązanie, skuteczniejsza metoda lub narzędzie rozwiązania problemu społecznego, ulepszenie istniejących form wsparcia albo optymalizacja istniejących rozwiązań według zasady 'więcej za mniej'."
+  },
+  "usluga_wrazliwa_wdrozenia": {
+    "nazwa": "Usługa Wrażliwa – upowszechnianie innowacji społecznych w środowiskach lokalnych",
+    "program": "FEM 2021-2027, Działanie 6.23 (EFS+)",
+    "url_ogloszenia": "https://rops.krakow.pl/mpliki/IS_2/za._1_do_Zarzdzenia_IS-430-3_25_-_ogoszenie_naboru.pdf",
+    "cel": "Pilotażowe wdrożenie usług społecznych opartych na innowacjach przetestowanych w inkubatorach ROPS (Małopolski Inkubator Innowacji Społecznych, Inkubator Dostępności, Inkubator Włączenia Społecznego).",
+    "parametry": {"max_grant_zl": 600000, "wklad_wlasny": "nie jest wymagany (100% kosztów kwalifikowalnych)", "alokacja_naboru_zl": 3000000, "max_okres_wdrozenia_mies": 18, "max_okres_przygotowania_mies": 6, "wnioski_na_kategorie": 1, "granty_na_wnioskodawce": 1},
+    "kategorie_naboru_2025_2026": ["Bez presji z depresji", "Strażnik (Alarm Ally)", "Himalaje Autyzmu", "Rodzina Adopcyjna Dorasta", "Głuchy czytelnik w bibliotece"],
+    "uprawnieni": ["jednostka sektora finansów publicznych", "osoba prawna", "jednostka organizacyjna bez osobowości prawnej z zdolnością prawną"],
+    "warunki_kwalifikowalnosci": [
+      {"id": "siedziba", "warunek": "Siedziba, filia, delegatura, oddział lub inna forma działalności w województwie małopolskim"},
+      {"id": "doswiadczenie", "warunek": "Min. 3 lata doświadczenia w pracy z grupą docelową innowacji, w podobnej formie wsparcia lub w innowacjach społecznych"},
+      {"id": "antydyskryminacja", "warunek": "Przestrzeganie przepisów antydyskryminacyjnych (art. 9 ust. 3 rozporządzenia 2021/1060)"},
+      {"id": "zaleglosci", "warunek": "Brak zaległości w podatkach, opłatach i składkach ZUS"},
+      {"id": "sankcje", "warunek": "Brak sankcji związanych z agresją Rosji na Ukrainę"},
+      {"id": "wykluczenie", "warunek": "Brak wykluczenia z otrzymywania środków europejskich"},
+      {"id": "podwojne_finansowanie", "warunek": "Brak równoległego finansowania tych samych wydatków ze środków publicznych (w tym FEM i FERS)"}
+    ],
+    "wykluczeni": ["podmioty, których członek zarządu był prawomocnie skazany za umyślne przestępstwo", "powiązania osobowe z pracownikami ROPS", "jednostki organizacyjne i osoby prawne Województwa Małopolskiego", "podmioty bez siedziby lub oddziału w Polsce", "działania niezgodne z Kartą Praw Podstawowych lub Konwencją o prawach osób niepełnosprawnych"],
+    "ocena": ["ocena formalna", "ocena merytoryczna", "lista rankingowa i rezerwowa w podziale na kategorie"],
+    "dokumenty": ["Ramowy Plan Wdrożenia Innowacji (RPWI) dla każdej kategorii, z suplementem", "Indywidualny Plan Wdrożenia Innowacji (IPWI) opracowywany przed umową", "Wzór formularza aplikacyjnego", "Karty oceny formalnej i merytorycznej"],
+    "harmonogram_przykladowy": {"skladanie": "22.12.2025 – 30.01.2026", "ocena": "luty – marzec 2026", "rozstrzygniecie": "kwiecień 2026", "umowy": "czerwiec – lipiec 2026"},
+    "wsparcie_rops": "Konsultacje on-line: strategia urynkowienia innowacji, wskaźniki ekonomiczne, komunikacja przyszłej usługi"
+  },
+  "przyklad_naboru_do_demo": {
+    "uwaga": "Fikcyjny nabór do demo generatora wniosków. Oznaczyć w UI jako przykład.",
+    "nazwa": "Nabór pomysłów 2027: samotność seniorów na terenach wiejskich",
+    "temat_z_radaru": "Biała plama: samotność osób 75+ w gminach bez dziennego domu pomocy i klubu seniora",
+    "otwarty_od": "2027-01-15", "otwarty_do": "2027-02-28",
+    "formularz": "jak IWS 2.0 (pola 1-11)",
+    "kryteria": "jak karta oceny merytorycznej IWS 2.0"
+  }
+}

@@ -1,0 +1,175 @@
+{
+  "zrodlo": "INNO AGH, Social Innovation Canvas, wersja 1.0 (5 maja 2026), oparta na Social Innovation Canvas The New Global School",
+  "url": "https://rops.krakow.pl/mpliki/IS/Moj_folder/INNO_AGH_-_SOCIAL_CANVAS.pdf",
+  "uwaga": "Schemat do zbudowania klikanego kreatora w module Pracownia. Każda emotka w UI musi mieć etykietę tekstową (czytniki ekranu).",
+  "arkusze": [
+    {
+      "id": "arkusz_1",
+      "sekcje": [
+        {
+          "id": "problem", "nazwa": "Problem",
+          "pola": [
+            {"id": "intensywnosc", "nazwa": "Intensywność", "pytanie": "Jak bardzo źle jest bez Waszego rozwiązania?", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 4, "emoji": "🔥", "etykieta": "Bardzo poważny problem", "opis": "Powoduje stres, wykluczenie albo realną krzywdę."},
+               {"wartosc": 3, "emoji": "😟", "etykieta": "Mocno przeszkadza", "opis": "Problem regularnie blokuje ważne działania."},
+               {"wartosc": 2, "emoji": "😐", "etykieta": "Utrudnia działanie", "opis": "Trzeba szukać alternatyw, traci się czas lub energię."},
+               {"wartosc": 1, "emoji": "🙂", "etykieta": "Lekko przeszkadza", "opis": "Da się żyć, problem raczej irytuje niż blokuje."}
+             ]},
+            {"id": "czestotliwosc", "nazwa": "Częstotliwość", "pytanie": "Jak często występuje problem?", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 4, "emoji": "🔥", "etykieta": "Bardzo często", "opis": "Codziennie albo prawie codziennie."},
+               {"wartosc": 3, "emoji": "😟", "etykieta": "Często", "opis": "Co tydzień lub regularnie."},
+               {"wartosc": 2, "emoji": "😐", "etykieta": "Czasami", "opis": "Kilka razy w roku lub miesiącu."},
+               {"wartosc": 1, "emoji": "🙂", "etykieta": "Rzadko", "opis": "Raz w roku lub rzadziej."}
+             ]},
+            {"id": "skala", "nazwa": "Skala problemu", "pytanie": "Ilu ludzi dotyka problem?", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 1, "etykieta": "Pojedyncze osoby", "opis": "Kilka osób lub mała grupa."},
+               {"wartosc": 2, "etykieta": "Wąska grupa", "opis": "Konkretna społeczność, np. uczniowie jednej szkoły, ludzie z jednej okolicy, załoga instytucji."},
+               {"wartosc": 3, "etykieta": "Duża grupa", "opis": "Wiele osób w mieście, regionie, branży lub większej społeczności."},
+               {"wartosc": 4, "etykieta": "Bardzo szeroka grupa", "opis": "Duża część społeczeństwa albo wiele podobnych grup w różnych miejscach."}
+             ]}
+          ]
+        },
+        {
+          "id": "aktorzy_zmiany", "nazwa": "Aktorzy zmiany",
+          "pola": [
+            {"id": "wspieraja", "nazwa": "Wspierają zmianę", "typ": "lista_tekstowa",
+             "pytania_pomocnicze": ["Kto najbardziej potrzebuje tej zmiany?", "Kto może zyskać na rozwiązaniu?", "Kto już mówi, że problem trzeba rozwiązać?", "Kto może Was poprzeć, polecić albo otworzyć drzwi?", "Kto ma energię, wpływ lub zasoby, żeby pomóc?"]},
+            {"id": "utrudniaja", "nazwa": "Utrudniają zmianę", "typ": "lista_tekstowa",
+             "pytania_pomocnicze": ["Kto może nie rozumieć potrzeby zmiany?", "Kto może bać się dodatkowej pracy, kosztów lub ryzyka?", "Kto może tracić wpływ, kontrolę albo dotychczasową rolę?", "Kto może powiedzieć, że to się nie uda?", "Kto może zablokować decyzję, finansowanie albo dostęp do odbiorców?"]}
+          ]
+        },
+        {
+          "id": "rozwiazanie", "nazwa": "Rozwiązanie",
+          "pola": [
+            {"id": "przystepnosc", "nazwa": "Przystępność i wartość rozwiązania", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 1, "etykieta": "Koszt jest większy niż korzyść", "opis": "Rozwiązanie pochłania dużo pieniędzy, czasu lub wysiłku, a efekt jest mało widoczny."},
+               {"wartosc": 2, "etykieta": "Korzyść i koszt są podobne", "opis": "Może pomagać, ale nie jest jasne, czy opłaca się z niego korzystać."},
+               {"wartosc": 3, "etykieta": "Korzyść jest większa niż koszt", "opis": "Zauważalna wartość za rozsądną cenę."},
+               {"wartosc": 4, "etykieta": "Bardzo duża wartość przy małym koszcie", "opis": "Skutecznie pomaga, niska bariera wejścia (niskie koszty, oszczędność czasu, łatwość użycia)."}
+             ]},
+            {"id": "gotowosc", "nazwa": "Gotowość do wdrożenia", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 1, "etykieta": "Pomysł", "opis": "Mamy koncepcję, ale nie sprawdziliśmy jej z odbiorcami."},
+               {"wartosc": 2, "etykieta": "Prototyp", "opis": "Mamy pierwszą wersję, wymaga testów i dopracowania."},
+               {"wartosc": 3, "etykieta": "Przetestowane rozwiązanie", "opis": "Sprawdzone z realnymi użytkownikami, wiemy, co poprawić."},
+               {"wartosc": 4, "etykieta": "Gotowe do wdrożenia", "opis": "Można uruchomić w realnym miejscu, z prawdziwymi odbiorcami i znanymi zasobami."}
+             ]},
+            {"id": "prostota", "nazwa": "Prostota i zrozumiałość", "pytanie": "Czy osoba, która pierwszy raz widzi rozwiązanie, szybko rozumie, dla kogo jest, jak działa i co daje?", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 1, "emoji": "❓", "etykieta": "Rozwiązanie jest niejasne", "opis": "Trzeba długo tłumaczyć, ludzie zadają podstawowe pytania."},
+               {"wartosc": 2, "emoji": "🧩", "etykieta": "Rozwiązanie jest częściowo jasne", "opis": "Ludzie rozumieją ogólny pomysł, ale nie wiedzą dokładnie, jak skorzystać."},
+               {"wartosc": 3, "emoji": "✅", "etykieta": "Rozwiązanie jest jasne", "opis": "Większość szybko rozumie problem, działanie i co zrobić, żeby skorzystać."},
+               {"wartosc": 4, "emoji": "🗣️", "etykieta": "Ludzie potrafią wyjaśnić sami", "opis": "Osoba z grupy docelowej wyjaśni rozwiązanie własnymi słowami po krótkim kontakcie."}
+             ]}
+          ]
+        },
+        {
+          "id": "struktura_kosztow", "nazwa": "Struktura kosztów",
+          "pola": [
+            {"id": "koszty_stale", "nazwa": "Stałe koszty", "opis": "Ponoszone niezależnie od liczby użytkowników.", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["wynagrodzenie zespołu", "czynsz / przestrzeń", "utrzymanie aplikacji lub strony", "abonamenty narzędzi", "koordynacja projektu", "księgowość / administracja", "promocja podstawowa", "sprzęt potrzebny na start"]},
+            {"id": "koszty_zmienne", "nazwa": "Zmienne koszty", "opis": "Rosną z liczbą osób lub działań.", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["materiały dla uczestników", "czas specjalisty na jedną osobę", "dojazdy", "catering", "wydruk materiałów", "wsparcie techniczne dla kolejnej osoby"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arkusz_2",
+      "sekcje": [
+        {
+          "id": "odbiorcy", "nazwa": "Odbiorcy",
+          "pola": [
+            {"id": "glowny_uzytkownik", "nazwa": "Główny użytkownik", "pytanie": "Komu to rozwiązanie ma realnie pomóc?", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["dzieci", "młodzież", "rodzice", "seniorzy", "osoby z niepełnosprawnościami", "nauczyciele", "pracownicy instytucji", "osoby w kryzysie", "organizacje społeczne", "mieszkańcy konkretnego miejsca"]},
+            {"id": "klient_platnik", "nazwa": "Klient / płatnik", "pytanie": "Kto wyciąga portfel albo uruchamia budżet, żeby rozwiązanie działało?", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["sam użytkownik", "rodzic / opiekun", "szkoła", "firma", "urząd miasta / gmina", "fundacja / organizacja społeczna", "grantodawca", "sponsor", "NFZ / instytucja publiczna", "pracodawca"]},
+            {"id": "decydent", "nazwa": "Autorytet / instytucja / decydent", "pytanie": "Czyja zgoda, rekomendacja albo decyzja jest potrzebna, żeby rozwiązanie zostało użyte?", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["dyrektor szkoły", "nauczyciel", "lekarz", "terapeuta", "pracownik socjalny", "urząd", "lider lokalny", "organizacja społeczna", "rodzic", "opiekun", "menedżer", "ekspert", "instytucja finansująca"]}
+          ]
+        },
+        {
+          "id": "zrodla_dochodow", "nazwa": "Źródła dochodów",
+          "pola": [
+            {"id": "glowny_dochod", "nazwa": "Główny dochód", "pytanie": "Co jest podstawowym źródłem pieniędzy? Za co klienci najpewniej zapłacą w pierwszej kolejności?", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 1, "etykieta": "Nie wiemy jeszcze", "opis": "Nie mamy jasnego pomysłu, kto i za co miałby płacić."},
+               {"wartosc": 2, "etykieta": "Mamy pomysł", "opis": "Wiemy, co mogłoby być źródłem dochodu, ale nie sprawdziliśmy tego z klientem."},
+               {"wartosc": 3, "etykieta": "Mamy konkretną propozycję", "opis": "Wiemy, co oferujemy, komu i dlaczego ktoś miałby za to zapłacić."},
+               {"wartosc": 4, "etykieta": "Mamy potwierdzenie", "opis": "Ktoś już zapłacił lub zadeklarował gotowość finansowania."}
+             ],
+             "pole_tekstowe": "Propozycja głównego źródła finansowania"},
+            {"id": "skalowanie_dochodu", "nazwa": "Skalowanie dochodu", "pytanie": "Jakie dodatkowe rzeczy możecie sprzedawać lub finansować w przyszłości?", "typ": "skala_1_4",
+             "opcje": [
+               {"wartosc": 1, "etykieta": "Brak jasnych dodatkowych źródeł"},
+               {"wartosc": 2, "etykieta": "Są szanse na dodatkowe pieniądze", "opis": "Kilka niesprawdzonych pomysłów."},
+               {"wartosc": 3, "etykieta": "Widzimy realne ścieżki rozwoju", "opis": "Wiemy, jakie dodatkowe usługi, pakiety lub wdrożenia można sprzedawać po pierwszym sukcesie."},
+               {"wartosc": 4, "etykieta": "Nasz model działania można powielać", "opis": "W wielu miejscach, dla wielu grup, przez wiele kanałów."}
+             ],
+             "pole_tekstowe": "Propozycja dodatkowego źródła dochodu"}
+          ]
+        },
+        {
+          "id": "propozycja_wartosci", "nazwa": "Propozycja wartości",
+          "pola": [
+            {"id": "wartosc_emocjonalna", "nazwa": "Emocjonalna", "pytanie": "Co odbiorcy poczują dzięki rozwiązaniu? (max 2-3)", "typ": "wybor_max_3_z_wlasnymi",
+             "opcje": ["Bezpieczeństwo", "Spokój", "Pewność", "Zmniejszenie samotności", "Większa sprawczość", "Poprawa stanu zdrowia", "Niezależność", "Motywacja", "Włączenie społeczne", "Poczucie bycia widzianym", "Poprawa nastroju", "Większe zadowolenie z życia"]},
+            {"id": "wartosc_funkcjonalna", "nazwa": "Funkcjonalna", "pytanie": "Co rozwiązanie konkretnie poprawi? (max 2-3)", "typ": "wybor_max_3_z_wlasnymi",
+             "opcje": ["Obniża koszty", "Oszczędza czas", "Zwiększa skuteczność", "Poprawia jakość", "Upraszcza proces", "Zwiększa dostępność", "Zwiększa zasięg pomocy", "Zmniejsza obciążenie", "Poprawia bezpieczeństwo", "Zwiększa wpływ społeczny", "Ogranicza negatywny wpływ na środowisko", "Pomaga w podejmowaniu lepszych decyzji"]}
+          ]
+        }
+      ]
+    },
+    {
+      "id": "arkusz_3",
+      "sekcje": [
+        {
+          "id": "kanaly", "nazwa": "Kanały",
+          "pola": [
+            {"id": "bezposrednie", "nazwa": "Bezpośrednie", "pytanie": "Jak ludzie trafiają do Was bezpośrednio?", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["własna strona internetowa", "własny formularz zgłoszeniowy", "własny sklep / system zakupu", "kontakt telefoniczny lub mailowy", "spotkania bezpośrednie", "własne warsztaty", "własne media społecznościowe", "własna aplikacja", "newsletter", "wydarzenia organizowane samodzielnie"]},
+            {"id": "posrednie", "nazwa": "Pośrednie", "pytanie": "Kto może pomóc Wam dotrzeć do odbiorców?", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["szkoła", "urząd / gmina", "organizacja społeczna", "ekspert", "lekarz / terapeuta", "nauczyciel", "pracownik socjalny", "lider lokalny", "firma", "partner", "ambasador", "handlowiec"]},
+            {"id": "dodatkowe", "nazwa": "Dodatkowe", "pytanie": "Jakie kanały dodatkowe możecie wykorzystać?", "typ": "wielokrotny_wybor_z_wlasnymi",
+             "opcje": ["kampania online", "webinary", "platforma cyfrowa", "lokalne wydarzenia", "program ambasadorski", "materiały edukacyjne", "rekomendacje ekspertów", "współpraca z instytucjami", "newsletter", "społeczność online"]}
+          ]
+        },
+        {
+          "id": "konstelacja_partnerow", "nazwa": "Konstelacja partnerów",
+          "opis": "Kto jest partnerem lub może nim zostać? Jak dokładnie pomaga? W którym obszarze wnosi wartość? Jeden partner może pomagać na kilka sposobów.",
+          "pola": [
+            {"id": "taniej", "nazwa": "Jak robić to taniej?", "pytanie": "Jacy partnerzy mogą obniżać koszty rozwiązania? W jaki sposób?", "typ": "lista_partnerow"},
+            {"id": "dotrzec", "nazwa": "Jak dotrzeć do odbiorców?", "pytanie": "Jacy partnerzy mogą wspierać komunikację i dystrybucję? Jakimi kanałami?", "typ": "lista_partnerow"},
+            {"id": "wartosc", "nazwa": "Jak dawać lepszą wartość?", "pytanie": "Jacy partnerzy mogą wzmacniać propozycję wartości? W jaki sposób?", "typ": "lista_partnerow"}
+          ],
+          "status_partnera": ["potwierdzony", "w rozmowie", "potencjalny"]
+        },
+        {
+          "id": "wplyw", "nazwa": "Wpływ", "pytanie": "Co zmienia Twoje rozwiązanie dla osoby, społeczności i świata wokół?",
+          "pola": [
+            {"id": "wplyw_osoba", "nazwa": "Osoba", "pytanie": "Jak zmienia życie użytkownika? Co staje się łatwiejsze, bezpieczniejsze, spokojniejsze albo bardziej dostępne?", "typ": "skala_1_4"},
+            {"id": "wplyw_spolecznosc", "nazwa": "Społeczność", "pytanie": "Jak pomaga większej grupie? Czy zwiększa dostęp, zmniejsza wykluczenie, wzmacnia współpracę albo poprawia jakość wsparcia?", "typ": "skala_1_4"},
+            {"id": "wplyw_srodowisko", "nazwa": "Środowisko", "pytanie": "Czy ogranicza odpady, zużycie zasobów, transport, energię albo inne szkody dla środowiska?", "typ": "skala_1_4"}
+          ],
+          "skala_wplywu": [
+            {"wartosc": 1, "etykieta": "Mały wpływ", "opis": "Zmiana jest niewielka lub jeszcze niejasna."},
+            {"wartosc": 2, "etykieta": "Możliwy wpływ", "opis": "Widzimy potencjał zmiany, ale nie mamy potwierdzenia."},
+            {"wartosc": 3, "etykieta": "Wyraźny wpływ", "opis": "Rozwiązanie daje konkretną, zauważalną zmianę."},
+            {"wartosc": 4, "etykieta": "Silny wpływ", "opis": "Zmiana jest duża, ważna i potwierdzona przez użytkowników, społeczność lub dane."}
+          ]
+        }
+      ]
+    }
+  ],
+  "wskaznik_dojrzalosci_splot": {
+    "opis": "Nasza propozycja (nie część kanwy): dwa wskaźniki liczone ze skal kanwy, pokazywane w Pracowni i w Centrali.",
+    "problem_3_12": "intensywnosc + czestotliwosc + skala",
+    "rozwiazanie_3_12": "przystepnosc + gotowosc + prostota",
+    "trwalosc_2_8": "glowny_dochod + skalowanie_dochodu",
+    "wplyw_3_12": "wplyw_osoba + wplyw_spolecznosc + wplyw_srodowisko"
+  }
+}

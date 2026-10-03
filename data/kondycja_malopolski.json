@@ -1,0 +1,49 @@
+{
+  "uwaga": "Najważniejsze fakty do modułu Skarbnica (Kondycja Małopolski), Radaru i prezentacji. Każdy fakt ma źródło i stronę. Raport ROPS 2025 jest na licencji CC BY 4.0 (trzeba podawać źródło).",
+  "zrodla": {
+    "diagnoza_2025": {
+      "tytul": "Usługi społeczne w Małopolsce – deficyty, potrzeby, potencjał rozwojowy. Zaktualizowane wnioski z diagnozy",
+      "wydawca": "ROPS w Krakowie, Dział Badań i Analiz", "rok": 2025, "licencja": "CC BY 4.0", "dane_za_rok": 2024,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2025-uslugi-spoleczne-w-malopolsce-deficyty-potrzeby-potencjal-rozwojowy-zaktualizowane-wnioski-z-diagnozy,1348"
+    },
+    "przewodnik_2019": {
+      "tytul": "Przewodnik po innowacjach społecznych (Małopolski Inkubator Innowacji Społecznych)",
+      "rok": 2019, "url": "https://rops.krakow.pl/mpliki/IS/ikony_PUBLIKACJE/InnMalopolska_przewodnik_po_innowacjach.pdf"
+    },
+    "gus_prognoza": {
+      "tytul": "Procesy demograficzne w województwie małopolskim w latach 2000–2019 oraz w perspektywie do 2040 r.",
+      "wydawca": "GUS / Urząd Statystyczny", "rok": 2020,
+      "url": "https://rrl.stat.gov.pl/Files/publikacje/Problemy-rozwoju-demograficznego-Polski/7._malopolskie.pdf"
+    },
+    "nik_2025": {"tytul": "Wykluczeni w cyfrowym państwie", "rok": 2025, "url": "https://www.nik.gov.pl/aktualnosci/administracja/wykluczeni-w-cyfrowym-panstwie.html"}
+  },
+  "fakty": [
+    {"temat": "cel diagnozy", "tekst": "Diagnoza ma dotyczyć w szczególności deficytów, luk w usługach i białych plam na mapie dostępności.", "zrodlo": "diagnoza_2025", "strona": 5, "uzycie": "uzasadnienie Mapy białych plam"},
+    {"temat": "seniorzy", "tekst": "W 2024 r. w Małopolsce mieszkało 841,5 tys. osób 60+ (24,5% ludności), w tym 147 tys. osób 80+.", "zrodlo": "diagnoza_2025", "strona": 25},
+    {"temat": "seniorzy", "tekst": "Najstarsze demograficznie: Tarnów (31,5% osób 60+), powiat olkuski (30,1%), chrzanowski (30,0%), miechowski (29,8%).", "zrodlo": "diagnoza_2025", "strona": 25},
+    {"temat": "seniorzy", "tekst": "Najwyższy udział osób 80+ wśród seniorów: Kraków (20,3%), Tarnów (19,1%), powiaty tatrzański (18%), tarnowski (17,9%), nowotarski (17,8%).", "zrodlo": "diagnoza_2025", "strona": 25},
+    {"temat": "usługi opiekuńcze", "tekst": "15 gmin (8,2%) nie organizowało własnych usług opiekuńczych (rok wcześniej 11, w 2019 r. 6).", "zrodlo": "diagnoza_2025", "strona": 26},
+    {"temat": "zdrowie psychiczne", "tekst": "W połowie małopolskich gmin nie świadczono usług opiekuńczych osobom z zaburzeniami psychicznymi.", "zrodlo": "diagnoza_2025", "strona": 26},
+    {"temat": "usługi opiekuńcze", "tekst": "Nakłady na gminne usługi opiekuńcze wzrosły w latach 2016-2024 z 31,5 do 59,2 mln zł (o 88%) bez znaczącego wzrostu dostępności, z powodu rosnących kosztów.", "zrodlo": "diagnoza_2025", "strona": 26, "uzycie": "argument za tańszymi, innowacyjnymi modelami usług"},
+    {"temat": "usługi opiekuńcze", "tekst": "Program Opieka 75+ realizowały 52 gminy.", "zrodlo": "diagnoza_2025", "strona": 26},
+    {"temat": "dzienna opieka", "tekst": "W 142 gminach nie było publicznego dziennego domu pomocy, a w 93 gminach (ponad połowie) nie działał ani dzienny dom pomocy, ani klub samopomocy w sektorze publicznym.", "zrodlo": "diagnoza_2025", "strona": 28, "uzycie": "główny przykład białej plamy"},
+    {"temat": "opiekunowie rodzinni", "tekst": "Na co dzień osobami starszymi opiekuje się 15% Małopolan, osobami z niepełnosprawnościami 4%; 76,1% preferuje opiekę domową.", "zrodlo": "diagnoza_2025", "strona": 31},
+    {"temat": "opiekunowie rodzinni", "tekst": "Najważniejsze problemy opiekunów rodzinnych: brak informacji, sektorowość informacji, brak wiedzy pracowników służby zdrowia i pomocy społecznej, brak kompetencji opiekuńczych, skutki zdrowotne, problemy w pracy.", "zrodlo": "diagnoza_2025", "strona": 31, "uzycie": "uzasadnienie Skarbnicy i Swatki"},
+    {"temat": "dzieci", "tekst": "W 2024 r. w 84 gminach nie działały publiczne placówki wsparcia dziennego dla dzieci i młodzieży (66 gmin po uwzględnieniu sektora niepublicznego).", "zrodlo": "diagnoza_2025", "strona": 8},
+    {"temat": "rodzina", "tekst": "W 169 gminach (na 182) zatrudnionych było 289 asystentów rodziny; ze wsparcia skorzystało 3 719 rodzin.", "zrodlo": "diagnoza_2025", "strona": 10},
+    {"temat": "kryzys", "tekst": "Z oferty ośrodków interwencji kryzysowej skorzystało 10 061 osób; w 5 powiatach bez OIK działały zespoły lub punkty interwencji kryzysowej.", "zrodlo": "diagnoza_2025", "strona": 11},
+    {"temat": "mieszkalnictwo", "tekst": "Funkcjonowały 143 mieszkania treningowe i wspomagane.", "zrodlo": "diagnoza_2025", "strona": 22},
+    {"temat": "bezdomność", "tekst": "W ostatnim ogólnopolskim badaniu zidentyfikowano w Małopolsce 2 093 osoby w kryzysie bezdomności.", "zrodlo": "diagnoza_2025", "strona": 37},
+    {"temat": "upowszechnianie", "tekst": "Nawet znakomita innowacja nie upowszechni się sama. Już na etapie realizacji warto rozglądać się, kto może być ambasadorem takiego rozwiązania w przyszłości.", "zrodlo": "przewodnik_2019", "uzycie": "cytat do prezentacji: Swatka, Krawiec, ambasadorzy"},
+    {"temat": "testowanie", "tekst": "Rekrutacja – czasem znalezienie 5 osób, które chciałyby przetestować dane rozwiązanie, jest barierą nie do przejścia. Warto wzmocnić w tym zakresie innowatorów i budować sieć networkingową.", "zrodlo": "przewodnik_2019", "uzycie": "cytat do prezentacji: Próbownia"},
+    {"temat": "demografia", "tekst": "Udział osób 65+ w Małopolsce: 17,0% (2019), prognoza 21,6% (2030) i 25,1% (2040). Wskaźnik starości (65+ na 100 osób 0-14): 105 (2019), prognoza 198 (2040).", "zrodlo": "gus_prognoza"},
+    {"temat": "wykluczenie cyfrowe", "tekst": "Ok. 3,8 mln Polaków było wykluczonych cyfrowo, z czego ponad 3,6 mln (80%) to osoby w wieku 55-74 lat; 15% osób w Polsce nigdy nie korzystało z internetu.", "zrodlo": "nik_2025", "uzycie": "uzasadnienie trybu asystowanego i trybu prostego"}
+  ],
+  "ioss_przyklady_2024": {
+    "uwaga": "Z pliku data/zrodla/ioss_powiaty.json (Obserwator ROPS, analiza zróżnicowania, powiaty).",
+    "wspolczynnik_starosci_65_plus_proc": {"najwyzszy": ["m. Tarnów 24,83", "olkuski 23,56", "miechowski 23,51"], "najnizszy": "limanowski 15,07"},
+    "wskaznik_podwojnego_starzenia_proc": {"najwyzszy": ["m. Kraków 20,25", "m. Tarnów 19,06", "tatrzański 18,02"], "najnizszy": "wielicki 14,5"},
+    "dzienne_domy_pomocy_liczba": {"najwiecej": ["wadowicki 5", "gorlicki 5", "tarnowski 4"], "zero": "nowotarski 0"},
+    "uniwersytety_trzeciego_wieku_2021": {"najwiecej": ["m. Kraków 10", "krakowski 5", "wielicki 4"], "zero": "tarnowski 0"}
+  }
+}

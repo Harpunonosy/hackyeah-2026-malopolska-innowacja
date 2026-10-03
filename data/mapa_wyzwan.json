@@ -1,0 +1,196 @@
+{
+  "zrodlo": "ROPS Kraków, Mapa Wyzwań Społecznych (projekt Inkubator Włączenia Społecznego 2.0, FERS 2021-2027, Działanie 5.1)",
+  "url": "https://rops.krakow.pl/mpliki/IS/IWS_20/za._nr_2._Mapa_Wyzwa_Spoecznych.pdf",
+  "uwaga": "Dane w Mapie są ogólnopolskie. Persony są fikcyjne (nie są danymi osobowymi). Pole 'miejsce_demo' to proponowana lokalizacja w Małopolsce na potrzeby demo, nie część źródła.",
+  "obszary": [
+    {
+      "id": "rodzina_piecza",
+      "nazwa": "Rodzina i piecza zastępcza",
+      "dane": ["W 2023 r. liczba dzieci w pieczy zastępczej wzrosła o 3,5% r/r (GUS)", "Za mało rodzin zastępczych spowalnia deinstytucjonalizację (NIK 2022)"],
+      "kluczowe_wyzwania": [
+        "Więcej pozytywnie zweryfikowanych kandydatów na rodziny zastępcze",
+        "Priorytet dla rodzinnej pieczy zastępczej",
+        "Lepsza współpraca między powiatami w systemie pieczy",
+        "Nierozdzielanie rodzeństwa przy umieszczaniu w pieczy",
+        "Krótszy pobyt w pieczy, szybkie kierowanie dzieci z uregulowaną sytuacją prawną do docelowej formy opieki",
+        "Spójny system adopcyjny z jednolitymi standardami"
+      ],
+      "slowa_kluczowe": ["piecza zastępcza", "rodzina zastępcza", "adopcja", "rodzeństwo", "placówka opiekuńczo-wychowawcza", "usamodzielnienie"]
+    },
+    {
+      "id": "bezdomnosc",
+      "nazwa": "Bezdomność",
+      "dane": ["Przyczyny: bezrobocie, ubóstwo, uzależnienia, przemoc, zadłużenie, eksmisje, rozpad rodziny, zaburzenia psychiczne"],
+      "kluczowe_wyzwania": [
+        "Rośnie liczba młodych bezdomnych (0-25 lat)",
+        "Niewidzialność i niepoliczalność młodych bezdomnych",
+        "Odrębne traktowanie bezdomności nastolatków i młodych dorosłych (bariery formalno-prawne niepełnoletnich)",
+        "Brak dostosowanej oferty dla młodych w noclegowniach i schroniskach",
+        "Luka w przekazaniu pomocy między instytucjami dla byłych wychowanków placówek",
+        "Bezrodzinowość: brak silnych więzi emocjonalnych i społecznych"
+      ],
+      "slowa_kluczowe": ["bezdomność", "noclegownia", "schronisko", "kryzys bezdomności", "wychowanek placówki", "uzależnienie"]
+    },
+    {
+      "id": "niepelnosprawnosc",
+      "nazwa": "Niepełnosprawność",
+      "dane": ["NSP 2021: 5,4 mln osób z niepełnosprawnościami (14,3% ludności)", "Wskaźnik zatrudnienia osób z niepełnosprawnością 16-64 lata: 30,1% (koniec 2023)", "PFRON 2024: najbardziej niezaspokojona potrzeba to dostęp do informacji"],
+      "kluczowe_wyzwania": [
+        "Dostęp do rynku pracy",
+        "Wykształcenie dające samodzielność i rozwój zawodowy",
+        "Samodzielne relacje społeczne i towarzyskie",
+        "Wsparcie emocjonalne",
+        "Wsparcie techniczne, infrastrukturalne, dostępność",
+        "Samodzielne przemieszczanie się i korzystanie z usług bez asysty",
+        "Opieka medyczna, fizjoterapia, farmakoterapia, pomoc w czynnościach codziennych",
+        "Rozwój zainteresowań",
+        "Mieszkania dostosowane do potrzeb i ograniczeń funkcjonalnych"
+      ],
+      "slowa_kluczowe": ["niepełnosprawność", "wózek", "dostępność", "asystent osobisty", "rehabilitacja", "niewidomy", "głuchy", "autyzm"]
+    },
+    {
+      "id": "ubostwo",
+      "nazwa": "Ubóstwo",
+      "dane": ["Ubóstwo skrajne 2023: 6,6% gospodarstw domowych (+2 pp r/r)", "Progi 2023 dla 1 osoby: ustawowe 776 zł, skrajne 913 zł, relatywne 1092 zł", "Ubóstwo skrajne wśród rolników: 14,1%", "Lęk przed biedą: 30% (najwyżej od 2015)"],
+      "kluczowe_wyzwania": [
+        "Ubóstwo dzieci (dobra opieka i edukacja wczesnoszkolna)",
+        "Ubóstwo seniorów",
+        "Ubóstwo osób z niepełnosprawnościami",
+        "Ubóstwo osób pracujących (np. rolników z małych gospodarstw)",
+        "Ubóstwo bezrobotnych i bezdomnych: zatrudnienie socjalne, spółdzielczość socjalna",
+        "Ubóstwo uchodźców z Ukrainy",
+        "Ubóstwo energetyczne",
+        "Głód i niedożywienie"
+      ],
+      "slowa_kluczowe": ["ubóstwo", "bieda", "opał", "niedożywienie", "praca dorywcza", "zadłużenie", "renta"]
+    },
+    {
+      "id": "cudzoziemcy",
+      "nazwa": "Integracja cudzoziemców",
+      "dane": ["Model integracji: partycypacja, badania, koordynacja, stabilne finansowanie, dostosowanie usług, równy dostęp"],
+      "kluczowe_wyzwania": [
+        "Równy dostęp migrantów do usług społecznych",
+        "Indywidualizacja usług (tłumacz, asysta kulturowa, indywidualne programy integracji)",
+        "Włączenie kulturowe cudzoziemców, w tym dzieci i młodzieży",
+        "Rynek pracy otwarty na cudzoziemców (język branżowy, uznawanie kwalifikacji)",
+        "Integracja dzieci migrantów w edukacji",
+        "Postawy wolne od stereotypów",
+        "Zdrowie psychiczne cudzoziemców"
+      ],
+      "slowa_kluczowe": ["cudzoziemcy", "migranci", "uchodźcy", "Ukraina", "język polski", "integracja", "asysta kulturowa"]
+    },
+    {
+      "id": "zdrowie",
+      "nazwa": "Zdrowie",
+      "dane": ["Największe wyzwania: choroba niedokrwienna serca, udary, nowotwory, choroby otępienne, cukrzyca, POChP", "Pandemia nasiliła samotność osób starszych mieszkających w pojedynkę"],
+      "kluczowe_wyzwania": [
+        "Edukacja zdrowotna i profilaktyka (dieta, aktywność)",
+        "Równy dostęp do opieki zdrowotnej",
+        "Dostosowanie systemu do starzenia się (opieka długoterminowa)",
+        "Zdrowie dzieci i młodzieży",
+        "Świadomość zdrowia psychicznego i przeciwdziałanie stygmatyzacji"
+      ],
+      "slowa_kluczowe": ["zdrowie", "profilaktyka", "choroba przewlekła", "rehabilitacja", "opieka długoterminowa", "otyłość"]
+    },
+    {
+      "id": "zdrowie_psychiczne",
+      "nazwa": "Zdrowie psychiczne",
+      "dane": ["Finansowanie opieki psychiatrycznej ok. 3% wydatków NFZ", "Wzrost prób samobójczych dzieci i młodzieży", "FOMO dotyka średnio co trzeciego młodego Polaka"],
+      "kluczowe_wyzwania": [
+        "Edukacja prozdrowotna, w tym o zdrowiu psychicznym (dzieci, młodzież, seniorzy)",
+        "Kompetencje rodziców w rozpoznawaniu sygnałów problemów psychicznych dzieci",
+        "Przejście z opieki instytucjonalnej na środowiskową",
+        "Ograniczanie stygmatyzacji osób z problemami psychicznymi"
+      ],
+      "slowa_kluczowe": ["depresja", "kryzys psychiczny", "samotność", "lęk", "terapia", "psychiatra", "myśli samobójcze"]
+    },
+    {
+      "id": "seniorzy",
+      "nazwa": "Seniorzy",
+      "dane": ["Największe problemy seniorów: zdrowie, samotność, finanse, cyfryzacja", "Polipragmazja (wielolekowość) jako zagrożenie", "Samotność silniejsza przy gorszej sytuacji materialnej"],
+      "kluczowe_wyzwania": [
+        "Dostosowanie instytucji i usług zdrowotnych do starzenia (także z nowymi technologiami)",
+        "Projektowanie uniwersalne w przestrzeni i mieszkalnictwie, mieszkalnictwo senioralne",
+        "Odpowiedzialne korzystanie z leków i suplementów (polipragmazja)",
+        "Aktywizacja i integracja seniorów",
+        "Kompetencje cyfrowe seniorów",
+        "Dostępność usług opiekuńczych w gminach"
+      ],
+      "slowa_kluczowe": ["senior", "samotność", "leki", "demencja", "upadki", "opieka", "wykluczenie cyfrowe", "klub seniora"]
+    }
+  ],
+  "persony": [
+    {
+      "id": "ania_i_stas", "obszar": "rodzina_piecza", "imie": "Ania i Staś", "wiek": "7 i 12 lat",
+      "opis": ["Rodzeństwo z rodziny dysfunkcyjnej", "Ania ma zespół Downa, Staś jest osobą niedosłyszącą", "Nieufni i wycofani", "Trafiali do wielu rodzin zastępczych i placówek"],
+      "cele": ["Piecza rodzinna bez rozdzielania rodzeństwa", "Specjalistyczne wsparcie związane z niepełnosprawnością", "Kompetencje społeczne i budowanie relacji"],
+      "wyzwania": ["Niepełnosprawność obojga dzieci", "Bagaż doświadczeń z domu rodzinnego", "Brak stabilności miejsca pobytu"],
+      "motywacje": ["Mieć prawdziwą rodzinę", "Nie być rozdzielonymi", "Być akceptowanymi przez rówieśników"],
+      "miejsce_demo": "powiat tarnowski"
+    },
+    {
+      "id": "kuba", "obszar": "bezdomnosc", "imie": "Kuba", "wiek": "22 lata",
+      "opis": ["Były wychowanek placówki opiekuńczo-wychowawczej", "Objawy uzależnienia od substancji psychoaktywnych", "Miał mieszkanie wspierane, ale go nie utrzymał"],
+      "cele": ["Schronienie i jedzenie na najbliższe dni", "Dostęp do prądu (telefon)", "Schludny wygląd, żeby nikt nie zauważył"],
+      "wyzwania": ["Znalezienie noclegu", "Brak osób wspierających w drodze do dorosłości"],
+      "motywacje": ["Żeby nikt nie zobaczył, że nie mam domu", "Chcę zrobić coś ze swoim życiem"],
+      "miejsce_demo": "Kraków"
+    },
+    {
+      "id": "krystian", "obszar": "niepelnosprawnosc", "imie": "Krystian", "wiek": "38 lat",
+      "opis": ["Mieszka sam w małej miejscowości, rodzice nieopodal", "Pracuje zdalnie jako operator danych, obsługuje komputer wzrokiem, ma inteligentny dom", "Porażenie czterokończynowe, nie mówi"],
+      "cele": ["Codzienne czynności bez obciążania innych", "Znajomi i życie towarzyskie", "Rozwój zawodowy i uznanie"],
+      "wyzwania": ["Samotność, brak przyjaciół", "Samoobsługa: ubieranie, wyjście z domu", "Utrzymanie zdrowia"],
+      "motywacje": ["Mieć w życiu coś więcej niż pracę", "Wyjść z domu, kiedy chce", "Decydować o sobie"],
+      "miejsce_demo": "powiat limanowski"
+    },
+    {
+      "id": "tomek", "obszar": "ubostwo", "imie": "Tomek", "wiek": "60 lat",
+      "opis": ["Do niedawna mieszkał z matką", "Wykształcenie techniczne, pracował w gospodarstwie rolnym", "Renta rolnicza, nie pracuje"],
+      "cele": ["Bezpieczeństwo finansowe i zdrowotne", "Praca dorywcza", "Opał na zimę"],
+      "wyzwania": ["Samotność, brak sieci wsparcia", "Rezygnacja, beznadzieja", "Zagrożenie alkoholizmem"],
+      "motywacje": ["Spotkać ludzi i napić się razem herbaty", "Pewność, że będzie co jeść i czym ogrzać dom"],
+      "miejsce_demo": "powiat miechowski"
+    },
+    {
+      "id": "swietlana", "obszar": "cudzoziemcy", "imie": "Swietłana", "wiek": "37 lat",
+      "opis": ["Pochodzi z Ukrainy", "Dwoje dzieci: 4 i 9 lat", "Mąż został w Ukrainie", "Nauczycielka historii, w Polsce szuka pracy poza zawodem"],
+      "cele": ["Bezpieczeństwo rodziny", "Praca i mieszkanie", "Przedszkole i szkoła dla dzieci"],
+      "wyzwania": ["Wynajem mieszkania (niechęć wynajmujących)", "Adaptacja dzieci, które nie mówią po polsku"],
+      "motywacje": ["Odnaleźć się w Polsce, integracja i aktywizacja", "Duża motywacja do zmiany"],
+      "miejsce_demo": "Kraków"
+    },
+    {
+      "id": "stanislaw", "obszar": "zdrowie", "imie": "Stanisław", "wiek": "56 lat",
+      "opis": ["Pracuje na etat i opiekuje się chorą matką", "Zaniedbuje własne zdrowie", "Otyłość i choroba serca", "Wycofany społecznie"],
+      "cele": ["Równowaga między pracą a opieką", "Więcej energii i lepsze zdrowie", "Relacje społeczne"],
+      "wyzwania": ["Fizyczne i emocjonalne obciążenie opieką nad osobą zależną", "Niepokój o pogarszające się zdrowie"],
+      "motywacje": ["Bezpieczeństwo i codzienna opieka nad matką", "Chwila dla siebie", "Wyjście poza schemat obowiązków"],
+      "miejsce_demo": "powiat oświęcimski"
+    },
+    {
+      "id": "mateusz", "obszar": "zdrowie_psychiczne", "imie": "Mateusz", "wiek": "17 lat",
+      "opis": ["Liceum w dużym mieście", "Większość czasu w sieci", "Przeżył rozstanie z pierwszą dziewczyną", "Pustka, stany depresyjne"],
+      "cele": ["Cele poza wirtualną rzeczywistością", "Wsparcie w trudnych emocjach", "Przełamanie izolacji, przynależność do grupy"],
+      "wyzwania": ["Skąpe kontakty z rówieśnikami", "Nadmiar czasu przed komputerem", "Trudność w rozumieniu emocji, niska motywacja"],
+      "motywacje": ["Poczucie bycia ważnym", "Akceptacja, bratnia dusza", "Poczucie bezpieczeństwa"],
+      "miejsce_demo": "Nowy Sącz"
+    },
+    {
+      "id": "karina", "obszar": "zdrowie_psychiczne", "imie": "Karina", "wiek": "41 lat",
+      "opis": ["Mieszka w dużym mieście", "Niedawno zdiagnozowana choroba afektywna dwubiegunowa", "Leczenie długoterminowe pod opieką psychiatry", "Wraca na rynek pracy"],
+      "cele": ["Stabilne zatrudnienie", "Wsparcie w aktywizacji zawodowej", "Działania dopasowane do jej możliwości"],
+      "wyzwania": ["Powrót do rzeczywistości po szpitalu", "Wstyd i wyobcowanie po diagnozie", "Spadek energii, lęk przed odrzuceniem", "Ryzyko bezrobocia i nawrotu kryzysu"],
+      "motywacje": ["Powrót do normalności i życia społecznego", "Znalezienie i podjęcie pracy", "Wiara we własne możliwości"],
+      "miejsce_demo": "Tarnów"
+    },
+    {
+      "id": "janina", "obszar": "seniorzy", "imie": "Janina", "wiek": "73 lata",
+      "opis": ["Mieszka sama w małym mieście", "Niedawno straciła męża, czuje się samotna, rzadko wychodzi z domu", "Wiele schorzeń, przyjmuje sporo leków i suplementów"],
+      "cele": ["Mniej samotności, więcej aktywności", "Poczucie wartości i użyteczności", "Świadome dbanie o zdrowie i kontrola leków"],
+      "wyzwania": ["Samotność i brak integracji", "Nadużywanie leków i suplementów", "Organizacja dnia", "Zmiana życia po utracie męża"],
+      "motywacje": ["Sens i przyjemność w prostych rzeczach", "Lepsze samopoczucie", "Wyjście do ludzi"],
+      "miejsce_demo": "Olkusz (powiat olkuski)"
+    }
+  ]
+}
