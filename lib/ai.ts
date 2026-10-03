@@ -41,6 +41,7 @@ export async function zapytajJson<S extends z.ZodType>(opcje: {
   model?: string;
   effort?: Effort;
   maxTokens?: number;
+  timeoutMs?: number;
 }): Promise<{ dane: z.infer<S>; uzycie: UzycieAi }> {
   const model = opcje.model ?? DOMYSLNY_MODEL();
   let odpowiedz;
@@ -57,7 +58,7 @@ export async function zapytajJson<S extends z.ZodType>(opcje: {
       })),
       messages: [{ role: "user", content: opcje.uzytkownik }],
       output_config: { effort: opcje.effort ?? "medium", format: zodOutputFormat(opcje.schemat) },
-    });
+    }, opcje.timeoutMs ? { timeout: opcje.timeoutMs } : undefined);
   } catch (e) {
     if (e instanceof AiNiedostepneError) throw e;
     if (e instanceof Anthropic.APIError) throw new AiNiedostepneError("blad", `API ${e.status}: ${e.message}`);

@@ -52,7 +52,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {t("nav.przejdzDoTresci")}
           </a>
           <PasekDostepnosci poczatkowe={ustawienia} />
-          <header className="border-b border-line-soft bg-bg">
+          <header className="nie-drukuj border-b border-line-soft bg-bg">
             <div className="kontener flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-2">
               <Link href="/" className="flex items-center gap-3 text-fg no-underline">
                 <Logo className="size-11 text-fg" />

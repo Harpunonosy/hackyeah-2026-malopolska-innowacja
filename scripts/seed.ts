@@ -2,19 +2,9 @@
 import { readFileSync } from "node:fs";
 import { db } from "../lib/db";
 import { innowacje } from "../lib/biblioteka";
+import { OBSZAR_KATEGORII } from "../lib/obszary";
 
 const wczytaj = (p: string) => JSON.parse(readFileSync(p, "utf8"));
-const OBSZAR_KATEGORII: Record<string, string> = {
-  Seniorzy: "seniorzy",
-  "Dzieci, młodzież i rodzina": "rodzina_piecza",
-  "Rynek pracy": "ubostwo",
-  "Osoby o ograniczonej mobilności": "niepelnosprawnosc",
-  "Niepełnosprawność sensoryczna": "niepelnosprawnosc",
-  "Niepełnosprawność intelektualna": "niepelnosprawnosc",
-  Cudzoziemcy: "cudzoziemcy",
-  "Kryzys bezdomności": "bezdomnosc",
-  "Zdrowie i medycyna": "zdrowie",
-};
 
 async function main() {
   const c = await db().connect();

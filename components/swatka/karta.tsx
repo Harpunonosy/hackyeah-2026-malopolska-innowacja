@@ -56,6 +56,9 @@ export function KartaInnowacji({ k }: { k: KartaDopasowania }) {
             <ArrowRight aria-hidden className="size-5" />
           </Link>
         </Button>
+        <Button asChild wariant="obrys" className="zaawansowane">
+          <Link href={`/wdrozenie?innowacja=${k.id}`}>{t("wdroz")}</Link>
+        </Button>
         {k.film && (
           <Button asChild wariant="obrys">
             <a href={k.film} target="_blank" rel="noopener noreferrer">

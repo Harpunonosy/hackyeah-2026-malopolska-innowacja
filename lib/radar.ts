@@ -185,3 +185,16 @@ export async function policzRadar(): Promise<RadarDane> {
     kpi: { zgloszen: zgl.length, bezDopasowania: bez, procentBez: zgl.length ? Math.round((100 * bez) / zgl.length) : 0, bialePlamy: luki.length, cichePotrzeby: ciche.length },
   };
 }
+
+/** Wskaźniki IOSS dla powiatu w danym obszarze, na tle średniej regionu (do uzasadnień lokalnych). */
+export async function wskaznikiPowiatu(obszar: ObszarId, powiat: string) {
+  const ioss = await wczytajIoss();
+  return WSKAZNIKI_OBSZARU[obszar]
+    .map((w) => {
+      const wart = ioss.powiaty.map((p) => ioss.wartosci[w.id]?.[p]).filter((x): x is number => x !== undefined);
+      const wartosc = ioss.wartosci[w.id]?.[powiat];
+      if (wartosc === undefined) return null;
+      return { nazwa: NAZWY_WSKAZNIKOW[w.id], wartosc, sredniaRegionu: Math.round((wart.reduce((a, b) => a + b, 0) / wart.length) * 100) / 100 };
+    })
+    .filter((x): x is { nazwa: string; wartosc: number; sredniaRegionu: number } => x !== null);
+}

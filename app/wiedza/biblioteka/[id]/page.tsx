@@ -60,7 +60,10 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
         <aside className="space-y-4 lg:sticky lg:top-28">
           <section className="karta space-y-3 p-5">
             <Button asChild className="w-full">
-              <Link href="/problem">{t("wroc")}</Link>
+              <Link href={`/wdrozenie?innowacja=${i.id}`}>{t("wdroz")}</Link>
+            </Button>
+            <Button asChild wariant="obrys" className="w-full">
+              <Link href="/">{t("wroc")}</Link>
             </Button>
             {i.film.map((f, n) => (
               <Button key={f} asChild wariant="obrys" className="w-full">
