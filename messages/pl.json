@@ -1082,5 +1082,13 @@
     "usun": "Usuń",
     "blad": "Nie udało się. Sprawdź dane i spróbuj ponownie.",
     "aiOznaczenie": "Propozycje przygotowane przez AI na podstawie wklejonego tekstu."
+  },
+  "centralaPulpit": {
+    "wlacz": "Włącz powiadomienia na pulpicie",
+    "wlaczone": "Powiadomienia na pulpicie są włączone",
+    "zablokowane": "Powiadomienia są zablokowane w przeglądarce. Odblokuj je w ustawieniach strony.",
+    "brak": "Ta przeglądarka nie obsługuje powiadomień.",
+    "tytul": "Splot: {n, plural, one {nowa sprawa} few {# nowe sprawy} other {# nowych spraw}}",
+    "opis": "Nowe sprawy pokażą się jako powiadomienie systemowe, także gdy Centrala jest w tle."
   }
 }

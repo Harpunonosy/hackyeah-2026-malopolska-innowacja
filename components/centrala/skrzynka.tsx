@@ -3,7 +3,8 @@
 import * as React from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { Bell, Siren } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { Bell, BellRing, Siren } from "lucide-react";
 import { Chip } from "@/components/ui/chip";
 import { Button } from "@/components/ui/button";
 import { nazwaObszaru, type ObszarId } from "@/lib/obszary";
@@ -31,7 +32,41 @@ function dzwiek() {
   }
 }
 
+/** Powiadomienie systemowe (pulpit), gdy przeglądarka ma zgodę. Kliknięcie przenosi do Centrali. */
+function naPulpit(tytul: string, tresc: string) {
+  try {
+    if (typeof Notification === "undefined" || Notification.permission !== "granted") return;
+    const n = new Notification(tytul, { body: tresc, tag: "splot-nowe", icon: "/favicon.ico" });
+    n.onclick = () => { window.focus(); n.close(); };
+  } catch {
+    /* brak powiadomień nie jest błędem */
+  }
+}
+
+function PrzelacznikPulpitu() {
+  const t = useTranslations("centralaPulpit");
+  const [zgoda, setZgoda] = React.useState<NotificationPermission | "brak" | null>(null);
+  React.useEffect(() => {
+    const id = requestAnimationFrame(() => setZgoda(typeof Notification === "undefined" ? "brak" : Notification.permission));
+    return () => cancelAnimationFrame(id);
+  }, []);
+  if (zgoda === null) return null;
+  if (zgoda === "brak") return <p className="text-sm text-muted">{t("brak")}</p>;
+  if (zgoda === "denied") return <p className="text-sm text-muted">{t("zablokowane")}</p>;
+  if (zgoda === "granted") return <p className="flex items-center gap-2 text-sm font-semibold text-ok"><BellRing aria-hidden className="size-5" />{t("wlaczone")}</p>;
+  return (
+    <div className="space-y-1">
+      <Button type="button" wariant="obrys" onClick={async () => setZgoda(await Notification.requestPermission())}><BellRing aria-hidden className="size-5" />{t("wlacz")}</Button>
+      <p className="text-sm text-muted">{t("opis")}</p>
+    </div>
+  );
+}
+
 export function Skrzynka() {
+  const tp = useTranslations("centralaPulpit");
+  // Tłumaczenie przez ref: zmiana funkcji nie restartuje odpytywania.
+  const tpRef = React.useRef(tp);
+  React.useEffect(() => { tpRef.current = tp; }, [tp]);
   const router = useRouter();
   const [wiersze, setWiersze] = React.useState<Wiersz[] | null>(null);
   const [nowe, setNowe] = React.useState<string[]>([]);
@@ -52,6 +87,7 @@ export function Skrzynka() {
         if (swieze.length) {
           setNowe((n) => [...swieze, ...n].slice(0, 5));
           dzwiek();
+          naPulpit(tpRef.current("tytul", { n: swieze.length }), swieze.join(", "));
         }
       }
       znane.current = new Set(zgloszenia.map((z) => z.id));
@@ -80,6 +116,7 @@ export function Skrzynka() {
             </p>
           )}
         </div>
+        <PrzelacznikPulpitu />
         <Button
           type="button"
           wariant="obrys"
