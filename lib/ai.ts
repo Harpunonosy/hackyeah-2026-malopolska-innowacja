@@ -23,7 +23,10 @@ export type UzycieAi = {
   cacheOdczyt: number;
 };
 
-export const DOMYSLNY_MODEL = () => process.env.AI_MODEL || "claude-sonnet-5-5";
+export const DOMYSLNY_MODEL = () => process.env.AI_MODEL || "claude-haiku-4-5";
+
+// Haiku 4.5 nie przyjmuje parametru effort (zwraca błąd 400), więc wysyłamy go tylko nowszym modelom.
+const obslugujeEffort = (model: string) => !model.includes("haiku");
 
 let klient: Anthropic | null = null;
 function pobierzKlienta(): Anthropic {
@@ -57,7 +60,10 @@ export async function zapytajJson<S extends z.ZodType>(opcje: {
           : {}),
       })),
       messages: [{ role: "user", content: opcje.uzytkownik }],
-      output_config: { effort: opcje.effort ?? "medium", format: zodOutputFormat(opcje.schemat) },
+      output_config: {
+        ...(obslugujeEffort(model) ? { effort: opcje.effort ?? "low" } : {}),
+        format: zodOutputFormat(opcje.schemat),
+      },
     }, opcje.timeoutMs ? { timeout: opcje.timeoutMs } : undefined);
   } catch (e) {
     if (e instanceof AiNiedostepneError) throw e;

@@ -141,7 +141,7 @@ export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { i
           {t("przygotuj")}
         </Button>
         <div>
-          {stan === "pracuje" && <Postep kroki={t("postepKroki")} sekund={60} />}
+          {stan === "pracuje" && <Postep kroki={t("postepKroki")} sekund={80} />}
           {stan === "blad" && <p role="alert" className="font-semibold text-primary">{komunikat}</p>}
         </div>
       </div>

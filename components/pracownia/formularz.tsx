@@ -91,7 +91,7 @@ export function FormularzPomyslu() {
         </div>
         {!fiszka && <p><Button type="button" wariant="cichy" onClick={trybReczny}>{t("trybReczny")}</Button></p>}
         <div>
-          {stan === "pracuje" && <Postep kroki={t("postepKroki")} sekund={30} />}
+          {stan === "pracuje" && <Postep kroki={t("postepKroki")} sekund={40} />}
           {stan === "blad" && <p role="alert" className="font-semibold text-primary">{komunikat}</p>}
         </div>
       </form>
