@@ -63,7 +63,7 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
               <Link href={`/wdrozenie?innowacja=${i.id}`}>{t("wdroz")}</Link>
             </Button>
             <Button asChild wariant="obrys" className="w-full">
-              <Link href="/">{t("wroc")}</Link>
+              <Link href={`/testy?innowacja=${i.id}`}>{t("ocen")}</Link>
             </Button>
             {i.film.map((f, n) => (
               <Button key={f} asChild wariant="obrys" className="w-full">

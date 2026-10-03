@@ -54,7 +54,7 @@
       },
       "testy": {
         "tytul": "Chcę testować",
-        "opis": "Wypróbuj nowe rozwiązania"
+        "opis": "Zapisz się lub oceń rozwiązanie"
       },
       "wiedza": {
         "tytul": "Biblioteka",
@@ -220,7 +220,8 @@
     "zFilmem": "film",
     "wybraneKrotko": "wybrana do upowszechniania",
     "zobacz": "Zobacz opis",
-    "wdroz": "Wdróż u siebie"
+    "wdroz": "Wdróż u siebie",
+    "ocen": "Oceń to rozwiązanie"
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",
@@ -366,5 +367,50 @@
     "wyslanoOpis": "Pracownicy ROPS zobaczą Twoją fiszkę. Dziękujemy za pomysł.",
     "blad2": "Nie udało się wysłać. Spróbuj ponownie.",
     "oznaczenie": "Fiszka i ocena przygotowane z pomocą AI. Sprawdź je przed wysłaniem."
+  },
+  "probownia": {
+    "nadtytul": "Próbownia: tester innowacji",
+    "tytul": "Pomóż przetestować nowe rozwiązania",
+    "opis": "Zapisz się do testu albo oceń rozwiązanie z Biblioteki. Twoja opinia pomaga ROPS wybierać to, co naprawdę działa.",
+    "otwarte": "Otwarte testy",
+    "brakTestow": "Aktualnie nie ma otwartych testów.",
+    "miejsca": "Wolne miejsca: {wolne} z {razem}",
+    "gdzie": "Gdzie",
+    "kiedy": "Kiedy",
+    "kogo": "Kogo szukamy",
+    "dostepnosc": "Dostępność",
+    "chce": "Chcę wziąć udział",
+    "email": "Adres e-mail (nieobowiązkowo)",
+    "emailPomoc": "Podaj go, jeśli chcesz dostać przypomnienie o terminie.",
+    "zapisz": "Zapisz mnie",
+    "zapisujac": "Zapisuję…",
+    "zapisano": "Jesteś zapisany. Dziękujemy!",
+    "pelny": "Brak wolnych miejsc",
+    "blad": "Nie udało się zapisać. Spróbuj ponownie.",
+    "ocenTytul": "Oceń rozwiązanie z Biblioteki",
+    "ocenOpis": "Wybierz rozwiązanie, które znasz lub testowałeś, i powiedz, jak działa.",
+    "wybierz": "Rozwiązanie",
+    "przejdz": "Oceń to rozwiązanie"
+  },
+  "opinia": {
+    "tytul": "Oceń to rozwiązanie",
+    "opis": "Twoja opinia trafi do ROPS i autora innowacji.",
+    "skala": "Jak oceniasz to rozwiązanie?",
+    "o1": "Słabo",
+    "o2": "Raczej słabo",
+    "o3": "Średnio",
+    "o4": "Dobrze",
+    "o5": "Bardzo dobrze",
+    "latwe": "Co było najłatwiejsze?",
+    "trudne": "Co było trudne?",
+    "polecilbys": "Czy poleciłbyś to innym?",
+    "tak": "Tak",
+    "nie": "Nie",
+    "moze": "Nie wiem",
+    "propozycja": "Co warto usprawnić?",
+    "wyslij": "Wyślij opinię",
+    "wysylam": "Wysyłam…",
+    "dzieki": "Dziękujemy za opinię!",
+    "blad": "Nie udało się wysłać opinii."
   }
 }
