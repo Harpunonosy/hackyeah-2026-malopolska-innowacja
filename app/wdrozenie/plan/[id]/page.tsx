@@ -5,6 +5,8 @@ import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { CircleAlert, CircleCheck, CircleDot, CircleHelp, CircleX, Compass, ExternalLink, Sparkles } from "lucide-react";
 import { Drukuj } from "@/components/krawiec/drukuj";
+import { KonsultacjaPlanu } from "@/components/krawiec/konsultacja";
+import { OBSZAR_KATEGORII } from "@/lib/obszary";
 import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
 import { Strona } from "@/components/strona";
@@ -36,6 +38,10 @@ export default async function Plan(props: PageProps<"/wdrozenie/plan/[id]">) {
   const profil = rows[0].profil as { typ: TypInstytucji; powiat: string; budzet: keyof typeof BUDZETY; odbiorcy: number };
   const { plan, dane } = rows[0].plan as { plan: PlanWdrozenia; dane: { wskazniki: { nazwa: string; wartosc: number; sredniaRegionu: number }[]; limit: number; razem: number; przekroczony: boolean } };
   const kw = rows[0].kwalifikowalnosc as Kwalifikowalnosc;
+  // Ekspert polecany: ten, którego obszary obejmują obszar innowacji.
+  const eksperci = (await db().query("select uzytkownik_id as id, nazwa, obszary from eksperci order by nazwa")).rows as { id: string; nazwa: string; obszary: string[] }[];
+  const obszarInn = inn ? OBSZAR_KATEGORII[inn.kategoria] : undefined;
+  const polecany = eksperci.find((e) => obszarInn && e.obszary?.includes(obszarInn))?.id ?? null;
   const stale = plan.budzet.pozycje.filter((p) => p.rodzaj === "stale");
   const zmienne = plan.budzet.pozycje.filter((p) => p.rodzaj === "zmienne");
   const ikona = { spelnia: CircleCheck, nie_spelnia: CircleX, do_sprawdzenia: CircleHelp };
@@ -217,6 +223,11 @@ export default async function Plan(props: PageProps<"/wdrozenie/plan/[id]">) {
         <p className="text-lg">{plan.kontakt_z_autorem}</p>
         {inn && <Button asChild wariant="obrys" className="nie-drukuj"><Link href={`/wiedza/biblioteka/${inn.id}`}>{inn.nazwa}</Link></Button>}
       </Sekcja>
+
+      <section className="karta nie-drukuj space-y-3 border-2 border-accent p-6">
+        <h2 className="text-2xl font-bold">{t("konsultacjaTytul")}</h2>
+        <KonsultacjaPlanu planId={id} eksperci={eksperci.map(({ id, nazwa }) => ({ id, nazwa }))} polecany={polecany} />
+      </section>
 
       {inn && (
         <Sekcja tytul={t("sekcjaPakiet")}>

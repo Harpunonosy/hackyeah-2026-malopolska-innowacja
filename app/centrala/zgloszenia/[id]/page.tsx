@@ -71,6 +71,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
       <section aria-labelledby="tresc-h" className="space-y-2">
         <h2 id="tresc-h" className="text-2xl font-bold">Treść (dane osobowe zamaskowane)</h2>
         <p className="whitespace-pre-line karta p-5 text-lg">{z.tresc_zamaskowana}</p>
+        {typeof z.obiekt_id === "string" && z.obiekt_id.startsWith("plan:") && <p><Link href={`/wdrozenie/plan/${z.obiekt_id.slice(5)}`} className="font-semibold underline">Otwórz plan wdrożenia, którego dotyczy konsultacja</Link></p>}
       </section>
 
       <section aria-labelledby="ai-h" className="space-y-2">

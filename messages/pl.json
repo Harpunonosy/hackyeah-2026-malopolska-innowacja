@@ -461,7 +461,18 @@
     "kartaRops": "Karta innowacji na stronie ROPS",
     "kontaktHub": "Zapytaj autora lub eksperta przez Hub",
     "pierwszeKroki": "Pierwsze 30 dni",
-    "nowaKarta": "(otworzy się w nowej karcie)"
+    "nowaKarta": "(otworzy się w nowej karcie)",
+    "konsultacjaTytul": "Poproś eksperta o opinię",
+    "konsultacjaOpis": "Ekspert współpracujący z ROPS przeczyta plan i odpowie w ciągu 2 dni roboczych. Odpowiedź zobaczysz w „Moje sprawy” po numerze sprawy.",
+    "konsultacjaEkspert": "Wybierz eksperta",
+    "konsultacjaPolecany": "polecany do tej innowacji",
+    "konsultacjaPytanie": "O co chcesz zapytać?",
+    "konsultacjaPrzyklad": "Czy budżet i harmonogram są realne dla naszej gminy? Na co uważać przy naborze?",
+    "konsultacjaEmail": "E-mail do powiadomienia (opcjonalnie)",
+    "konsultacjaWyslij": "Wyślij plan do eksperta",
+    "konsultacjaWyslano": "Wysłano. Numer sprawy: {numer}.",
+    "konsultacjaStatus": "Sprawdź status",
+    "konsultacjaBlad": "Nie udało się wysłać. Spróbuj ponownie."
   },
   "pracownia": {
     "nadtytul": "Pracownia: kreator pomysłów",
@@ -941,10 +952,14 @@
     "k4t": "Tryb asystowany i papier",
     "k4o": "Pracownik OPS zgłasza sprawę w imieniu seniora bez internetu i drukuje kartę potrzeby z kodem QR.",
     "k5t": "Krawiec 2.0",
-    "k5o": "Plan wdrożenia dla gminy: dwa warianty z kosztem na odbiorcę, kompas deinstytucjonalizacji, pakiet startowy.",
+    "k5o": "Plan wdrożenia dla gminy: dwa warianty z kosztem na odbiorcę, kompas deinstytucjonalizacji, pakiet startowy. Jednym kliknięciem plan trafia do eksperta po opinię.",
     "k6t": "Architektura i koszty",
     "k6o": "Test obciążenia (86 zapytań/s na jednym procesie, 0 błędów), koszt dopasowania ok. 2,5 gr z pomiaru, kroki wdrożenia w innym województwie: plik docs/WDROZENIE.md w repozytorium.",
-    "otworz": "Otwórz"
+    "otworz": "Otwórz",
+    "k7t": "Sieć liderów innowacji",
+    "k7o": "Autorzy innowacji, samorządy, uczelnie i firmy z filtrem poczwórnej helisy. Kontakt przez Hub, mapa wdrożeń, dołączanie po weryfikacji ROPS.",
+    "k8t": "Szkic pomysłu",
+    "k8o": "W Pracowni asystent rysuje koncepcyjny szkic przedmiotu, ekranu albo usługi, opisuje części i proponuje nietuzinkowe warianty."
   },
   "puls": {
     "tytul": "Puls Małopolski",

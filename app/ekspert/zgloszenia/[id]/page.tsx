@@ -33,7 +33,9 @@ export default async function Page(props: PageProps<"/ekspert/zgloszenia/[id]">)
         <p className="flex flex-wrap gap-2">{z.tytul && <Chip>{z.tytul}</Chip>}{z.powiat && <Chip>{z.powiat}</Chip>}</p>
         <p className="text-muted">Wpłynęło {fmt(z.created_at)}. Termin odpowiedzi {fmt(z.termin_sla)}. Dane osobowe są zamaskowane.</p>
       </header>
-      <section aria-labelledby="tr" className="space-y-2"><h2 id="tr" className="text-2xl font-bold">Treść</h2><p className="karta whitespace-pre-line p-5 text-lg">{z.tresc_zamaskowana}</p></section>
+      <section aria-labelledby="tr" className="space-y-2"><h2 id="tr" className="text-2xl font-bold">Treść</h2><p className="karta whitespace-pre-line p-5 text-lg">{z.tresc_zamaskowana}</p>
+        {typeof z.obiekt_id === "string" && z.obiekt_id.startsWith("plan:") && <p><Link href={`/wdrozenie/plan/${z.obiekt_id.slice(5)}`} className="text-lg font-semibold underline">Otwórz plan wdrożenia, o który pyta instytucja</Link></p>}
+      </section>
       {dop.rows.length > 0 && (
         <section aria-labelledby="dp" className="space-y-2"><h2 id="dp" className="text-2xl font-bold">Dopasowane innowacje</h2>
           <ul className="space-y-2">{dop.rows.map((d) => <li key={d.id} className="karta-mala p-3"><Link href={`/wiedza/biblioteka/${d.id}`} className="font-bold">{d.nazwa}</Link><span className="block">{d.dlaczego}</span></li>)}</ul>

@@ -20,7 +20,7 @@ const MODULY = [
   ["VII. Middleman Innowacji", "/wdrozenie", "Krawiec: plan wdrożenia w dwóch wariantach, kompas deinstytucjonalizacji, kwalifikowalność, pakiet startowy"],
 ] as const;
 
-const GOTOWOSC = [["k1", "/integracje"], ["k2", "/centrala/integracje"], ["k3", "/centrala/nabory"], ["k4", "/asystowane"], ["k5", "/wdrozenie"], ["k6", null]] as const;
+const GOTOWOSC = [["k1", "/integracje"], ["k2", "/centrala/integracje"], ["k3", "/centrala/nabory"], ["k4", "/asystowane"], ["k5", "/wdrozenie"], ["k7", "/siec"], ["k8", "/pomysl"], ["k6", null]] as const;
 
 export default async function Ocena() {
   const t = await getTranslations("ocena");
