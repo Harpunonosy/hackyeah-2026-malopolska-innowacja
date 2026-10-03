@@ -367,7 +367,9 @@
       },
       "jeszczeNie": "(jeszcze nie)"
     },
-    "sledzenie": "Śledzenie zgłoszenia"
+    "sledzenie": "Śledzenie zgłoszenia",
+    "bladSieci": "Nie udało się odświeżyć sprawy. Ponawiamy połączenie automatycznie. Ostatnie pobrane informacje pozostają widoczne.",
+    "ladowanie": "Ładujemy Twoją sprawę…"
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -1089,6 +1091,7 @@
     "zablokowane": "Powiadomienia są zablokowane w przeglądarce. Odblokuj je w ustawieniach strony.",
     "brak": "Ta przeglądarka nie obsługuje powiadomień.",
     "tytul": "Splot: {n, plural, one {nowa sprawa} few {# nowe sprawy} other {# nowych spraw}}",
-    "opis": "Nowe sprawy pokażą się jako powiadomienie systemowe, także gdy Centrala jest w tle."
+    "opis": "Nowe sprawy pokażą się jako powiadomienie systemowe, także gdy Centrala jest w tle.",
+    "bladSieci": "Nie udało się odświeżyć skrzynki. Ponawiamy połączenie automatycznie. Ostatnie pobrane sprawy pozostają widoczne."
   }
 }

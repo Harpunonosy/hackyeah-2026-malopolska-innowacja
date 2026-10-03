@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
 import { ETYKIETY_STATUSOW, STATUSY, type Status } from "@/lib/statusy";
 import { ETYKIETY_TYPOW, type TypSprawy } from "@/lib/sprawy-etykiety";
+import { odpytywanie } from "@/lib/odpytywanie";
 
 type Dane = {
   numer: string;
@@ -95,20 +96,25 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
   const [ocena, setOcena] = React.useState<number | null>(null);
   const [odp, setOdp] = React.useState("");
   const [wyslano, setWyslano] = React.useState(false);
+  const [bladSieci, setBladSieci] = React.useState(false);
 
   React.useEffect(() => {
     let aktywny = true;
-    async function pobierz() {
-      const r = await fetch(`/api/zgloszenia/${numer}`, { cache: "no-store" });
+    async function pobierz(signal: AbortSignal) {
+      const r = await fetch(`/api/zgloszenia/${numer}`, { cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(15000)]) });
       if (!aktywny) return;
       if (r.status === 404) return setBrak(true);
-      if (r.ok) setDane(await r.json());
+      if (!r.ok) throw new Error("sprawa_niedostepna");
+      const wynik: Dane = await r.json();
+      if (!aktywny) return;
+      setBladSieci(false);
+      setBrak(false);
+      setDane(wynik);
     }
-    pobierz();
-    const timer = setInterval(pobierz, 4000);
+    const stop = odpytywanie(pobierz, 4000, () => { if (aktywny) setBladSieci(true); });
     return () => {
       aktywny = false;
-      clearInterval(timer);
+      stop();
     };
   }, [numer]);
 
@@ -118,13 +124,14 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
   }
 
   if (brak) return <p role="alert" className="text-lg font-semibold">{t("nieZnaleziono")}</p>;
-  if (!dane) return <p role="status">…</p>;
+  if (!dane) return <p role="status">{bladSieci ? t("bladSieci") : t("ladowanie")}</p>;
 
   const osiagniete = new Set(dane.historia.map((h) => h.status));
   const etapy: Status[] = ["wyslane", "przeczytane", "w_analizie", "odpowiedz"];
 
   return (
     <div className="space-y-8">
+      {bladSieci && <p role="status" className="rounded-xl border-2 border-primary p-4 font-semibold">{t("bladSieci")}</p>}
       <p className="flex flex-wrap items-center gap-2">
         <Chip>{ETYKIETY_TYPOW[dane.typ as TypSprawy] ?? dane.typ}</Chip>
         {dane.tytul && <span className="font-display text-xl font-bold">{dane.tytul}</span>}

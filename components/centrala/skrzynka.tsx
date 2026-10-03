@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button";
 import { nazwaObszaru, type ObszarId } from "@/lib/obszary";
 import { ETYKIETY_TYPOW, TYPY_SPRAW, type TypSprawy } from "@/lib/sprawy-etykiety";
 import { ETYKIETY_PRIORYTETU, ETYKIETY_STATUSOW, type Status } from "@/lib/statusy";
+import { noweSprawy, odpytywanie } from "@/lib/odpytywanie";
 
 type Wiersz = {
   id: string; numer: string; status: Status; priorytet: number; kryzys: boolean; obszar: ObszarId | null; powiat: string | null;
@@ -73,31 +74,35 @@ export function Skrzynka() {
   const znane = React.useRef<Set<string> | null>(null);
   const [filtr, setFiltr] = React.useState<"wszystkie" | TypSprawy>("wszystkie");
   const [metryki, setMetryki] = React.useState<{ odpowiedzianych: number; mediana_min: string | null; w_terminie: number } | null>(null);
+  const [bladSieci, setBladSieci] = React.useState(false);
 
   React.useEffect(() => {
     let aktywny = true;
-    async function pobierz() {
-      const r = await fetch("/api/admin/zgloszenia", { cache: "no-store" });
-      if (r.status === 401) return router.push("/centrala/logowanie");
-      if (!r.ok || !aktywny) return;
+    async function pobierz(signal: AbortSignal) {
+      const r = await fetch("/api/admin/zgloszenia", { cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(15000)]) });
+      if (!aktywny) return;
+      if (r.status === 401) { router.push("/centrala/logowanie"); return; }
+      if (!r.ok) throw new Error("skrzynka_niedostepna");
       const { zgloszenia, metryki: m } = (await r.json()) as { zgloszenia: Wiersz[]; metryki: { odpowiedzianych: number; mediana_min: string | null; w_terminie: number } };
+      if (!aktywny) return;
+      setBladSieci(false);
       setMetryki(m);
-      if (znane.current) {
-        const swieze = zgloszenia.filter((z) => !znane.current!.has(z.id)).map((z) => `${ETYKIETY_TYPOW[z.typ as TypSprawy] ?? z.typ} ${z.numer}`);
+      {
+        const pierwsze = znane.current === null;
+        znane.current ??= new Set<string>();
+        const swieze = noweSprawy(znane.current, zgloszenia, pierwsze).map((z) => `${ETYKIETY_TYPOW[z.typ as TypSprawy] ?? z.typ} ${z.numer}`);
         if (swieze.length) {
           setNowe((n) => [...swieze, ...n].slice(0, 5));
           dzwiek();
           naPulpit(tpRef.current("tytul", { n: swieze.length }), swieze.join(", "));
         }
       }
-      znane.current = new Set(zgloszenia.map((z) => z.id));
       setWiersze(zgloszenia);
     }
-    pobierz();
-    const timer = setInterval(pobierz, 3000);
+    const stop = odpytywanie(pobierz, 3000, () => { if (aktywny) setBladSieci(true); });
     return () => {
       aktywny = false;
-      clearInterval(timer);
+      stop();
     };
   }, [router]);
 
@@ -145,6 +150,7 @@ export function Skrzynka() {
           </p>
         )}
       </div>
+      {bladSieci && <p role="status" className="rounded-xl border-2 border-primary p-4 font-semibold">{tp("bladSieci")}</p>}
 
       {widoczne === null ? (
         <p role="status">Ładuję…</p>
