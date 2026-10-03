@@ -3,6 +3,7 @@
 // adresat "autor" w "Moje sprawy" po numerze. E-mail i SMS są w MVP symulowane (podgląd w skrzynce nadawczej);
 // podpięcie SMTP i bramki SMS to jeden adapter w tym pliku.
 import { db } from "./db";
+import { wyslijZdarzenie, zdarzenieDlaPowiadomienia } from "./webhooki";
 
 export type TypPowiadomienia =
   | "nowa_sprawa" | "odpowiedz" | "pytanie_autora" | "nowy_pomysl" | "nabor_otwarty" | "nabor_zmiana" | "nabor_zamkniety"
@@ -39,6 +40,11 @@ export async function powiadom(p: NoweP): Promise<void> {
        values ($1,$2,$3,$4,$5,$6,$7,true)`,
       [p.adresat, p.typ, p.tytul ?? ETYKIETY_POWIADOMIEN[p.typ], p.tresc.slice(0, 400), p.link ?? null, p.numerSprawy ?? null, p.kanal ?? (p.adresat === "rops" ? "aplikacja" : "email")],
     );
+    // Zdarzenia dla ROPS idą też do zewnętrznych systemów Hubu (webhooki z podpisem HMAC).
+    const zdarzenie = zdarzenieDlaPowiadomienia(p.typ);
+    if (zdarzenie && p.adresat === "rops") {
+      wyslijZdarzenie(zdarzenie, { numerSprawy: p.numerSprawy ?? null, typ: p.typ, tytul: zdarzenie === "nabor.zmiana" ? (p.tytul ?? null) : null, link: p.link ?? null });
+    }
   } catch (e) {
     console.error("Powiadomienie nie zostało zapisane:", e instanceof Error ? e.message : "?");
   }

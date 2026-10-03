@@ -1,3 +1,4 @@
+import Link from "next/link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
@@ -33,7 +34,7 @@ export default async function Nabory() {
         <ul className="flex flex-wrap gap-3">
           <li><a className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/api/admin/eksport/zgloszenia">Zgłoszenia (CSV)</a></li>
           <li><a className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/api/admin/eksport/wnioski">Wnioski z naborów (JSON)</a></li>
-          <li><a className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/api/v1/innowacje">Katalog innowacji, API tylko do odczytu (JSON)</a></li>
+          <li><Link className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/centrala/integracje">API, webhooki i widżet</Link></li>
         </ul>
       </section>
       <NowyNabor />
