@@ -4,7 +4,7 @@ import { redirect } from "next/navigation";
 import { PodsumujOpinie, StatusFiszki } from "@/components/centrala/akcje-pomyslow";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
 import { Chip } from "@/components/ui/chip";
-import { innowacjaPoId } from "@/lib/biblioteka";
+import { katalog } from "@/lib/katalog";
 import { db } from "@/lib/db";
 import { czyAdmin } from "@/lib/sesja";
 
@@ -19,6 +19,7 @@ type Ocena = { id: string; nazwa: string; punkty: number; ok: boolean };
 
 export default async function Page() {
   if (!(await czyAdmin())) redirect("/centrala/logowanie");
+  const { mapa: innowacjaPoId } = await katalog();
   const c = db();
   const [fiszki, opinie, testy] = await Promise.all([
     c.query("select id, tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, status, created_at from fiszki order by (status='zgloszona') desc, created_at desc limit 40"),

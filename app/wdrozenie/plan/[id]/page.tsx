@@ -8,7 +8,7 @@ import { Drukuj } from "@/components/krawiec/drukuj";
 import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
 import { Strona } from "@/components/strona";
-import { innowacjaPoId } from "@/lib/biblioteka";
+import { innowacjaPoIdAsync } from "@/lib/katalog";
 import { db } from "@/lib/db";
 import { BUDZETY, TYPY_INSTYTUCJI, type Kwalifikowalnosc, type PlanWdrozenia, type TypInstytucji } from "@/lib/krawiec";
 
@@ -32,7 +32,7 @@ export default async function Plan(props: PageProps<"/wdrozenie/plan/[id]">) {
   const { rows } = await db().query("select innowacja_id, profil, plan, kwalifikowalnosc from plany_wdrozenia where id=$1", [id]);
   if (!rows[0]) notFound();
   const t = await getTranslations("krawiec");
-  const inn = innowacjaPoId.get(rows[0].innowacja_id);
+  const inn = await innowacjaPoIdAsync(rows[0].innowacja_id);
   const profil = rows[0].profil as { typ: TypInstytucji; powiat: string; budzet: keyof typeof BUDZETY; odbiorcy: number };
   const { plan, dane } = rows[0].plan as { plan: PlanWdrozenia; dane: { wskazniki: { nazwa: string; wartosc: number; sredniaRegionu: number }[]; limit: number; razem: number; przekroczony: boolean } };
   const kw = rows[0].kwalifikowalnosc as Kwalifikowalnosc;

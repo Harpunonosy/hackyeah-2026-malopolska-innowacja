@@ -1,6 +1,6 @@
 import { z } from "zod";
 import { zapytajJson, DOMYSLNY_MODEL } from "@/lib/ai";
-import { innowacjaPoId } from "@/lib/biblioteka";
+import { innowacjaPoIdAsync } from "@/lib/katalog";
 import { db } from "@/lib/db";
 import { czyAdmin } from "@/lib/sesja";
 
@@ -10,7 +10,7 @@ const Podsumowanie = z.object({ co_dziala: z.array(z.string()), co_poprawic: z.a
 export async function POST(req: Request) {
   if (!(await czyAdmin())) return Response.json({ blad: "brak_dostepu" }, { status: 401 });
   const w = z.object({ innowacjaId: z.string() }).safeParse(await req.json().catch(() => null));
-  const inn = w.success ? innowacjaPoId.get(w.data.innowacjaId) : undefined;
+  const inn = w.success ? await innowacjaPoIdAsync(w.data.innowacjaId) : undefined;
   if (!w.success || !inn) return Response.json({ blad: "walidacja" }, { status: 400 });
   const { rows } = await db().query("select ocena, odpowiedzi, propozycja from opinie where innowacja_id=$1 order by created_at desc limit 40", [inn.id]);
   if (rows.length === 0) return Response.json({ blad: "brak_opinii" }, { status: 404 });

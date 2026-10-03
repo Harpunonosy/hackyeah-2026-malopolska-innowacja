@@ -5,7 +5,7 @@ import { Opinia } from "@/components/probownia/opinia";
 import { Zapis } from "@/components/probownia/zapis";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
-import { innowacjaPoId } from "@/lib/biblioteka";
+import { katalog } from "@/lib/katalog";
 import { db } from "@/lib/db";
 
 export const metadata: Metadata = { title: "Chcę testować" };
@@ -14,6 +14,7 @@ export const dynamic = "force-dynamic";
 export default async function Testy(props: PageProps<"/testy">) {
   const t = await getTranslations("probownia");
   const sp = await props.searchParams;
+  const { mapa: innowacjaPoId } = await katalog();
   const oceniana = typeof sp.innowacja === "string" ? innowacjaPoId.get(sp.innowacja) : undefined;
   const { rows } = await db().query(
     `select t.id, t.innowacja_id, t.tytul, t.opis, t.kogo_szukamy, t.powiat, t.termin, t.liczba_miejsc, t.dostepnosc,

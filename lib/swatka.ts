@@ -3,7 +3,8 @@
 // -> walidacja -> próg "brak dopasowania". Gdy AI zawiedzie, działa wyszukiwanie awaryjne.
 import { z } from "zod";
 import { zapytajJson, AiNiedostepneError, DOMYSLNY_MODEL, type Effort, type UzycieAi } from "./ai";
-import { innowacjaPoId, INNOWACJE_IDS, katalogDoPromptu, skroc } from "./biblioteka";
+import { katalogDoPromptu, skroc, type Innowacja } from "./biblioteka";
+import { katalog } from "./katalog";
 import { faktyDlaObszaru, type Fakt } from "./fakty";
 import { wykryjKryzys, type RodzajKryzysu } from "./kryzys";
 import { zamaskuj } from "./maskowanie";
@@ -20,7 +21,7 @@ export const WejscieSwatki = z.object({
 });
 export type WejscieSwatki = z.infer<typeof WejscieSwatki>;
 
-const WyjscieAI = z.object({
+const schematAI = (ids: [string, ...string[]]) => z.object({
   obszar: z.enum(OBSZAR_IDS),
   grupa_docelowa: z.string(),
   potrzeby: z.array(z.string()),
@@ -28,7 +29,7 @@ const WyjscieAI = z.object({
   kryzys: z.boolean(),
   dopasowania: z.array(
     z.object({
-      id: z.enum(INNOWACJE_IDS),
+      id: z.enum(ids),
       trafnosc: z.number(),
       dlaczego: z.string(),
     }),
@@ -69,8 +70,8 @@ export type WynikSwatki = {
 
 const POLE_DOWOD = 420;
 
-function karta(id: string, trafnosc: number | null, dlaczego: string): KartaDopasowania {
-  const i = innowacjaPoId.get(id)!;
+function karta(mapa: Map<string, Innowacja>, id: string, trafnosc: number | null, dlaczego: string): KartaDopasowania {
+  const i = mapa.get(id)!;
   return {
     id,
     nazwa: i.nazwa,
@@ -85,7 +86,7 @@ function karta(id: string, trafnosc: number | null, dlaczego: string): KartaDopa
 
 const JEZYKI = { pl: "polski", uk: "ukraiński", en: "angielski" } as const;
 
-const INSTRUKCJA = `Jesteś asystentem Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Zadanie: zrozumieć potrzebę opisaną przez użytkownika i dopasować do niej innowacje społeczne z KATALOGU poniżej.
+const instrukcja = (lista: Innowacja[]) => `Jesteś asystentem Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Zadanie: zrozumieć potrzebę opisaną przez użytkownika i dopasować do niej innowacje społeczne z KATALOGU poniżej.
 
 ZASADY
 1. Polecasz WYŁĄCZNIE innowacje z katalogu, podając ich id. Nie wymyślasz innowacji ani faktów spoza katalogu.
@@ -102,18 +103,19 @@ ZASADY
 OBSZARY (Mapa Wyzwań Społecznych ROPS): ${OBSZARY.map((o) => `${o.id} (${o.nazwa})`).join("; ")}.
 
 KATALOG (id | nazwa | kategoria | na czym polega | jakich problemów dotyczy | odbiorcy | kto może wdrożyć):
-${katalogDoPromptu()}`;
+${katalogDoPromptu(lista)}`;
 
 export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
   const start = Date.now();
   const { tekst, zamaskowano } = zamaskuj(wejscie.tekst);
   const kryzysRegula = wykryjKryzys(tekst);
   const effort = (process.env.AI_EFFORT_SWATKA as Effort | undefined) ?? "medium";
+  const { lista: wszystkie, mapa } = await katalog();
 
   try {
     const { dane, uzycie } = await zapytajJson({
-      schemat: WyjscieAI,
-      system: [{ tekst: INSTRUKCJA, cache: "1h" }],
+      schemat: schematAI(wszystkie.map((i) => i.id) as [string, ...string[]]),
+      system: [{ tekst: instrukcja(wszystkie), cache: "1h" }],
       uzytkownik:
         `rola: ${wejscie.rola}\npowiat: ${wejscie.powiat || "nie podano"}\n` +
         `język odpowiedzi: ${JEZYKI[wejscie.jezyk]}\nopis użytkownika:\n"""\n${tekst}\n"""`,
@@ -141,8 +143,8 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
         slowaKluczowe: dane.slowa_kluczowe,
       },
       kryzys: kryzysAi,
-      dopasowania: dobre.map((d) => karta(d.id, Math.round(d.trafnosc), d.dlaczego)),
-      najblizsze: slabsze.slice(0, 3).map((d) => karta(d.id, Math.round(d.trafnosc), d.dlaczego)),
+      dopasowania: dobre.map((d) => karta(mapa, d.id, Math.round(d.trafnosc), d.dlaczego)),
+      najblizsze: slabsze.slice(0, 3).map((d) => karta(mapa, d.id, Math.round(d.trafnosc), d.dlaczego)),
       brakDopasowania: dobre.length === 0,
       pytanie: dane.pytanie_doprecyzowujace,
       fakty: faktyDlaObszaru(dane.obszar),
@@ -153,12 +155,13 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
     const powod = e instanceof AiNiedostepneError ? e.powod : "blad";
     if (!(e instanceof AiNiedostepneError)) console.error("Swatka: nieoczekiwany błąd", e instanceof Error ? e.message : "?");
     else if (e.powod !== "brak_klucza") console.error("Swatka: AI niedostępne:", e.powod, e.message);
-    return awaryjnie(tekst, zamaskowano, kryzysRegula, powod, Date.now() - start);
+    return awaryjnie(mapa, tekst, zamaskowano, kryzysRegula, powod, Date.now() - start);
   }
 }
 
 // Wyszukiwanie słów, gdy AI nie odpowiada. Bez ocen procentowych, bo nie byłyby uczciwe.
 function awaryjnie(
+  mapa: Map<string, Innowacja>,
   tekst: string,
   zamaskowano: string[],
   kryzys: RodzajKryzysu | null,
@@ -167,7 +170,7 @@ function awaryjnie(
 ): WynikSwatki {
   const trafienia = szukaj(tekst, 5).filter((t) => t.wynik >= 0.25);
   const karty = trafienia.map((t) =>
-    karta(t.id, null, t.slowa.length ? `Pasuje do słów z Twojego opisu: ${t.slowa.join(", ")}.` : "Podobny temat do Twojego opisu."),
+    karta(mapa, t.id, null, t.slowa.length ? `Pasuje do słów z Twojego opisu: ${t.slowa.join(", ")}.` : "Podobny temat do Twojego opisu."),
   );
   const obszar: ObszarId = "seniorzy";
   return {

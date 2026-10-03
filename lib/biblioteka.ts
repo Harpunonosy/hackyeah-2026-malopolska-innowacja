@@ -68,8 +68,8 @@ export const INNOWACJE_IDS = innowacje.map((i) => i.id) as [string, ...string[]]
 export const KATEGORIE = [...new Set(innowacje.map((i) => i.kategoria))].sort((a, b) => a.localeCompare(b, "pl"));
 
 // Katalog do promptu. Deterministyczny (stała kolejność i długości), żeby cache promptu się trafiał.
-export function katalogDoPromptu(): string {
-  return innowacje
+export function katalogDoPromptu(lista: Innowacja[] = innowacje): string {
+  return lista
     .map((i) =>
       [
         i.id,

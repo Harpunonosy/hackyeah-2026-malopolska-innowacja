@@ -1,7 +1,7 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 
-type Aktywna = "skrzynka" | "pomysly" | "nabory" | "radar";
+type Aktywna = "skrzynka" | "pomysly" | "nabory" | "tresci" | "radar";
 
 async function liczniki() {
   try {
@@ -21,6 +21,7 @@ export async function CentralaNav({ aktywna }: { aktywna: Aktywna }) {
     { id: "skrzynka", href: "/centrala/zgloszenia", etykieta: "Skrzynka zgłoszeń", licznik: n.zgloszenia },
     { id: "pomysly", href: "/centrala/pomysly", etykieta: "Pomysły, opinie i testy", licznik: n.fiszki },
     { id: "nabory", href: "/centrala/nabory", etykieta: "Nabory i wnioski", licznik: 0 },
+    { id: "tresci", href: "/centrala/tresci", etykieta: "Treści", licznik: 0 },
     { id: "radar", href: "/centrala/radar", etykieta: "Radar potrzeb", licznik: 0 },
   ] as const;
   return (

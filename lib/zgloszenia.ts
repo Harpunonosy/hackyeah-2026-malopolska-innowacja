@@ -1,7 +1,7 @@
 import { randomInt } from "node:crypto";
 import { z } from "zod";
 import { zapytajJson, DOMYSLNY_MODEL } from "./ai";
-import { innowacjaPoId } from "./biblioteka";
+import { innowacjaPoIdAsync } from "./katalog";
 import { db } from "./db";
 import { wykryjKryzys } from "./kryzys";
 import { zamaskuj } from "./maskowanie";
@@ -56,7 +56,7 @@ export async function utworzZgloszenie(w: WejscieZgloszenia): Promise<{ id: stri
     const id: string = z.rows[0].id;
     await c.query("insert into historia_statusu (zgloszenie_id, status, notatka) values ($1,'wyslane','Zgłoszenie wysłane przez formularz')", [id]);
     for (const [i, d] of w.dopasowania.entries()) {
-      if (!innowacjaPoId.has(d.id)) continue;
+      if (!(await innowacjaPoIdAsync(d.id))) continue;
       await c.query(
         `insert into dopasowania (zgloszenie_id, innowacja_id, pozycja, trafnosc, dlaczego) values ($1,$2,$3,$4,$5)
          on conflict do nothing`,

@@ -3,14 +3,16 @@ import { getTranslations } from "next-intl/server";
 import { FormularzKrawca } from "@/components/krawiec/formularz";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
-import { innowacje, innowacjaPoId } from "@/lib/biblioteka";
+import { katalog } from "@/lib/katalog";
 
 export const metadata: Metadata = { title: "Wdróż innowację u siebie" };
+export const dynamic = "force-dynamic";
 
 export default async function Wdrozenie(props: PageProps<"/wdrozenie">) {
   const t = await getTranslations("krawiec");
   const sp = await props.searchParams;
-  const id = typeof sp.innowacja === "string" && innowacjaPoId.has(sp.innowacja) ? sp.innowacja : undefined;
+  const { lista: innowacje, mapa } = await katalog();
+  const id = typeof sp.innowacja === "string" && mapa.has(sp.innowacja) ? sp.innowacja : undefined;
   return (
     <Strona>
       <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")} />

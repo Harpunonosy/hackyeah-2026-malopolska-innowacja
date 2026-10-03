@@ -5,7 +5,8 @@ import { getTranslations } from "next-intl/server";
 import { ArrowLeft, Download, ExternalLink, Video } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
-import { innowacjaPoId, innowacje } from "@/lib/biblioteka";
+import { innowacje } from "@/lib/biblioteka";
+import { innowacjaPoIdAsync } from "@/lib/katalog";
 
 export function generateStaticParams() {
   return innowacje.map((i) => ({ id: i.id }));
@@ -13,7 +14,7 @@ export function generateStaticParams() {
 
 export async function generateMetadata(props: PageProps<"/wiedza/biblioteka/[id]">): Promise<Metadata> {
   const { id } = await props.params;
-  return { title: innowacjaPoId.get(id)?.nazwa ?? "Innowacja" };
+  return { title: (await innowacjaPoIdAsync(id))?.nazwa ?? "Innowacja" };
 }
 
 function Sekcja({ tytul, tekst, wyroznienie }: { tytul: string; tekst: string; wyroznienie?: boolean }) {
@@ -28,7 +29,7 @@ function Sekcja({ tytul, tekst, wyroznienie }: { tytul: string; tekst: string; w
 
 export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id]">) {
   const { id } = await props.params;
-  const i = innowacjaPoId.get(id);
+  const i = await innowacjaPoIdAsync(id);
   if (!i) notFound();
   const t = await getTranslations("wiedza");
 
