@@ -325,7 +325,29 @@
     "rozmowy": "Rozmowy o Twoim pomyśle lub ogłoszeniu",
     "rozmowyInfo": "Osoby, które chcą pomóc, przetestować albo współpracować, piszą tutaj. Ich dane kontaktowe pozostają ukryte, a ROPS widzi całą korespondencję.",
     "osoba": "Osoba {n}",
-    "odpiszOsobie": "Twoja odpowiedź"
+    "odpiszOsobie": "Twoja odpowiedź",
+    "wniosek": {
+      "tytul": "Droga wniosku",
+      "nabor": "Nabór: {nabor}",
+      "etapy": {
+        "zlozony": "Złożony",
+        "ocena_formalna": "Ocena formalna",
+        "ocena_merytoryczna": "Ocena merytoryczna",
+        "decyzja": "Decyzja"
+      },
+      "opisy": {
+        "zlozony": "Wniosek dotarł do ROPS.",
+        "ocena_formalna": "Sprawdzamy kompletność i zgodność z regulaminem.",
+        "ocena_merytoryczna": "Eksperci oceniają wniosek według karty oceny.",
+        "decyzja": "Komisja podjęła decyzję."
+      },
+      "decyzje": {
+        "przyznano": "Przyznano dofinansowanie",
+        "lista_rezerwowa": "Lista rezerwowa",
+        "odrzucono": "Bez dofinansowania"
+      },
+      "jeszczeNie": "(jeszcze nie)"
+    }
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -764,5 +786,30 @@
     "kryzys": "Jeśli Ty lub ktoś obok jest w niebezpieczeństwie, zadzwoń teraz:",
     "stopka": "Wyszukiwarka Splotu, Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Opis jest maskowany i nie jest zapisywany.",
     "nowaKarta": "(nowa karta)"
+  },
+  "wnioskiOcena": {
+    "etap": "Etap: {etap}",
+    "numer": "Sprawa {numer}",
+    "przekazano": "Przekazano do bazy grantowej: {data}",
+    "formalna": "Przyjmij do oceny formalnej",
+    "merytoryczna": "Przekaż do oceny merytorycznej",
+    "decyzjaLegenda": "Decyzja",
+    "uzasadnienie": "Uzasadnienie dla autora (opcjonalnie)",
+    "zapiszDecyzje": "Zapisz decyzję i powiadom autora",
+    "eksport": "Przekaż do bazy grantowej",
+    "zapisano": "Zapisano. Autor dostał powiadomienie.",
+    "zapisanoEksport": "Oznaczono jako przekazany do bazy grantowej.",
+    "blad": "Nie udało się zapisać.",
+    "etapy": {
+      "zlozony": "Złożony",
+      "ocena_formalna": "Ocena formalna",
+      "ocena_merytoryczna": "Ocena merytoryczna",
+      "decyzja": "Decyzja"
+    },
+    "decyzje": {
+      "przyznano": "Przyznano dofinansowanie",
+      "lista_rezerwowa": "Lista rezerwowa",
+      "odrzucono": "Bez dofinansowania"
+    }
   }
 }

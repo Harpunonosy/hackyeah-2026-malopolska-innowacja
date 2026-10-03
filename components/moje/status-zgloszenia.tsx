@@ -23,6 +23,7 @@ type Dane = {
   pierwsza_odpowiedz_at: string | null;
   rozmowy: { id: string; tytul: string; wiadomosci: { tresc: string; created_at: string; od: string }[] }[];
   powiadomienia: { typ: string; tytul: string; tresc: string; link: string | null; kanal: string; created_at: string }[];
+  wniosek: { etap: string; etapy: Record<string, string>; decyzja: "przyznano" | "lista_rezerwowa" | "odrzucono" | null; created_at: string; nabor: string | null } | null;
 };
 
 function czasOdpowiedzi(od: string, do_: string) {
@@ -55,6 +56,35 @@ function RozmowaWlasciciela({ numer, nr, r }: { numer: string; nr: number; r: Da
         <p role="status" className="font-semibold text-ok">{info}</p>
       </form>
     </article>
+  );
+}
+
+const ETAPY_WNIOSKU = ["zlozony", "ocena_formalna", "ocena_merytoryczna", "decyzja"] as const;
+
+/** Droga wniosku grantowego jak śledzenie paczki: złożony → ocena formalna → ocena merytoryczna → decyzja. */
+function DrogaWniosku({ w }: { w: NonNullable<Dane["wniosek"]> }) {
+  const t = useTranslations("moje.wniosek");
+  const daty: Record<string, string | undefined> = { zlozony: w.created_at, ...w.etapy };
+  const biezacy = ETAPY_WNIOSKU.indexOf((ETAPY_WNIOSKU as readonly string[]).includes(w.etap) ? (w.etap as (typeof ETAPY_WNIOSKU)[number]) : "zlozony");
+  return (
+    <section aria-labelledby="droga-wniosku" className="karta space-y-3 p-5">
+      <h2 id="droga-wniosku" className="text-2xl font-bold">{t("tytul")}</h2>
+      {w.nabor && <p className="text-muted">{t("nabor", { nabor: w.nabor })}</p>}
+      <ol className="grid gap-3 sm:grid-cols-4">
+        {ETAPY_WNIOSKU.map((e, i) => {
+          const gotowe = i <= biezacy;
+          return (
+            <li key={e} aria-current={i === biezacy ? "step" : undefined} className={`rounded-2xl border-2 p-3 ${i === biezacy ? "border-fg bg-accent text-accent-fg" : gotowe ? "border-ok" : "border-line-soft text-muted"}`}>
+              <p className="flex items-center gap-2 font-bold">
+                {gotowe ? <CheckCircle2 aria-hidden className="size-5 shrink-0" /> : <Circle aria-hidden className="size-5 shrink-0" />}
+                {t(`etapy.${e}`)}{!gotowe && <span className="sr-only"> {t("jeszczeNie")}</span>}
+              </p>
+              <p className="text-sm">{e === "decyzja" && w.decyzja ? t(`decyzje.${w.decyzja}`) : daty[e] ? fmt(daty[e]!) : t(`opisy.${e}`)}</p>
+            </li>
+          );
+        })}
+      </ol>
+    </section>
   );
 }
 
@@ -104,6 +134,7 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
             : t("terminOdpowiedzi", { data: fmt(dane.termin_sla) })}
         </span>
       </p>
+      {dane.wniosek && <DrogaWniosku w={dane.wniosek} />}
       <section aria-labelledby="os-czasu" className="space-y-3">
         <h2 id="os-czasu" className="text-2xl font-bold">
           {t("os")}

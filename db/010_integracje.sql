@@ -24,3 +24,4 @@ alter table webhooki_dostawy enable row level security;
 
 -- Wnioski grantowe: decyzja i eksport do bazy grantowej (W-35).
 alter table wnioski add column if not exists decyzja text, add column if not exists decyzja_at timestamptz, add column if not exists eksport_at timestamptz;
+alter table wnioski add column if not exists etapy jsonb not null default '{}'::jsonb;

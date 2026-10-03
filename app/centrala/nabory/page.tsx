@@ -1,6 +1,7 @@
 import Link from "next/link";
 import type { Metadata } from "next";
 import { redirect } from "next/navigation";
+import { OcenaWniosku } from "@/components/centrala/ocena-wniosku";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
 import { ResetDemo } from "@/components/centrala/reset-demo";
 import { EdytorNaboru, NowyNabor } from "@/components/centrala/nabory";
@@ -20,7 +21,8 @@ export default async function Nabory() {
   if (!(await czyAdmin())) redirect("/centrala/logowanie");
   const c = db();
   const nabory = await c.query("select id, nazwa, program, opis, temat, aktywny, przyklad, otwarty_od, otwarty_do, formularz, schemat from nabory order by aktywny desc, nazwa");
-  const wnioski = await c.query("select id, nabor_id, pola, status, created_at from wnioski order by created_at desc limit 100");
+  const wnioski = await c.query(`select w.id, w.nabor_id, w.pola, w.status, w.created_at, w.decyzja, w.eksport_at, z.numer
+    from wnioski w left join zgloszenia z on z.typ='wniosek' and z.obiekt_id = w.id::text order by w.created_at desc limit 100`);
   return (
     <div className="space-y-10">
       <div>
@@ -62,6 +64,7 @@ export default async function Nabory() {
                         <summary className="min-h-10 cursor-pointer font-semibold">Wniosek z {fmt(x.created_at)} ({(x.pola as Pole[]).find((p) => p.nr === 1)?.tresc.slice(0, 80) ?? "bez tytułu"})</summary>
                         <dl className="space-y-3 py-2">{(x.pola as Pole[]).map((p) => <div key={p.nr}><dt className="text-sm font-bold uppercase text-muted">Pole {p.nr}</dt><dd className="whitespace-pre-line">{p.tresc}</dd></div>)}</dl>
                       </details>
+                      <OcenaWniosku id={x.id} etap={x.status === "zlozony" || !x.status ? "zlozony" : x.status} numer={x.numer} decyzja={x.decyzja} przekazano={x.eksport_at ? x.eksport_at.toISOString() : null} />
                     </li>
                   ))}
                 </ul>

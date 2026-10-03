@@ -4,7 +4,7 @@ import { db } from "@/lib/db";
 export async function GET(_req: Request, ctx: { params: Promise<{ numer: string }> }) {
   const { numer } = await ctx.params;
   const z = await db().query(
-    "select id, numer, status, created_at, tresc_zamaskowana, ocena_pomocy, typ, tytul, termin_sla, pierwsza_odpowiedz_at from zgloszenia where numer=$1",
+    "select id, numer, status, created_at, tresc_zamaskowana, ocena_pomocy, typ, tytul, termin_sla, pierwsza_odpowiedz_at, obiekt_id from zgloszenia where numer=$1",
     [numer.toUpperCase()],
   );
   if (!z.rows[0]) return Response.json({ blad: "nie_znaleziono" }, { status: 404 });
@@ -31,10 +31,14 @@ export async function GET(_req: Request, ctx: { params: Promise<{ numer: string 
       wiadomosci: (await db().query("select w.tresc, w.created_at, w.od from wiadomosci w join watki t on t.id=w.watek_id where t.typ='zgloszenie' and t.obiekt_id=$1 order by w.created_at", [o.id])).rows,
     })),
   );
-  const { id: _id, ...publiczne } = z.rows[0];
-  void _id;
+  // Wniosek grantowy: etapy oceny i decyzja (W-35).
+  const wniosek = z.rows[0].typ === "wniosek" && z.rows[0].obiekt_id
+    ? (await db().query("select w.status as etap, w.etapy, w.decyzja, w.created_at, n.nazwa as nabor from wnioski w left join nabory n on n.id=w.nabor_id where w.id::text=$1", [z.rows[0].obiekt_id])).rows[0] ?? null
+    : null;
+  const { id: _id, obiekt_id: _o, ...publiczne } = z.rows[0];
+  void _id; void _o;
   return Response.json(
-    { ...publiczne, historia: hist.rows, wiadomosci: wiad.rows, dopasowania: dop.rows, powiadomienia: pow.rows, rozmowy },
+    { ...publiczne, historia: hist.rows, wiadomosci: wiad.rows, dopasowania: dop.rows, powiadomienia: pow.rows, rozmowy, wniosek },
     { headers: { "Cache-Control": "no-store" } },
   );
 }

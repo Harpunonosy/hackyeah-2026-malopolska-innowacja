@@ -7,7 +7,7 @@ import { wyslijZdarzenie, zdarzenieDlaPowiadomienia } from "./webhooki";
 
 export type TypPowiadomienia =
   | "nowa_sprawa" | "odpowiedz" | "pytanie_autora" | "nowy_pomysl" | "nabor_otwarty" | "nabor_zmiana" | "nabor_zamkniety"
-  | "nowe_rozwiazanie" | "nowe_ogloszenie" | "odpowiedz_ogloszenie" | "pytanie_eksperta";
+  | "nowe_rozwiazanie" | "nowe_ogloszenie" | "odpowiedz_ogloszenie" | "pytanie_eksperta" | "wniosek_status";
 
 export const ETYKIETY_POWIADOMIEN: Record<TypPowiadomienia, string> = {
   nowa_sprawa: "Nowe zgłoszenie",
@@ -21,6 +21,7 @@ export const ETYKIETY_POWIADOMIEN: Record<TypPowiadomienia, string> = {
   nowe_ogloszenie: "Nowe ogłoszenie",
   odpowiedz_ogloszenie: "Odpowiedź na ogłoszenie",
   pytanie_eksperta: "Pytanie do eksperta",
+  wniosek_status: "Zmiana statusu wniosku",
 };
 
 export type NoweP = {

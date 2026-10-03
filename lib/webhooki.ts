@@ -7,13 +7,14 @@ import { adresBazowy } from "./adres";
 import { db } from "./db";
 import type { TypPowiadomienia } from "./powiadomienia";
 
-export const ZDARZENIA = ["sprawa.nowa", "pomysl.nowy", "nabor.zmiana", "ogloszenie.nowe", "test.ping"] as const;
+export const ZDARZENIA = ["sprawa.nowa", "pomysl.nowy", "nabor.zmiana", "wniosek.zmiana", "ogloszenie.nowe", "test.ping"] as const;
 export type Zdarzenie = (typeof ZDARZENIA)[number];
 
 export const OPISY_ZDARZEN: Record<Zdarzenie, string> = {
   "sprawa.nowa": "Nowe zgłoszenie (problem, pytanie, wniosek)",
   "pomysl.nowy": "Nowy pomysł z Kreatora",
   "nabor.zmiana": "Otwarcie, zmiana lub zamknięcie naboru",
+  "wniosek.zmiana": "Etap oceny lub decyzja w sprawie wniosku (dla bazy grantowej)",
   "ogloszenie.nowe": "Nowe ogłoszenie na Rynku współpracy",
   "test.ping": "Wiadomość testowa",
 };

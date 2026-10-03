@@ -228,7 +228,29 @@
     "powiadomienia": "Сповіщення",
     "kanalEmail": "e-mail (симуляція)",
     "kanalAplikacja": "у застосунку",
-    "otworz": "відкрити"
+    "otworz": "відкрити",
+    "wniosek": {
+      "tytul": "Шлях заявки",
+      "nabor": "Конкурс: {nabor}",
+      "etapy": {
+        "zlozony": "Подано",
+        "ocena_formalna": "Формальна оцінка",
+        "ocena_merytoryczna": "Оцінка по суті",
+        "decyzja": "Рішення"
+      },
+      "opisy": {
+        "zlozony": "Заявка надійшла до ROPS.",
+        "ocena_formalna": "Перевіряємо повноту та відповідність регламенту.",
+        "ocena_merytoryczna": "Експерти оцінюють заявку за картою оцінки.",
+        "decyzja": "Комісія ухвалила рішення."
+      },
+      "decyzje": {
+        "przyznano": "Фінансування надано",
+        "lista_rezerwowa": "Резервний список",
+        "odrzucono": "Без фінансування"
+      },
+      "jeszczeNie": "(ще ні)"
+    }
   },
   "rozmowaGlosowa": {
     "nadtytul": "Голосова розмова",
