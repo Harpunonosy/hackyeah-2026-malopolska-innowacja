@@ -25,6 +25,9 @@ export const WejscieZgloszenia = z.object({
   najlepsze: z.number().min(0).max(100).nullable().default(null),
   obszar: z.enum(OBSZAR_IDS).optional(),
   testy: z.boolean().default(false),
+  // Tryb asystowany: nazwa placówki (OPS, CUS, klub seniora, biblioteka) i telefon, jeśli osoba prosi o oddzwonienie.
+  placowka: z.string().trim().max(120).optional(),
+  telefon: z.string().trim().regex(/^[+\d][\d\s-]{6,18}$/, "Podaj numer telefonu (same cyfry).").optional().or(z.literal("")),
 });
 export type WejscieZgloszenia = z.infer<typeof WejscieZgloszenia>;
 
@@ -51,13 +54,13 @@ export async function utworzZgloszenie(w: WejscieZgloszenia): Promise<{ id: stri
     }
     const z = await c.query(
       `insert into zgloszenia (numer, autor_id, kanal, tresc_zamaskowana, obszar, powiat, priorytet, kryzys,
-         termin_sla, najlepsze_dopasowanie, zgoda_kontakt, kanal_kontaktu, zgoda_testy)
-       values ($1,$2,$3,$4,$5,$6,$7,$8, now() + ($9 || ' hours')::interval, $10,$11,$12,$13) returning id`,
+         termin_sla, najlepsze_dopasowanie, zgoda_kontakt, kanal_kontaktu, zgoda_testy, placowka, telefon_kontakt)
+       values ($1,$2,$3,$4,$5,$6,$7,$8, now() + ($9 || ' hours')::interval, $10,$11,$12,$13,$14,$15) returning id`,
       [numer, autorId, w.kanal, tekst, w.obszar ?? null, normalizujPowiat(w.powiat), priorytet, kryzys, kryzys ? "0" : "72",
-        w.najlepsze, true, w.email ? "email" : null, w.testy],
+        w.najlepsze, true, w.telefon ? "telefon" : w.email ? "email" : null, w.testy, w.placowka || null, w.telefon || null],
     );
     const id: string = z.rows[0].id;
-    await c.query("insert into historia_statusu (zgloszenie_id, status, notatka) values ($1,'wyslane','Zgłoszenie wysłane przez formularz')", [id]);
+    await c.query("insert into historia_statusu (zgloszenie_id, status, notatka) values ($1,'wyslane',$2)", [id, w.kanal === "asystowane" ? `Zgłoszenie przyjęte w imieniu osoby${w.placowka ? ` (${w.placowka})` : ""}` : "Zgłoszenie wysłane przez formularz"]);
     for (const [i, d] of w.dopasowania.entries()) {
       if (!(await innowacjaPoIdAsync(d.id))) continue;
       await c.query(
@@ -67,7 +70,7 @@ export async function utworzZgloszenie(w: WejscieZgloszenia): Promise<{ id: stri
       );
     }
     await c.query("commit");
-    await powiadom({ adresat: "rops", typ: "nowa_sprawa", tytul: `Problem: ${kryzys ? "KRYZYS, " : ""}nowe zgłoszenie`, tresc: `Numer ${numer}. Termin odpowiedzi: ${kryzys ? "natychmiast" : "72 godz."}.`, link: `/centrala/zgloszenia/${id}`, numerSprawy: numer });
+    await powiadom({ adresat: "rops", typ: "nowa_sprawa", tytul: `Problem: ${kryzys ? "KRYZYS, " : ""}${w.kanal === "asystowane" ? "zgłoszenie asystowane" : "nowe zgłoszenie"}${w.telefon ? ", prośba o telefon" : ""}`, tresc: `Numer ${numer}. Termin odpowiedzi: ${kryzys ? "natychmiast" : "72 godz."}.`, link: `/centrala/zgloszenia/${id}`, numerSprawy: numer });
     return { id, numer };
   } catch (e) {
     await c.query("rollback");

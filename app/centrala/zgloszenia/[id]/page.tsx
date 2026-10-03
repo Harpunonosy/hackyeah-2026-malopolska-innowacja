@@ -54,6 +54,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
           {z.obszar && <Chip>{nazwaObszaru(z.obszar as ObszarId)}</Chip>}
           {z.powiat && <Chip>{z.powiat}</Chip>}
           <Chip>Kanał: {z.kanal}</Chip>
+          {z.placowka && <Chip>Przyjęła: {z.placowka}</Chip>}
           {z.ocena_pomocy && <Chip>Ocena pomocy: {z.ocena_pomocy}/5</Chip>}
         </div>
         <p className="text-muted">Wpłynęło {fmt(z.created_at)}. Termin odpowiedzi {fmt(z.termin_sla)}.</p>
@@ -61,6 +62,10 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
 
       {z.typ === "pomysl" && z.obiekt_id && (
         <p><Link href="/centrala/pomysly">Zobacz pełną fiszkę i ocenę wstępną w panelu pomysłów</Link></p>
+      )}
+
+      {z.telefon_kontakt && (
+        <p className="karta-mala border-2 border-accent p-4 text-lg"><strong>Osoba prosi o telefon:</strong> <a href={`tel:${z.telefon_kontakt.replace(/\s/g, "")}`} className="underline">{z.telefon_kontakt}</a> <span className="text-sm text-muted">(numer jest poza treścią i nie trafia do AI)</span></p>
       )}
 
       <section aria-labelledby="tresc-h" className="space-y-2">

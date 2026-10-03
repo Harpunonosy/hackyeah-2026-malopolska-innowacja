@@ -347,7 +347,8 @@
         "odrzucono": "Bez dofinansowania"
       },
       "jeszczeNie": "(jeszcze nie)"
-    }
+    },
+    "sledzenie": "Śledzenie zgłoszenia"
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -836,5 +837,61 @@
       "lista_rezerwowa": "Lista rezerwowa",
       "odrzucono": "Bez dofinansowania"
     }
+  },
+  "karta": {
+    "tytul": "Karta potrzeby",
+    "metaTytul": "Karta potrzeby do druku",
+    "numer": "Numer sprawy",
+    "zachowaj": "Zachowaj tę kartę. Numer pozwala sprawdzić, co dzieje się ze sprawą.",
+    "qr": "Zeskanuj kod telefonem, aby zobaczyć status sprawy.",
+    "qrAlt": "Kod QR prowadzący do statusu sprawy {numer}",
+    "albo": "Albo wpisz adres:",
+    "data": "Data zgłoszenia",
+    "przyjeta": "Przyjęła",
+    "potrzeba": "Opisana potrzeba (bez danych osobowych)",
+    "propozycje": "Co może pomóc",
+    "brakPropozycji": "Pracownik ROPS szuka rozwiązania. Odpowiedź przyjdzie w ciągu 3 dni roboczych.",
+    "coDalej": "Co dalej",
+    "krok1": "Pracownik ROPS przeczyta sprawę i odpowie w ciągu 3 dni roboczych.",
+    "krok2": "Status sprawdzisz kodem QR, na stronie Splotu albo w placówce, która pomogła Ci zgłosić sprawę.",
+    "krok3": "Jeśli była prośba o telefon, zadzwonimy na podany numer.",
+    "pomocTeraz": "Potrzebujesz pomocy teraz?",
+    "drukuj": "Drukuj kartę",
+    "wroc": "Wróć do sprawy",
+    "stopka": "Splot · Małopolski Hub Innowacji Społecznych · ROPS Kraków",
+    "wydrukujKarte": "Wydrukuj kartę potrzeby z kodem QR"
+  },
+  "asystowane": {
+    "nadtytul": "Tryb asystowany",
+    "tytul": "Zgłoś sprawę w imieniu osoby",
+    "opis": "Dla pracowników OPS, CUS, klubów seniora i bibliotek. Spisz potrzebę osoby, która nie korzysta z internetu. Splot znajdzie rozwiązania, a osoba dostanie papierową kartę z numerem sprawy i kodem QR.",
+    "demo": "W wersji demo nie trzeba się logować. Docelowo placówka ma własne konto.",
+    "krok1": "Kto przyjmuje zgłoszenie",
+    "placowka": "Nazwa placówki",
+    "placowkaPrzyklad": "np. GOPS w Wolbromiu, Klub Seniora „Pod Lipą”",
+    "powiat": "Powiat osoby",
+    "krok2": "Potrzeba osoby",
+    "opisPole": "Opisz potrzebę słowami osoby",
+    "opisPomoc": "Bez imion, nazwisk, adresów i numerów. Dane osobowe i tak zamaskujemy przed wysłaniem do AI.",
+    "krok3": "Jak oddać odpowiedź",
+    "kontaktPlacowka": "Odpowiedź odbierze w placówce",
+    "kontaktTelefon": "Osoba prosi, żeby ROPS oddzwonił",
+    "kontaktEmail": "Na e-mail (np. rodziny)",
+    "telefon": "Numer telefonu osoby",
+    "telefonPomoc": "Numer zapiszemy osobno. Nie trafi do treści ani do AI.",
+    "email": "Adres e-mail",
+    "zgoda": "Osoba wyraziła ustną zgodę na przekazanie sprawy do ROPS Kraków.",
+    "szukaj": "Znajdź rozwiązania",
+    "postepKroki": "Maskuję dane osobowe|Rozumiem potrzebę|Szukam w 115 innowacjach ROPS|Sprawdzam podobne sprawy",
+    "propozycje": "Propozycje dla osoby",
+    "brak": "Nie ma gotowego rozwiązania. Wyślij sprawę: pracownik ROPS jej poszuka, a brak trafi na Radar potrzeb.",
+    "wyslij": "Wyślij do ROPS w imieniu osoby",
+    "wyslano": "Sprawa przyjęta",
+    "numer": "Numer sprawy: {numer}",
+    "drukuj": "Wydrukuj kartę potrzeby dla osoby",
+    "nowa": "Przyjmij kolejną sprawę",
+    "blad": "Nie udało się. Spróbuj ponownie.",
+    "kryzys": "Uwaga: w opisie są sygnały kryzysu. Jeśli osoba jest w niebezpieczeństwie, zadzwoń z nią pod 112 albo 116 123.",
+    "linkWdrozenie": "Pracujesz w OPS, CUS, klubie seniora albo bibliotece? Pomóż komuś zgłosić sprawę w trybie asystowanym."
   }
 }

@@ -4,10 +4,10 @@ import type { Page } from "playwright-core";
 export const PUBLICZNE = [
   "/", "/problem", "/latwy", "/rozmowa", "/moje", "/pomysl", "/testy", "/rynek", "/wdrozenie", "/galeria",
   "/wiedza/biblioteka", "/wiedza/biblioteka/straznik", "/wiedza/malopolska", "/wiedza/powiat", "/wiedza/powiat/olkuski",
-  "/wiedza/akademia", "/ocena", "/zaufanie", "/dostepnosc", "/centrala/logowanie",
+  "/wiedza/akademia", "/ocena", "/zaufanie", "/dostepnosc", "/centrala/logowanie", "/asystowane", "/integracje", "/widzet?powiat=olkuski",
 ];
 export const ADMIN = [
-  "/centrala/zgloszenia", "/centrala/radar", "/centrala/pomysly", "/centrala/nabory", "/centrala/tresci", "/centrala/powiadomienia",
+  "/centrala/zgloszenia", "/centrala/radar", "/centrala/pomysly", "/centrala/nabory", "/centrala/tresci", "/centrala/powiadomienia", "/centrala/integracje",
 ];
 
 /** Strony z parametrem: bierzemy pierwszy link z listy (np. pierwszą kartę zgłoszenia). */
@@ -15,6 +15,7 @@ const DYNAMICZNE: { lista: string; wzor: RegExp }[] = [
   { lista: "/centrala/zgloszenia", wzor: /^\/centrala\/zgloszenia\/[^/?#]+$/ },
   { lista: "/wiedza/akademia", wzor: /^\/wiedza\/akademia\/[^/?#]+$/ },
   { lista: "/ekspert", wzor: /^\/ekspert\/zgloszenia\/[^/?#]+$/ },
+  { lista: "/moje", wzor: /^\/moje\/SPL-[^/?#]+$/ },
 ];
 
 export async function zalogujAdmina(strona: Page, baza: string) {

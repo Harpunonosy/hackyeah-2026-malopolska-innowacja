@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { getTranslations } from "next-intl/server";
 import { FormularzKrawca } from "@/components/krawiec/formularz";
 import { NaglowekStrony } from "@/components/naglowek-strony";
@@ -12,6 +13,7 @@ export const dynamic = "force-dynamic";
 
 export default async function Wdrozenie(props: PageProps<"/wdrozenie">) {
   const t = await getTranslations("krawiec");
+  const ta = await getTranslations("asystowane");
   const sp = await props.searchParams;
   const { lista: innowacje } = await katalog();
   // Plan wdrożenia ma sens dla rzetelnych, sprawdzonych innowacji (wybranych do upowszechniania, z naboru lub dodanych i zatwierdzonych w Centrali).
@@ -19,7 +21,9 @@ export default async function Wdrozenie(props: PageProps<"/wdrozenie">) {
   const id = typeof sp.innowacja === "string" && wdrazalne.some((i) => i.id === sp.innowacja) ? sp.innowacja : undefined;
   return (
     <Strona>
-      <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")} />
+      <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")}>
+        <p className="karta-mala border-2 border-accent p-4 text-lg"><Link href="/asystowane" className="font-semibold underline">{ta("linkWdrozenie")}</Link></p>
+      </NaglowekStrony>
       <FormularzKrawca innowacje={wdrazalne.map((i) => ({ id: i.id, nazwa: i.nazwa, kategoria: i.kategoria }))} poczatkowa={id} poczatkowyPowiat={typeof sp.powiat === "string" ? sp.powiat : undefined} />
     </Strona>
   );

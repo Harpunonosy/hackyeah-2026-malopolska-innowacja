@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useTranslations } from "next-intl";
-import { Send } from "lucide-react";
+import { Printer, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { WynikSwatki } from "@/lib/swatka";
 
@@ -11,6 +11,7 @@ type Props = { tekst: string; rola: string; powiat: string; wynik: WynikSwatki }
 
 export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
   const t = useTranslations("zgloszenie");
+  const tk = useTranslations("karta");
   const [krok, setKrok] = React.useState<"start" | "podglad" | "wysylka" | "gotowe">("start");
   const [email, setEmail] = React.useState("");
   const [zgoda, setZgoda] = React.useState(false);
@@ -58,9 +59,14 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
         <p>{t("numerPomoc")}</p>
         <p className="text-sm font-semibold">{t("numer")}</p>
         <p className="font-mono text-3xl font-bold tracking-wider">{numer}</p>
-        <Button asChild>
-          <Link href={`/moje/${numer}`}>{t("sprawdzStatus")}</Link>
-        </Button>
+        <div className="flex flex-wrap gap-3">
+          <Button asChild>
+            <Link href={`/moje/${numer}`}>{t("sprawdzStatus")}</Link>
+          </Button>
+          <Button asChild wariant="obrys">
+            <Link href={`/moje/${numer}/karta`}><Printer aria-hidden className="size-5" />{tk("wydrukujKarte")}</Link>
+          </Button>
+        </div>
       </section>
     );
   }
