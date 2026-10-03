@@ -8,7 +8,8 @@ export function zapamietaj<T>(klucz: string, ttlMs: number, pobierz: () => Promi
   const w = mapa.get(klucz);
   if (w && Date.now() - w.t < ttlMs) return w.obietnica as Promise<T>;
   const obietnica = pobierz().catch((e) => {
-    mapa.delete(klucz); // błędu nie zapamiętujemy
+    // Spóźniony błąd starego odczytu nie może usunąć nowszego wpisu po invalidacji.
+    if (mapa.get(klucz)?.obietnica === obietnica) mapa.delete(klucz);
     throw e;
   });
   mapa.set(klucz, { t: Date.now(), obietnica });
@@ -17,4 +18,9 @@ export function zapamietaj<T>(klucz: string, ttlMs: number, pobierz: () => Promi
 
 export function zapomnij(klucz: string) {
   mapa.delete(klucz);
+}
+
+/** Unieważnia całą rodzinę widoków, np. profile wszystkich powiatów. */
+export function zapomnijPrefiks(prefiks: string) {
+  for (const klucz of mapa.keys()) if (klucz.startsWith(prefiks)) mapa.delete(klucz);
 }

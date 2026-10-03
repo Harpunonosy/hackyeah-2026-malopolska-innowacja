@@ -1,3 +1,4 @@
+import { sprawdzWersjeIoss } from "./ioss-import-cache";
 import mapa from "@/data/mapa_wyzwan.json";
 import kondycja from "@/data/kondycja_malopolski.json";
 import { wczytajIoss, NAZWY_WSKAZNIKOW, WSKAZNIKI_OBSZARU } from "./radar";
@@ -17,7 +18,8 @@ export const faktyRaportow: FaktRaportu[] = (kondycja.fakty as { tekst: string; 
 
 export type WskaznikMapy = { id: number; nazwa: string; kierunek: 1 | -1; wartosci: Record<string, number> };
 /** Wartości wskaźników IOSS dla 22 powiatów, pogrupowane według obszarów Mapy Wyzwań (część na 10 tys. mieszkańców). */
-export function wskaznikiDoMapy(): Promise<{ powiaty: string[]; obszary: Record<string, WskaznikMapy[]> }> {
+export async function wskaznikiDoMapy(): Promise<{ powiaty: string[]; obszary: Record<string, WskaznikMapy[]> }> {
+  await sprawdzWersjeIoss();
   return zapamietaj("mapa-wskaznikow", 600_000, wskaznikiDoMapyZDanych);
 }
 
@@ -30,7 +32,7 @@ async function wskaznikiDoMapyZDanych(): Promise<{ powiaty: string[]; obszary: R
       nazwa: NAZWY_WSKAZNIKOW[w.id] + (w.na10k ? " (na 10 tys. mieszkańców)" : ""),
       kierunek: w.kierunek,
       wartosci: Object.fromEntries(
-        io.powiaty.filter((p) => io.wartosci[w.id]?.[p] !== undefined).map((p) => [p, Math.round((w.na10k ? (io.wartosci[w.id][p] / io.ludnosc[p]) * 10000 : io.wartosci[w.id][p]) * 100) / 100]),
+        io.powiaty.filter((p) => io.wartosci[w.id]?.[p] !== undefined && (!w.na10k || io.ludnosc[p] > 0)).map((p) => [p, Math.round((w.na10k ? (io.wartosci[w.id][p] / io.ludnosc[p]) * 10000 : io.wartosci[w.id][p]) * 100) / 100]),
       ),
     }));
   }

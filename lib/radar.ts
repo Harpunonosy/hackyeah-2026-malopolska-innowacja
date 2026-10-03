@@ -1,3 +1,4 @@
+import { sprawdzWersjeIoss } from "./ioss-import-cache";
 // Radar (tylko dla administratora): białe plamy, ciche potrzeby i trendy.
 // Wzory opisane w PLAN.md, rozdz. 8.
 import { db } from "./db";
@@ -48,8 +49,9 @@ export type DanePowiatow = {
   wartosci: Record<number, Record<string, number>>;
 };
 
-/** Dane IOSS są statyczne (import skryptem), więc trzymamy je w pamięci przez 10 minut. */
-export function wczytajIoss(): Promise<DanePowiatow> {
+/** Import IOSS unieważnia pamięć od razu; pozostałe odczyty korzystają z TTL 10 minut. */
+export async function wczytajIoss(): Promise<DanePowiatow> {
+  await sprawdzWersjeIoss();
   return zapamietaj("ioss", 600_000, wczytajIossZBazy);
 }
 
@@ -60,6 +62,11 @@ async function wczytajIossZBazy(): Promise<DanePowiatow> {
      where wskaznik_id = any($1) and wartosc is not null order by wskaznik_id, powiat, rok desc`,
     [ids],
   );
+  return policzDaneIoss(rows);
+}
+
+/** Oddzielne obliczenia pozwalają sprawdzać dane niepełne bez dostępu do bazy. */
+export function policzDaneIoss(rows: { wskaznik_id: number; powiat: string; wartosc: number }[]): DanePowiatow {
   const wartosci: DanePowiatow["wartosci"] = {};
   for (const r of rows) (wartosci[r.wskaznik_id] ??= {})[r.powiat] = r.wartosc;
   const powiaty = Object.keys(wartosci[186] ?? {}).sort((a, b) => a.localeCompare(b, "pl"));
@@ -70,7 +77,7 @@ async function wczytajIossZBazy(): Promise<DanePowiatow> {
     const zscory: Record<string, number[]> = Object.fromEntries(powiaty.map((p) => [p, []]));
     for (const w of WSKAZNIKI_OBSZARU[obszar]) {
       const wart = powiaty
-        .filter((p) => wartosci[w.id]?.[p] !== undefined)
+        .filter((p) => wartosci[w.id]?.[p] !== undefined && (!w.na10k || ludnosc[p] > 0))
         .map((p) => [p, w.na10k ? (wartosci[w.id][p] / ludnosc[p]) * 10000 : wartosci[w.id][p]] as const);
       const m = srednia(wart.map(([, v]) => v));
       const s = odchylenie(wart.map(([, v]) => v)) || 1;
@@ -131,7 +138,7 @@ export async function policzRadar(): Promise<RadarDane> {
     const akt = powiaty.map((p) => na10k(p, wObszarze.filter((z) => z.powiat === p).length));
     powiaty.forEach((p, i) => (aktywnosc[obszar][p] = akt[i]));
     const sumaLudnosci = powiaty.reduce((a, p) => a + ludnosc[p], 0);
-    const stopa = (wObszarze.length / sumaLudnosci) * 10000;
+    const stopa = sumaLudnosci > 0 ? (wObszarze.length / sumaLudnosci) * 10000 : 0;
 
     for (const [i, p] of powiaty.entries()) {
       const wPowiecie = wObszarze.filter((z) => z.powiat === p);

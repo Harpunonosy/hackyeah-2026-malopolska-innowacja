@@ -1,3 +1,4 @@
+import { sprawdzWersjeIoss } from "./ioss-import-cache";
 // Profil powiatu: diagnoza w minutę dla gmin, CUS i OPS. Dane IOSS na tle regionu opisane prostym językiem.
 // Wyłącznie dane publiczne (IOSS, Biblioteka ROPS). Trendy zgłoszeń mieszkańców są tylko w Centrali.
 import { czyWdrazalna } from "./swatka";
@@ -31,7 +32,8 @@ const zaokr = (x: number) => Math.round(x * 100) / 100;
 const liczba = (x: number) => x.toLocaleString("pl-PL", { maximumFractionDigits: 2 });
 
 /** Profil zależy tylko od danych IOSS i katalogu, więc liczymy go raz na 2 minuty dla każdego powiatu. */
-export function profilPowiatu(powiat: string): Promise<ProfilPowiatu> {
+export async function profilPowiatu(powiat: string): Promise<ProfilPowiatu> {
+  await sprawdzWersjeIoss();
   return zapamietaj(`profil-powiatu:${powiat}`, 120_000, () => policzProfil(powiat));
 }
 
