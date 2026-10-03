@@ -95,11 +95,32 @@ Jury zwraca uwagę na: pomysłowość i atrakcyjność, łatwość zgłoszenia p
 6. **Narzędzia AI w kodowaniu:** umowa wymaga oświadczenia, że utwór „został wykonany osobiście”. Zespół sprawdza u organizatorów lub w regulaminie Hackathonu, czy asystenci AI do kodowania są dozwoleni.
 7. **Oddanie:** regulamin (§4 ust. 9) wymaga PDF **oraz** filmu, wszystko po polsku.
 
+### 1c. Stan implementacji i nowe decyzje (3–4.10.2026, noc)
+
+**Wszystkie 7 modułów działa w kodzie.** Szczegółowy plan prac: `DROGA_DO_90.md`, lista zadań do zrobienia: `NEXT.md`. Ten rozdział nadpisuje starsze zapisy tam, gdzie się różnią.
+
+- **Wspólny model „sprawy”.** Każde zgłoszenie to wiersz w `zgloszenia` z polem `typ` (`problem`, `pomysl`, `pytanie`, `wniosek`, `zapis`, `ogloszenie`, `wyzwanie`), numerem `SPL-XXXXXXXX`, wątkiem (`watki`/`wiadomosci`), terminem odpowiedzi i osią czasu (`historia_statusu`). Centrala ma jedną skrzynkę z filtrem typów i wskaźnikami (mediana czasu pierwszej odpowiedzi, odpowiedzi w terminie). Kod: `lib/sprawy.ts`, `lib/sprawy-etykiety.ts`.
+- **Magistrala powiadomień** (`lib/powiadomienia.ts`, tabela `powiadomienia`): adresat `rops` (plakietka i dźwięk w Centrali) albo `autor` (po numerze sprawy w „Moje sprawy”). E-mail i SMS są symulowane i widoczne w skrzynce nadawczej (`/centrala/powiadomienia`). Zdarzenia: nowa sprawa, nowy pomysł, odpowiedź, zmiana naboru (otwarcie, termin, schemat, zamknięcie), nowe rozwiązanie dla zgłoszenia, zaproszenie do testu, odpowiedź na ogłoszenie.
+- **Nabór „na miarę”** (`lib/nabor-schemat.ts`): AI wyciąga z regulaminu pola wniosku z limitami, kryteria z progami, limity i kategorie; pracownik edytuje; Pracownia generuje wniosek według schematu i ocenia go według kryteriów tego naboru. Domyślnie IWS 2.0.
+- **Nici potrzeb (I-01):** Swatka rozdziela opis na 1–3 sprawy i dobiera rozwiązania do każdej (`nici` w schemacie AI), płaska lista `dopasowania` zostaje do pomiarów. Pomiar po zmianach: Hit@3 100% (29/29), 3.10.2026.
+- **„Wdróż u siebie” tylko dla rzetelnych innowacji** (`czyWdrazalna` w `lib/swatka.ts`: wybrane do upowszechniania lub z naboru lub dodane w Centrali) i tylko dla roli „instytucja”. Krawiec sprawdza kategorie naboru Usługa Wrażliwa 2025/2026 (5 innowacji, nabór zamknięty, wykluczenia).
+- **Odwrotne dopasowanie (I-02):** `lib/odwrotne.ts`, panel „Kogo ta innowacja może ucieszyć?” w Centrali/Treści; powiadomienie autorów zgłoszeń bez rozwiązania.
+- **Panel eksperta** (`/ekspert`, `lib/ekspert.ts`): konta demo (wybór profilu + hasło demo), przydział pytań i pomysłów według obszaru lub ręcznie z Centrali, odpowiedzi z oznaczeniem nadawcy.
+- **Rozmowy między użytkownikami** (`lib/rozmowy.ts`): galeria pomysłów (`/galeria`) i tablica partnerów; odpowiedź tworzy moderowaną rozmowę (kontakt ukryty, treść maskowana, ROPS widzi całość).
+- **Próbownia:** ogłaszanie testów (AI pisze ogłoszenie), akceptacja przez ROPS, zaproszenia dla osób ze zgodą na testowanie z pasującego obszaru i powiatu.
+- **Zasobnik wiedzy:** odtwarzacz filmów po kliknięciu (youtube-nocookie), filtry i porównywarka, edycja wszystkich kart z dziennikiem zmian (nadpisania `zrodlo='nadpisana'` w `innowacje`), Akademia (5 lekcji z tekstem łatwym i quizem), profile powiatów z danymi IOSS (`/wiedza/powiat/[slug]`), zgłaszanie wyzwań gmin (`wyzwanie`, trafia do Radaru).
+- **Pracownia:** asystent (pytania, podpowiedzi do pól kanwy), scenorys 4 kadry, plakat A4 z kodem QR (pakiet `qrcode`, MIT), pełna kanwa INNO AGH (arkusze 2–3), tryb ręczny bez AI.
+- **Dostępność:** panel „Jak wolisz korzystać?” (pierwsza wizyta), rozmowa głosowa (`/rozmowa`), wersja ukraińska ścieżki mieszkańca (`messages/uk.json`, brakujące klucze wracają do polskiego), test reflow 320 px (`scripts/szerokosc-320.ts`).
+- **Prywatność:** opis problemu nie trafia do adresu URL (sessionStorage), maskowanie imion i nazwisk ze słownika, `SESSION_SECRET` obowiązkowy w produkcji (min. 16 znaków), limity zapytań ×5 (wspólne IP Jury), globalny limit godzinowy.
+- **Jury i demo:** `/ocena` (4 testy Jury, moduły, konta demo), `/zaufanie` (karta systemu AI, prywatność, bezpieczeństwo), `/dostepnosc`, `/latwy`; `scripts/reset-demo.ts` i przycisk w Centrali przywracają dane demo.
+- **Migracje:** `db/004`…`db/009` (sprawy, reakcje, ekspert, testy/galeria, rozmowy, dziennik). Seedy: `scripts/seed-galeria.ts`.
+- **Niepublikowanie bez zmian:** repozytorium zostaje prywatne; regulamin §4 ust. 9 traktuje repozytorium jako opcjonalne.
+
 ### 1b. Decyzje techniczne z 3.10 (nadpisują dalsze rozdziały)
 
 - Framework: **Next.js 16** (nie 15), React 19, Tailwind 4. Komponenty własne na pakiecie `radix-ui` (generator shadcn odrzucony: instalował nieznany pakiet `cn`).
 - Model AI: na czas prac **`claude-sonnet-5-5`** (zmienna `AI_MODEL`), Opus 5.5 po pomiarze, czy podnosi Hit@3. Głębokość myślenia: `AI_EFFORT_SWATKA`.
-- Katalog w prompcie Swatki ma ok. 27 tys. tokenów (nazwa, kategoria, „na czym polega”, problemy, odbiorcy, „kto może wdrożyć”), z cache 1 h.
+- Katalog w prompcie Swatki ma ok. 43 tys. tokenów (pomiar 3.10) (nazwa, kategoria, „na czym polega”, problemy, odbiorcy, „kto może wdrożyć”), z cache 1 h.
 - Baza w dev: lokalny Postgres w Dockerze, na demo Supabase (region UE). Ustawienia dostępności trzymane w cookie, więc serwer renderuje je bez migotania.
 - Maskowanie: wyszukiwanie przechodzi maskowanie regex, a zapis zgłoszenia dodatkowo maskowanie imion i nazwisk przez AI (do zrobienia).
 - Wynik bazowy wyszukiwania awaryjnego (bez AI) na 30 zapytaniach: Hit@3 79,3%, MRR 0,76 (`npx tsx scripts/eval-swatka.ts --lex`).

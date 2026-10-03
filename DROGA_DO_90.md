@@ -25,6 +25,9 @@ Stan na: sobota 3.10.2026, ok. 20:00 · kod: commit `2c2406d` · audyt i pomysł
 - [Załącznik A: wyniki testów](#załącznik-a-wyniki-testów)
 - [Załącznik B: szkic opisu do HackTribe](#załącznik-b-szkic-opisu-do-hacktribe)
 
+
+> **Stan realizacji (4.10.2026, noc):** zrobione B-01…B-09, B-11, B-13 oraz większość P1 i TOP 8: W-11/12/14, W-21/22/24, W-31, W-34/35/36/37, W-44, W-50/87/91 (sprawy, magistrala powiadomień, wskaźniki czasu odpowiedzi), W-52/74 (panel eksperta), W-53/94 (rozmowy), W-71/72 (profil powiatu, filtry, porównywarka), I-01, I-02, I-03, I-04, I-05, I-06 (UA, część), I-07, I-08, I-09, I-10, I-11, I-12, I-15, I-18, I-19 (bez rzędów), I-21. **Pozostałe zadania: `NEXT.md`.** Szczegóły decyzji: `PLAN.md` rozdz. 1c.
+
 ### Jak korzystać z tego dokumentu
 
 - **Priorytety:** P0 (blokery i pułapki, najpierw), P1 (domknięcie 100% wymagań z PDF), P2 (innowacje na 90+), P3 (jeśli zostanie czas).
@@ -168,7 +171,7 @@ Skala 1–10 na kryterium, wynik to średnia ważona (PDF §8, PLAN.md rozdz. 1)
 
 ### P0: naprawić najpierw (ok. 1,5 h agenta)
 
-- [ ] **B-01 Przykład „Dziecko w kryzysie” daje „brak rozwiązania”.**
+- [x] **B-01 Przykład „Dziecko w kryzysie” daje „brak rozwiązania”.**
   - *Dowód:* zapytanie „Mój syn zamknął się w sobie i całe dni siedzi przy komputerze.” zwraca `brakDopasowania: true`. Najlepszy wynik to „Bez presji z depresji”, 50/100 (sprawdzone na żywo 3.10). To ten sam jedyny błąd z pomiaru (q11). Przykład stoi na stronie głównej (`messages/pl.json` → `start.hero.p3`) i w Swatce (`components/swatka/formularz.tsx:25`).
   - *Poprawka:*
     1. W instrukcji Swatki (`lib/swatka.ts`) dodać zasadę: gdy zgadzają się problem i grupa odbiorców, a forma wsparcia jest pokrewna, trafność wynosi co najmniej 60. Dodać 3 krótkie przykłady kalibracji.
@@ -176,12 +179,12 @@ Skala 1–10 na kryterium, wynik to średnia ważona (PDF §8, PLAN.md rozdz. 1)
     3. Pytanie doprecyzowujące ma mieć gotowe odpowiedzi (przyciski) i ponawiać wyszukiwanie.
     4. Dodać do zestawu testowego 20 zapytań w stylu Jury i 5 prawdziwych przypadków bez rozwiązania, a potem ponownie zmierzyć.
   - *DoD:* każdy przykład w UI daje co najmniej 1 wynik ≥ 55; Hit@3 ≥ 95%; q30 jest poprawnie oznaczone jako „brak”.
-- [ ] **B-02 Opis problemu trafia do adresu URL.**
+- [x] **B-02 Opis problemu trafia do adresu URL.**
   - `components/home/pole-opisu.tsx:21` wysyła `/problem?q=<opis>&auto=1`.
   - Adres z opisem trafia do logów hostingu, historii przeglądarki i ewentualnej analityki. To łamie zasadę „w logach nie zapisujemy treści zgłoszeń”.
   - *Poprawka:* przekazać tekst przez `sessionStorage` i usunąć go zaraz po odczycie.
   - *DoD:* w adresie nie ma treści opisu.
-- [ ] **B-03 Maskowanie danych ma dziury** (`lib/maskowanie.ts`):
+- [x] **B-03 Maskowanie danych ma dziury** (`lib/maskowanie.ts`):
   - „tel. 600 100 200.” na końcu zdania nie jest maskowany, bo lookahead `(?![\d.])` w linii 12 blokuje kropkę;
   - „Nazywam się Jan Kowalski” z wielkiej litery nie jest maskowane, bo reguła w linii 24 zna tylko małe litery;
   - imiona i nazwiska w zwykłym zdaniu („mamą, Haliną Wiśniewską”) trafiają do modelu, bo AI czyści je dopiero przed zapisem (`oceńZgloszenie`).
@@ -191,11 +194,11 @@ Skala 1–10 na kryterium, wynik to średnia ważona (PDF §8, PLAN.md rozdz. 1)
     - słownik najczęstszych imion plus wzorzec „Imię Nazwisko” (np. lista imion z rejestru PESEL na dane.gov.pl — sprawdzić licencję);
     - 20 testów w skrypcie.
   - *DoD:* testy przechodzą, a Karta AI (I-15) uczciwie opisuje, co maskujemy.
-- [ ] **B-04 Brak `SESSION_SECRET` daje stały podpis.** W `lib/sesja.ts:9` brak zmiennej oznacza podpis cookie admina tekstem „brak-sekretu”, więc da się je podrobić. W produkcji rzucić błąd i ustawić zmienną na hostingu.
-- [ ] **B-05 Limity zapytań per IP** (`lib/limit.ts`).
+- [x] **B-04 Brak `SESSION_SECRET` daje stały podpis.** W `lib/sesja.ts:9` brak zmiennej oznacza podpis cookie admina tekstem „brak-sekretu”, więc da się je podrobić. W produkcji rzucić błąd i ustawić zmienną na hostingu.
+- [x] **B-05 Limity zapytań per IP** (`lib/limit.ts`).
   - Jury w jednej sieci (Tauron Arena, biuro ROPS) ma jedno IP. Krawiec pozwala na 4 zapytania na minutę, Pracownia i zgłoszenia na 5.
   - *Poprawka:* kluczem ma być anonimowe cookie sesji, a IP drugim, wyższym limitem. Na czas oceny podnieść limity. Budżet globalny zostaje.
-- [ ] **B-06 Szerokość 320 px (WCAG 1.4.10).** Poziome przewijanie na 6 stronach:
+- [x] **B-06 Szerokość 320 px (WCAG 1.4.10).** Poziome przewijanie na 6 stronach:
 
   | Strona | Szerokość | Przyczyna |
   |---|---|---|
@@ -207,7 +210,7 @@ Skala 1–10 na kryterium, wynik to średnia ważona (PDF §8, PLAN.md rozdz. 1)
   | start | 324 px | |
 
   *Poprawka:* `min-w-0` w elementach siatki, `break-words` i `hyphens-auto`, `max-w-full` dla `select` (najlepiej zamienić je na przyciski, zob. B-14). *DoD:* przy 320 px żadna strona nie przewija się w poziomie.
-- [ ] **B-07 Krawiec i „Usługa Wrażliwa”.**
+- [x] **B-07 Krawiec i „Usługa Wrażliwa”.**
   - Nabór 2025/2026 obejmuje tylko 5 innowacji (`data/nabory_rops.json`):
     - Bez presji z depresji (`bez-presji-z-depresji`);
     - Strażnik (`straznik`);
@@ -221,17 +224,17 @@ Skala 1–10 na kryterium, wynik to średnia ważona (PDF §8, PLAN.md rozdz. 1)
     - dodać wykluczenia;
     - dodać etykietę „na zasadach naboru 2025/2026”;
     - pokazywać demo na Strażniku albo na „Bez presji z depresji”.
-- [ ] **B-08 „Podobne przypadki” przesadzają.** Licznik liczy wszystkie zgłoszenia z całego obszaru, razem z danymi demo. Przy pytaniu o alarm dla głuchych wychodzi „39 osób zgłosiło podobną sprawę” o całej „niepełnosprawności”. Poprawka: zob. W-11.
+- [x] **B-08 „Podobne przypadki” przesadzają.** Licznik liczy wszystkie zgłoszenia z całego obszaru, razem z danymi demo. Przy pytaniu o alarm dla głuchych wychodzi „39 osób zgłosiło podobną sprawę” o całej „niepełnosprawności”. Poprawka: zob. W-11.
 
 ### P1: poprawić przy domykaniu wymagań
 
-- [ ] **B-09 Pracownia nie działa bez AI.** Nie ma ręcznego formularza fiszki. Dodać 4 pola z PDF wypełniane ręcznie, a „Uzupełnij z opisu (AI)” zostawić jako opcję.
+- [x] **B-09 Pracownia nie działa bez AI.** Nie ma ręcznego formularza fiszki. Dodać 4 pola z PDF wypełniane ręcznie, a „Uzupełnij z opisu (AI)” zostawić jako opcję.
 - [ ] **B-10 Długie czekanie.** Pracownia trwa ok. 30 s, Krawiec ok. 60 s, bez żadnej informacji o postępie.
   - Dodać kroki postępu w `role="status"`, np. „Czytam pomysł…”, „Porównuję z 115 innowacjami…”, „Oceniam według karty IWS…”.
   - Albo rozbić analizę na 2 krótsze wywołania.
-- [ ] **B-11 Wyszarzone przyciski.** Przycisk „Znajdź pomoc” jest nieaktywny, dopóki pole jest puste, i senior nie wie, dlaczego nie działa. Zostawić go aktywnym, a po kliknięciu pokazać komunikat przy polu (WCAG 3.3.1, 3.3.3).
+- [x] **B-11 Wyszarzone przyciski.** Przycisk „Znajdź pomoc” jest nieaktywny, dopóki pole jest puste, i senior nie wie, dlaczego nie działa. Zostawić go aktywnym, a po kliknięciu pokazać komunikat przy polu (WCAG 3.3.1, 3.3.3).
 - [ ] **B-12 Teksty na sztywno w komponentach** (Centrala, statusy, Kondycja, „Zapytaj raporty”, „(jeszcze nie)” w `status-zgloszenia.tsx`). CLAUDE.md wymaga `messages/pl.json`. Bez tego nie będzie wersji ukraińskiej.
-- [ ] **B-13 Formy męskie.** „Jesteś zapisany” i „Czy poleciłbyś” zamienić na neutralne: „Zapisaliśmy Cię”, „Czy polecisz to innym?”.
+- [x] **B-13 Formy męskie.** „Jesteś zapisany” i „Czy poleciłbyś” zamienić na neutralne: „Zapisaliśmy Cię”, „Czy polecisz to innym?”.
 - [ ] **B-14 Listy rozwijane** (`<select>`) w Rynku, Kondycji, imporcie i formularzu pytania. PLAN 10.1 sam zakłada „bez list rozwijanych”, bo seniorzy mają z nimi najwięcej kłopotu. Zamienić na przyciski radio albo wyszukiwarkę.
 - [ ] **B-16 Ocena AI w karcie zgłoszenia.** Centrala pisze „Ocena AI w toku. Odśwież stronę”. Strona ma odświeżać się sama.
 - [ ] **B-17 Nieaktualne materiały:**
