@@ -1,6 +1,6 @@
 /** Zapamiętuje już widziane sprawy również wtedy, gdy wypadną z pierwszej strony skrzynki. */
-export function noweSprawy<T extends { id: string }>(znane: Set<string>, sprawy: T[], pierwsze = false): T[] {
-  const nowe = pierwsze ? [] : sprawy.filter((s) => !znane.has(s.id));
+export function noweSprawy<T extends { id: string; created_at?: string }>(znane: Set<string>, sprawy: T[], pierwsze = false, noweOd?: string): T[] {
+  const nowe = pierwsze ? [] : sprawy.filter((s) => !znane.has(s.id) && (!noweOd || Date.parse(s.created_at ?? "") >= Date.parse(noweOd)));
   sprawy.forEach((s) => znane.add(s.id));
   return nowe;
 }

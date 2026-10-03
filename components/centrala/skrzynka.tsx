@@ -72,6 +72,7 @@ export function Skrzynka() {
   const [wiersze, setWiersze] = React.useState<Wiersz[] | null>(null);
   const [nowe, setNowe] = React.useState<string[]>([]);
   const znane = React.useRef<Set<string> | null>(null);
+  const noweOd = React.useRef<string | undefined>(undefined);
   const [filtr, setFiltr] = React.useState<"wszystkie" | TypSprawy>("wszystkie");
   const [metryki, setMetryki] = React.useState<{ odpowiedzianych: number; mediana_min: string | null; w_terminie: number } | null>(null);
   const [bladSieci, setBladSieci] = React.useState(false);
@@ -83,14 +84,15 @@ export function Skrzynka() {
       if (!aktywny) return;
       if (r.status === 401) { router.push("/centrala/logowanie"); return; }
       if (!r.ok) throw new Error("skrzynka_niedostepna");
-      const { zgloszenia, metryki: m } = (await r.json()) as { zgloszenia: Wiersz[]; metryki: { odpowiedzianych: number; mediana_min: string | null; w_terminie: number } };
+      const { zgloszenia, metryki: m, teraz } = (await r.json()) as { zgloszenia: Wiersz[]; teraz: string; metryki: { odpowiedzianych: number; mediana_min: string | null; w_terminie: number } };
       if (!aktywny) return;
       setBladSieci(false);
       setMetryki(m);
       {
         const pierwsze = znane.current === null;
+        noweOd.current ??= teraz;
         znane.current ??= new Set<string>();
-        const swieze = noweSprawy(znane.current, zgloszenia, pierwsze).map((z) => `${ETYKIETY_TYPOW[z.typ as TypSprawy] ?? z.typ} ${z.numer}`);
+        const swieze = noweSprawy(znane.current, zgloszenia, pierwsze, noweOd.current).map((z) => `${ETYKIETY_TYPOW[z.typ as TypSprawy] ?? z.typ} ${z.numer}`);
         if (swieze.length) {
           setNowe((n) => [...swieze, ...n].slice(0, 5));
           dzwiek();

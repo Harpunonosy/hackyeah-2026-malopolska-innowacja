@@ -33,3 +33,13 @@ test("odpytywanie po błędzie ponawia i nie wykonuje żądań jednocześnie", a
   assert.equal(maksimum, 1);
   assert.equal(bledy.length, 1);
 });
+
+test("starsza sprawa spoza pierwszych 200 wyników nie powoduje nowego powiadomienia", async () => {
+  const { noweSprawy } = await import("../lib/odpytywanie");
+  const znane = new Set<string>(["a"]);
+  const sprawy = [
+    { id: "stara-poza-lista", created_at: "2026-10-03T10:00:00.000Z" },
+    { id: "nowy-pomysl", created_at: "2026-10-03T20:00:01.000Z" },
+  ];
+  assert.deepEqual(noweSprawy(znane, sprawy, false, "2026-10-03T20:00:00.000Z"), [sprawy[1]]);
+});

@@ -3,6 +3,8 @@ import { czyAdmin } from "@/lib/sesja";
 
 export async function GET() {
   if (!(await czyAdmin())) return Response.json({ blad: "brak_dostepu" }, { status: 401 });
+  // Początek odczytu: sprawa utworzona podczas zapytań nie może wypaść z okna powiadomień.
+  const teraz = new Date().toISOString();
   const c = db();
   const [{ rows }, m] = await Promise.all([
     c.query(
@@ -19,5 +21,5 @@ export async function GET() {
        from zgloszenia`,
     ),
   ]);
-  return Response.json({ zgloszenia: rows, metryki: m.rows[0], teraz: new Date().toISOString() }, { headers: { "Cache-Control": "no-store" } });
+  return Response.json({ zgloszenia: rows, metryki: m.rows[0], teraz }, { headers: { "Cache-Control": "no-store" } });
 }
