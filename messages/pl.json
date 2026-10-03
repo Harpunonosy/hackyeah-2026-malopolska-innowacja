@@ -50,7 +50,7 @@
       },
       "pomysl": {
         "tytul": "Mam pomysł",
-        "opis": "Opisz i sprawdź szanse"
+        "opis": "Fiszka i ocena pomysłu"
       },
       "testy": {
         "tytul": "Chcę testować",
@@ -322,5 +322,49 @@
     "wdroz": "Wdróż u siebie",
     "wskaznikiLokalne": "Dane z Obserwatora Statystyk (IOSS)",
     "sredniaRegionu": "średnia regionu"
+  },
+  "pracownia": {
+    "nadtytul": "Pracownia: kreator pomysłów",
+    "tytul": "Masz pomysł na innowację?",
+    "opis": "Opisz go własnymi słowami. Asystent AI przygotuje fiszkę, sprawdzi, czy podobne rozwiązanie już istnieje, i wstępnie oceni pomysł według karty ROPS.",
+    "poleEtykieta": "Twój pomysł",
+    "placeholder": "Na przykład: Chcemy zorganizować w wiejskim klubie spotkania, na których młodzi uczą seniorów korzystać z telefonu i bankowości, a seniorzy uczą młodych gotowania i rzemiosła…",
+    "powiedz": "Powiedz",
+    "analizuj": "Przygotuj fiszkę i ocenę",
+    "pracuje": "Asystent AI czyta pomysł i porównuje go z 115 innowacjami ROPS. To potrwa około pół minuty.",
+    "blad": "Nie udało się przygotować analizy. Spróbuj ponownie.",
+    "fiszka": "Fiszka pomysłu",
+    "fiszkaPomoc": "Możesz poprawić każde pole przed wysłaniem.",
+    "tytulPole": "Tytuł",
+    "opisPole": "Krótki opis",
+    "istotaPole": "Na czym polega",
+    "kogoPole": "Dla kogo",
+    "etapPole": "Na jakim etapie jest pomysł",
+    "etap": {
+      "pomysl": "Pomysł",
+      "prototyp": "Prototyp",
+      "przetestowane": "Przetestowane",
+      "gotowe": "Gotowe do wdrożenia"
+    },
+    "istnieje": "Czy to już istnieje?",
+    "istniejeBrak": "Nie znaleźliśmy w Bibliotece ROPS podobnej innowacji. To dobry znak dla kryterium innowacyjności.",
+    "istniejeOpis": "Najbliższe rozwiązania z Biblioteki. Formularz naboru wymaga oświadczenia, że nie powielasz istniejących innowacji.",
+    "ocena": "Wstępna ocena według karty ROPS",
+    "ocenaOpis": "To pomoc w przygotowaniu wniosku, a nie decyzja komisji. Zdobywasz 0–10 pkt w pięciu kryteriach; potrzebujesz co najmniej 21 z 50, innowacyjność co najmniej 5, a pozostałe po co najmniej 4.",
+    "suma": "Razem {suma} z 50",
+    "spelniaProgi": "Pomysł spełnia progi karty oceny.",
+    "niespelniaProgi": "Pomysł nie spełnia jeszcze progów karty. Zobacz wskazówki poniżej.",
+    "prog": "próg {prog}",
+    "wskazowka": "Co dopisać",
+    "pkt": "{p} z 10",
+    "adwokat": "Trudne pytania komisji",
+    "nietuzinkowe": "Nietuzinkowe warianty",
+    "doUzupelnienia": "Do uzupełnienia",
+    "wyslij": "Wyślij pomysł do ROPS",
+    "wysylam": "Wysyłam…",
+    "wyslano": "Pomysł wysłany",
+    "wyslanoOpis": "Pracownicy ROPS zobaczą Twoją fiszkę. Dziękujemy za pomysł.",
+    "blad2": "Nie udało się wysłać. Spróbuj ponownie.",
+    "oznaczenie": "Fiszka i ocena przygotowane z pomocą AI. Sprawdź je przed wysłaniem."
   }
 }

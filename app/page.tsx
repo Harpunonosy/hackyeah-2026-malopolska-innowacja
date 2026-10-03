@@ -9,7 +9,7 @@ import { cn } from "@/lib/utils";
 const KAFELKI: { klucz: string; ikona: LucideIcon; href?: string }[] = [
   { klucz: "wiedza", ikona: BookOpen, href: "/wiedza/biblioteka" },
   { klucz: "moje", ikona: ClipboardList, href: "/moje" },
-  { klucz: "pomysl", ikona: Lightbulb },
+  { klucz: "pomysl", ikona: Lightbulb, href: "/pomysl" },
   { klucz: "testy", ikona: FlaskConical },
   { klucz: "instytucja", ikona: Building2, href: "/wdrozenie" },
   { klucz: "rozmowa", ikona: MessagesSquare },
