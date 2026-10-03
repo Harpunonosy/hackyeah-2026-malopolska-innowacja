@@ -291,7 +291,11 @@
     "prosciejBlad": "Nie udało się przygotować tekstu. Spróbuj za chwilę.",
     "ukDlaKogo": "Для кого",
     "ukJak": "Як скористатися",
-    "ukAi": "Текст підготовлено штучним інтелектом на основі картки ROPS."
+    "ukAi": "Текст підготовлено штучним інтелектом на основі картки ROPS.",
+    "rzadWybrane": "Polecane do wdrożenia",
+    "rzadFilmy": "Zobacz na filmie",
+    "zobaczWszystkie": "Zobacz wszystkie ({n})",
+    "rzadPrzewin": "{nazwa}: przewiń w bok, aby zobaczyć więcej"
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",
