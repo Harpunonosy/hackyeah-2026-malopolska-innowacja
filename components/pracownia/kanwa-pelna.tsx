@@ -4,6 +4,7 @@ import * as React from "react";
 import { useTranslations } from "next-intl";
 import { Loader2, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { Szczegoly } from "@/components/ui/szczegoly";
 
 export type KanwaPelnaStan = Record<string, string>;
 const POLA: { grupa: string; pola: { id: string; pytanie: string }[] }[] = [
@@ -37,14 +38,14 @@ export function KanwaPelna({ stan, zmien, fiszkaTekst }: { stan: KanwaPelnaStan;
     }
   }
   return (
-    <section className="karta space-y-6 p-6" aria-labelledby="h-kanwa-pelna">
+    <section className="space-y-6" aria-labelledby="h-kanwa-pelna">
       <div>
-        <h2 id="h-kanwa-pelna" className="text-2xl font-bold">{t("kanwaPelna")}</h2>
+        <h3 id="h-kanwa-pelna" className="text-xl font-bold">{t("kanwaPelna")}</h3>
         <p className="text-muted">{t("kanwaPelnaOpis")}</p>
       </div>
       {POLA.map((g) => (
-        <fieldset key={g.grupa} className="space-y-4">
-          <legend className="text-lg font-bold">{g.grupa}</legend>
+        <Szczegoly key={g.grupa} poziom={3} tytul={g.grupa} className="shadow-none"><fieldset className="space-y-4">
+          <legend className="sr-only">{g.grupa}</legend>
           {g.pola.map((p) => (
             <div key={p.id} className="space-y-2">
               <label htmlFor={`kp-${p.id}`} className="block font-semibold">{p.pytanie}</label>
@@ -59,7 +60,7 @@ export function KanwaPelna({ stan, zmien, fiszkaTekst }: { stan: KanwaPelnaStan;
               )}
             </div>
           ))}
-        </fieldset>
+        </fieldset></Szczegoly>
       ))}
       <button type="button" className="min-h-12 rounded-full border-2 border-fg px-4 font-semibold hover:bg-fg hover:text-bg" onClick={() => window.print()}>{t("drukujKanwe")}</button>
     </section>

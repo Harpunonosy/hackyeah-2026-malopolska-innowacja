@@ -1,6 +1,7 @@
 "use client";
 
 import { useTranslations } from "next-intl";
+import { Szczegoly } from "@/components/ui/szczegoly";
 import type { KanwaStan } from "@/lib/pracownia";
 export type { KanwaStan };
 type PoleSkali = "intensywnosc" | "czestotliwosc" | "skala" | "przystepnosc" | "prostota" | "dochod_pewnosc" | "skalowanie" | "wplyw_osoba" | "wplyw_spolecznosc" | "wplyw_srodowisko";
@@ -26,9 +27,9 @@ export function Kanwa({ kanwa, zmien, etap }: { kanwa: KanwaStan; zmien: (k: Kan
   const w = wskaznikiDojrzalosci(kanwa, etap);
   const skala = t.raw("skala") as string[];
   return (
-    <section className="karta space-y-6 p-6" aria-labelledby="h-kanwa">
+    <section className="space-y-6" aria-labelledby="h-kanwa">
       <div>
-        <h2 id="h-kanwa" className="text-2xl font-bold">{t("kanwa")}</h2>
+        <h3 id="h-kanwa" className="text-xl font-bold">{t("kanwa")}</h3>
         <p className="text-muted">{t("kanwaOpis")}</p>
       </div>
       <div>
@@ -43,14 +44,13 @@ export function Kanwa({ kanwa, zmien, etap }: { kanwa: KanwaStan; zmien: (k: Kan
         </ul>
       </div>
       {GRUPY.map(([g, pola]) => (
-        <div key={g} className="space-y-4">
-          <h3 className="text-lg font-bold">{t(`wsk.${g}`)}</h3>
+        <Szczegoly key={g} poziom={3} tytul={t(`wsk.${g}`)} className="shadow-none">
           {pola.map((pole) => (
             <fieldset key={pole} className="space-y-2">
               <legend className="font-semibold">{t(`pytania.${pole}`)}</legend>
               <div className="grid grid-cols-2 gap-2 sm:grid-cols-4">
                 {[1, 2, 3, 4].map((n) => (
-                  <label key={n} className="flex min-h-12 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-line-soft bg-card px-2 py-1 text-center text-sm font-semibold hover:border-fg has-[:checked]:border-fg has-[:checked]:bg-accent has-[:checked]:text-accent-fg">
+                  <label key={n} className="flex min-h-12 cursor-pointer flex-col items-center justify-center rounded-xl border-2 border-line-soft bg-card px-2 py-1 text-center text-sm font-semibold hover:border-fg has-[:checked]:border-fg has-[:checked]:bg-accent has-[:checked]:text-accent-fg has-[:focus-visible]:ring-4 has-[:focus-visible]:ring-[var(--focus)]">
                     <input type="radio" name={`k-${pole}`} checked={kanwa[pole] === n} onChange={() => zmien({ ...kanwa, [pole]: n })} className="sr-only" />
                     {skala[n - 1]}
                   </label>
@@ -58,7 +58,7 @@ export function Kanwa({ kanwa, zmien, etap }: { kanwa: KanwaStan; zmien: (k: Kan
               </div>
             </fieldset>
           ))}
-        </div>
+        </Szczegoly>
       ))}
       <div className="grid gap-4 md:grid-cols-2">
         {([["kto_wspiera", t("wspiera")], ["kto_utrudnia", t("utrudnia")], ["koszty_stale", t("stale")], ["koszty_zmienne", t("zmienne")]] as const).map(([k, e]) => (

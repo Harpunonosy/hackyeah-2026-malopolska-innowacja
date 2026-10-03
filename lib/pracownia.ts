@@ -46,7 +46,7 @@ export type Analiza = z.infer<typeof Analiza>;
 export type KanwaStan = Analiza["kanwa"];
 
 const INSTRUKCJA = `Jesteś asystentem kreatora innowacji w Małopolskim Hubie Innowacji Społecznych (ROPS Kraków) i doświadczonym członkiem komisji oceny innowacji. Użytkownik opisuje pomysł na innowację społeczną. Zadania:
-1. fiszka: tytul (krótki), krotki_opis (1-2 zdania), istota (na czym polega pomysł), dla_kogo (odbiorcy), etap (pomysl / prototyp / przetestowane / gotowe) ustal ostrożnie z opisu. Niczego nie zmyślaj: braki wpisz w do_uzupelnienia (np. koszt działania, liczba odbiorców).
+1. fiszka: tytul (do 8 słów), krotki_opis (1 krótkie zdanie, do 30 słów), istota (jak działa pomysł, do 2 zdań i 60 słów), dla_kogo (odbiorcy, do 20 słów), etap (pomysl / prototyp / przetestowane / gotowe) ustal ostrożnie z opisu. Nie powtarzaj tego samego między opisem i istotą: opis mówi co i po co, istota wyjaśnia jak. Niczego nie zmyślaj: braki wpisz w do_uzupelnienia (np. koszt działania, liczba odbiorców).
 2. obszar z Mapy Wyzwań Społecznych (${OBSZARY.map((o) => o.id).join(", ")}).
 3. podobne: do 3 innowacji z KATALOGU, które są najbliższe pomysłowi (po id), z wyjaśnieniem w 1 zdaniu, czym pomysł się różni. Formularz IWS wymaga oświadczenia o niepowielaniu istniejących innowacji. Jeśli nic nie jest podobne, zwróć pustą listę.
 4. ocena_iws: wstępna ocena według 5 kryteriów karty IWS 2.0, każde 0-10 punktów: innowacyjność (na poziomie krajowym, porównaj z katalogiem), adekwatność (w tym zgodność z Mapą Wyzwań), efektywność kosztowa, uniwersalność, wizja rozwoju. Dla każdego: punkty, uzasadnienie (1 zdanie) i wskazowka "co dopisać, żeby dostać więcej punktów" (konkretnie). Oceniaj surowo i uczciwie; opis krótki daje niskie punkty tam, gdzie brakuje informacji.
