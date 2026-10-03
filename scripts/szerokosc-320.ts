@@ -2,13 +2,13 @@
  * WCAG 1.4.10 (reflow): sprawdza, czy strony przy szerokości 320 px nie przewijają się w poziomie.
  *   npx tsx --env-file=.env.local scripts/szerokosc-320.ts [adres]
  */
-import { chromium } from "playwright-core";
+import { przegladarkaTestowa } from "./przegladarka";
 import { ADMIN, PUBLICZNE, zalogujAdmina, zalogujEksperta, znajdzDynamiczne } from "./strony";
 
 const BAZA = process.argv[2] ?? "http://localhost:3000";
 
 async function main() {
-  const przegladarka = await chromium.launch({ executablePath: "/usr/bin/google-chrome", args: ["--no-sandbox"] });
+  const przegladarka = await przegladarkaTestowa();
   const kontekst = await przegladarka.newContext({ viewport: { width: 320, height: 700 }, locale: "pl-PL" });
   const strona = await kontekst.newPage();
   await zalogujAdmina(strona, BAZA);
@@ -16,7 +16,8 @@ async function main() {
   const dynamiczne = await znajdzDynamiczne(strona, BAZA);
   let zle = 0;
   for (const sciezka of [...PUBLICZNE, ...ADMIN, "/ekspert", ...dynamiczne]) {
-    await strona.goto(`${BAZA}${sciezka}`, { waitUntil: "load" });
+    const odpowiedz = await strona.goto(`${BAZA}${sciezka}`, { waitUntil: "load" });
+    if (!odpowiedz?.ok()) throw new Error(`Strona zwróciła HTTP ${odpowiedz?.status()}: ${strona.url()}`);
     await strona.waitForTimeout(1200);
     const wynik = await strona.evaluate(() => {
       const szer = document.documentElement.scrollWidth;
@@ -35,5 +36,6 @@ async function main() {
   }
   await przegladarka.close();
   console.log(zle === 0 ? "\n320 px: brak przewijania poziomego" : `\n320 px: ${zle} stron przewija się w poziomie`);
+  if (zle > 0) process.exitCode = 1;
 }
-main();
+main().catch((e) => { console.error(e); process.exitCode = 1; });

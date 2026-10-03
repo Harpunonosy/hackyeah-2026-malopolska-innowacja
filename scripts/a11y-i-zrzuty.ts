@@ -5,15 +5,16 @@
  */
 import { mkdirSync } from "node:fs";
 import AxeBuilder from "@axe-core/playwright";
-import { chromium } from "playwright-core";
+import { przegladarkaTestowa } from "./przegladarka";
 import { ADMIN, PUBLICZNE, zalogujAdmina, zalogujEksperta, znajdzDynamiczne } from "./strony";
 
 const BAZA = process.argv[2] ?? "http://localhost:3100";
 const TRYBY = process.argv.includes("--tryby");
+const ZRZUTY = !process.argv.includes("--bez-zrzutow");
 
 async function main() {
   mkdirSync("docs/zrzuty", { recursive: true });
-  const przegladarka = await chromium.launch({ executablePath: "/usr/bin/google-chrome", args: ["--no-sandbox"] });
+  const przegladarka = await przegladarkaTestowa();
   const kontekst = await przegladarka.newContext({ viewport: { width: 1280, height: 900 }, locale: "pl-PL" });
   const strona = await kontekst.newPage();
 
@@ -32,9 +33,11 @@ async function main() {
     await strona.setViewportSize({ width: w.szerokosc ?? 1280, height: 900 });
   for (const sciezka of STRONY) {
     const s = { sciezka, nazwa: (sciezka === "/" ? "start" : sciezka.slice(1).replaceAll("/", "-")) + w.przyrostek };
-    await strona.goto(`${BAZA}${s.sciezka}`, { waitUntil: "load", timeout: 90000 }); await strona.waitForTimeout(1200);
+    const odpowiedz = await strona.goto(`${BAZA}${s.sciezka}`, { waitUntil: "load", timeout: 90000 });
+    if (!odpowiedz?.ok()) throw new Error(`Strona zwróciła HTTP ${odpowiedz?.status()}: ${strona.url()}`);
+    await strona.waitForTimeout(1200);
     const wynik = await new AxeBuilder({ page: strona }).withTags(["wcag2a", "wcag2aa", "wcag21a", "wcag21aa"]).analyze();
-    if (!w.przyrostek) await strona.screenshot({ path: `docs/zrzuty/${s.nazwa}.png`, fullPage: true });
+    if (ZRZUTY && !w.przyrostek) await strona.screenshot({ path: `docs/zrzuty/${s.nazwa}.png`, fullPage: true });
     bledy += wynik.violations.length;
     console.log(`${wynik.violations.length === 0 ? "OK " : "BŁĄD"} ${s.nazwa}  (${wynik.violations.length} naruszeń, ${wynik.passes.length} reguł zaliczonych)`);
     for (const v of wynik.violations) {
@@ -45,5 +48,6 @@ async function main() {
   }
   await przegladarka.close();
   console.log(bledy === 0 ? "\naxe: 0 naruszeń na wszystkich stronach" : `\naxe: ${bledy} naruszeń`);
+  if (bledy > 0) process.exitCode = 1;
 }
-main();
+main().catch((e) => { console.error(e); process.exitCode = 1; });

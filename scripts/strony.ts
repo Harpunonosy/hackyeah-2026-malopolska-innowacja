@@ -7,7 +7,7 @@ export const PUBLICZNE = [
   "/wiedza/akademia", "/ocena", "/zaufanie", "/dostepnosc", "/centrala/logowanie", "/asystowane", "/integracje", "/siec", "/widzet?powiat=olkuski",
 ];
 export const ADMIN = [
-  "/centrala/zgloszenia", "/centrala/radar", "/centrala/pomysly", "/centrala/nabory", "/centrala/tresci", "/centrala/powiadomienia", "/centrala/integracje", "/centrala/puls",
+  "/centrala/zgloszenia", "/centrala/radar", "/centrala/pomysly", "/centrala/nabory", "/centrala/tresci", "/centrala/akademia", "/centrala/dane", "/centrala/powiadomienia", "/centrala/integracje", "/centrala/puls",
 ];
 
 /** Strony z parametrem: bierzemy pierwszy link z listy (np. pierwszą kartę zgłoszenia). */

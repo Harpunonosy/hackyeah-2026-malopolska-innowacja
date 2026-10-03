@@ -5,7 +5,7 @@
  *   npx tsx --env-file=.env.local scripts/klawiatura.ts [adres]
  * Nie zastępuje testu ręcznego (kolejność logiczna, czytelność ogłoszeń czytnika ekranu).
  */
-import { chromium } from "playwright-core";
+import { przegladarkaTestowa } from "./przegladarka";
 
 const BAZA = process.argv[2] ?? "http://localhost:3000";
 const STRONY = ["/", "/problem", "/pomysl", "/moje", "/wiedza/biblioteka", "/rozmowa", "/asystowane", "/wdrozenie", "/testy", "/rynek", "/latwy"];
@@ -14,14 +14,15 @@ const MAKS = 120;
 type Stop = { opis: string; nazwa: string; widoczny: boolean };
 
 async function main() {
-  const przegladarka = await chromium.launch({ executablePath: "/usr/bin/google-chrome", args: ["--no-sandbox"] });
+  const przegladarka = await przegladarkaTestowa();
   const kontekst = await przegladarka.newContext({ viewport: { width: 1280, height: 900 }, locale: "pl-PL" });
   // pomijamy panel „Jak wolisz korzystać?”, żeby liczyć drogę do głównej treści
   await kontekst.addCookies([{ name: "splot_a11y_wybor", value: "1", url: BAZA }]);
   const strona = await kontekst.newPage();
   let problemy = 0;
   for (const sciezka of STRONY) {
-    await strona.goto(`${BAZA}${sciezka}`, { waitUntil: "load", timeout: 90000 });
+    const odpowiedz = await strona.goto(`${BAZA}${sciezka}`, { waitUntil: "load", timeout: 90000 });
+    if (!odpowiedz?.ok()) throw new Error(`Strona zwróciła HTTP ${odpowiedz?.status()}: ${strona.url()}`);
     await strona.waitForTimeout(800);
     const stopy: Stop[] = [];
     const widziane = new Set<string>();
@@ -57,5 +58,6 @@ async function main() {
   }
   await przegladarka.close();
   console.log(problemy === 0 ? "\nKlawiatura: wszystkie elementy mają widoczny fokus i nazwę" : `\nKlawiatura: ${problemy} uwag`);
+  if (problemy > 0) process.exitCode = 1;
 }
-main();
+main().catch((e) => { console.error(e); process.exitCode = 1; });
