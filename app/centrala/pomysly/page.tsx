@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
-import { PodsumujOpinie, StatusFiszki } from "@/components/centrala/akcje-pomyslow";
+import { AkceptujTest, PodsumujOpinie, StatusFiszki } from "@/components/centrala/akcje-pomyslow";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
 import { Chip } from "@/components/ui/chip";
 import { katalog } from "@/lib/katalog";
@@ -21,13 +21,14 @@ export default async function Page() {
   if (!(await czyAdmin())) redirect("/centrala/logowanie");
   const { mapa: innowacjaPoId } = await katalog();
   const c = db();
-  const [fiszki, opinie, testy] = await Promise.all([
+  const [fiszki, opinie, testy, doAkceptacji] = await Promise.all([
     c.query("select id, tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, status, created_at from fiszki order by (status='zgloszona') desc, created_at desc limit 40"),
     c.query(`select innowacja_id, count(*)::int as n, round(avg(ocena)::numeric,1) as srednia,
                count(*) filter (where odpowiedzi->>'polecilbys'='tak')::int as polecaja,
                (array_agg(propozycja order by created_at desc) filter (where propozycja <> ''))[1:3] as propozycje
              from opinie group by innowacja_id order by n desc`),
-    c.query(`select t.id, t.tytul, t.powiat, t.termin, t.liczba_miejsc, (select count(*)::int from zapisy_testy z where z.test_id=t.id) as zapisani from testy t order by t.tytul`),
+    c.query(`select t.id, t.tytul, t.powiat, t.termin, t.liczba_miejsc, (select count(*)::int from zapisy_testy z where z.test_id=t.id) as zapisani from testy t where t.status='otwarty' order by t.tytul`),
+    c.query("select id, tytul, opis, powiat, termin, liczba_miejsc, numer from testy where status='do_akceptacji' order by created_at"),
   ]);
 
   return (
@@ -37,6 +38,22 @@ export default async function Page() {
         <h1 className="text-4xl font-bold sm:text-5xl">Pomysły, opinie i testy</h1>
         <p className="mt-2 max-w-3xl text-lg text-muted">Co mieszkańcy i organizacje zgłosili w Pracowni i Próbowni. Ocena pomysłów to wstępna ocena AI według karty ROPS, a nie decyzja komisji.</p>
       </div>
+
+      {doAkceptacji.rows.length > 0 && (
+        <section aria-labelledby="dotest-h" className="space-y-4">
+          <h2 id="dotest-h" className="text-3xl font-extrabold">Testy do akceptacji ({doAkceptacji.rows.length})</h2>
+          <ul className="space-y-4">
+            {doAkceptacji.rows.map((t) => (
+              <li key={t.id} className="karta space-y-2 border-l-8 border-l-primary p-6">
+                <h3 className="font-display text-2xl font-bold">{t.tytul}</h3>
+                <p>{t.opis}</p>
+                <p className="text-muted">{String(t.powiat).replace("powiat ", "")} · {t.termin} · miejsc: {t.liczba_miejsc}{t.numer ? ` · sprawa ${t.numer}` : ""}</p>
+                <AkceptujTest id={t.id} />
+              </li>
+            ))}
+          </ul>
+        </section>
+      )}
 
       <section aria-labelledby="fiszki-h" className="space-y-4">
         <h2 id="fiszki-h" className="text-3xl font-extrabold">Zgłoszone pomysły ({fiszki.rows.length})</h2>

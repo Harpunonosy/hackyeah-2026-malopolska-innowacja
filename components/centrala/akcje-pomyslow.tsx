@@ -51,3 +51,23 @@ export function PodsumujOpinie({ innowacjaId }: { innowacjaId: string }) {
     </div>
   );
 }
+
+export function AkceptujTest({ id }: { id: string }) {
+  const router = useRouter();
+  const [info, setInfo] = React.useState("");
+  const decyduj = async (decyzja: "akceptuj" | "odrzuc") => {
+    const r = await fetch(`/api/admin/testy/${id}`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ decyzja }) });
+    const d = await r.json().catch(() => ({}));
+    setInfo(r.ok ? (decyzja === "akceptuj" ? `Zaakceptowano. Zaproszono osób: ${d.zaproszono ?? 0}.` : "Odrzucono.") : "Nie udało się zapisać decyzji.");
+    if (r.ok) router.refresh();
+  };
+  return (
+    <div className="space-y-2">
+      <div className="flex flex-wrap gap-2">
+        <Button type="button" onClick={() => decyduj("akceptuj")}>Zaakceptuj i zaproś pasujące osoby</Button>
+        <Button type="button" wariant="obrys" onClick={() => decyduj("odrzuc")}>Odrzuć</Button>
+      </div>
+      <p role="status" className="font-semibold">{info}</p>
+    </div>
+  );
+}

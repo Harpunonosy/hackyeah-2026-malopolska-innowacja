@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
+import { OglosTest } from "@/components/probownia/oglos-test";
 import { Opinia } from "@/components/probownia/opinia";
 import { Zapis } from "@/components/probownia/zapis";
 import { NaglowekStrony } from "@/components/naglowek-strony";
@@ -48,6 +49,11 @@ export default async function Testy(props: PageProps<"/testy">) {
             </li>
           ))}
         </ul>
+      </section>
+      <section aria-labelledby="oglos-h" className="max-w-3xl space-y-4">
+        <h2 id="oglos-h" className="text-3xl font-extrabold">{t("oglosTytul")}</h2>
+        <p className="text-lg">{t("oglosOpis")}</p>
+        <OglosTest />
       </section>
       <section aria-labelledby="ocen-h" className="max-w-3xl space-y-4">
         <h2 id="ocen-h" className="text-3xl font-extrabold">{t("ocenTytul")}</h2>

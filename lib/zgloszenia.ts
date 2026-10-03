@@ -24,6 +24,7 @@ export const WejscieZgloszenia = z.object({
     .default([]),
   najlepsze: z.number().min(0).max(100).nullable().default(null),
   obszar: z.enum(OBSZAR_IDS).optional(),
+  testy: z.boolean().default(false),
 });
 export type WejscieZgloszenia = z.infer<typeof WejscieZgloszenia>;
 
@@ -50,10 +51,10 @@ export async function utworzZgloszenie(w: WejscieZgloszenia): Promise<{ id: stri
     }
     const z = await c.query(
       `insert into zgloszenia (numer, autor_id, kanal, tresc_zamaskowana, obszar, powiat, priorytet, kryzys,
-         termin_sla, najlepsze_dopasowanie, zgoda_kontakt, kanal_kontaktu)
-       values ($1,$2,$3,$4,$5,$6,$7,$8, now() + ($9 || ' hours')::interval, $10,$11,$12) returning id`,
+         termin_sla, najlepsze_dopasowanie, zgoda_kontakt, kanal_kontaktu, zgoda_testy)
+       values ($1,$2,$3,$4,$5,$6,$7,$8, now() + ($9 || ' hours')::interval, $10,$11,$12,$13) returning id`,
       [numer, autorId, w.kanal, tekst, w.obszar ?? null, normalizujPowiat(w.powiat), priorytet, kryzys, kryzys ? "0" : "72",
-        w.najlepsze, true, w.email ? "email" : null],
+        w.najlepsze, true, w.email ? "email" : null, w.testy],
     );
     const id: string = z.rows[0].id;
     await c.query("insert into historia_statusu (zgloszenie_id, status, notatka) values ($1,'wyslane','Zgłoszenie wysłane przez formularz')", [id]);

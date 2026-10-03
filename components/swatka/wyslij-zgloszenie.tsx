@@ -14,6 +14,7 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
   const [krok, setKrok] = React.useState<"start" | "podglad" | "wysylka" | "gotowe">("start");
   const [email, setEmail] = React.useState("");
   const [zgoda, setZgoda] = React.useState(false);
+  const [testy, setTesty] = React.useState(false);
   const [numer, setNumer] = React.useState("");
   const [blad, setBlad] = React.useState("");
 
@@ -31,6 +32,7 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
           powiat: powiat || undefined,
           zgoda,
           email: email || undefined,
+          testy,
           obszar: wynik.tryb === "ai" ? wynik.zrozumiano.obszar : undefined,
           najlepsze: wynik.dopasowania[0]?.trafnosc ?? wynik.najblizsze[0]?.trafnosc ?? null,
           dopasowania: [...wynik.dopasowania, ...wynik.najblizsze].map((d) => ({ id: d.id, trafnosc: d.trafnosc, dlaczego: d.dlaczego })),
@@ -99,6 +101,10 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
           <label className="flex cursor-pointer items-start gap-3">
             <input type="checkbox" checked={zgoda} onChange={(e) => setZgoda(e.target.checked)} className="mt-1.5 size-6 accent-current" />
             <span className="text-lg">{t("zgoda")}</span>
+          </label>
+          <label className="flex cursor-pointer items-start gap-3">
+            <input type="checkbox" checked={testy} onChange={(e) => setTesty(e.target.checked)} className="mt-1.5 size-6 accent-current" />
+            <span className="text-lg">{t("zgodaTesty")}</span>
           </label>
           {blad && (
             <p role="alert" className="font-semibold text-primary">

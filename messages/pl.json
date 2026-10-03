@@ -258,7 +258,8 @@
     "numer": "Twój numer zgłoszenia",
     "numerPomoc": "Zapisz ten numer. Po nim sprawdzisz status i odpowiedź.",
     "sprawdzStatus": "Sprawdź status zgłoszenia",
-    "blad": "Nie udało się wysłać zgłoszenia. Spróbuj ponownie."
+    "blad": "Nie udało się wysłać zgłoszenia. Spróbuj ponownie.",
+    "zgodaTesty": "Chcę pomagać w testach nowych rozwiązań. Zaproście mnie, gdy pojawi się test w moim obszarze (nieobowiązkowo)."
   },
   "moje": {
     "tytul": "Moje sprawy",
