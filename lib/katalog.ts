@@ -6,9 +6,17 @@ type Wpis = { t: number; lista: Innowacja[]; mapa: Map<string, Innowacja> };
 const g = globalThis as unknown as { __katalog?: Wpis };
 const TTL_MS = 20_000;
 
+let wToku: Promise<Wpis> | null = null;
+
 export async function katalog(): Promise<{ lista: Innowacja[]; mapa: Map<string, Innowacja> }> {
+  if (g.__katalog && Date.now() - g.__katalog.t < TTL_MS) return g.__katalog;
+  // Po wygaśnięciu pamięci równoległe żądania czekają na jedno odświeżenie.
+  wToku ??= odswiezKatalog().finally(() => { wToku = null; });
+  return wToku;
+}
+
+async function odswiezKatalog(): Promise<Wpis> {
   const teraz = Date.now();
-  if (g.__katalog && teraz - g.__katalog.t < TTL_MS) return g.__katalog;
   let dodane: Innowacja[] = [];
   try {
     const { rows } = await db().query("select * from innowacje where zrodlo = 'dodana' and status = 'opublikowana' order by id");

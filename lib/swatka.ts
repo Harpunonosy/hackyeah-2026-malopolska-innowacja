@@ -23,6 +23,9 @@ export const WejscieSwatki = z.object({
 });
 export type WejscieSwatki = z.infer<typeof WejscieSwatki>;
 
+// SDK przekazuje enum modelowi tylko jako podpowiedź w opisie, więc model może czasem wymyślić identyfikator.
+// .catch() zamienia nieznaną wartość na znacznik, który odfiltrowujemy, zamiast odrzucać całą odpowiedź.
+const NIEZNANE = "__nieznane__";
 const schematAI = (ids: [string, ...string[]]) => z.object({
   obszar: z.enum(OBSZAR_IDS),
   grupa_docelowa: z.string(),
@@ -31,7 +34,7 @@ const schematAI = (ids: [string, ...string[]]) => z.object({
   kryzys: z.boolean(),
   dopasowania: z.array(
     z.object({
-      id: z.enum(ids),
+      id: z.enum(ids).catch(NIEZNANE as (typeof ids)[number]),
       trafnosc: z.number(),
       dlaczego: z.string(),
     }),
@@ -41,7 +44,7 @@ const schematAI = (ids: [string, ...string[]]) => z.object({
     z.object({
       potrzeba: z.string(),
       slowa: z.array(z.object({ z_opisu: z.string(), pojecie: z.string() })),
-      ids: z.array(z.enum(ids)),
+      ids: z.array(z.enum(ids).catch(NIEZNANE as (typeof ids)[number])),
     }),
   ),
 });
@@ -147,7 +150,7 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
 
     const unikalne = new Map<string, (typeof dane.dopasowania)[number]>();
     for (const d of [...dane.dopasowania].sort((a, b) => b.trafnosc - a.trafnosc)) {
-      if (!unikalne.has(d.id)) unikalne.set(d.id, d);
+      if (d.id !== NIEZNANE && mapa.has(d.id) && !unikalne.has(d.id)) unikalne.set(d.id, d);
     }
     const lista = [...unikalne.values()].slice(0, 5);
     const dobre = lista.filter((d) => d.trafnosc >= PROG_DOPASOWANIA);

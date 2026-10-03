@@ -19,13 +19,14 @@ export const Analiza = z.object({
     krotki_opis: z.string(),
     istota: z.string(),
     dla_kogo: z.string(),
-    etap: z.enum(["pomysl", "prototyp", "przetestowane", "gotowe"]),
+    etap: z.enum(["pomysl", "prototyp", "przetestowane", "gotowe"]).catch("pomysl"),
   }),
   obszar: z.enum(OBSZAR_IDS),
-  podobne: z.array(z.object({ id: z.enum(INNOWACJE_IDS), roznica: z.string() })),
+  // .catch(): nieznany identyfikator nie odrzuca całej analizy (odfiltrowujemy go niżej).
+  podobne: z.array(z.object({ id: z.enum(INNOWACJE_IDS).catch("" as (typeof INNOWACJE_IDS)[number]), roznica: z.string() })),
   ocena_iws: z.array(
     z.object({
-      kryterium: z.enum(["innowacyjnosc", "adekwatnosc", "efektywnosc_kosztowa", "uniwersalnosc", "wizja_rozwoju"]),
+      kryterium: z.enum(["innowacyjnosc", "adekwatnosc", "efektywnosc_kosztowa", "uniwersalnosc", "wizja_rozwoju"]).catch("innowacyjnosc"),
       punkty: z.number(),
       uzasadnienie: z.string(),
       wskazowka: z.string(),

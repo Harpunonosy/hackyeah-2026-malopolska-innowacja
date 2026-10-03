@@ -6,6 +6,7 @@ import { nazwaObszaru, OBSZAR_KATEGORII, type ObszarId } from "./obszary";
 import { POWIATY_IOSS } from "./powiaty";
 import { szukaj } from "./szukaj";
 import { wskaznikiDoMapy } from "./wiedza";
+import { zapamietaj } from "./pamiec";
 import { wczytajIoss } from "./radar";
 
 const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l");
@@ -29,7 +30,12 @@ export type ProfilPowiatu = {
 const zaokr = (x: number) => Math.round(x * 100) / 100;
 const liczba = (x: number) => x.toLocaleString("pl-PL", { maximumFractionDigits: 2 });
 
-export async function profilPowiatu(powiat: string): Promise<ProfilPowiatu> {
+/** Profil zależy tylko od danych IOSS i katalogu, więc liczymy go raz na 2 minuty dla każdego powiatu. */
+export function profilPowiatu(powiat: string): Promise<ProfilPowiatu> {
+  return zapamietaj(`profil-powiatu:${powiat}`, 120_000, () => policzProfil(powiat));
+}
+
+async function policzProfil(powiat: string): Promise<ProfilPowiatu> {
   const [mapa, ioss, { lista }] = await Promise.all([wskaznikiDoMapy(), wczytajIoss(), katalog()]);
   const wszystkie: Wyzwanie[] = [];
   for (const [obszar, wskazniki] of Object.entries(mapa.obszary)) {

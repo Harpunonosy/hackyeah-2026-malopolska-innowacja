@@ -1,6 +1,7 @@
 import mapa from "@/data/mapa_wyzwan.json";
 import kondycja from "@/data/kondycja_malopolski.json";
 import { wczytajIoss, NAZWY_WSKAZNIKOW, WSKAZNIKI_OBSZARU } from "./radar";
+import { zapamietaj } from "./pamiec";
 import type { ObszarId } from "./obszary";
 
 export type ObszarMapy = { id: ObszarId; nazwa: string; dane: string[]; wyzwania: string[] };
@@ -16,7 +17,11 @@ export const faktyRaportow: FaktRaportu[] = (kondycja.fakty as { tekst: string; 
 
 export type WskaznikMapy = { id: number; nazwa: string; kierunek: 1 | -1; wartosci: Record<string, number> };
 /** Wartości wskaźników IOSS dla 22 powiatów, pogrupowane według obszarów Mapy Wyzwań (część na 10 tys. mieszkańców). */
-export async function wskaznikiDoMapy(): Promise<{ powiaty: string[]; obszary: Record<string, WskaznikMapy[]> }> {
+export function wskaznikiDoMapy(): Promise<{ powiaty: string[]; obszary: Record<string, WskaznikMapy[]> }> {
+  return zapamietaj("mapa-wskaznikow", 600_000, wskaznikiDoMapyZDanych);
+}
+
+async function wskaznikiDoMapyZDanych(): Promise<{ powiaty: string[]; obszary: Record<string, WskaznikMapy[]> }> {
   const io = await wczytajIoss();
   const obszary: Record<string, WskaznikMapy[]> = {};
   for (const [obszar, lista] of Object.entries(WSKAZNIKI_OBSZARU)) {

@@ -1,0 +1,686 @@
+{
+ "hit3": 0.9655172413793104,
+ "hit5": 0.9655172413793104,
+ "mrr": 0.9482758620689655,
+ "wiersze": [
+  {
+   "id": "q01",
+   "typ": "opis",
+   "zapytanie": "Od kiedy zmarł mąż, rzadko wychodzę z domu. Czuję się samotna i gubię się w lekach i suplementach.",
+   "oczekiwane": [
+    "inteligentny-organizer-do-lekow",
+    "senior-cuder",
+    "centrum-antydepresyjne",
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "wirtualne-izby-pamieci"
+   ],
+   "zwrocone": [],
+   "hit3": false,
+   "hit5": false,
+   "rr": 0,
+   "brakOczekiwany": false,
+   "brakZwrocony": true,
+   "czasMs": 10213,
+   "tryb": "awaryjny"
+  },
+  {
+   "id": "q02",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "samotność senior leki",
+   "oczekiwane": [
+    "inteligentny-organizer-do-lekow",
+    "senior-cuder",
+    "centrum-antydepresyjne",
+    "mobilne-centrum-pomocy-dla-osob-starszych"
+   ],
+   "zwrocone": [
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "inteligentny-organizer-do-lekow",
+    "centrum-antydepresyjne",
+    "senior-cuder",
+    "kody-qr-na-pomoc-seniorom"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 10566,
+   "tryb": "ai"
+  },
+  {
+   "id": "q03",
+   "typ": "opis",
+   "zapytanie": "Jestem na wózku, mam porażenie czterokończynowe i nie mówię. Pracuję zdalnie, ale chciałbym wychodzić z domu, poznawać ludzi i bywać w kulturze.",
+   "oczekiwane": [
+    "nakreceni-na-aktywnosc",
+    "moduly-niezaleznosci",
+    "ev-modul-do-wozkow-inwalidzkich",
+    "spotkania-kulturlove",
+    "my-way-to-culture",
+    "zdobadz-swoje-szczyty"
+   ],
+   "zwrocone": [
+    "nakreceni-na-aktywnosc",
+    "my-way-to-culture",
+    "wsparcie-imprez-masowych-dla-osob-z-niepelnosprawnoscia-wzroku",
+    "spotkania-kulturlove",
+    "mpatyk"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 12489,
+   "tryb": "ai"
+  },
+  {
+   "id": "q04",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "wózek wyjście z domu kultura",
+   "oczekiwane": [
+    "nakreceni-na-aktywnosc",
+    "spotkania-kulturlove",
+    "my-way-to-culture",
+    "moduly-niezaleznosci",
+    "puzzles-ramp"
+   ],
+   "zwrocone": [
+    "my-way-to-culture",
+    "nakreceni-na-aktywnosc",
+    "wsparcie-imprez-masowych-dla-osob-z-niepelnosprawnoscia-wzroku",
+    "sciezka-motosensoryczna"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8604,
+   "tryb": "ai"
+  },
+  {
+   "id": "q05",
+   "typ": "opis",
+   "zapytanie": "Mam 60 lat, rentę rolniczą, mieszkam sam na wsi. Brakuje mi pieniędzy na opał, szukam dorywczej pracy i ludzi do rozmowy.",
+   "oczekiwane": [
+    "agencja-pracy-incydentalnej",
+    "oddawacze",
+    "mobilne-centrum-pomocy-dla-osob-starszych"
+   ],
+   "zwrocone": [
+    "mobilna-gielda-pracy",
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "przenosne-modularne-lazienki"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 0.5,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 9187,
+   "tryb": "ai"
+  },
+  {
+   "id": "q06",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "ubóstwo praca dorywcza wieś",
+   "oczekiwane": [
+    "agencja-pracy-incydentalnej",
+    "oddawacze",
+    "mobilna-gielda-pracy"
+   ],
+   "zwrocone": [
+    "mobilna-gielda-pracy",
+    "agencja-pracy-incydentalnej",
+    "oddawacze",
+    "wiejski-program-pomocy-osobom-w-kryzysie-bezdomnosci-sciezka-feniksa"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 9075,
+   "tryb": "ai"
+  },
+  {
+   "id": "q07",
+   "typ": "opis",
+   "zapytanie": "Jestem z Ukrainy, mam dwoje dzieci, które nie mówią po polsku i mają trudności w szkole. Szukam pracy i nie wiem, jak korzystać z lekarza.",
+   "oczekiwane": [
+    "moj-pomocny-virtual-world",
+    "health-guide-pl",
+    "zrozum-moja-kulture-zrozum-mnie",
+    "osoby-niewidome-i-niedowidzace-jako-nauczyciele-jezyka-polskiego"
+   ],
+   "zwrocone": [
+    "health-guide-pl",
+    "moj-pomocny-virtual-world",
+    "dialog-ponad-kulturami-1",
+    "zrozum-moja-kulture-zrozum-mnie",
+    "mobilna-gielda-pracy"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 11683,
+   "tryb": "ai"
+  },
+  {
+   "id": "q08",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "Ukraina dzieci szkoła adaptacja",
+   "oczekiwane": [
+    "moj-pomocny-virtual-world",
+    "zrozum-moja-kulture-zrozum-mnie",
+    "bajkala"
+   ],
+   "zwrocone": [
+    "moj-pomocny-virtual-world",
+    "zrozum-moja-kulture-zrozum-mnie",
+    "dialog-ponad-kulturami-1"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8419,
+   "tryb": "ai"
+  },
+  {
+   "id": "q09",
+   "typ": "opis",
+   "zapytanie": "Pracuję na etat i sam opiekuję się chorą mamą, która wróciła ze szpitala. Nie daję rady, nie wiem, jak zorganizować opiekę w domu.",
+   "oczekiwane": [
+    "organizator-kompleksowej-opieki-w-miejscu-zamieszkania",
+    "inteligentny-organizer-do-lekow",
+    "therapy-set",
+    "terapeuta-przestrzeni"
+   ],
+   "zwrocone": [
+    "organizator-kompleksowej-opieki-w-miejscu-zamieszkania",
+    "inteligentny-organizer-do-lekow",
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "terapeuta-przestrzeni",
+    "senior-cuder"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 11796,
+   "tryb": "ai"
+  },
+  {
+   "id": "q10",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "opiekun rodzinny opieka w domu po szpitalu",
+   "oczekiwane": [
+    "organizator-kompleksowej-opieki-w-miejscu-zamieszkania",
+    "therapy-set",
+    "inteligentny-organizer-do-lekow"
+   ],
+   "zwrocone": [
+    "organizator-kompleksowej-opieki-w-miejscu-zamieszkania",
+    "rodzinny-system-wzajemnej-pomocy",
+    "bajkala",
+    "czas-na-aktywnosc",
+    "inteligentny-organizer-do-lekow"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 10020,
+   "tryb": "awaryjny"
+  },
+  {
+   "id": "q11",
+   "typ": "opis",
+   "zapytanie": "Mój 17-letni syn zamknął się w sobie, całe dnie siedzi przy komputerze, chyba ma depresję. Jak mu pomóc wrócić do ludzi?",
+   "oczekiwane": [
+    "bez-presji-z-depresji",
+    "komix-zyciowy",
+    "gra-o-zdrowie",
+    "marimbaza"
+   ],
+   "zwrocone": [
+    "bez-presji-z-depresji",
+    "nasz-wspolny-rodzinny-swiat-poznaje-ucze-reaguje",
+    "gra-o-zdrowie",
+    "mobilna-pomoc-terapeutyczna",
+    "pacjent-pro"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 12004,
+   "tryb": "ai"
+  },
+  {
+   "id": "q12",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "nastolatek depresja emocje",
+   "oczekiwane": [
+    "bez-presji-z-depresji",
+    "komix-zyciowy",
+    "gra-o-zdrowie"
+   ],
+   "zwrocone": [
+    "bez-presji-z-depresji",
+    "komix-zyciowy",
+    "pacjent-pro",
+    "gra-o-zdrowie"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8729,
+   "tryb": "ai"
+  },
+  {
+   "id": "q13",
+   "typ": "opis",
+   "zapytanie": "Mam chorobę afektywną dwubiegunową, wyszłam ze szpitala i chcę wrócić do pracy, ale boję się, że sobie nie poradzę.",
+   "oczekiwane": [
+    "agencja-pracy-incydentalnej",
+    "gra-o-zdrowie"
+   ],
+   "zwrocone": [
+    "gra-o-zdrowie",
+    "bez-presji-z-depresji",
+    "pacjent-pro",
+    "agencja-pracy-incydentalnej"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 11323,
+   "tryb": "ai"
+  },
+  {
+   "id": "q14",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "kryzys psychiczny powrót do pracy",
+   "oczekiwane": [
+    "agencja-pracy-incydentalnej",
+    "gra-o-zdrowie"
+   ],
+   "zwrocone": [
+    "gra-o-zdrowie",
+    "bez-presji-z-depresji",
+    "agencja-pracy-incydentalnej",
+    "pacjent-pro"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 9551,
+   "tryb": "ai"
+  },
+  {
+   "id": "q15",
+   "typ": "opis",
+   "zapytanie": "Mam 22 lata, wyszedłem z domu dziecka, nie mam gdzie mieszkać, śpię u znajomych. Nie mam gdzie się umyć ani pracy.",
+   "oczekiwane": [
+    "szlakiem-ludzi-bezdomnych",
+    "agencja-pracy-incydentalnej",
+    "wiejski-program-pomocy-osobom-w-kryzysie-bezdomnosci-sciezka-feniksa",
+    "przenosne-modularne-lazienki"
+   ],
+   "zwrocone": [
+    "wiejski-program-pomocy-osobom-w-kryzysie-bezdomnosci-sciezka-feniksa",
+    "szlakiem-ludzi-bezdomnych",
+    "agencja-pracy-incydentalnej",
+    "mobilna-pomoc-terapeutyczna"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 11345,
+   "tryb": "ai"
+  },
+  {
+   "id": "q16",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "bezdomność higiena praca",
+   "oczekiwane": [
+    "szlakiem-ludzi-bezdomnych",
+    "agencja-pracy-incydentalnej",
+    "wiejski-program-pomocy-osobom-w-kryzysie-bezdomnosci-sciezka-feniksa"
+   ],
+   "zwrocone": [
+    "szlakiem-ludzi-bezdomnych",
+    "wiejski-program-pomocy-osobom-w-kryzysie-bezdomnosci-sciezka-feniksa",
+    "agencja-pracy-incydentalnej"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 9457,
+   "tryb": "ai"
+  },
+  {
+   "id": "q17",
+   "typ": "opis",
+   "zapytanie": "Jesteśmy rodziną zastępczą dla rodzeństwa: dziewczynka ma zespół Downa, chłopiec słabo słyszy. Szukamy wsparcia dla rodziny i dzieci.",
+   "oczekiwane": [
+    "uwaznione-rodzienstwo",
+    "to-nie-koniec-swiata-to-poczatek-swiata",
+    "nasz-wspolny-rodzinny-swiat-poznaje-ucze-reaguje",
+    "komix-zyciowy",
+    "straznik"
+   ],
+   "zwrocone": [
+    "nasz-wspolny-rodzinny-swiat-poznaje-ucze-reaguje",
+    "uwaznione-rodzienstwo",
+    "rodzina-adopcyjna-dorasta",
+    "bez-presji-z-depresji",
+    "himalaje-autyzmu"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 13251,
+   "tryb": "ai"
+  },
+  {
+   "id": "q18",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "rodzeństwo niepełnosprawność rodzina",
+   "oczekiwane": [
+    "uwaznione-rodzienstwo",
+    "to-nie-koniec-swiata-to-poczatek-swiata",
+    "nasz-wspolny-rodzinny-swiat-poznaje-ucze-reaguje"
+   ],
+   "zwrocone": [
+    "uwaznione-rodzienstwo",
+    "to-nie-koniec-swiata-to-poczatek-swiata",
+    "nasz-wspolny-rodzinny-swiat-poznaje-ucze-reaguje",
+    "rodzina-adopcyjna-dorasta"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 11005,
+   "tryb": "ai"
+  },
+  {
+   "id": "q19",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "głusi alarm pożarowy czujka",
+   "oczekiwane": [
+    "straznik"
+   ],
+   "zwrocone": [
+    "straznik",
+    "wibraap"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 7681,
+   "tryb": "ai"
+  },
+  {
+   "id": "q20",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "niewidomi komunikacja miejska przystanek",
+   "oczekiwane": [
+    "dostepny-transport-publiczny",
+    "ngoz-nawigacja-glosowa-osob-zaleznych"
+   ],
+   "zwrocone": [
+    "dostepny-transport-publiczny",
+    "ngoz-nawigacja-glosowa-osob-zaleznych"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 7890,
+   "tryb": "ai"
+  },
+  {
+   "id": "q21",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "demencja pamięć terapia seniorów",
+   "oczekiwane": [
+    "bawita",
+    "korytarz-wspomnien",
+    "sciezka-treningu-umyslu",
+    "kody-qr-na-pomoc-seniorom"
+   ],
+   "zwrocone": [
+    "bawita",
+    "korytarz-wspomnien",
+    "sciezka-treningu-umyslu",
+    "centrum-antydepresyjne",
+    "therapy-set"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 9016,
+   "tryb": "ai"
+  },
+  {
+   "id": "q22",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "upadki seniorów w domu",
+   "oczekiwane": [
+    "obu-obuwie-po-domu",
+    "terapeuta-przestrzeni",
+    "sciezka-motosensoryczna"
+   ],
+   "zwrocone": [
+    "obu-obuwie-po-domu",
+    "e-rzecznik-konsumenta-seniora",
+    "stworzenie-narzedzia-ulatwiajacego-seniorom-prawidlowe-regulowanie-spraw-spadkowych",
+    "kody-qr-na-pomoc-seniorom",
+    "mobilne-centrum-pomocy-dla-osob-starszych"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8725,
+   "tryb": "awaryjny"
+  },
+  {
+   "id": "q23",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "autyzm wizyta u lekarza agresja",
+   "oczekiwane": [
+    "himalaje-autyzmu"
+   ],
+   "zwrocone": [
+    "himalaje-autyzmu",
+    "autyzm-i-ja",
+    "przewodnik-dla-osob-z-asd-moje-potrzeby-gdzie-i-jak-je-realizowac"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 7650,
+   "tryb": "ai"
+  },
+  {
+   "id": "q24",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "senior bankomat paczkomat strach",
+   "oczekiwane": [
+    "merkury"
+   ],
+   "zwrocone": [
+    "merkury",
+    "e-rzecznik-konsumenta-seniora"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 7726,
+   "tryb": "ai"
+  },
+  {
+   "id": "q25",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "otyłość dzieci przedszkole",
+   "oczekiwane": [
+    "brzuszkole-brzuszek-zostaje-w-przedszkolu"
+   ],
+   "zwrocone": [
+    "brzuszkole-brzuszek-zostaje-w-przedszkolu",
+    "hop-hop-mobilny-plac-zabaw"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8397,
+   "tryb": "ai"
+  },
+  {
+   "id": "q26",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "niepełnosprawność intelektualna sprawy urzędowe",
+   "oczekiwane": [
+    "urzedowy-ambaras",
+    "zalatw-to-sam",
+    "pelna-wokanda"
+   ],
+   "zwrocone": [
+    "urzedowy-ambaras",
+    "dostepny-wniosek-dla-ggluchych",
+    "stop-otylosci-innowacyjna-metoda-pracy-z-osobami-niepelnosprawnymi-intelektualnie",
+    "niepelnosprawnosc-szansa-na-pelnosprawnosc-w-pracy-i-zyciu",
+    "pelna-wokanda"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8504,
+   "tryb": "awaryjny"
+  },
+  {
+   "id": "q27",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "spadek testament senior porada",
+   "oczekiwane": [
+    "stworzenie-narzedzia-ulatwiajacego-seniorom-prawidlowe-regulowanie-spraw-spadkowych",
+    "e-rzecznik-konsumenta-seniora"
+   ],
+   "zwrocone": [
+    "stworzenie-narzedzia-ulatwiajacego-seniorom-prawidlowe-regulowanie-spraw-spadkowych",
+    "e-rzecznik-konsumenta-seniora"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 6224,
+   "tryb": "ai"
+  },
+  {
+   "id": "q28",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "kobiety wieś praca aktywizacja",
+   "oczekiwane": [
+    "mobilna-gielda-pracy"
+   ],
+   "zwrocone": [
+    "mobilna-gielda-pracy",
+    "agencja-pracy-incydentalnej"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 7511,
+   "tryb": "ai"
+  },
+  {
+   "id": "q29",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "przemoc w rodzinie pomoc terapeutyczna",
+   "oczekiwane": [
+    "mobilna-pomoc-terapeutyczna"
+   ],
+   "zwrocone": [
+    "mobilna-pomoc-terapeutyczna",
+    "nasz-wspolny-rodzinny-swiat-poznaje-ucze-reaguje"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8539,
+   "tryb": "ai"
+  },
+  {
+   "id": "q30",
+   "typ": "brak_rozwiazania",
+   "zapytanie": "samotni mężczyźni po 60 na wsi bez transportu do lekarza",
+   "oczekiwane": [],
+   "zwrocone": [
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "terapeuta-przestrzeni",
+    "centrum-antydepresyjne",
+    "e-rzecznik-konsumenta-seniora",
+    "kody-qr-na-pomoc-seniorom"
+   ],
+   "hit3": false,
+   "hit5": false,
+   "rr": 0,
+   "brakOczekiwany": true,
+   "brakZwrocony": false,
+   "czasMs": 9611,
+   "tryb": "ai"
+  }
+ ],
+ "koszt": {
+  "wejscie": 1652,
+  "wyjscie": 18963,
+  "cacheZapis": 0,
+  "cacheOdczyt": 889486
+ }
+}

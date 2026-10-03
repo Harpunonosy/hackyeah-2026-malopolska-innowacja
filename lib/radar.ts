@@ -1,6 +1,7 @@
 // Radar (tylko dla administratora): białe plamy, ciche potrzeby i trendy.
 // Wzory opisane w PLAN.md, rozdz. 8.
 import { db } from "./db";
+import { zapamietaj } from "./pamiec";
 import { OBSZAR_IDS, type ObszarId } from "./obszary";
 
 export const PROG_BIALEJ_PLAMY = 55;
@@ -47,7 +48,12 @@ export type DanePowiatow = {
   wartosci: Record<number, Record<string, number>>;
 };
 
-export async function wczytajIoss(): Promise<DanePowiatow> {
+/** Dane IOSS są statyczne (import skryptem), więc trzymamy je w pamięci przez 10 minut. */
+export function wczytajIoss(): Promise<DanePowiatow> {
+  return zapamietaj("ioss", 600_000, wczytajIossZBazy);
+}
+
+async function wczytajIossZBazy(): Promise<DanePowiatow> {
   const ids = [186, ...new Set(Object.values(WSKAZNIKI_OBSZARU).flat().map((w) => w.id))];
   const { rows } = await db().query(
     `select distinct on (wskaznik_id, powiat) wskaznik_id, powiat, wartosc::float8 as wartosc from ioss

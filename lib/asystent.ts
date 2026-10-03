@@ -8,7 +8,7 @@ export const IKONY_SCENORYSU = ["dom", "spotkanie", "telefon", "serce", "miasto"
 
 const Odpowiedz = z.object({ odpowiedz: z.string(), kolejne_pytania: z.array(z.string()) });
 const Scenorys = z.object({
-  kadry: z.array(z.object({ tytul: z.string(), kto: z.string(), gdzie: z.string(), co_sie_dzieje: z.string(), emocja: z.string(), ikona: z.enum(IKONY_SCENORYSU) })),
+  kadry: z.array(z.object({ tytul: z.string(), kto: z.string(), gdzie: z.string(), co_sie_dzieje: z.string(), emocja: z.string(), ikona: z.enum(IKONY_SCENORYSU).catch("wsparcie") })),
 });
 const Podpowiedz = z.object({ opcje: z.array(z.string()) });
 
