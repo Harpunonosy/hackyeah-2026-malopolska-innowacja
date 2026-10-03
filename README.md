@@ -32,19 +32,20 @@ Splot łączy każdą potrzebę zgłoszoną w Małopolsce ze sprawdzoną innowac
 
 Źródła danych: ROPS Kraków (Biblioteka Innowacji, Mapa Wyzwań, IOSS, raporty, kanwa INNO AGH), GUS, NIK. Linki w [PLAN.md, rozdział 24](PLAN.md#24-źródła). Odświeżenie danych: `python3 scripts/scrape_biblioteka.py` i `python3 scripts/scrape_ioss.py`.
 
-## Status modułów (4.10.2026, rano)
+## Status modułów (3.10.2026, wieczór)
 
 | Moduł | Gdzie | Stan |
 |---|---|---|
-| I. Swatka | `/`, `/problem` | działa: tekst i głos, uzasadnienia, podobne sprawy (od 5 zgłoszeń), fakty z raportów, tryb awaryjny |
-| II. Skarbnica | `/wiedza/biblioteka`, `/wiedza/malopolska` | Biblioteka z wyszukiwarką, Kondycja Małopolski, pytania do raportów, materiały; trendy tylko w Centrali |
-| III. Pracownia | `/pomysl` | fiszka, kanwa INNO AGH, ocena wg karty IWS 2.0, generator wniosku tylko przy otwartym naborze |
-| IV. Próbownia | `/testy` | otwarte testy, zapisy, opinie o rozwiązaniach |
-| V. Rynek | `/rynek`, `/moje` | pytania do ROPS i ekspertów, wątek z autorem, tablica partnerstw |
-| VI. Centrala | `/centrala` (hasło) | skrzynka, pomysły i opinie, nabory i wnioski, treści (import AI), Radar, eksporty CSV/JSON |
-| VII. Krawiec | `/wdrozenie` | plan wdrożenia i kwalifikowalność do „Usługi Wrażliwej” |
+| I. Swatka (matchmaking) | `/`, `/problem`, `/rozmowa`, `/widzet` | tekst i głos, nici potrzeb, uzasadnienia, podobne sprawy, fakty z raportów, tryb awaryjny bez AI; Hit@3 96,6% (Haiku 4.5) |
+| II. Skarbnica | `/wiedza/*`, `/galeria` | Biblioteka z filmami, Akademia, Kondycja Małopolski, profile 22 powiatów; trendy tylko w Centrali |
+| III. Pracownia | `/pomysl` | fiszka, kanwa INNO AGH, ocena wg karty IWS 2.0, asystent i scenorys, wniosek pod konkretny nabór |
+| IV. Próbownia | `/testy` | otwarte testy, zapisy, opinie |
+| V. Rynek | `/rynek`, `/moje`, `/ekspert` | pytania do ROPS i ekspertów, panel eksperta, partnerstwa, sprawy z osią czasu |
+| VI. Centrala | `/centrala` (hasło) | skrzynka, Radar, nabory i ocena wniosków, treści, powiadomienia, integracje (webhooki) |
+| VII. Krawiec | `/wdrozenie` | plan wdrożenia: dwa warianty z kosztem na odbiorcę, kompas DI, kwalifikowalność, pakiet startowy |
+| Tryb asystowany | `/asystowane` | zgłoszenie w imieniu osoby bez internetu, karta potrzeby z kodem QR |
 
-Otwarte API (tylko do odczytu): `GET /api/v1/innowacje`.
+Integracje: API v1 z opisem OpenAPI (`/integracje`, `/api/v1/openapi.json`), webhooki HMAC, eksport wniosków do bazy grantowej, widżet „Znajdź pomoc”. Wdrożenie, skalowanie i koszty: `docs/WDROZENIE.md`. Licencje: `docs/zaleznosci.md`. Dostępność: `docs/raport-dostepnosci.md`.
 
 ## Uruchomienie
 
@@ -56,7 +57,7 @@ npx tsx --env-file=.env.local scripts/eval-swatka.ts   # pomiar trafności Swatk
 npx tsx scripts/eval-swatka.ts --lex                   # to samo bez AI (wyszukiwanie awaryjne)
 ```
 
-Stos: Next.js 16, React 19, Tailwind 4, `radix-ui`, `next-intl`, Anthropic SDK, zod. Zależności i licencje: `docs/zaleznosci.md` (generowane przed oddaniem).
+Stos: Next.js 16, React 19, Tailwind 4, `radix-ui`, `next-intl`, Anthropic SDK, zod. Zależności i licencje: `docs/zaleznosci.md`.
 
 ## Status
 

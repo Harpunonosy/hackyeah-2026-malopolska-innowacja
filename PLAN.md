@@ -119,7 +119,7 @@ Jury zwraca uwagę na: pomysłowość i atrakcyjność, łatwość zgłoszenia p
 ### 1b. Decyzje techniczne z 3.10 (nadpisują dalsze rozdziały)
 
 - Framework: **Next.js 16** (nie 15), React 19, Tailwind 4. Komponenty własne na pakiecie `radix-ui` (generator shadcn odrzucony: instalował nieznany pakiet `cn`).
-- Model AI: na czas prac **`claude-sonnet-5-5`** (zmienna `AI_MODEL`), Opus 5.5 po pomiarze, czy podnosi Hit@3. Głębokość myślenia: `AI_EFFORT_SWATKA`.
+- Model AI: **`claude-haiku-4-5`** od 3.10.2026 wieczorem (zmienna `AI_MODEL`). Pomiar: Hit@3 96,6% (28/29), tyle samo co na `claude-sonnet-5-5`, przy połowie ceny. Haiku nie przyjmuje parametru `effort` (`lib/ai.ts` go pomija).
 - Katalog w prompcie Swatki ma ok. 43 tys. tokenów (pomiar 3.10) (nazwa, kategoria, „na czym polega”, problemy, odbiorcy, „kto może wdrożyć”), z cache 1 h.
 - Baza w dev: lokalny Postgres w Dockerze, na demo Supabase (region UE). Ustawienia dostępności trzymane w cookie, więc serwer renderuje je bez migotania.
 - Maskowanie: wyszukiwanie przechodzi maskowanie regex, a zapis zgłoszenia dodatkowo maskowanie imion i nazwisk przez AI (do zrobienia).
@@ -661,7 +661,7 @@ Dodatkowo spełniamy część WCAG 2.2: rozmiar celu (2.5.8), fokus niezasłoni�
 | Baza | **PostgreSQL + pgvector + pg_trgm**, na hackathon **Supabase** | relacje, wyszukiwanie tekstowe i wektorowe, realtime do powiadomień, storage na pliki |
 | ORM | Drizzle albo klient Supabase | szybko, typowane |
 | Hosting demo | **Vercel** (frontend/API) + Supabase (baza) | publiczny link w kilka minut |
-| AI | **Anthropic Claude API**, model `claude-sonnet-5-5` (docelowo do porównania z `claude-opus-5-5`), za warstwą `lib/ai.ts` (wymienny dostawca) | najlepsza jakość po polsku w prototypie; docelowo PLLuM lub Bielik |
+| AI | **Anthropic Claude API**, model `claude-haiku-4-5` (zmierzona trafność jak na `claude-sonnet-5-5`), za warstwą `lib/ai.ts` (wymienny dostawca) | najlepsza jakość po polsku w prototypie; docelowo PLLuM lub Bielik |
 | Embeddingi (etap 2) | `BAAI/bge-m3` albo `sdadas/mmlw-retrieval-roberta-large` (polski) na małym serwisie w Pythonie; na hackathon niepotrzebne (pełny kontekst) | otwarte, bez kosztów za zapytanie |
 | Głos | Web Speech API (rozpoznawanie `pl-PL`) + SpeechSynthesis; docelowo Whisper na własnym serwerze | zero kosztów w demo |
 | Mapa | react-leaflet albo kartogram SVG + GeoJSON powiatów Małopolski | czytelny Radar |

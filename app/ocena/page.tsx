@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight } from "lucide-react";
+import { getTranslations } from "next-intl/server";
 import { PrzykladLink } from "@/components/ocena/przyklad-link";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
@@ -15,11 +16,14 @@ const MODULY = [
   ["III. Kreator pomysłów", "/pomysl", "Fiszka, kanwa INNO AGH, asystent i scenorys, wniosek dopasowany do naboru"],
   ["IV. Tester innowacji", "/testy", "Zapis na test, ocena rozwiązań, ogłoszenia testów"],
   ["V. Platforma komunikacji", "/rynek", "Pytania do ekspertów, tablica partnerów, galeria pomysłów, panel eksperta"],
-  ["VI. Panel administratora", "/centrala", "Skrzynka spraw, Radar, nabory, treści, powiadomienia (hasło w opisie zgłoszenia)"],
-  ["VII. Middleman Innowacji", "/wdrozenie", "Krawiec: plan wdrożenia dla instytucji i sprawdzenie kwalifikowalności"],
+  ["VI. Panel administratora", "/centrala", "Skrzynka spraw, Radar, nabory i ocena wniosków, treści, powiadomienia, integracje (hasło w opisie zgłoszenia)"],
+  ["VII. Middleman Innowacji", "/wdrozenie", "Krawiec: plan wdrożenia w dwóch wariantach, kompas deinstytucjonalizacji, kwalifikowalność, pakiet startowy"],
 ] as const;
 
-export default function Ocena() {
+const GOTOWOSC = [["k1", "/integracje"], ["k2", "/centrala/integracje"], ["k3", "/centrala/nabory"], ["k4", "/asystowane"], ["k5", "/wdrozenie"], ["k6", null]] as const;
+
+export default async function Ocena() {
+  const t = await getTranslations("ocena");
   return (
     <Strona>
       <NaglowekStrony nadtytul="Dla Jury" tytul="Jak ocenić Splot w 5 minut" opis="Cztery testy z opisu wyzwania, każdy z gotowymi krokami. Dane w demo są syntetyczne. E-maile i SMS-y są w prototypie symulowane." />
@@ -72,6 +76,20 @@ export default function Ocena() {
         <ul className="grid gap-3 md:grid-cols-2">
           {MODULY.map(([n, href, opis]) => (
             <li key={n}><Link href={href} className="karta flex items-center justify-between gap-4 p-4 text-fg no-underline hover:-translate-y-0.5"><span><span className="block font-display text-xl font-bold">{n}</span><span className="block text-muted">{opis}</span></span><ArrowRight aria-hidden className="size-6 shrink-0 text-primary" /></Link></li>
+          ))}
+        </ul>
+      </section>
+
+      <section aria-labelledby="wdr-h" className="space-y-4">
+        <h2 id="wdr-h" className="text-3xl font-extrabold">{t("wdrTytul")}</h2>
+        <p className="max-w-3xl text-lg text-muted">{t("wdrOpis")}</p>
+        <ul className="grid gap-3 md:grid-cols-2 lg:grid-cols-3">
+          {GOTOWOSC.map(([k, href]) => (
+            <li key={k} className="karta flex flex-col gap-2 p-5">
+              <h3 className="text-xl font-bold">{t(`${k}t`)}</h3>
+              <p className="flex-1">{t(`${k}o`)}</p>
+              {href && <Link href={href} className="font-semibold underline">{t("otworz")}: {href}</Link>}
+            </li>
           ))}
         </ul>
       </section>

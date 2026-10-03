@@ -278,7 +278,20 @@
       "wskaznik": "Wskaźnik",
       "wartosci": "Wartości wskaźnika w powiatach",
       "legenda": "Im ciemniejszy kafelek, tym wyższa wartość wskaźnika. Źródło: Internetowy Obserwator Statystyk Społecznych ROPS, najnowszy rok."
-    }
+    },
+    "prosciejTytul": "Nie wszystko jasne?",
+    "prosciej": "Wyjaśnij prościej",
+    "poUkrainsku": "Українською",
+    "prosciejPracuje": "Przygotowuję prostszy opis. To potrwa kilka sekund.",
+    "prosciejWynik": "Prosto o innowacji",
+    "ukWynik": "Коротко українською",
+    "prosciejAi": "Tekst przygotowany przez AI na podstawie karty ROPS. Może zawierać uproszczenia.",
+    "prosciejDlaKogo": "Dla kogo",
+    "prosciejJak": "Jak skorzystać",
+    "prosciejBlad": "Nie udało się przygotować tekstu. Spróbuj za chwilę.",
+    "ukDlaKogo": "Для кого",
+    "ukJak": "Як скористатися",
+    "ukAi": "Текст підготовлено штучним інтелектом на основі картки ROPS."
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",
@@ -893,5 +906,22 @@
     "blad": "Nie udało się. Spróbuj ponownie.",
     "kryzys": "Uwaga: w opisie są sygnały kryzysu. Jeśli osoba jest w niebezpieczeństwie, zadzwoń z nią pod 112 albo 116 123.",
     "linkWdrozenie": "Pracujesz w OPS, CUS, klubie seniora albo bibliotece? Pomóż komuś zgłosić sprawę w trybie asystowanym."
+  },
+  "ocena": {
+    "wdrTytul": "Gotowość do wdrożenia: sprawdź w 2 minuty",
+    "wdrOpis": "Rzeczy, o które pyta kryterium „Potencjał wdrożeniowy” i wymagania techniczne z opisu wyzwania.",
+    "k1t": "Widżet na stronę gminy",
+    "k1o": "Jedna linijka HTML. Mieszkaniec opisuje problem na stronie gminy albo OPS i od razu widzi sprawdzone innowacje.",
+    "k2t": "API i webhooki",
+    "k2o": "Opis OpenAPI, podpisane webhooki do bazy grantowej. W Centrali (Integracje) dodaj odbiornik demonstracyjny i wyślij test.",
+    "k3t": "Wniosek jak paczka",
+    "k3o": "Centrala → Nabory: ocena formalna, merytoryczna, decyzja. Autor widzi każdy etap w „Moje sprawy”, a baza grantowa dostaje eksport z numerem sprawy.",
+    "k4t": "Tryb asystowany i papier",
+    "k4o": "Pracownik OPS zgłasza sprawę w imieniu seniora bez internetu i drukuje kartę potrzeby z kodem QR.",
+    "k5t": "Krawiec 2.0",
+    "k5o": "Plan wdrożenia dla gminy: dwa warianty z kosztem na odbiorcę, kompas deinstytucjonalizacji, pakiet startowy.",
+    "k6t": "Architektura i koszty",
+    "k6o": "Test obciążenia (86 zapytań/s na jednym procesie, 0 błędów), koszt dopasowania ok. 2,5 gr z pomiaru, kroki wdrożenia w innym województwie: plik docs/WDROZENIE.md w repozytorium.",
+    "otworz": "Otwórz"
   }
 }

@@ -1,4 +1,5 @@
 import { Film } from "@/components/biblioteka/film";
+import { Prosciej } from "@/components/biblioteka/prosciej";
 import { ZglosNieaktualne } from "@/components/biblioteka/zglos-nieaktualne";
 import { czyWdrazalna } from "@/lib/swatka";
 import type { Metadata } from "next";
@@ -56,6 +57,7 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
       <div className="kontener grid items-start gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="space-y-5">
           <Sekcja tytul={t("naCzymPolega")} tekst={i.naCzymPolega} wyroznienie />
+          <Prosciej id={i.id} />
           <Sekcja tytul={t("problem")} tekst={i.problem} />
           <Sekcja tytul={t("grupa")} tekst={i.grupaDocelowa} />
           <Sekcja tytul={t("ktoMoze")} tekst={i.ktoMozeSkorzystac} />

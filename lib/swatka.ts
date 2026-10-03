@@ -143,7 +143,10 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
       system: [{ tekst: instrukcja(wszystkie), cache: "1h" }],
       uzytkownik:
         `rola: ${wejscie.rola}\npowiat: ${wejscie.powiat || "nie podano"}\n` +
-        `język odpowiedzi: ${JEZYKI[wejscie.jezyk]}\nopis użytkownika:\n"""\n${tekst}\n"""`,
+        `język odpowiedzi: ${JEZYKI[wejscie.jezyk]}\n` +
+        // Mniejszy model trzyma się języka katalogu, więc przy innym języku przypominamy wprost (pola tekstowe dla użytkownika).
+        (wejscie.jezyk !== "pl" ? `WAŻNE: pola dlaczego, potrzeby, grupa_docelowa, pytanie_doprecyzowujace oraz potrzeba i pojecie w niciach napisz w języku: ${JEZYKI[wejscie.jezyk]}. Nazw innowacji nie tłumacz.\n` : "") +
+        `opis użytkownika:\n"""\n${tekst}\n"""`,
       model: DOMYSLNY_MODEL(),
       effort,
     });
