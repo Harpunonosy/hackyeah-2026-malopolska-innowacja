@@ -96,13 +96,8 @@ const Plan = z.object({
 });
 
 // Krawiec 2.0 (I-13): dwa warianty, kompas deinstytucjonalizacji (część B karty oceny IWS) i pierwsze kroki.
-export const KRYTERIA_DI = {
-  w_spolecznosci: "Usługa w społeczności lokalnej, blisko domu (nie w placówce całodobowej)",
-  podmiotowosc: "Odbiorca współdecyduje o wsparciu i ma wybór",
-  indywidualizacja: "Wsparcie dopasowane do osoby (plan indywidualny)",
-  niezaleznosc: "Wzmacnia samodzielność i naturalną sieć wsparcia (rodzina, sąsiedzi)",
-  koordynacja: "Współpraca z innymi usługami (OPS, CUS, zdrowie, edukacja)",
-} as const;
+import { KRYTERIA_DI } from "./krawiec-stale";
+export { KRYTERIA_DI };
 export type KryteriumDI = keyof typeof KRYTERIA_DI;
 
 const Rozszerzenie = z.object({
