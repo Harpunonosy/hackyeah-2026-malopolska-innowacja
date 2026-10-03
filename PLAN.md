@@ -527,7 +527,7 @@ opis / głos / słowa kluczowe
 ### 8.3 Cicha potrzeba (ryzyko wysokie, zgłoszeń brak)
 - **Ryzyko** dla pary (powiat, obszar) to średnia z-score'ów wskaźników IOSS przypisanych do obszaru. Kierunek odwracamy tam, gdzie więcej znaczy lepiej, np. liczba dziennych domów pomocy.
 - **Aktywność:** liczba zgłoszeń na 10 tys. mieszkańców (wskaźnik `186`).
-- **Cicha potrzeba:** ryzyko z ≥ 1 przy aktywności ≤ połowy mediany regionu.
+- **Cicha potrzeba:** ryzyko (średni z-score) ≥ 0,5 przy aktywności ≤ połowy średniej regionalnej (zgłoszeń na 10 tys. mieszkańców w danym obszarze), gdy w obszarze jest co najmniej 20 zgłoszeń. Próg 0,5, a nie 1, bo uśrednianie wskaźników rozcieńcza z-score.
 - **Podpowiedź działania:** „Uruchom zgłoszenia w trybie asystowanym przez ośrodki pomocy społecznej i kluby seniora w powiecie X”. To odpowiedź na wykluczenie cyfrowe.
 - **Wskaźniki IOSS przypisane do obszarów:**
 

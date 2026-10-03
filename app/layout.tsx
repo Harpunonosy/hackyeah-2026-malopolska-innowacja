@@ -5,6 +5,7 @@ import Link from "next/link";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { PasekDostepnosci } from "@/components/a11y/pasek-dostepnosci";
+import { GlownaNawigacja } from "@/components/glowna-nawigacja";
 import { Logo } from "@/components/logo";
 import { COOKIE_DOSTEPNOSC, odczytajUstawienia } from "@/lib/dostepnosc";
 import "./globals.css";
@@ -51,45 +52,36 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             {t("nav.przejdzDoTresci")}
           </a>
           <PasekDostepnosci poczatkowe={ustawienia} />
-          <header className="border-b-2 border-line">
-            <div className="mx-auto flex max-w-6xl flex-wrap items-center justify-between gap-3 px-4 py-3 sm:px-6">
+          <header className="border-b border-line-soft bg-bg">
+            <div className="kontener flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-2">
               <Link href="/" className="flex items-center gap-3 text-fg no-underline">
                 <Logo className="size-11 text-fg" />
                 <span>
                   <span className="block font-display text-2xl font-bold leading-none">{t("marka.nazwa")}</span>
-                  <span className="zaawansowane hidden text-sm text-muted sm:block">cyfrowe serce HubMI</span>
+                  
                 </span>
               </Link>
-              <nav aria-label={t("nav.glowna")}>
-                <ul className="flex flex-wrap gap-1">
-                  {[
-                    { href: "/", etykieta: t("nav.start") },
-                    { href: "/problem", etykieta: t("nav.problem") },
-                    { href: "/wiedza/biblioteka", etykieta: t("nav.wiedza") },
-                    { href: "/moje", etykieta: t("nav.moje") },
-                  ].map((l) => (
-                    <li key={l.href}>
-                      <Link
-                        href={l.href}
-                        className="inline-flex min-h-12 items-center rounded-lg px-4 font-semibold text-fg hover:bg-fg hover:text-bg"
-                      >
-                        {l.etykieta}
-                      </Link>
-                    </li>
-                  ))}
-                </ul>
-              </nav>
+              <GlownaNawigacja
+                etykieta={t("nav.glowna")}
+                linki={[
+                  { href: "/", etykieta: t("nav.start") },
+                  { href: "/wiedza/biblioteka", etykieta: t("nav.wiedza") },
+                  { href: "/moje", etykieta: t("nav.moje") },
+                ]}
+              />
             </div>
           </header>
-          <main id="tresc" tabIndex={-1} className="mx-auto w-full max-w-6xl flex-1 px-4 py-8 outline-none sm:px-6">
+          <main id="tresc" tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>
-          <footer className="nie-drukuj mt-8 border-t-2 border-line bg-card">
-            <div className="mx-auto max-w-6xl space-y-1 px-4 py-6 text-sm text-muted sm:px-6">
-              <p>{t("stopka.ai")}</p>
-              <p>{t("stopka.zrodlo")}</p>
-              <p>{t("stopka.dane")}</p>
-              <p><Link href="/centrala">Panel dla pracowników ROPS (Centrala)</Link></p>
+          <footer className="nie-drukuj mt-20 bg-hero text-hero-fg">
+            <div className="kontener flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-8">
+              <p className="flex items-center gap-3 font-display text-2xl font-bold">
+                <Logo className="size-9 text-hero-fg" />
+                {t("marka.nazwa")}
+              </p>
+              <p className="max-w-xl">{t("stopka.ai")}</p>
+              <Link href="/centrala" className="inline-flex min-h-12 items-center font-semibold text-hero-fg">{t("stopka.centrala")}</Link>
             </div>
           </footer>
         </NextIntlClientProvider>

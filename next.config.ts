@@ -5,6 +5,8 @@ const withNextIntl = createNextIntlPlugin("./i18n/request.ts");
 
 const nextConfig: NextConfig = {
   poweredByHeader: false,
+  // dostęp do trybu dev przez adres sieciowy (np. z telefonu); w razie zmiany IP dopisz nowy
+  allowedDevOrigins: ["10.250.193.255"],
   async headers() {
     return [
       {

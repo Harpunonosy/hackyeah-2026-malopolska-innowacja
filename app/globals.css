@@ -4,7 +4,7 @@
 @custom-variant prosty (&:where([data-prosty="tak"] *));
 
 :root {
-  --bg: #f4f6fa;
+  --bg: #faf7f2;
   --fg: #14213d;
   --muted: #3d4a66;
   --card: #ffffff;
@@ -18,6 +18,12 @@
   --ok: #17603a;
   --warn: #7a4300;
   --link: #14213d;
+  --line-soft: #d6dce9;
+  --soft: #e9edf6;
+  --primary-soft: #fbebee;
+  --hero-bg: #14213d;
+  --hero-fg: #ffffff;
+  --shadow: 0 1px 2px rgb(20 33 61 / 0.06), 0 12px 28px -14px rgb(20 33 61 / 0.28);
 }
 
 /* Wysoki kontrast: czarne tło, biały tekst, żółte akcenty. */
@@ -36,6 +42,12 @@ html[data-kontrast="wysoki"] {
   --ok: #7dff9f;
   --warn: #ffb95c;
   --link: #ffd400;
+  --line-soft: #ffffff;
+  --soft: #141414;
+  --primary-soft: #1a1700;
+  --hero-bg: #000000;
+  --hero-fg: #ffffff;
+  --shadow: none;
 }
 
 @theme inline {
@@ -52,6 +64,11 @@ html[data-kontrast="wysoki"] {
   --color-accent-fg: var(--accent-fg);
   --color-ok: var(--ok);
   --color-warn: var(--warn);
+  --color-soft: var(--soft);
+  --color-primary-soft: var(--primary-soft);
+  --color-hero: var(--hero-bg);
+  --color-hero-fg: var(--hero-fg);
+  --color-line-soft: var(--line-soft);
 }
 
 html {
@@ -69,9 +86,13 @@ body {
   min-height: 100dvh;
 }
 
-h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; letter-spacing: -0.01em; }
+@layer base {
+  h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; letter-spacing: -0.01em; }
+}
 
-a { color: var(--link); text-underline-offset: 0.2em; }
+@layer base {
+  a { color: var(--link); text-underline-offset: 0.2em; }
+}
 
 :focus-visible {
   outline: 3px solid var(--focus);
@@ -94,4 +115,34 @@ a { color: var(--link); text-underline-offset: 0.2em; }
 
 @media print {
   .nie-drukuj { display: none !important; }
+}
+
+/* Kafelki kartogramu Radaru: 5 stopni intensywności, kontrast tekstu sprawdzony dla obu motywów. */
+:root { --k3: #14213d; }
+html[data-kontrast="wysoki"] { --k3: #000000; }
+.kaf-0 { background: var(--card); color: var(--fg); }
+.kaf-1 { background: color-mix(in oklab, var(--primary) 18%, var(--card)); color: var(--fg); }
+.kaf-2 { background: color-mix(in oklab, var(--primary) 38%, var(--card)); color: var(--fg); }
+.kaf-3 { background: color-mix(in oklab, var(--primary) 62%, var(--card)); color: var(--k3); }
+.kaf-4 { background: var(--primary); color: var(--primary-fg); }
+
+/* Wspólne powierzchnie: jedna karta, jedna mała karta. Równe zaokrąglenia i cienie w całym serwisie. */
+@layer components {
+  .karta {
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    border-radius: 1.25rem;
+    box-shadow: var(--shadow);
+  }
+  .karta-mala {
+    background: var(--card);
+    border: 1px solid var(--line-soft);
+    border-radius: 0.875rem;
+  }
+  html[data-kontrast="wysoki"] .karta,
+  html[data-kontrast="wysoki"] .karta-mala {
+    border: 2px solid var(--border);
+  }
+  .kontener { width: 100%; max-width: 72rem; margin-inline: auto; padding-inline: 1rem; }
+  @media (min-width: 640px) { .kontener { padding-inline: 1.5rem; } }
 }

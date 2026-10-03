@@ -51,7 +51,7 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
 
   if (krok === "gotowe") {
     return (
-      <section role="status" className="space-y-3 rounded-2xl border-4 border-ok bg-card p-5">
+      <section role="status" className="karta space-y-3 border-4 border-ok p-6">
         <h3 className="text-2xl font-bold">{t("gotowe")}</h3>
         <p>{t("numerPomoc")}</p>
         <p className="text-sm font-semibold">{t("numer")}</p>
@@ -64,7 +64,7 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
   }
 
   return (
-    <section className="space-y-4 rounded-2xl border-2 border-fg bg-card p-5">
+    <section className="karta space-y-4 p-6 sm:p-8">
       <h3 className="text-2xl font-bold">{t("tytul")}</h3>
       <p>{t("opis")}</p>
       {krok === "start" ? (
@@ -77,7 +77,7 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
           <h4 className="text-xl font-bold">{t("sprawdz")}</h4>
           <div>
             <p className="font-semibold">{t("twojaTresc")}</p>
-            <p className="whitespace-pre-line rounded-xl border-2 border-line p-3">{tekst}</p>
+            <p className="karta-mala whitespace-pre-line p-3">{tekst}</p>
           </div>
           <div className="space-y-1">
             <label htmlFor="zgl-email" className="block font-semibold">
@@ -93,7 +93,7 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
               aria-describedby="zgl-email-pomoc"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="block min-h-12 w-full max-w-md rounded-xl border-2 border-fg bg-card px-4 text-lg"
+              className="block min-h-12 w-full max-w-md rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg"
             />
           </div>
           <label className="flex cursor-pointer items-start gap-3">

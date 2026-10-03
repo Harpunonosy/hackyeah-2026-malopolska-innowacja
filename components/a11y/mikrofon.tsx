@@ -24,7 +24,7 @@ function pobierzKonstruktor(): Konstruktor | null {
   return w.SpeechRecognition ?? w.webkitSpeechRecognition ?? null;
 }
 
-export function Mikrofon({ onZdanie, jezyk }: { onZdanie: (tekst: string) => void; jezyk: string }) {
+export function Mikrofon({ onZdanie, jezyk, etykieta }: { onZdanie: (tekst: string) => void; jezyk: string; etykieta?: string }) {
   const t = useTranslations("swatka");
   const [stan, setStan] = React.useState<"bezczynny" | "slucham" | "blad">("bezczynny");
   const dostepny = React.useSyncExternalStore(
@@ -68,7 +68,7 @@ export function Mikrofon({ onZdanie, jezyk }: { onZdanie: (tekst: string) => voi
     <div className="space-y-1">
       <Button type="button" wariant={stan === "slucham" ? "glowny" : "obrys"} rozmiar="lg" onClick={przelacz} aria-pressed={stan === "slucham"}>
         {stan === "slucham" ? <Square aria-hidden className="size-5" /> : <Mic aria-hidden className="size-5" />}
-        {t("mikrofon")}
+        {etykieta ?? t("mikrofon")}
       </Button>
       <p role="status" className="text-sm text-muted">
         {stan === "slucham" && t("mikrofonSluchamy")}

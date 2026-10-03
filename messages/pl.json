@@ -8,7 +8,7 @@
     "glowna": "Główna nawigacja",
     "start": "Start",
     "problem": "Mam problem",
-    "wiedza": "Wiedza",
+    "wiedza": "Biblioteka rozwiązań",
     "przejdzDoTresci": "Przejdź do treści",
     "moje": "Moje sprawy"
   },
@@ -28,7 +28,12 @@
   "stopka": {
     "dane": "Dane demonstracyjne. Prototyp na HackYeah 2026.",
     "ai": "Odpowiedzi asystenta AI są podpowiedzią. Decyzje podejmuje człowiek.",
-    "zrodlo": "Treści innowacji: Biblioteka Innowacji Społecznych ROPS Kraków."
+    "zrodlo": "Treści innowacji: Biblioteka Innowacji Społecznych ROPS Kraków.",
+    "zaufanie": "Zaufanie i przejrzystość",
+    "dla": "Dla mieszkańców",
+    "dlaRops": "Dla pracowników ROPS",
+    "centrala": "Panel dla pracowników ROPS",
+    "hasloMarki": "Cyfrowe serce Małopolskiego Hubu Innowacji Społecznych."
   },
   "start": {
     "tytul": "Co chcesz zrobić?",
@@ -40,28 +45,78 @@
         "opis": "Opisz swoją sytuację. Znajdziemy sprawdzone rozwiązania."
       },
       "instytucja": {
-        "tytul": "Szukam rozwiązania dla mojej instytucji",
-        "opis": "Gmina, ośrodek lub organizacja: wybierz innowację i zobacz plan wdrożenia."
+        "tytul": "Dla instytucji",
+        "opis": "Gmina, ośrodek, organizacja"
       },
       "pomysl": {
         "tytul": "Mam pomysł",
-        "opis": "Opisz pomysł na innowację społeczną i sprawdź, czy ma szanse."
+        "opis": "Opisz i sprawdź szanse"
       },
       "testy": {
-        "tytul": "Chcę testować nowe rozwiązania",
-        "opis": "Zapisz się do testów i powiedz, co działa, a co nie."
+        "tytul": "Chcę testować",
+        "opis": "Wypróbuj nowe rozwiązania"
       },
       "wiedza": {
-        "tytul": "Wiedza i inspiracje",
-        "opis": "Biblioteka 115 innowacji, filmy i materiały ROPS."
+        "tytul": "Biblioteka",
+        "opis": "Sprawdzone rozwiązania ROPS"
       },
       "rozmowa": {
-        "tytul": "Zapytaj ROPS lub eksperta",
-        "opis": "Zadaj pytanie i znajdź partnerów do współpracy."
+        "tytul": "Zapytaj eksperta",
+        "opis": "Porozmawiaj z ROPS"
       },
       "moje": {
         "tytul": "Moje sprawy",
-        "opis": "Sprawdź, co dzieje się z Twoim zgłoszeniem."
+        "opis": "Sprawdź status zgłoszenia"
+      }
+    },
+    "hero": {
+      "eyebrow": "Małopolski Hub Innowacji Społecznych",
+      "tytul": "W czym możemy Ci pomóc?",
+      "opis": "Opisz swoją sytuację własnymi słowami. Znajdziemy sprawdzone rozwiązania.",
+      "cta": "Opisz swój problem",
+      "cta2": "Przeglądaj Bibliotekę innowacji",
+      "nota": "Bez logowania i bez podawania nazwiska.",
+      "przykladDlaczego": "Dlaczego pasuje",
+      "przykladTekst": "Pomaga pamiętać o lekach i uspokaja rodzinę, gdy ktoś bierze ich wiele naraz.",
+      "poleEtykieta": "Opisz swoją sytuację",
+      "placeholder": "Na przykład: Od śmierci męża rzadko wychodzę z domu i gubię się w lekach.",
+      "powiedz": "Powiedz",
+      "szukaj": "Znajdź pomoc",
+      "p1": {
+        "chip": "Samotność i leki",
+        "tekst": "Od kiedy zmarł mąż, rzadko wychodzę z domu i gubię się w lekach."
+      },
+      "p2": {
+        "chip": "Opieka nad mamą",
+        "tekst": "Opiekuję się chorą mamą, która wróciła ze szpitala. Nie daję rady."
+      },
+      "p3": {
+        "chip": "Dziecko w kryzysie",
+        "tekst": "Mój syn zamknął się w sobie i całe dni siedzi przy komputerze."
+      }
+    },
+    "liczby": {
+      "innowacje": "innowacji w Bibliotece ROPS",
+      "powiaty": "powiatów w analizie potrzeb",
+      "wskazniki": "wskaźników z Obserwatora Statystyk",
+      "obszary": "obszarów Mapy Wyzwań"
+    },
+    "wybierz": "Albo wybierz, co chcesz zrobić",
+    "wybierzOpis": "Splot łączy mieszkańców, samorządy, organizacje i ekspertów w jednym miejscu.",
+    "otworz": "Otwórz",
+    "jak": {
+      "tytul": "Jak to działa",
+      "k1": {
+        "tytul": "Opisz",
+        "opis": "Napisz lub powiedz, co się dzieje. Wystarczy kilka zdań."
+      },
+      "k2": {
+        "tytul": "Dopasujemy",
+        "opis": "Asystent AI wybiera rozwiązania z Biblioteki ROPS i tłumaczy, dlaczego pasują."
+      },
+      "k3": {
+        "tytul": "Zgłoś i śledź",
+        "opis": "Wyślij zgłoszenie do ROPS, dostaniesz numer i zobaczysz odpowiedź."
       }
     }
   },
@@ -81,7 +136,7 @@
     "powiat": "Powiat (nieobowiązkowo)",
     "powiatPodpowiedz": "Zacznij pisać nazwę powiatu",
     "szukaj": "Znajdź pomoc",
-    "szukam": "Asystent AI czyta Twój opis i szuka wśród 115 sprawdzonych rozwiązań. To potrwa kilka sekund.",
+    "szukam": "Asystent AI czyta Twój opis i szuka wśród sprawdzonych rozwiązań. To potrwa kilka sekund.",
     "blad": "Nie udało się teraz wyszukać. Spróbuj ponownie za chwilę.",
     "zaDuzo": "Zbyt wiele zapytań naraz. Poczekaj pół minuty i spróbuj ponownie.",
     "mikrofon": "Powiedz opis",
@@ -116,7 +171,21 @@
     "oznaczenieAi": "Odpowiedź przygotowana z pomocą AI. Sprawdź ją i w razie wątpliwości zapytaj pracownika ROPS.",
     "trybAwaryjny": "Asystent AI jest chwilowo niedostępny, więc wyszukaliśmy po słowach z Twojego opisu. Wyniki mogą być mniej trafne.",
     "zamaskowano": "Ukryliśmy w opisie dane osobowe ({rodzaje}), zanim trafił do asystenta.",
-    "nowaProba": "Szukaj ponownie"
+    "nowaProba": "Szukaj ponownie",
+    "krok1": "Opisz sytuację",
+    "krok2": "Kim jesteś?",
+    "krok3": "Wyślij do wyszukania",
+    "pomocTytul": "W nagłej sytuacji",
+    "pomocOpis": "Jeśli ktoś jest w niebezpieczeństwie albo myślisz o odebraniu sobie życia, zadzwoń od razu.",
+    "jakTytul": "Jak to działa",
+    "jak1": "Opisujesz problem własnymi słowami.",
+    "jak2": "Asystent AI szuka wśród sprawdzonych rozwiązań ROPS.",
+    "jak3": "Dostajesz propozycje z wyjaśnieniem i możesz wysłać zgłoszenie.",
+    "prywatnosc": "Ukrywamy dane osobowe, zanim opis trafi do asystenta. Zgłoszenie wysyłasz dopiero, gdy się zgodzisz.",
+    "zmien": "Zmień opis",
+    "twojOpis": "Twój opis",
+    "przykladDla": "Znaleźliśmy {ile, plural, one {# rozwiązanie} few {# rozwiązania} many {# rozwiązań} other {# rozwiązania}} dla Ciebie",
+    "szukamTytul": "Szukamy rozwiązań dla Ciebie"
   },
   "kryzys": {
     "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",
@@ -141,7 +210,15 @@
     "paczka": "Paczka materiałów (ZIP)",
     "filmy": "Filmy",
     "zrodlo": "Źródło: Biblioteka Innowacji Społecznych ROPS Kraków",
-    "otworz": "Otwórz stronę w Bibliotece ROPS"
+    "otworz": "Otwórz stronę w Bibliotece ROPS",
+    "szukaj": "Szukaj w Bibliotece",
+    "szukajPlaceholder": "Na przykład: samotność, leki, wózek, autyzm",
+    "wszystkie": "Wszystkie kategorie",
+    "wynikow": "{ile, plural, one {# innowacja} few {# innowacje} many {# innowacji} other {# innowacji}}",
+    "brak": "Nic nie pasuje do tego filtra. Spróbuj innych słów albo wybierz wszystkie kategorie.",
+    "zFilmem": "film",
+    "wybraneKrotko": "wybrana do upowszechniania",
+    "zobacz": "Zobacz opis"
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",

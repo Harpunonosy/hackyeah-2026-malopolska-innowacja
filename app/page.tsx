@@ -1,55 +1,77 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { BookOpen, ClipboardList, FlaskConical, HandHeart, Lightbulb, MessagesSquare, Building2 } from "lucide-react";
+import { ArrowRight, BookOpen, Building2, ClipboardList, FlaskConical, Lightbulb, MessagesSquare } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { PoleOpisu } from "@/components/home/pole-opisu";
+import { Logo } from "@/components/logo";
 import { cn } from "@/lib/utils";
 
-type Kafelek = { klucz: string; ikona: LucideIcon; href?: string };
-
-const KAFELKI: Kafelek[] = [
-  { klucz: "problem", ikona: HandHeart, href: "/problem" },
-  { klucz: "instytucja", ikona: Building2 },
+const KAFELKI: { klucz: string; ikona: LucideIcon; href?: string }[] = [
+  { klucz: "wiedza", ikona: BookOpen, href: "/wiedza/biblioteka" },
+  { klucz: "moje", ikona: ClipboardList, href: "/moje" },
   { klucz: "pomysl", ikona: Lightbulb },
   { klucz: "testy", ikona: FlaskConical },
-  { klucz: "wiedza", ikona: BookOpen, href: "/wiedza/biblioteka" },
+  { klucz: "instytucja", ikona: Building2 },
   { klucz: "rozmowa", ikona: MessagesSquare },
-  { klucz: "moje", ikona: ClipboardList, href: "/moje" },
 ];
 
 export default async function Start() {
   const t = await getTranslations("start");
   return (
-    <div className="space-y-8">
-      <div className="max-w-3xl space-y-3">
-        <h1 className="text-4xl font-bold sm:text-5xl">{t("tytul")}</h1>
-        <p className="text-xl text-muted">{t("podtytul")}</p>
-      </div>
-      <ul className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-        {KAFELKI.map(({ klucz, ikona: Ikona, href }) => {
-          const tresc = (
-            <>
-              <Ikona aria-hidden className="size-9 shrink-0" />
-              <span className="space-y-1">
-                <span className="block font-display text-xl font-bold">{t(`kafelki.${klucz}.tytul`)}</span>
-                <span className="block text-base">{t(`kafelki.${klucz}.opis`)}</span>
-                {!href && <span className="mt-1 inline-block rounded-full border-2 border-line px-3 text-sm font-semibold">{t("wkrotce")}</span>}
-              </span>
-            </>
-          );
-          const klasy = "flex min-h-32 items-start gap-4 rounded-2xl border-2 p-5 no-underline";
-          return (
-            <li key={klucz}>
-              {href ? (
-                <Link href={href} className={cn(klasy, "border-fg bg-card text-fg hover:bg-fg hover:text-bg")}>
-                  {tresc}
-                </Link>
-              ) : (
-                <div className={cn(klasy, "border-dashed border-line bg-transparent text-muted")}>{tresc}</div>
-              )}
-            </li>
-          );
-        })}
-      </ul>
-    </div>
+    <>
+      <section className="kontener grid items-center gap-12 py-12 lg:grid-cols-[1.15fr_0.85fr] lg:py-16">
+        <div className="space-y-7">
+          <h1 className="text-balance text-[clamp(2.5rem,1.4rem+3.6vw,4.25rem)] font-extrabold leading-[1.05]">{t("hero.tytul")}</h1>
+          <p className="max-w-xl text-balance text-xl text-muted sm:text-2xl">{t("hero.opis")}</p>
+          <PoleOpisu />
+        </div>
+
+        <div aria-hidden="true" className="relative mx-auto hidden aspect-square w-full max-w-lg lg:block">
+          <div className="absolute inset-[6%] rounded-full bg-soft" />
+          <div className="absolute inset-0 rounded-full border-[3px] border-dotted border-accent" />
+          <Logo className="absolute left-1/2 top-[44%] size-[62%] -translate-x-1/2 -translate-y-1/2 text-fg" />
+          <div className="karta absolute -bottom-2 -left-4 w-72 space-y-2 p-5 text-fg">
+            <p className="flex items-center gap-2 text-sm font-semibold text-muted">
+              <span className="flex gap-1">{[0, 1, 2].map((i) => <span key={i} className="size-3 rounded-full bg-fg" />)}</span>
+              Bardzo dobre dopasowanie
+            </p>
+            <p className="font-display text-xl font-bold leading-tight">Inteligentny organizer do leków</p>
+            <p className="rounded-lg bg-primary-soft px-3 py-2 text-sm">{t("hero.przykladTekst")}</p>
+          </div>
+        </div>
+      </section>
+
+      <section className="kontener space-y-7 pb-4" aria-labelledby="wybierz-h">
+        <h2 id="wybierz-h" className="text-3xl font-extrabold sm:text-4xl">{t("wybierz")}</h2>
+        <ul className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
+          {KAFELKI.map(({ klucz, ikona: Ikona, href }) => {
+            const wnetrze = (
+              <>
+                <span className={cn("flex size-14 shrink-0 items-center justify-center rounded-2xl sm:size-[4.5rem] sm:rounded-[1.25rem]", href ? "bg-primary text-primary-fg" : "bg-soft text-fg")}>
+                  <Ikona aria-hidden className="size-8" />
+                </span>
+                <span className="min-w-0 flex-1">
+                  <span className="block font-display text-2xl font-bold leading-tight">{t(`kafelki.${klucz}.tytul`)}</span>
+                  <span className="mt-1 block text-lg text-muted">{t(`kafelki.${klucz}.opis`)}</span>
+                  {!href && <span className="mt-2 inline-block rounded-full bg-soft px-3 py-0.5 text-sm font-bold text-muted">{t("wkrotce")}</span>}
+                </span>
+                {href && <ArrowRight aria-hidden className="size-6 shrink-0 text-primary" />}
+              </>
+            );
+            return (
+              <li key={klucz} className="flex">
+                {href ? (
+                  <Link href={href} className="karta flex w-full items-center gap-4 p-5 sm:gap-5 sm:p-6 text-fg no-underline transition-transform hover:-translate-y-0.5">
+                    {wnetrze}
+                  </Link>
+                ) : (
+                  <div className="flex w-full items-center gap-4 rounded-[1.25rem] border-2 border-line-soft p-5 sm:gap-5 sm:p-6">{wnetrze}</div>
+                )}
+              </li>
+            );
+          })}
+        </ul>
+      </section>
+    </>
   );
 }

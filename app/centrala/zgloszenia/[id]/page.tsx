@@ -56,13 +56,13 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
 
       <section aria-labelledby="tresc-h" className="space-y-2">
         <h2 id="tresc-h" className="text-2xl font-bold">Treść (dane osobowe zamaskowane)</h2>
-        <p className="whitespace-pre-line rounded-2xl border-2 border-fg bg-card p-5 text-lg">{z.tresc_zamaskowana}</p>
+        <p className="whitespace-pre-line karta p-5 text-lg">{z.tresc_zamaskowana}</p>
       </section>
 
       <section aria-labelledby="ai-h" className="space-y-2">
         <h2 id="ai-h" className="text-2xl font-bold">Ocena asystenta AI</h2>
         {z.ocena_ai ? (
-          <div className="space-y-2 rounded-2xl border-2 border-line bg-card p-5">
+          <div className="space-y-2 karta p-5">
             <p><strong>Streszczenie:</strong> {z.streszczenie}</p>
             <p><strong>Dla kogo:</strong> {z.grupa_docelowa}</p>
             <p className="flex flex-wrap gap-2">{(z.tagi ?? []).map((t: string) => <Chip key={t}>{t}</Chip>)}</p>
@@ -80,7 +80,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
         ) : (
           <ul className="space-y-2">
             {dop.rows.map((d) => (
-              <li key={d.id} className="rounded-xl border-2 border-line bg-card p-3">
+              <li key={d.id} className="karta-mala p-3">
                 <Link href={`/wiedza/biblioteka/${d.id}`} className="font-bold">{d.nazwa}</Link>{" "}
                 <span className="text-sm text-muted">({d.trafnosc ?? "wstępnie"}{d.trafnosc ? "/100" : ""})</span>
                 <span className="block">{d.dlaczego}</span>
@@ -94,7 +94,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
         <section aria-labelledby="wyslane-h" className="space-y-2">
           <h2 id="wyslane-h" className="text-2xl font-bold">Wysłane odpowiedzi</h2>
           {wiad.rows.map((w) => (
-            <p key={w.created_at} className="whitespace-pre-line rounded-xl border-2 border-line bg-card p-3">
+            <p key={w.created_at} className="whitespace-pre-line karta-mala p-3">
               {w.tresc}
               <span className="mt-1 block text-sm text-muted">{fmt(w.created_at)}{w.wygenerowane_przez_ai ? " · ze szkicu AI" : ""}</span>
             </p>

@@ -87,7 +87,7 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
             {t("odpowiedz")}
           </h2>
           {dane.wiadomosci.map((w) => (
-            <article key={w.created_at} className="space-y-2 rounded-2xl border-2 border-fg bg-card p-5">
+            <article key={w.created_at} className="space-y-2 karta p-5">
               <p className="whitespace-pre-line text-lg">{w.tresc}</p>
               <p className="text-sm text-muted">
                 {fmt(w.created_at)}

@@ -6,6 +6,7 @@ import { db } from "./db";
 import { wykryjKryzys } from "./kryzys";
 import { zamaskuj } from "./maskowanie";
 import { OBSZAR_IDS } from "./obszary";
+import { normalizujPowiat } from "./powiaty";
 import type { Status } from "./statusy";
 
 export const WejscieZgloszenia = z.object({
@@ -41,7 +42,7 @@ export async function utworzZgloszenie(w: WejscieZgloszenia): Promise<{ id: stri
     if (w.email) {
       const u = await c.query(
         "insert into uzytkownicy (rola, email, powiat) values ($1,$2,$3) returning id",
-        [w.rola === "mieszkaniec" ? "mieszkaniec" : "organizacja", w.email, w.powiat ?? null],
+        [w.rola === "mieszkaniec" ? "mieszkaniec" : "organizacja", w.email, normalizujPowiat(w.powiat)],
       );
       autorId = u.rows[0].id;
     }
@@ -49,7 +50,7 @@ export async function utworzZgloszenie(w: WejscieZgloszenia): Promise<{ id: stri
       `insert into zgloszenia (numer, autor_id, kanal, tresc_zamaskowana, obszar, powiat, priorytet, kryzys,
          termin_sla, najlepsze_dopasowanie, zgoda_kontakt, kanal_kontaktu)
        values ($1,$2,$3,$4,$5,$6,$7,$8, now() + ($9 || ' hours')::interval, $10,$11,$12) returning id`,
-      [numer, autorId, w.kanal, tekst, w.obszar ?? null, w.powiat ?? null, priorytet, kryzys, kryzys ? "0" : "72",
+      [numer, autorId, w.kanal, tekst, w.obszar ?? null, normalizujPowiat(w.powiat), priorytet, kryzys, kryzys ? "0" : "72",
         w.najlepsze, true, w.email ? "email" : null],
     );
     const id: string = z.rows[0].id;

@@ -1,16 +1,19 @@
 import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { SzukajNumeru } from "@/components/moje/szukaj-numeru";
+import { NaglowekStrony } from "@/components/naglowek-strony";
+import { Strona } from "@/components/strona";
 
 export const metadata: Metadata = { title: "Moje sprawy" };
 
 export default async function Moje() {
   const t = await getTranslations("moje");
   return (
-    <div className="max-w-3xl space-y-6">
-      <h1 className="text-4xl font-bold sm:text-5xl">{t("tytul")}</h1>
-      <p className="text-xl text-muted">{t("podtytul")}</p>
-      <SzukajNumeru />
-    </div>
+    <Strona>
+      <NaglowekStrony tytul={t("tytul")} opis={t("podtytul")} nadtytul="Rynek" />
+      <div className="karta max-w-2xl p-6 sm:p-8">
+        <SzukajNumeru />
+      </div>
+    </Strona>
   );
 }
