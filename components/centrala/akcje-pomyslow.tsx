@@ -7,9 +7,10 @@ import { Button } from "@/components/ui/button";
 
 const STATUSY: [string, string][] = [["przeczytana", "Przeczytana"], ["w_ocenie", "W ocenie"], ["zaproszona_do_naboru", "Zaproś do naboru"], ["odrzucona", "Odrzuć"]];
 
-export function StatusFiszki({ id, status }: { id: string; status: string }) {
+export function StatusFiszki({ id, status, publiczna }: { id: string; status: string; publiczna: boolean }) {
   const router = useRouter();
   return (
+    <div className="space-y-3">
     <div role="group" aria-label="Zmień status pomysłu" className="flex flex-wrap gap-2">
       {STATUSY.map(([v, e]) => (
         <Button key={v} type="button" wariant="obrys" aria-pressed={status === v} className="aria-pressed:bg-fg aria-pressed:text-bg" onClick={async () => {
@@ -17,6 +18,11 @@ export function StatusFiszki({ id, status }: { id: string; status: string }) {
           router.refresh();
         }}>{e}</Button>
       ))}
+    </div>
+    <Button type="button" wariant={publiczna ? "obrys" : "zloty"} aria-pressed={publiczna} onClick={async () => {
+      await fetch(`/api/admin/fiszki/${id}/status`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ publiczna: !publiczna }) });
+      router.refresh();
+    }}>{publiczna ? "Wycofaj z galerii" : "Opublikuj w galerii"}</Button>
     </div>
   );
 }

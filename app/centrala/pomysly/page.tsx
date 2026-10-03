@@ -22,7 +22,7 @@ export default async function Page() {
   const { mapa: innowacjaPoId } = await katalog();
   const c = db();
   const [fiszki, opinie, testy, doAkceptacji] = await Promise.all([
-    c.query("select id, tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, status, created_at from fiszki order by (status='zgloszona') desc, created_at desc limit 40"),
+    c.query("select id, tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, status, publiczna, created_at from fiszki order by (status='zgloszona') desc, created_at desc limit 40"),
     c.query(`select innowacja_id, count(*)::int as n, round(avg(ocena)::numeric,1) as srednia,
                count(*) filter (where odpowiedzi->>'polecilbys'='tak')::int as polecaja,
                (array_agg(propozycja order by created_at desc) filter (where propozycja <> ''))[1:3] as propozycje
@@ -84,7 +84,7 @@ export default async function Page() {
                     <p><strong>Podobne w Bibliotece:</strong>{" "}{podobne.length ? podobne.map((p, i) => <span key={p.id}>{i > 0 && ", "}<Link href={`/wiedza/biblioteka/${p.id}`}>{p.nazwa}</Link></span>) : "brak"}</p>
                   </div>
                 </details>
-                <StatusFiszki id={f.id} status={f.status} />
+                <StatusFiszki id={f.id} status={f.status} publiczna={f.publiczna} />
               </li>
             );
           })}

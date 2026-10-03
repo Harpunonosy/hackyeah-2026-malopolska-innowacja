@@ -21,6 +21,7 @@ type Dane = {
   tytul: string | null;
   termin_sla: string;
   pierwsza_odpowiedz_at: string | null;
+  rozmowy: { id: string; tytul: string; wiadomosci: { tresc: string; created_at: string; od: string }[] }[];
   powiadomienia: { typ: string; tytul: string; tresc: string; link: string | null; kanal: string; created_at: string }[];
 };
 
@@ -29,6 +30,33 @@ function czasOdpowiedzi(od: string, do_: string) {
   return min < 120 ? `${min} min` : min < 2880 ? `${Math.round(min / 60)} godz.` : `${Math.round(min / 1440)} dni`;
 }
 const fmt = (d: string) => new Date(d).toLocaleString("pl-PL", { dateStyle: "medium", timeStyle: "short" });
+
+function RozmowaWlasciciela({ numer, nr, r }: { numer: string; nr: number; r: Dane["rozmowy"][number] }) {
+  const t = useTranslations("moje");
+  const [tresc, setTresc] = React.useState("");
+  const [info, setInfo] = React.useState("");
+  return (
+    <article className="karta space-y-3 p-5">
+      <h3 className="text-xl font-bold">{t("osoba", { n: nr })}: {r.tytul}</h3>
+      {r.wiadomosci.map((w) => (
+        <p key={w.created_at} className="karta-mala whitespace-pre-line p-3">
+          {w.tresc}
+          <span className="mt-1 block text-sm text-muted">{w.od === "wlasciciel" ? "Ty" : t("osoba", { n: nr })} · {fmt(w.created_at)}</span>
+        </p>
+      ))}
+      <form className="space-y-2" onSubmit={async (e) => {
+        e.preventDefault();
+        const odp = await fetch("/api/rozmowy/odpowiedz", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ numer, rozmowaId: r.id, tresc }) });
+        if (odp.ok) { setTresc(""); setInfo(t("wyslanoOdp")); }
+      }}>
+        <label htmlFor={`rozm-${r.id}`} className="block font-bold">{t("odpiszOsobie")}</label>
+        <textarea id={`rozm-${r.id}`} rows={3} value={tresc} onChange={(e) => setTresc(e.target.value)} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
+        <Button type="submit" disabled={tresc.trim().length < 2}>{t("wyslijOdp")}</Button>
+        <p role="status" className="font-semibold text-ok">{info}</p>
+      </form>
+    </article>
+  );
+}
 
 export function StatusZgloszenia({ numer }: { numer: string }) {
   const t = useTranslations("moje");
@@ -113,7 +141,7 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
             <article key={w.created_at} className="space-y-2 karta p-5">
               <p className="whitespace-pre-line text-lg">{w.tresc}</p>
               <p className="text-sm text-muted">
-                {w.od === "autor" ? "Ty · " : w.od === "ekspert" ? `${w.nadawca ?? "Ekspert"} · ` : "ROPS · "}{fmt(w.created_at)}
+                {w.od === "wlasciciel" ? "Autor ogłoszenia · " : w.od === "autor" ? "Ty · " : w.od === "ekspert" ? `${w.nadawca ?? "Ekspert"} · ` : "ROPS · "}{fmt(w.created_at)}
                 {w.wygenerowane_przez_ai ? ` · ${t("aiOdpowiedz")}` : ""}
               </p>
             </article>
@@ -149,6 +177,16 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
               </div>
             )}
           </div>
+        </section>
+      )}
+
+      {dane.rozmowy.length > 0 && (
+        <section aria-labelledby="roz" className="space-y-4" aria-live="polite">
+          <h2 id="roz" className="text-2xl font-bold">{t("rozmowy")}</h2>
+          <p className="text-muted">{t("rozmowyInfo")}</p>
+          {dane.rozmowy.map((r, i) => (
+            <RozmowaWlasciciela key={r.id} numer={numer} nr={i + 1} r={r} />
+          ))}
         </section>
       )}
 

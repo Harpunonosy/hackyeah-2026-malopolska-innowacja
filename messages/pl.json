@@ -10,7 +10,8 @@
     "problem": "Mam problem",
     "wiedza": "Biblioteka rozwiązań",
     "przejdzDoTresci": "Przejdź do treści",
-    "moje": "Moje sprawy"
+    "moje": "Moje sprawy",
+    "galeria": "Galeria pomysłów"
   },
   "dostepnosc": {
     "etykieta": "Ustawienia dostępności",
@@ -283,7 +284,11 @@
     "powiadomienia": "Powiadomienia",
     "kanalEmail": "e-mail (symulacja)",
     "kanalAplikacja": "w aplikacji",
-    "otworz": "otwórz"
+    "otworz": "otwórz",
+    "rozmowy": "Rozmowy o Twoim pomyśle lub ogłoszeniu",
+    "rozmowyInfo": "Osoby, które chcą pomóc, przetestować albo współpracować, piszą tutaj. Ich dane kontaktowe pozostają ukryte, a ROPS widzi całą korespondencję.",
+    "osoba": "Osoba {n}",
+    "odpiszOsobie": "Twoja odpowiedź"
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -546,5 +551,16 @@
     "opisOgl": "Opis",
     "opublikuj": "Opublikuj ogłoszenie",
     "opublikowano": "Ogłoszenie dodane. Odśwież stronę, aby je zobaczyć."
+  },
+  "galeria": {
+    "nadtytul": "Dobre praktyki i pomysły",
+    "tytul": "Co powstaje w Małopolsce",
+    "opis": "Pomysły, które ROPS zaakceptował do pokazania, oraz rozwiązania sprawdzone w mikroskali. Możesz pomóc, przetestować, zgłosić podobny problem albo zostać partnerem. Twoje dane kontaktowe pozostają ukryte.",
+    "brak": "Galeria jest jeszcze pusta.",
+    "demo": "dane demonstracyjne",
+    "naCzymPolega": "Na czym polega",
+    "dlaKogo": "Dla kogo",
+    "wyniki": "Wyniki testu",
+    "cochcesz": "Co chcesz zrobić?"
   }
 }

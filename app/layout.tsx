@@ -66,6 +66,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 linki={[
                   { href: "/", etykieta: t("nav.start") },
                   { href: "/wiedza/biblioteka", etykieta: t("nav.wiedza") },
+                  { href: "/galeria", etykieta: t("nav.galeria") },
                   { href: "/moje", etykieta: t("nav.moje") },
                 ]}
               />

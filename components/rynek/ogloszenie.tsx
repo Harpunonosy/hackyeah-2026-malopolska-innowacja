@@ -14,8 +14,9 @@ export function DodajOgloszenie() {
   const [powiat, setPowiat] = React.useState("");
   const [stan, setStan] = React.useState<"" | "pracuje" | "ok" | "blad">("");
   const [komunikat, setKomunikat] = React.useState("");
+  const [numer, setNumer] = React.useState("");
 
-  if (stan === "ok") return <p role="status" className="karta p-5 font-bold text-ok">{t("opublikowano")}</p>;
+  if (stan === "ok") return <p role="status" className="karta p-5 font-bold text-ok">{t("opublikowano")}{numer && <span className="mt-2 block font-normal text-fg">Numer sprawy: <span className="font-mono font-bold">{numer}</span>. Odpowiedzi zainteresowanych zobaczysz w „Moje sprawy”.</span>}</p>;
   const opcje: ["taniej" | "dotrzec" | "wartosc", string][] = [["taniej", t("szukaTaniej")], ["dotrzec", t("szukaDotrzec")], ["wartosc", t("szukaWartosc")]];
   return (
     <form
@@ -24,7 +25,7 @@ export function DodajOgloszenie() {
         e.preventDefault();
         setStan("pracuje");
         const r = await fetch("/api/partnerstwa", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tytul, szuka, obszar, powiat, opis }) });
-        if (r.ok) return setStan("ok");
+        if (r.ok) { setNumer((await r.json().catch(() => ({}))).numer ?? ""); return setStan("ok"); }
         setKomunikat((await r.json().catch(() => ({}))).komunikat ?? t("blad"));
         setStan("blad");
       }}

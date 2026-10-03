@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { getTranslations } from "next-intl/server";
 import { CalendarClock } from "lucide-react";
 import { DodajOgloszenie } from "@/components/rynek/ogloszenie";
+import { Rozmowa } from "@/components/rozmowa/rozmowa";
 import { Pytanie } from "@/components/rynek/pytanie";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
@@ -16,7 +17,7 @@ export default async function Rynek() {
   const t = await getTranslations("rynek");
   const [eks, par] = await Promise.all([
     db().query("select u.id, e.nazwa, e.dziedziny, e.obszary, e.opis, e.dyzury from eksperci e join uzytkownicy u on u.id = e.uzytkownik_id order by e.nazwa"),
-    db().query("select id, tytul, szuka, obszar, powiat, opis from partnerstwa order by created_at desc limit 30"),
+    db().query("select id, tytul, szuka, obszar, powiat, opis, numer from partnerstwa order by created_at desc limit 30"),
   ]);
   const szuka: Record<string, string> = { taniej: t("szukaTaniej"), dotrzec: t("szukaDotrzec"), wartosc: t("szukaWartosc") };
   return (
@@ -46,6 +47,7 @@ export default async function Rynek() {
               <p className="flex flex-wrap gap-2"><Chip className="bg-accent text-accent-fg">{szuka[p.szuka]}</Chip><Chip>{nazwaObszaru(p.obszar as ObszarId)}</Chip>{p.powiat && <Chip>{String(p.powiat).replace("powiat ", "")}</Chip>}</p>
               <h3 className="font-display text-xl font-bold leading-snug">{p.tytul}</h3>
               <p className="text-muted">{p.opis}</p>
+              {p.numer && <div className="mt-auto"><Rozmowa cel="partnerstwo" celId={p.id} rodzaje={["partner"]} id={p.id} /></div>}
             </li>
           ))}
         </ul>

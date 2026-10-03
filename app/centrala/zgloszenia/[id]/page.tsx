@@ -104,7 +104,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
           {wiad.rows.map((w) => (
             <p key={w.created_at} className="whitespace-pre-line karta-mala p-3">
               {w.tresc}
-              <span className="mt-1 block text-sm text-muted">{w.od === "autor" ? "Autor zgłoszenia · " : w.od === "ekspert" ? `${w.nadawca ?? "Ekspert"} · ` : "ROPS · "}{fmt(w.created_at)}{w.wygenerowane_przez_ai ? " · ze szkicu AI" : ""}</span>
+              <span className="mt-1 block text-sm text-muted">{w.od === "wlasciciel" ? "Autor ogłoszenia · " : w.od === "autor" ? "Autor zgłoszenia · " : w.od === "ekspert" ? `${w.nadawca ?? "Ekspert"} · ` : "ROPS · "}{fmt(w.created_at)}{w.wygenerowane_przez_ai ? " · ze szkicu AI" : ""}</span>
             </p>
           ))}
           {pow.rows.map((p) => (
