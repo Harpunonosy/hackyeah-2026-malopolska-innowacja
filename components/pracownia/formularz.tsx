@@ -6,7 +6,9 @@ import { useLocale, useTranslations } from "next-intl";
 import { CircleCheck, CircleX, Loader2, Sparkles } from "lucide-react";
 import { Mikrofon } from "@/components/a11y/mikrofon";
 import { Button } from "@/components/ui/button";
-import { Kanwa, type KanwaStan } from "@/components/pracownia/kanwa";
+import { Kanwa, wskaznikiDojrzalosci, type KanwaStan } from "@/components/pracownia/kanwa";
+import { Asystent } from "@/components/pracownia/asystent";
+import { KanwaPelna, type KanwaPelnaStan } from "@/components/pracownia/kanwa-pelna";
 import { Wniosek } from "@/components/pracownia/wniosek";
 import type { WynikAnalizy } from "@/lib/pracownia";
 
@@ -21,6 +23,7 @@ export function FormularzPomyslu() {
   const [wynik, setWynik] = React.useState<WynikAnalizy | null>(null);
   const [fiszka, setFiszka] = React.useState<WynikAnalizy["fiszka"] | null>(null);
   const [kanwa, setKanwa] = React.useState<KanwaStan | null>(null);
+  const [pelna, setPelna] = React.useState<KanwaPelnaStan>({});
   const [numer, setNumer] = React.useState<string | null>(null);
   const [wysylka, setWysylka] = React.useState<"" | "wysylam" | "ok" | "blad">("");
 
@@ -47,16 +50,24 @@ export function FormularzPomyslu() {
   }
 
   async function wyslij() {
-    if (!fiszka || !wynik) return;
+    if (!fiszka || fiszka.tytul.trim().length < 3 || fiszka.krotki_opis.trim().length < 3 || fiszka.istota.trim().length < 3 || fiszka.dla_kogo.trim().length < 3) return setWysylka("blad");
     setWysylka("wysylam");
     const r = await fetch("/api/pracownia/fiszka", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ kanwa, tytul: fiszka.tytul, opis: fiszka.krotki_opis, istota: fiszka.istota, dla_kogo: fiszka.dla_kogo, etap: fiszka.etap, oceny: wynik.oceny, podobne: wynik.podobne }),
+      body: JSON.stringify({ kanwa: { ...(kanwa ?? {}), pelna }, tytul: fiszka.tytul, opis: fiszka.krotki_opis, istota: fiszka.istota, dla_kogo: fiszka.dla_kogo, etap: fiszka.etap, oceny: wynik?.oceny, podobne: wynik?.podobne }),
     });
     if (r.ok) setNumer((await r.json()).numer ?? null);
     setWysylka(r.ok ? "ok" : "blad");
   }
+
+  function trybReczny() {
+    setFiszka({ tytul: "", krotki_opis: "", istota: "", dla_kogo: "", etap: "pomysl" });
+    setWynik(null);
+    setKanwa(null);
+  }
+
+  const tekstFiszki = fiszka ? `Tytuł: ${fiszka.tytul}. Opis: ${fiszka.krotki_opis}. Na czym polega: ${fiszka.istota}. Dla kogo: ${fiszka.dla_kogo}. Etap: ${fiszka.etap}.` : "";
 
   const pole = (id: keyof WynikAnalizy["fiszka"], etykieta: string, wiersze = 2) => (
     <div className="space-y-1">
@@ -77,15 +88,16 @@ export function FormularzPomyslu() {
             {t("analizuj")}
           </Button>
         </div>
+        {!fiszka && <p><Button type="button" wariant="cichy" onClick={trybReczny}>{t("trybReczny")}</Button></p>}
         <div aria-live="polite">
           {stan === "pracuje" && <p className="text-lg">{t("pracuje")}</p>}
           {stan === "blad" && <p role="alert" className="font-semibold text-primary">{komunikat}</p>}
         </div>
       </form>
 
-      {wynik && fiszka && (
+      {fiszka && (
         <div className="space-y-6">
-          <p className="text-sm text-muted">{t("oznaczenie")}</p>
+          {wynik ? <p className="text-sm text-muted">{t("oznaczenie")}</p> : <p className="karta-mala border-2 border-accent p-3">{t("trybRecznyInfo")}</p>}
 
           <section className="karta space-y-4 p-6" aria-labelledby="h-fiszka">
             <h2 id="h-fiszka" className="text-2xl font-bold">{t("fiszka")}</h2>
@@ -105,7 +117,7 @@ export function FormularzPomyslu() {
                 ))}
               </div>
             </fieldset>
-            {wynik.doUzupelnienia.length > 0 && (
+            {wynik && wynik.doUzupelnienia.length > 0 && (
               <div className="rounded-xl bg-soft p-4">
                 <p className="font-bold">{t("doUzupelnienia")}</p>
                 <ul className="list-disc pl-6">{wynik.doUzupelnienia.map((x) => <li key={x}>{x}</li>)}</ul>
@@ -115,6 +127,8 @@ export function FormularzPomyslu() {
 
           {kanwa && <Kanwa kanwa={kanwa} zmien={setKanwa} etap={fiszka.etap} />}
 
+          {wynik && (
+            <>
           <section className="karta space-y-4 p-6" aria-labelledby="h-istnieje">
             <h2 id="h-istnieje" className="text-2xl font-bold">{t("istnieje")}</h2>
             {wynik.podobne.length === 0 ? <p className="text-lg">{t("istniejeBrak")}</p> : (
@@ -165,7 +179,14 @@ export function FormularzPomyslu() {
             </section>
           </div>
 
-          <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik.doUzupelnienia.join("; ")}`} />
+            </>
+          )}
+
+          <KanwaPelna stan={pelna} zmien={setPelna} fiszkaTekst={tekstFiszki} />
+
+          {tekstFiszki.length >= 20 && <Asystent fiszkaTekst={tekstFiszki} tytul={fiszka.tytul} opis={fiszka.krotki_opis} numer={numer} wskazniki={kanwa ? Object.entries(wskaznikiDojrzalosci(kanwa, fiszka.etap)).map(([k, v]) => ({ nazwa: t(`wsk.${k}`), v: v.v, max: v.max })) : []} />}
+
+          <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik?.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik?.doUzupelnienia.join("; ") ?? ""}\nOdbiorcy i wartość: ${Object.values(pelna).filter(Boolean).join("; ")}`} />
 
           <div className="karta flex flex-wrap items-center gap-4 p-6">
             {wysylka === "ok" ? (
