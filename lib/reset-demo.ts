@@ -1,5 +1,6 @@
 // Przywraca dane demonstracyjne: usuwa wszystko, co wprowadzili goście i Jury, a zostawia syntetyczne dane startowe.
 import { db } from "./db";
+import { odswiezFakty } from "./fakty-baza";
 import { uniewaznijKatalog } from "./katalog";
 
 export async function przywrocDaneDemo(): Promise<Record<string, number>> {
@@ -28,6 +29,7 @@ export async function przywrocDaneDemo(): Promise<Record<string, number>> {
     await wykonaj("dziennik", "delete from dziennik");
     await wykonaj("webhooki", "delete from webhooki");
     await wykonaj("liderzy", "delete from liderzy where not syntetyczne");
+    await wykonaj("fakty", "delete from fakty where dodany");
     await wykonaj("uzytkownicy", "delete from uzytkownicy where rola <> 'ekspert'");
     await c.query("commit");
   } catch (e) {
@@ -37,5 +39,6 @@ export async function przywrocDaneDemo(): Promise<Record<string, number>> {
     c.release();
   }
   uniewaznijKatalog();
+  odswiezFakty();
   return usuniete;
 }

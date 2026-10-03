@@ -2,7 +2,7 @@ import { z } from "zod";
 import { zapytajJson, DOMYSLNY_MODEL } from "@/lib/ai";
 import { innowacjaPoId } from "@/lib/biblioteka";
 import { db } from "@/lib/db";
-import { faktyDlaObszaru } from "@/lib/fakty";
+import { faktyObszaru } from "@/lib/fakty-baza";
 import { nazwaObszaru, OBSZAR_IDS } from "@/lib/obszary";
 import { NAZWY_WSKAZNIKOW, policzRadar, wczytajIoss, WSKAZNIKI_OBSZARU } from "@/lib/radar";
 import { czyAdmin } from "@/lib/sesja";
@@ -33,7 +33,7 @@ export async function POST(req: Request) {
     const srednia = wart.reduce((a, b) => a + b, 0) / (wart.length || 1);
     return `${NAZWY_WSKAZNIKOW[s.id]}: ${ioss.wartosci[s.id]?.[luka.powiat] ?? "brak"} (średnia regionu ${srednia.toFixed(1)})`;
   });
-  const fakty = faktyDlaObszaru(luka.obszar, 3).map((f) => `${f.tekst} (${f.zrodlo}${f.strona ? ", s. " + f.strona : ""})`);
+  const fakty = (await faktyObszaru(luka.obszar, 3)).map((f) => `${f.tekst} (${f.zrodlo}${f.strona ? ", s. " + f.strona : ""})`);
   const najblizsze = szukaj(luka.tagi.join(" "), 3).map((t) => innowacjaPoId.get(t.id)?.nazwa).filter(Boolean);
 
   const wynik = await zapytajJson({

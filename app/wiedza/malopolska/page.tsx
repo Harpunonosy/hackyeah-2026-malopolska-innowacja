@@ -5,13 +5,16 @@ import { MapaWskaznikow } from "@/components/wiedza/mapa-wskaznikow";
 import { Zapytaj } from "@/components/wiedza/zapytaj";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
+import { faktyDodane } from "@/lib/fakty-baza";
 import { faktyRaportow, MATERIALY, obszaryMapy, wskaznikiDoMapy } from "@/lib/wiedza";
 
 export const metadata: Metadata = { title: "Kondycja Małopolski" };
 
 export default async function Malopolska() {
   const mapa = await wskaznikiDoMapy();
-  const fakty = faktyRaportow.filter((f) => f.strona !== null).slice(0, 9);
+  const dodane = await faktyDodane();
+  const fakty = [...dodane.slice(0, 6), ...faktyRaportow.filter((f) => f.strona !== null)].slice(0, 9);
+  const noweTeksty = new Set(dodane.map((f) => f.tekst));
   return (
     <Strona>
       <NaglowekStrony nadtytul="Skarbnica wiedzy" tytul="Kondycja Małopolski" opis="Najważniejsze wyzwania społeczne regionu na podstawie raportów ROPS i Mapy Wyzwań Społecznych." />
@@ -44,8 +47,9 @@ export default async function Malopolska() {
         <ul className="grid auto-rows-fr gap-4 md:grid-cols-3">
           {fakty.map((f) => (
             <li key={f.tekst} className="karta flex flex-col gap-2 p-5">
+              {noweTeksty.has(f.tekst) && <p><span className="rounded-full bg-accent px-3 py-0.5 text-sm font-bold text-accent-fg">Nowe</span></p>}
               <p className="text-lg">{f.tekst}</p>
-              <p className="mt-auto text-sm text-muted">{f.zrodlo}{f.strona ? `, s. ${f.strona}` : ""}</p>
+              <p className="mt-auto text-sm text-muted">{f.url ? <a href={f.url} target="_blank" rel="noopener noreferrer" className="underline">{f.zrodlo}</a> : f.zrodlo}{f.strona ? `, s. ${f.strona}` : ""}</p>
             </li>
           ))}
         </ul>

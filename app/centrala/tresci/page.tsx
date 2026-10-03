@@ -4,6 +4,9 @@ import { redirect } from "next/navigation";
 import { getTranslations } from "next-intl/server";
 import { CentralaNav } from "@/components/centrala/centrala-nav";
 import { DecyzjaLidera } from "@/components/centrala/weryfikacja-liderow";
+import { FaktyRaportow } from "@/components/centrala/fakty-raportow";
+import { faktyDodane } from "@/lib/fakty-baza";
+import { OBSZARY } from "@/lib/obszary";
 import { Odbiorcy } from "@/components/centrala/odbiorcy";
 import { AkcjeDodanej, ImportInnowacji } from "@/components/centrala/import-innowacji";
 import { Chip } from "@/components/ui/chip";
@@ -24,6 +27,7 @@ export default async function Tresci() {
   const liderzy = await db().query("select id, nazwa, sektor, powiat, oferuje, szuka, email, created_at from liderzy where status='oczekuje' order by created_at").catch(() => ({ rows: [] as Record<string, string>[] }));
   const ts = await getTranslations("siecCentrala");
   const tsiec = await getTranslations("siec");
+  const tf = await getTranslations("faktyCentrala");
   return (
     <div className="space-y-10">
       <div>
@@ -52,6 +56,11 @@ export default async function Tresci() {
             </li>
           ))}
         </ul>
+      </section>
+      <section aria-labelledby="fakty-h" className="space-y-3">
+        <h2 id="fakty-h" className="text-3xl font-extrabold">{tf("tytul")}</h2>
+        <p className="max-w-3xl text-lg text-muted">{tf("opis")}</p>
+        <FaktyRaportow obszary={OBSZARY.map((o): [string, string] => [o.id, o.nazwa])} dodane={(await faktyDodane()).map(({ id, tekst, zrodlo, strona }) => ({ id, tekst, zrodlo, strona }))} />
       </section>
       <section aria-labelledby="siec-h" className="space-y-3">
         <h2 id="siec-h" className="text-3xl font-extrabold">{ts("tytul")} ({liderzy.rows.length})</h2>

@@ -5,7 +5,8 @@ import { z } from "zod";
 import { zapytajJson, AiNiedostepneError, DOMYSLNY_MODEL, type Effort, type UzycieAi } from "./ai";
 import { katalogDoPromptu, skroc, type Innowacja } from "./biblioteka";
 import { katalog } from "./katalog";
-import { faktyDlaObszaru, type Fakt } from "./fakty";
+import { type Fakt } from "./fakty";
+import { faktyObszaru } from "./fakty-baza";
 import { wykryjKryzys, type RodzajKryzysu } from "./kryzys";
 import { zamaskuj } from "./maskowanie";
 import { nazwaObszaru, OBSZARY, OBSZAR_IDS, type ObszarId } from "./obszary";
@@ -187,7 +188,7 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
       najblizsze: slabsze.slice(0, 3).map((d) => karta(mapa, d.id, Math.round(d.trafnosc), d.dlaczego)),
       brakDopasowania: dobre.length === 0,
       pytanie: dane.pytanie_doprecyzowujace,
-      fakty: faktyDlaObszaru(dane.obszar),
+      fakty: await faktyObszaru(dane.obszar),
       podobnePrzypadki: podobne,
       coPomoglo: pomoglo,
       nici,

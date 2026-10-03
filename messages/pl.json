@@ -1059,5 +1059,28 @@
     "zatwierdz": "Opublikuj w sieci",
     "odrzuc": "Odrzuć",
     "zobacz": "Zobacz sieć liderów"
+  },
+  "faktyCentrala": {
+    "tytul": "Fakty z raportów",
+    "opis": "Nowy raport? Wklej fragment. Asystent AI wypisze fakty z liczbami, a Ty poprawiasz i zatwierdzasz. Fakty od razu trafiają do Kondycji Małopolski, do „Zapytaj raporty”, do Swatki i do Krawca.",
+    "zrodlo": "Nazwa raportu (źródło)",
+    "zrodloPrzyklad": "np. Raport o stanie pomocy społecznej w Małopolsce 2026",
+    "url": "Adres raportu (opcjonalnie)",
+    "tekst": "Fragment raportu",
+    "wyciagnij": "Wyciągnij fakty (AI)",
+    "pracuje": "Czytam fragment i wypisuję fakty…",
+    "propozycje": "Propozycje do zatwierdzenia",
+    "propozycjeOpis": "Sprawdź każdy fakt z raportem. Odznacz te, których nie chcesz publikować.",
+    "fakt": "Fakt {n}",
+    "obszar": "Obszar",
+    "bezObszaru": "bez obszaru",
+    "strona": "Strona",
+    "publikuj": "Opublikuj zaznaczone ({n})",
+    "opublikowano": "Opublikowano {n, plural, one {# fakt} few {# fakty} other {# faktów}}.",
+    "dodane": "Dodane fakty ({n})",
+    "brakDodanych": "Nie dodano jeszcze faktów. Fakty z raportów ROPS w repozytorium działają cały czas.",
+    "usun": "Usuń",
+    "blad": "Nie udało się. Sprawdź dane i spróbuj ponownie.",
+    "aiOznaczenie": "Propozycje przygotowane przez AI na podstawie wklejonego tekstu."
   }
 }

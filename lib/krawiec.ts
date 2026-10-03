@@ -5,7 +5,7 @@ import nabory from "@/data/nabory_rops.json";
 import { zapytajJson, DOMYSLNY_MODEL } from "./ai";
 import { skroc } from "./biblioteka";
 import { innowacjaPoIdAsync } from "./katalog";
-import { faktyDlaObszaru } from "./fakty";
+import { faktyObszaru } from "./fakty-baza";
 import { OBSZAR_KATEGORII, nazwaObszaru } from "./obszary";
 import { normalizujPowiat } from "./powiaty";
 import { wskaznikiPowiatu } from "./radar";
@@ -164,7 +164,7 @@ export async function przygotujPlan(p: ProfilInstytucji) {
   const powiat = normalizujPowiat(p.powiat)!;
   const obszar = OBSZAR_KATEGORII[inn.kategoria] ?? "seniorzy";
   const [wskazniki] = await Promise.all([wskaznikiPowiatu(obszar, powiat)]);
-  const fakty = faktyDlaObszaru(obszar, 3);
+  const fakty = await faktyObszaru(obszar, 3);
   const limit = MAX_BUDZET[p.budzet];
 
   const { dane } = await zapytajJson({
