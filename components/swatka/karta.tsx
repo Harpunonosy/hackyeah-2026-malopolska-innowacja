@@ -14,7 +14,10 @@ function poziomDopasowania(trafnosc: number | null) {
   return trafnosc >= 85 ? 3 : trafnosc >= 70 ? 2 : 1;
 }
 
-export function KartaInnowacji({ k }: { k: KartaDopasowania }) {
+export function KartaInnowacji({ k, obszar }: { k: KartaDopasowania; obszar?: string }) {
+  const zapisz = (wartosc: 1 | -1) => {
+    void fetch("/api/swatka/reakcja", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ innowacjaId: k.id, obszar, wartosc }) }).catch(() => {});
+  };
   const t = useTranslations("swatka");
   const [ocena, setOcena] = React.useState<"tak" | "nie" | null>(null);
   const poziom = poziomDopasowania(k.trafnosc);
@@ -68,11 +71,11 @@ export function KartaInnowacji({ k }: { k: KartaDopasowania }) {
           </Button>
         )}
         <div className="zaawansowane ml-auto flex items-center gap-2">
-          <Button type="button" wariant="cichy" aria-pressed={ocena === "tak"} onClick={() => setOcena("tak")} className="aria-pressed:bg-fg aria-pressed:text-bg">
+          <Button type="button" wariant="cichy" aria-pressed={ocena === "tak"} onClick={() => { if (!ocena) zapisz(1); setOcena("tak"); }} className="aria-pressed:bg-fg aria-pressed:text-bg">
             <ThumbsUp aria-hidden className="size-5" />
             {t("pomoze")}
           </Button>
-          <Button type="button" wariant="cichy" aria-pressed={ocena === "nie"} onClick={() => setOcena("nie")} className="aria-pressed:bg-fg aria-pressed:text-bg">
+          <Button type="button" wariant="cichy" aria-pressed={ocena === "nie"} onClick={() => { if (!ocena) zapisz(-1); setOcena("nie"); }} className="aria-pressed:bg-fg aria-pressed:text-bg">
             <ThumbsDown aria-hidden className="size-5" />
             {t("nieTo")}
           </Button>

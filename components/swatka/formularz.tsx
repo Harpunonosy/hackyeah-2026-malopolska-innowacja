@@ -10,6 +10,7 @@ import { KartaInnowacji } from "@/components/swatka/karta";
 import type { WynikSwatki } from "@/lib/swatka";
 import { TELEFONY_KRYZYSOWE } from "@/lib/kryzys";
 import { Phone } from "lucide-react";
+import Link from "next/link";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { WyslijZgloszenie } from "@/components/swatka/wyslij-zgloszenie";
 
@@ -237,6 +238,10 @@ function Wyniki({ wynik }: { wynik: WynikSwatki }) {
   const z = wynik.zrozumiano;
   const telefony = TELEFONY_KRYZYSOWE.filter((x) => wynik.kryzys && (x.rodzaje as readonly string[]).includes(wynik.kryzys));
   const karty = wynik.dopasowania.slice(0, 3);
+  const wiele = wynik.nici.length >= 2 && wynik.nici.every((n) => n.karty.length > 0 || true) && wynik.nici.some((n) => n.karty.length > 0);
+  const wNiciach = new Set(wynik.nici.flatMap((n) => n.karty.map((k) => k.id)));
+  const pozostale = wynik.dopasowania.slice(0, 3).filter((k) => !wNiciach.has(k.id));
+  const rozpoznane = [...new Map(wynik.nici.flatMap((n) => n.slowa).map((x) => [x.zOpisu, x])).values()].slice(0, 5);
 
   return (
     <section aria-label={t("wyniki")} className="space-y-6">
@@ -280,33 +285,86 @@ function Wyniki({ wynik }: { wynik: WynikSwatki }) {
         </p>
       )}
 
-      <div className="space-y-5">
-        {karty.map((k) => (
-          <KartaInnowacji key={k.id} k={k} />
-        ))}
-      </div>
+      {rozpoznane.length > 0 && (
+        <p className="flex flex-wrap items-center gap-2 text-sm">
+          <span className="font-bold">{t("rozpoznalismy")}:</span>
+          {rozpoznane.map((r) => (
+            <Chip key={r.zOpisu}>{r.zOpisu} → {r.pojecie}</Chip>
+          ))}
+        </p>
+      )}
+
+      {wiele ? (
+        <>
+          <p role="status" className="sr-only">{t("znalezionoNici", { ile: wynik.nici.length })}</p>
+          {wynik.nici.map((n, i) => (
+            <section key={n.potrzeba} aria-labelledby={`nic-${i}`} className="space-y-4 border-l-8 border-l-primary pl-4 sm:pl-6">
+              <h2 id={`nic-${i}`} className="text-2xl font-bold"><span className="text-primary">{t("sprawaNr", { n: i + 1 })}:</span> {n.potrzeba}</h2>
+              {n.karty.length === 0 ? <p className="text-muted">{t("niciBrak")}</p> : n.karty.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />)}
+            </section>
+          ))}
+          {pozostale.length > 0 && (
+            <section aria-labelledby="jeszcze-h" className="space-y-4">
+              <h2 id="jeszcze-h" className="text-2xl font-bold">{t("jeszczePasuje")}</h2>
+              {pozostale.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />)}
+            </section>
+          )}
+        </>
+      ) : (
+        <div className="space-y-5">
+          {karty.map((k) => (
+            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />
+          ))}
+        </div>
+      )}
 
       {wynik.najblizsze.length > 0 && (
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">{t("najblizsze")}</h2>
           {wynik.najblizsze.slice(0, 2).map((k) => (
-            <KartaInnowacji key={k.id} k={k} />
+            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} />
           ))}
         </div>
       )}
 
-      {(wynik.podobnePrzypadki || wynik.fakty.length > 0) && (
-        <aside className="karta-mala space-y-2 p-5">
+      {(wynik.podobnePrzypadki || wynik.coPomoglo.length > 0 || wynik.fakty.length > 0) && (
+        <section aria-labelledby="wiedz-h" className="karta-mala space-y-4 p-5">
+          <h2 id="wiedz-h" className="text-xl font-bold">{t("coWarto")}</h2>
           {wynik.podobnePrzypadki && (
-            <p className="font-semibold">{t("podobne", { liczba: wynik.podobnePrzypadki.liczba, zakres: wynik.podobnePrzypadki.zakres })}</p>
+            <div className="space-y-2">
+              <p className="font-semibold">
+                {t("podobneLiczba", { liczba: wynik.podobnePrzypadki.liczba, zakres: wynik.podobnePrzypadki.zakres })}
+                {wynik.podobnePrzypadki.wTymPowiecie ? ` ${t("wPowiecie", { n: wynik.podobnePrzypadki.wTymPowiecie })}` : ""}
+              </p>
+              <ul className="space-y-1 text-muted">
+                {wynik.podobnePrzypadki.przyklady.map((p) => (
+                  <li key={p.streszczenie}>„{p.streszczenie}”{p.powiat ? ` (${p.powiat})` : ""}</li>
+                ))}
+              </ul>
+              <p className="text-sm text-muted">{t("podobneInfo")}{wynik.podobnePrzypadki.demo ? ` ${t("daneDemo")}` : ""}</p>
+            </div>
           )}
-          {wynik.fakty[0] && (
-            <p className="text-muted">
-              <span className="font-bold text-fg">{t("fakty")}: </span>
-              {wynik.fakty[0].tekst} <span className="text-sm">({t("zrodlo", { zrodlo: wynik.fakty[0].zrodlo, strona: wynik.fakty[0].strona ?? "–" })})</span>
-            </p>
+          {wynik.coPomoglo.length > 0 && (
+            <div className="space-y-1">
+              <p className="font-semibold">{t("coPomoglo")}</p>
+              <ul className="list-disc pl-5">
+                {wynik.coPomoglo.map((c) => (
+                  <li key={c.id}><Link href={`/wiedza/biblioteka/${c.id}`}>{c.nazwa}</Link> ({t("pomoglo", { n: c.pomoglo })}{c.demo ? `, ${t("daneDemoKrotko")}` : ""})</li>
+                ))}
+              </ul>
+            </div>
           )}
-        </aside>
+          {wynik.fakty.length > 0 && (
+            <ul className="space-y-1 text-muted">
+              {wynik.fakty.slice(0, 2).map((f) => (
+                <li key={f.tekst}>{f.tekst} <span className="text-sm">({t("zrodlo", { zrodlo: f.zrodlo, strona: f.strona ?? "–" })})</span></li>
+              ))}
+            </ul>
+          )}
+          <p className="flex flex-wrap gap-4">
+            <Link href="/wiedza/malopolska">{t("kondycjaLink")}</Link>
+          </p>
+        </section>
       )}
 
       <div className="space-y-1 text-sm text-muted">

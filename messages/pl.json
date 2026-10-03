@@ -191,7 +191,21 @@
     "podobne": "Nie jesteś sam ani sama: w ciągu ostatnich 6 miesięcy {liczba} osób {zakres} zgłosiło podobną sprawę.",
     "zaKrotki": "Napisz kilka słów o swojej sytuacji (co najmniej 3 znaki), a potem kliknij „Znajdź pomoc”.",
     "brakTytulCzesciowy": "Te rozwiązania mogą pomóc w części Twojej sytuacji",
-    "czesciowoOpis": "Nie znaleźliśmy rozwiązania, które pasuje w całości, ale poniższe odpowiadają na część Twojej sytuacji. Twoje zgłoszenie pomoże ROPS zobaczyć, czego jeszcze brakuje."
+    "czesciowoOpis": "Nie znaleźliśmy rozwiązania, które pasuje w całości, ale poniższe odpowiadają na część Twojej sytuacji. Twoje zgłoszenie pomoże ROPS zobaczyć, czego jeszcze brakuje.",
+    "rozpoznalismy": "Rozpoznaliśmy",
+    "znalezionoNici": "Znaleźliśmy rozwiązania dla {ile, plural, one {# sprawy} other {# spraw}}",
+    "sprawaNr": "Sprawa {n}",
+    "niciBrak": "Dla tej sprawy nie mamy jeszcze gotowego rozwiązania. Wyślij zgłoszenie, a ROPS zobaczy tę lukę.",
+    "jeszczePasuje": "Jeszcze może pasować",
+    "coWarto": "Co warto wiedzieć",
+    "podobneLiczba": "{liczba, plural, one {# osoba zgłosiła} few {# osoby zgłosiły} other {# osób zgłosiło}} sprawę {zakres}.",
+    "wPowiecie": "W Twoim powiecie: {n}.",
+    "podobneInfo": "Pokazujemy tylko krótkie streszczenia, bez danych osobowych, i tylko gdy takich spraw jest co najmniej 5.",
+    "daneDemo": "To dane demonstracyjne.",
+    "daneDemoKrotko": "dane demo",
+    "coPomoglo": "Co pomogło innym w tej sytuacji:",
+    "pomoglo": "pomogło {n} osobom",
+    "kondycjaLink": "Zobacz dane o Małopolsce w Kondycji Małopolski"
   },
   "kryzys": {
     "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",
