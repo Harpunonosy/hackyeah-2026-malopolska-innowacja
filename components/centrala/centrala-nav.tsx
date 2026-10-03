@@ -1,7 +1,8 @@
 import Link from "next/link";
+import { getTranslations } from "next-intl/server";
 import { db } from "@/lib/db";
 
-type Aktywna = "skrzynka" | "pomysly" | "nabory" | "tresci" | "radar" | "powiadomienia" | "integracje" | "puls";
+type Aktywna = "skrzynka" | "pomysly" | "nabory" | "tresci" | "radar" | "powiadomienia" | "integracje" | "puls" | "akademia" | "dane";
 
 async function liczniki() {
   try {
@@ -18,18 +19,21 @@ async function liczniki() {
 
 export async function CentralaNav({ aktywna }: { aktywna: Aktywna }) {
   const n = await liczniki();
+  const t = await getTranslations("centralaNav");
   const linki = [
-    { id: "skrzynka", href: "/centrala/zgloszenia", etykieta: "Skrzynka zgłoszeń", licznik: n.zgloszenia },
-    { id: "pomysly", href: "/centrala/pomysly", etykieta: "Pomysły, opinie i testy", licznik: n.fiszki },
-    { id: "nabory", href: "/centrala/nabory", etykieta: "Nabory i wnioski", licznik: 0 },
-    { id: "tresci", href: "/centrala/tresci", etykieta: "Treści", licznik: 0 },
-    { id: "radar", href: "/centrala/radar", etykieta: "Radar potrzeb", licznik: 0 },
-    { id: "puls", href: "/centrala/puls", etykieta: "Puls (raport)", licznik: 0 },
-    { id: "powiadomienia", href: "/centrala/powiadomienia", etykieta: "Powiadomienia", licznik: n.powiadomienia },
-    { id: "integracje", href: "/centrala/integracje", etykieta: "Integracje", licznik: 0 },
+    { id: "skrzynka", href: "/centrala/zgloszenia", etykieta: t("skrzynka"), licznik: n.zgloszenia },
+    { id: "pomysly", href: "/centrala/pomysly", etykieta: t("pomysly"), licznik: n.fiszki },
+    { id: "nabory", href: "/centrala/nabory", etykieta: t("nabory"), licznik: 0 },
+    { id: "tresci", href: "/centrala/tresci", etykieta: t("tresci"), licznik: 0 },
+    { id: "akademia", href: "/centrala/akademia", etykieta: t("akademia"), licznik: 0 },
+    { id: "dane", href: "/centrala/dane", etykieta: t("dane"), licznik: 0 },
+    { id: "radar", href: "/centrala/radar", etykieta: t("radar"), licznik: 0 },
+    { id: "puls", href: "/centrala/puls", etykieta: t("puls"), licznik: 0 },
+    { id: "powiadomienia", href: "/centrala/powiadomienia", etykieta: t("powiadomienia"), licznik: n.powiadomienia },
+    { id: "integracje", href: "/centrala/integracje", etykieta: t("integracje"), licznik: 0 },
   ] as const;
   return (
-    <nav aria-label="Centrala" className="mb-6 flex flex-wrap gap-2 border-b-2 border-line-soft pb-4">
+    <nav aria-label={t("etykieta")} className="mb-6 flex flex-wrap gap-2 border-b-2 border-line-soft pb-4">
       {linki.map((l) => (
         <Link
           key={l.id}
@@ -40,7 +44,7 @@ export async function CentralaNav({ aktywna }: { aktywna: Aktywna }) {
           {l.etykieta}
           {l.licznik > 0 && (
             <span className="rounded-full bg-primary px-2 text-sm font-bold text-primary-fg">
-              {l.licznik}<span className="sr-only"> nowych</span>
+              {l.licznik}<span className="sr-only"> {t("nowych")}</span>
             </span>
           )}
         </Link>
