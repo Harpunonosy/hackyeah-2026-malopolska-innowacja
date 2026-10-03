@@ -14,3 +14,4 @@ create table if not exists liderzy (
 );
 create index if not exists liderzy_status_idx on liderzy (status, created_at desc);
 alter table liderzy enable row level security;
+alter table liderzy add column if not exists syntetyczne boolean not null default false;
