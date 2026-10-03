@@ -3,14 +3,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getTranslations } from "next-intl/server";
-import { CircleCheck, CircleHelp, CircleX, Sparkles } from "lucide-react";
+import { CircleAlert, CircleCheck, CircleDot, CircleHelp, CircleX, Compass, ExternalLink, Sparkles } from "lucide-react";
 import { Drukuj } from "@/components/krawiec/drukuj";
 import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
 import { Strona } from "@/components/strona";
 import { innowacjaPoIdAsync } from "@/lib/katalog";
 import { db } from "@/lib/db";
-import { BUDZETY, NABOR_ETYKIETA, TYPY_INSTYTUCJI, type Kwalifikowalnosc, type PlanWdrozenia, type TypInstytucji } from "@/lib/krawiec";
+import { BUDZETY, KRYTERIA_DI, NABOR_ETYKIETA, TYPY_INSTYTUCJI, type Kwalifikowalnosc, type PlanWdrozenia, type TypInstytucji } from "@/lib/krawiec";
 
 export const metadata: Metadata = { title: "Plan wdrożenia" };
 
@@ -151,8 +151,50 @@ export default async function Plan(props: PageProps<"/wdrozenie/plan/[id]">) {
             </tbody>
           </table>
         </div>
+        {profil.odbiorcy > 0 && <p className="text-lg font-bold">{t("kosztNaOdbiorce", { kwota: zl(dane.razem / profil.odbiorcy) })}</p>}
         {dane.przekroczony && <p role="alert" className="font-bold text-primary">{t("przekroczony")}</p>}
       </Sekcja>
+
+      {plan.warianty && plan.warianty.length > 0 && (
+        <Sekcja tytul={t("sekcjaWarianty")}>
+          <p className="text-muted">{t("wariantyOpis")}</p>
+          <ul className="grid gap-4 sm:grid-cols-2">
+            {plan.warianty.map((w) => (
+              <li key={w.wariant} className={`karta-mala space-y-2 border-2 p-4 ${w.wariant === "pelny" ? "border-fg" : "border-line-soft"}`}>
+                <h3 className="text-xl font-bold">{t(`wariant_${w.wariant}`)}</h3>
+                <p className="flex flex-wrap gap-2"><Chip>{t("odbiorcow", { n: w.odbiorcy })}</Chip><Chip>{t("kosztCalk", { kwota: zl(w.koszt_zl) })}</Chip></p>
+                {w.odbiorcy > 0 && <p className="text-lg font-bold">{t("kosztNaOdbiorce", { kwota: zl(w.koszt_zl / w.odbiorcy) })}</p>}
+                <p>{w.opis}</p>
+                <p className="text-sm font-bold uppercase text-muted">{t("obejmuje")}</p>
+                <ul className="list-disc pl-5">{w.obejmuje.map((o) => <li key={o}>{o}</li>)}</ul>
+                {w.wariant === "minimum" && <p><span className="font-bold">{t("rezygnujemy")}: </span>{w.rezygnujemy_z}</p>}
+              </li>
+            ))}
+          </ul>
+        </Sekcja>
+      )}
+
+      {plan.kompas_di && plan.kompas_di.length > 0 && (
+        <Sekcja tytul={t("sekcjaKompas")}>
+          <p className="flex items-start gap-2 text-muted"><Compass aria-hidden className="mt-1 size-5 shrink-0" />{t("kompasOpis")}</p>
+          <ul className="space-y-3">
+            {plan.kompas_di.map((k) => {
+              const I = k.ocena === "mocne" ? CircleCheck : k.ocena === "czesciowe" ? CircleDot : CircleAlert;
+              const kol = k.ocena === "mocne" ? "text-ok" : k.ocena === "czesciowe" ? "text-warn" : "text-primary";
+              return (
+                <li key={k.kryterium} className="flex items-start gap-3">
+                  <I aria-hidden className={`mt-1 size-6 shrink-0 ${kol}`} />
+                  <div>
+                    <p><span className={`font-bold ${kol}`}>{t(`ocena_${k.ocena}`)}: </span><span className="font-semibold">{KRYTERIA_DI[k.kryterium]}</span></p>
+                    <p>{k.uzasadnienie}</p>
+                    <p className="text-sm"><span className="font-bold">{t("wskazowka")}</span> {k.wskazowka}</p>
+                  </div>
+                </li>
+              );
+            })}
+          </ul>
+        </Sekcja>
+      )}
 
       <Sekcja tytul={t("sekcjaWskazniki")}>
         <div className="overflow-x-auto">
@@ -175,6 +217,25 @@ export default async function Plan(props: PageProps<"/wdrozenie/plan/[id]">) {
         <p className="text-lg">{plan.kontakt_z_autorem}</p>
         {inn && <Button asChild wariant="obrys" className="nie-drukuj"><Link href={`/wiedza/biblioteka/${inn.id}`}>{inn.nazwa}</Link></Button>}
       </Sekcja>
+
+      {inn && (
+        <Sekcja tytul={t("sekcjaPakiet")}>
+          <p className="text-muted">{t("pakietOpis")}</p>
+          <h3 className="text-xl font-bold">{t("materialy")}</h3>
+          <ul className="space-y-1 text-lg">
+            {[...inn.film.map((u) => [u, t("film")]), ...inn.folderPdf.map((u) => [u, t("folder")]), ...inn.materialyZip.map((u) => [u, t("zip")]), [inn.url, t("kartaRops")]].filter(([u]) => u).map(([u, e]) => (
+              <li key={u}><a href={u} target="_blank" rel="noopener noreferrer" className="inline-flex min-h-12 items-center gap-2 underline"><ExternalLink aria-hidden className="size-5 shrink-0" />{e}<span className="sr-only"> {t("nowaKarta")}</span></a></li>
+            ))}
+            <li><Link href="/rynek" className="inline-flex min-h-12 items-center underline">{t("kontaktHub")}</Link></li>
+          </ul>
+          {plan.pierwsze_kroki && plan.pierwsze_kroki.length > 0 && (
+            <>
+              <h3 className="text-xl font-bold">{t("pierwszeKroki")}</h3>
+              <ol className="list-decimal space-y-1 pl-6 text-lg">{plan.pierwsze_kroki.map((k) => <li key={k}>{k}</li>)}</ol>
+            </>
+          )}
+        </Sekcja>
+      )}
     </Strona>
   );
 }
