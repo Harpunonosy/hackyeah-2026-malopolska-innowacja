@@ -1,0 +1,59 @@
+import type { Metadata } from "next";
+import { redirect } from "next/navigation";
+import { CentralaNav } from "@/components/centrala/centrala-nav";
+import { PrzelaczNabor } from "@/components/centrala/przelacz-nabor";
+import { Chip } from "@/components/ui/chip";
+import { db } from "@/lib/db";
+import { czyAdmin } from "@/lib/sesja";
+
+export const metadata: Metadata = { title: "Centrala: nabory" };
+export const dynamic = "force-dynamic";
+
+type Pole = { nr: number; tresc: string };
+const fmt = (d: Date) => d.toLocaleString("pl-PL", { dateStyle: "short", timeStyle: "short" });
+
+export default async function Nabory() {
+  if (!(await czyAdmin())) redirect("/centrala/logowanie");
+  const c = db();
+  const nabory = await c.query("select id, nazwa, program, opis, temat, aktywny, przyklad, otwarty_od, otwarty_do, formularz from nabory order by aktywny desc, nazwa");
+  const wnioski = await c.query("select id, nabor_id, pola, status, created_at from wnioski order by created_at desc limit 100");
+  return (
+    <div className="space-y-10">
+      <div>
+        <CentralaNav aktywna="nabory" />
+        <h1 className="text-4xl font-bold sm:text-5xl">Nabory i wnioski</h1>
+        <p className="mt-2 max-w-3xl text-lg text-muted">Otwarcie naboru włącza w Pracowni generator wniosków dla mieszkańców i organizacji. Szkice tematów z Radaru czekają tu na decyzję.</p>
+      </div>
+      <ul className="space-y-5">
+        {nabory.rows.map((n) => {
+          const w = wnioski.rows.filter((x) => x.nabor_id === n.id);
+          return (
+            <li key={n.id} className={`karta space-y-3 p-6 ${n.aktywny ? "border-l-8 border-l-ok" : ""}`}>
+              <div className="flex flex-wrap items-center gap-2">
+                <Chip className={n.aktywny ? "bg-ok text-bg" : ""}>{n.aktywny ? "Otwarty" : "Zamknięty"}</Chip>
+                {n.przyklad && <Chip>przykład / szkic</Chip>}
+                <Chip>wniosków: {w.length}</Chip>
+              </div>
+              <h2 className="font-display text-2xl font-bold">{n.nazwa}</h2>
+              <p className="text-muted">{n.temat ?? n.opis}</p>
+              {n.formularz?.uzasadnienie && <details className="karta-mala px-4 py-2"><summary className="min-h-10 cursor-pointer font-semibold">Uzasadnienie szkicu (z Radaru)</summary><p className="py-2">{n.formularz.uzasadnienie}</p></details>}
+              <PrzelaczNabor id={n.id} aktywny={n.aktywny} />
+              {w.length > 0 && (
+                <ul className="space-y-2">
+                  {w.map((x) => (
+                    <li key={x.id}>
+                      <details className="karta-mala px-4 py-2">
+                        <summary className="min-h-10 cursor-pointer font-semibold">Wniosek z {fmt(x.created_at)} ({(x.pola as Pole[]).find((p) => p.nr === 1)?.tresc.slice(0, 80) ?? "bez tytułu"})</summary>
+                        <dl className="space-y-3 py-2">{(x.pola as Pole[]).map((p) => <div key={p.nr}><dt className="text-sm font-bold uppercase text-muted">Pole {p.nr}</dt><dd className="whitespace-pre-line">{p.tresc}</dd></div>)}</dl>
+                      </details>
+                    </li>
+                  ))}
+                </ul>
+              )}
+            </li>
+          );
+        })}
+      </ul>
+    </div>
+  );
+}

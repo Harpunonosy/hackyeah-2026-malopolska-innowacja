@@ -6,6 +6,8 @@ import { useLocale, useTranslations } from "next-intl";
 import { CircleCheck, CircleX, Loader2, Sparkles } from "lucide-react";
 import { Mikrofon } from "@/components/a11y/mikrofon";
 import { Button } from "@/components/ui/button";
+import { Kanwa, type KanwaStan } from "@/components/pracownia/kanwa";
+import { Wniosek } from "@/components/pracownia/wniosek";
 import type { WynikAnalizy } from "@/lib/pracownia";
 
 const ETAPY = ["pomysl", "prototyp", "przetestowane", "gotowe"] as const;
@@ -18,6 +20,7 @@ export function FormularzPomyslu() {
   const [komunikat, setKomunikat] = React.useState("");
   const [wynik, setWynik] = React.useState<WynikAnalizy | null>(null);
   const [fiszka, setFiszka] = React.useState<WynikAnalizy["fiszka"] | null>(null);
+  const [kanwa, setKanwa] = React.useState<KanwaStan | null>(null);
   const [wysylka, setWysylka] = React.useState<"" | "wysylam" | "ok" | "blad">("");
 
   async function analizuj(e: React.FormEvent) {
@@ -34,6 +37,7 @@ export function FormularzPomyslu() {
       }
       setWynik(d);
       setFiszka(d.fiszka);
+      setKanwa(d.kanwa);
       setStan("");
     } catch {
       setKomunikat(t("blad"));
@@ -47,7 +51,7 @@ export function FormularzPomyslu() {
     const r = await fetch("/api/pracownia/fiszka", {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ tytul: fiszka.tytul, opis: fiszka.krotki_opis, istota: fiszka.istota, dla_kogo: fiszka.dla_kogo, etap: fiszka.etap, oceny: wynik.oceny, podobne: wynik.podobne }),
+      body: JSON.stringify({ kanwa, tytul: fiszka.tytul, opis: fiszka.krotki_opis, istota: fiszka.istota, dla_kogo: fiszka.dla_kogo, etap: fiszka.etap, oceny: wynik.oceny, podobne: wynik.podobne }),
     });
     setWysylka(r.ok ? "ok" : "blad");
   }
@@ -107,6 +111,8 @@ export function FormularzPomyslu() {
             )}
           </section>
 
+          {kanwa && <Kanwa kanwa={kanwa} zmien={setKanwa} etap={fiszka.etap} />}
+
           <section className="karta space-y-4 p-6" aria-labelledby="h-istnieje">
             <h2 id="h-istnieje" className="text-2xl font-bold">{t("istnieje")}</h2>
             {wynik.podobne.length === 0 ? <p className="text-lg">{t("istniejeBrak")}</p> : (
@@ -156,6 +162,8 @@ export function FormularzPomyslu() {
               <ul className="list-disc space-y-2 pl-5">{wynik.nietuzinkowe.map((x) => <li key={x}>{x}</li>)}</ul>
             </section>
           </div>
+
+          <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik.doUzupelnienia.join("; ")}`} />
 
           <div className="karta flex flex-wrap items-center gap-4 p-6">
             {wysylka === "ok" ? (

@@ -10,6 +10,7 @@ const Fiszka = z.object({
   etap: z.enum(["pomysl", "prototyp", "przetestowane", "gotowe"]),
   oceny: z.unknown().optional(),
   podobne: z.unknown().optional(),
+  kanwa: z.unknown().optional(),
 });
 
 export async function POST(req: Request) {
@@ -19,9 +20,9 @@ export async function POST(req: Request) {
   if (!w.success) return Response.json({ blad: "walidacja", komunikat: w.error.issues[0]?.message }, { status: 400 });
   const d = w.data;
   const { rows } = await db().query(
-    `insert into fiszki (tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, publiczna, status)
-     values ($1,$2,$3,$4,$5,$6,$7,false,'zgloszona') returning id`,
-    [d.tytul, d.opis, d.istota, d.dla_kogo, d.etap, JSON.stringify(d.oceny ?? null), JSON.stringify(d.podobne ?? null)],
+    `insert into fiszki (tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, kanwa, publiczna, status)
+     values ($1,$2,$3,$4,$5,$6,$7,$8,false,'zgloszona') returning id`,
+    [d.tytul, d.opis, d.istota, d.dla_kogo, d.etap, JSON.stringify(d.oceny ?? null), JSON.stringify(d.podobne ?? null), JSON.stringify(d.kanwa ?? {})],
   );
   return Response.json({ id: rows[0].id }, { status: 201 });
 }
