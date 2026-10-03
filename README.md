@@ -37,11 +37,11 @@ Splot łączy każdą potrzebę zgłoszoną w Małopolsce ze sprawdzoną innowac
 | Moduł | Gdzie | Stan |
 |---|---|---|
 | I. Swatka (matchmaking) | `/`, `/problem`, `/rozmowa`, `/widzet` | tekst i głos, nici potrzeb, uzasadnienia, podobne sprawy, fakty z raportów, tryb awaryjny bez AI; Hit@3 96,6% (Haiku 4.5) |
-| II. Skarbnica | `/wiedza/*`, `/galeria` | Biblioteka z filmami, Akademia, Kondycja Małopolski, profile 22 powiatów; trendy tylko w Centrali |
+| II. Skarbnica | `/wiedza/*`, `/galeria` | Biblioteka z filmami, Akademia ze szkicami i publikacją lekcji, Kondycja Małopolski, profile 22 powiatów; import IOSS z CSV w Centrali |
 | III. Pracownia | `/pomysl` | fiszka, kanwa INNO AGH, ocena wg karty IWS 2.0, asystent i scenorys, wniosek pod konkretny nabór |
 | IV. Próbownia | `/testy` | otwarte testy, zapisy, opinie |
 | V. Rynek | `/rynek`, `/moje`, `/ekspert` | pytania do ROPS i ekspertów, panel eksperta, partnerstwa, sprawy z osią czasu |
-| VI. Centrala | `/centrala` (hasło) | skrzynka, Radar, nabory i ocena wniosków, treści, powiadomienia, integracje (webhooki) |
+| VI. Centrala | `/centrala` (hasło) | skrzynka, Radar, nabory i ocena wniosków, treści, edytor Akademii, import danych IOSS z podglądem, powiadomienia, integracje (webhooki) |
 | VII. Krawiec | `/wdrozenie` | plan wdrożenia: dwa warianty z kosztem na odbiorcę, kompas DI, kwalifikowalność, pakiet startowy |
 | Tryb asystowany | `/asystowane` | zgłoszenie w imieniu osoby bez internetu, karta potrzeby z kodem QR |
 
@@ -58,6 +58,8 @@ npx tsx scripts/eval-swatka.ts --lex                   # to samo bez AI (wyszuki
 ```
 
 Stos: Next.js 16, React 19, Tailwind 4, `radix-ui`, `next-intl`, Anthropic SDK, zod. Zależności i licencje: `docs/zaleznosci.md`.
+
+Przed wdrożeniem aktualizacji na istniejącej bazie zastosuj `db/013_akademia.sql` i `db/014_odtwarzalnosc.sql`. Instrukcja i zmienne Vercela: [docs/WDROZENIE.md](docs/WDROZENIE.md). Testy logiki: `npm test`; testy integracyjne wymagają oddzielnej bazy testowej opisanej w instrukcji.
 
 ## Status
 

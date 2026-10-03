@@ -1,5 +1,7 @@
 # Raport dostępności Splotu
 
+Uzupełnienie po dodaniu edytora Akademii i importu IOSS: na obu nowych ekranach sprawdzono axe-core (0 naruszeń) oraz szerokość 320 px (bez przewijania poziomego). Sprawdzono też publiczną lekcję i wybór odpowiedzi quizu klawiaturą. Testy wykonano na osobnej lokalnej bazie; nie powtarzano całego historycznego zestawu 33 stron po tej zmianie. Poniższe wyniki globalne dotyczą wcześniejszego przebiegu.
+
 Stan na 3.10.2026, wieczór. Cel: WCAG 2.1 poziom AA. Raport opisuje tylko to, co faktycznie sprawdziliśmy. Testy automatyczne nie wykrywają wszystkich barier, więc zgodności z WCAG nie deklarujemy jako pełnej.
 
 ## 1. Podsumowanie

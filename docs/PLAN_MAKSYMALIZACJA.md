@@ -8,10 +8,10 @@ Ograniczenia: lokalne commity bez pushowania i bez współautora; polskie teksty
 
 ## Zadania
 
-- [ ] Akademia: administrator dodaje i edytuje lekcje, tekst łatwy, quiz oraz źródła; rozdzielenie szkicu i publikacji. Publiczne strony czytają zatwierdzone materiały z bazy, pięć oryginalnych lekcji pozostaje bazą. Walidacja, kontrola admina, dziennik zmian, test zapis → publikacja → odczyt.
-- [ ] IOSS: administrator wkleja CSV, widzi podgląd i błędy przed zatwierdzeniem; atomowy import aktualizuje bazę i odświeża mapy oraz profile. Kontrola powiatów, wskaźników, lat, wartości i duplikatów; testy poprawnego importu oraz odrzucenia błędnych danych.
-- [ ] Komunikacja: sprawdzić i poprawić niezawodność odpytywania Centrali i powiadomień na pulpicie; sprawdzić nowy pomysł → Centrala → odpowiedź → autor bez wywołań płatnego AI.
-- [ ] Weryfikacja: TypeScript, lint, build, testy funkcjonalne i dostępność nowych formularzy; zaktualizować NEXT.md oraz instrukcję migracji.
+- [x] Akademia: administrator dodaje i edytuje lekcje, tekst łatwy, quiz oraz źródła; rozdzielenie szkicu i publikacji. Publiczne strony czytają zatwierdzone materiały z bazy, pięć oryginalnych lekcji pozostaje bazą. Walidacja, kontrola admina, dziennik zmian, test zapis → publikacja → odczyt.
+- [x] IOSS: administrator wkleja CSV, widzi podgląd i błędy przed zatwierdzeniem; atomowy import aktualizuje bazę i odświeża mapy oraz profile. Kontrola powiatów, wskaźników, lat, wartości i duplikatów; testy poprawnego importu oraz odrzucenia błędnych danych.
+- [x] Komunikacja: sprawdzić i poprawić niezawodność odpytywania Centrali i powiadomień na pulpicie; sprawdzić nowy pomysł → Centrala → odpowiedź → autor bez wywołań płatnego AI.
+- [x] Weryfikacja: TypeScript, lint, build, testy funkcjonalne i dostępność nowych formularzy; zaktualizować NEXT.md oraz instrukcję migracji.
 
 ## Szczególna uwaga podczas przeglądu
 
@@ -24,3 +24,7 @@ Ograniczenia: lokalne commity bez pushowania i bez współautora; polskie teksty
 ## Środowisko
 
 Checkout nie zawiera `.env.local`, Node.js ani przeglądarki. Node.js i czytnik PDF przygotowano lokalnie w `/tmp`; testy wymagające bazy wykonujemy na odrębnej lokalnej bazie, nigdy na wspólnej bazie demo.
+
+## Wynik weryfikacji
+
+45/45 testów (bez pominięć), TypeScript i ESLint przeszły. Sprawdzono transakcje, konflikty edycji, rollback importu, odtworzenie i ponowne migracje, komunikację z natywnym Notification oraz dostępność nowych ekranów (axe 0, 320 px bez overflow). Build przeszedł przed końcową korektą invalidacji cache; końcową korektę sprawdzono testami, TypeScript i ESLint. Na prośbę użytkownika nie uruchamiano kolejnych usług ani globalnej regresji na VM. Własne usługi testowe zatrzymano. Migracje 013–014 pozostają do zastosowania na docelowej bazie przez użytkownika przed wdrożeniem.

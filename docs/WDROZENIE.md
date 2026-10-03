@@ -26,9 +26,9 @@ Przeglądarka / widżet na stronie gminy / systemy Hubu (API, webhooki)
 
 ## 2. Moduły i dane
 
-- Kod: `app/` (strony i API), `components/` (interfejs), `lib/` (logika), `db/` (migracje SQL `schema.sql`, `002`…`010`), `scripts/` (import danych, testy).
+- Kod: `app/` (strony i API), `components/` (interfejs), `lib/` (logika), `db/` (migracje SQL `schema.sql`, `002`…`014`), `scripts/` (import danych, testy).
 - Dane startowe: Biblioteka Innowacji (115 kart), IOSS (149 wskaźników, 22 powiaty), Mapa Wyzwań (8 obszarów), karta oceny IWS 2.0, kanwa INNO AGH. Import: `scripts/scrape_biblioteka.py`, `scripts/scrape_ioss.py`, `scripts/seed.ts`.
-- Treści zmienia pracownik w Centrali (Treści, Nabory). Każda zmiana trafia do dziennika (`dziennik`).
+- Treści zmienia pracownik w Centrali (Treści, Nabory, Materiały edukacyjne, Dane IOSS). Każda zmiana trafia do dziennika (`dziennik`).
 
 ## 3. Wydajność i skalowanie (pomiar)
 
@@ -41,7 +41,7 @@ Przeglądarka / widżet na stronie gminy / systemy Hubu (API, webhooki)
 
 - Pojedyncze strony: start 98 zapytań/s, Kondycja 78/s, profil powiatu 57/s, Biblioteka 42/s (115 kart, 60 KB po kompresji).
 - Jeden proces to dolna granica. Na Vercelu funkcje skalują się poziomo same. Na własnych serwerach 2–4 procesy za load balancerem dają kilkaset zapytań na sekundę, co z dużym zapasem wystarcza dla całego województwa (3,4 mln mieszkańców; zakładamy setki, a nie tysiące jednoczesnych użytkowników).
-- Dane, które zmieniają się rzadko (IOSS, mapa wskaźników, profil powiatu, katalog), są trzymane w pamięci procesu (`lib/pamiec.ts`, 20 s–10 min). Przy wielu procesach każdy ma własną kopię; to bezpieczne, bo dane są tylko do odczytu.
+- Dane, które zmieniają się rzadko (IOSS, mapa wskaźników, profil powiatu, katalog), są trzymane w pamięci procesu (`lib/pamiec.ts`, 20 s–10 min). Przy wielu procesach każdy ma własną kopię. Przed użyciem IOSS, map i profili instancja sprawdza wspólną wersję importu w dzienniku (najwyższy identyfikator i liczba importów), najwyżej raz na 3 sekundy. Zmiana wersji unieważnia wszystkie te widoki; lokalny import unieważnia je od razu. To okno świeżości obejmuje wyłącznie zmiany przez import w Centrali; bezpośrednie zmiany SQL wymagają odświeżenia cache lub restartu.
 
 **Zapytania z AI** są wolniejsze i droższe, dlatego mają osobne limity (`lib/limit.ts`: na adres i globalnie na godzinę):
 
@@ -88,7 +88,7 @@ Pozostałe funkcje AI nie były mierzone tak samo. W tabeli kosztów na slajd po
 
 ## 7. Wdrożenie krok po kroku
 
-1. Baza: utwórz PostgreSQL 16, uruchom `db/schema.sql`, potem migracje `db/002_…sql` do `db/010_…sql` w kolejności.
+1. Baza: utwórz PostgreSQL 16, uruchom `db/schema.sql`, potem migracje `db/002_…sql` do `db/014_…sql` w kolejności.
 2. Dane: `npx tsx --env-file=.env.local scripts/seed.ts` (Biblioteka, IOSS, Mapa Wyzwań, nabory, eksperci). Dane demo: `scripts/seed-*.ts`, czyszczenie: `scripts/reset-demo.ts`.
 3. Zmienne środowiskowe (`.env.local` lokalnie, ustawienia projektu w hostingu):
    - `DATABASE_URL`: połączenie z bazą;
@@ -121,3 +121,25 @@ To szacunek zespołu, a nie pomiar. Do potwierdzenia w pilotażu.
 | Aktualizacja IOSS | analityk | raz w roku (import) |
 | Utrzymanie techniczne (aktualizacje, kopie, monitoring) | wykonawca IT | ok. 8 h miesięcznie |
 | Audyt dostępności i bezpieczeństwa | zewnętrznie | raz w roku |
+
+## Aktualizacja wiedzy i odtwarzanie środowiska
+
+- **Materiały edukacyjne** (`/centrala/akademia`): treść, wersja łatwa, quiz i źródła. Zapis szkicu zachowuje publiczną wersję; publikacja aktualizuje ją bez restartu. Konflikt równoczesnej edycji nie nadpisuje cudzej pracy. Zapis i dziennik działają w jednej transakcji.
+- **Dane IOSS** (`/centrala/dane`): UTF-8 CSV z sześcioma kolumnami zgodnymi z `data/zrodla/ioss_powiaty.csv`. Administrator ogląda podgląd przed zatwierdzeniem. Cały plik przechodzi walidację; błąd albo awaria dziennika wycofuje cały import. Podpis podglądu wiąże zatwierdzenie z dokładnie sprawdzonym plikiem. Limit 1 MB, 10 000 wierszy.
+- Nowe migracje: `013_akademia.sql` (szkice/publikacje oraz RLS), `014_odtwarzalnosc.sql` (brakujące `nabory.schemat`, generator wniosków). Na istniejącej bazie stosuj oba pliki w tej kolejności. Na czystej bazie najpierw `schema.sql`, potem wszystkie numerowane migracje rosnąco. Migracje sprawdzono również przy ponownym zastosowaniu.
+- Nie zmieniono modelu AI i nie dodano zależności produkcyjnych. E-mail oraz SMS nadal są symulowane.
+
+```bash
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -1 -f db/013_akademia.sql
+psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -1 -f db/014_odtwarzalnosc.sql
+npm test
+npx tsc --noEmit
+npm run lint
+npm run build
+```
+
+`npm test` uruchamia testy walidacji i logiki; testy bazy są pomijane bez jawnej konfiguracji testowej. Pełny przebieg wymaga odrębnej bazy (nigdy współdzielonego demo): `DATABASE_URL`, `IOSS_TEST_DATABASE_URL`, `SCHEMA_TEST_DATABASE_URL`. Test Akademii dodatkowo wymusza lokalny `localhost:55432/splot_test`. `SCHEMA_TEST_WITHOUT_VECTOR=1` pozwala testować migracje lokalnie bez pgvector, jawnie zamieniając wyłącznie nieużywaną w tych testach kolumnę embedding na text; nie stanowi to testu wyszukiwania wektorowego.
+
+Test pełnej komunikacji (ręczny pomysł → Centrala → odpowiedź → autor, bez płatnego AI): `SPLOT_TEST_BAZA_LOCALNA=1 DEMO_ADMIN_PASSWORD=… npx tsx scripts/komunikacja-test.ts http://localhost:3100`. Test zapisuje syntetyczną sprawę; uruchamiaj tylko z osobną lokalną bazą. Pełne Chromium jest potrzebne do testu natywnego `Notification` (Headless Shell zwraca odmowę mimo nadanych uprawnień).
+
+Skrypty przeglądarkowe korzystają z systemowego Chrome lub cache Playwright. Można podać `SPLOT_BROWSER_PATH` albo `SPLOT_BROWSER_CHANNEL`. Testy axe, 320 px i klawiatury kończą się niezerowym kodem przy naruszeniach oraz odrzucają błędne odpowiedzi HTTP. `--bez-zrzutow` w teście axe zachowuje istniejące zrzuty.

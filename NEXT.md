@@ -1,4 +1,19 @@
-# Przekazanie dla kolejnej sesji (stan: 4.10.2026, ok. 1:00; oddanie do 11:00)
+# Aktualizacja po domknięciu wymagań HubMI
+
+Poniższy blok zastępuje informacje o brakach i niezacommitowanych zmianach ze starszego przekazania. Przeczytano `hub.pdf`, `PLAN.md`, `NEXT.md` i `DROGA_DO_90.md`.
+
+- Gotowe: `/centrala/akademia` (szkice, publikacja, wersja łatwa, quiz, źródła, konflikty edycji i dziennik) oraz `/centrala/dane` (CSV IOSS, podgląd, walidacja, atomowy import i dziennik). Publiczne lekcje zachowują zatwierdzoną wersję podczas edycji szkicu.
+- IOSS odświeża mapy i profile lokalnie od razu; pozostałe instancje przy odczycie sprawdzają co 3 s wspólny fingerprint dziennika `max(id):count(*)`. Naprawiono także wyścig starego odczytu cache i dzielenie przez zerową ludność.
+- Komunikacja sprawdzona w Chromium: nowy pomysł → Centrala → natywne `Notification` → odpowiedź ROPS → autor. Powiadomienie po 1806 ms w osobnej lokalnej bazie. Awaria sieci nie zatrzymuje odpytywania; starsze sprawy spoza pierwszych 200 nie wywołują fałszywych powiadomień.
+- Uzupełniono teksty PL/UK nowych ścieżek oraz brakujące ukraińskie teksty Sieci i trybu asystowanego.
+- Pełny zestaw: **45/45 testów, zero pominiętych**, TypeScript i ESLint bez błędów. Sprawdzono odtwarzanie schematu i powtórne migracje na oddzielnej bazie. Nowe ekrany Akademii i IOSS: axe 0 naruszeń, 320 px bez overflow; quiz sprawdzony klawiaturą. Pełny build przeszedł przed końcową korektą invalidacji cache; tę korektę objęły końcowe testy, TypeScript i ESLint. Nie powtórzono globalnej regresji przeglądarkowej wszystkich stron.
+- **Przed Vercel:** zastosuj `db/013_akademia.sql` i `db/014_odtwarzalnosc.sql` na docelowej bazie. Naprawiono brakujące `nabory.schemat`. Migracji nie wykonywano na wspólnej bazie demo — checkout nie zawierał jej połączenia. Instrukcja: `docs/WDROZENIE.md`.
+- Wszystkie zmiany zapisane lokalnie, bez pushowania i bez współautora. Użytkownik sam wypchnie repozytorium i uruchomi Vercel. Na jego prośbę zatrzymano własny serwer testowy i lokalny PostgreSQL; nie uruchamiać kolejnych usług na tej VM bez nowego polecenia.
+- Haiku pozostaje bez zmian; e-mail/SMS nadal symulowane. Nie wykonywano nowych płatnych testów AI ani badań z ludźmi/czytnikiem ekranu. Nie przygotowywano slajdów ani filmu.
+
+## Starsze przekazanie (stan historyczny)
+
+Stan opisany poniżej pochodzi z poprzedniej sesji; priorytety i braki oceniaj według aktualizacji powyżej.
 
 Przeczytaj najpierw: `CLAUDE.md` (zasady), `~/Downloads/hub.pdf` (wymagania i kryteria oceny), ten plik. `PLAN.md` rozdz. 1a–1c i `DROGA_DO_90.md` to tło (część zadań z nich jest już zrobiona, patrz niżej).
 
