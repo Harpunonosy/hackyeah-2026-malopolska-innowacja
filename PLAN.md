@@ -85,6 +85,25 @@ Jury zwraca uwagę na: pomysłowość i atrakcyjność, łatwość zgłoszenia p
 
 **Dane:** nie wolno używać prawdziwych danych osobowych ani wrażliwych z materiałów ROPS. W naszej kopii Biblioteki usunęliśmy imiona i nazwiska autorów, zostały tylko organizacje. Zgłoszenia w demo są syntetyczne.
 
+### 1a. Korekty po ponownej lekturze regulaminu i umowy (3.10, ok. 17:00)
+
+1. **Niepublikowanie.** Wzór umowy (§1 ust. 4 lit. b, §2 ust. 12) wymaga oświadczenia, że utwór „nie został dotychczas opublikowany, a jedynie udostępniony na potrzeby oceny”, a pierwsza publikacja należy do Organizatora. Repozytorium zostaje **prywatne**, demo ma `noindex` (meta, nagłówek `X-Robots-Tag`), kod i film nie idą publicznie.
+2. **Wykaz narzędzi i bibliotek** z licencjami jest elementem umowy (§1), a kod ma być czytelny, bez szyfrowania i obfuskacji. Przed oddaniem generujemy `docs/zaleznosci.md`. Tylko MIT, Apache, BSD (fonty: SIL OFL).
+3. **Trendy tylko dla administratora** (opis modułu II). Radar, wykresy i agregaty potrzeb są wyłącznie w Centrali, za hasłem. Publicznie zostaje zanonimizowane „podobne przypadki” pokazywane od 5 zgłoszeń wzwyż, bo Swatka ma „wyszukiwać podobne przypadki”.
+4. **Integracja z bazą grantową:** eksport CSV/JSON wniosków i zgłoszeń, endpoint `/api/v1` tylko do odczytu i webhook przy nowym zgłoszeniu.
+5. **Powiadomienia** obejmują też nowe pomysły (fiszki) i zmiany w naborach, nie tylko zgłoszenia problemów. Jedna magistrala zdarzeń.
+6. **Narzędzia AI w kodowaniu:** umowa wymaga oświadczenia, że utwór „został wykonany osobiście”. Zespół sprawdza u organizatorów lub w regulaminie Hackathonu, czy asystenci AI do kodowania są dozwoleni.
+7. **Oddanie:** regulamin (§4 ust. 9) wymaga PDF **oraz** filmu, wszystko po polsku.
+
+### 1b. Decyzje techniczne z 3.10 (nadpisują dalsze rozdziały)
+
+- Framework: **Next.js 16** (nie 15), React 19, Tailwind 4. Komponenty własne na pakiecie `radix-ui` (generator shadcn odrzucony: instalował nieznany pakiet `cn`).
+- Model AI: na czas prac **`claude-sonnet-5-5`** (zmienna `AI_MODEL`), Opus 5.5 po pomiarze, czy podnosi Hit@3. Głębokość myślenia: `AI_EFFORT_SWATKA`.
+- Katalog w prompcie Swatki ma ok. 27 tys. tokenów (nazwa, kategoria, „na czym polega”, problemy, odbiorcy, „kto może wdrożyć”), z cache 1 h.
+- Baza w dev: lokalny Postgres w Dockerze, na demo Supabase (region UE). Ustawienia dostępności trzymane w cookie, więc serwer renderuje je bez migotania.
+- Maskowanie: wyszukiwanie przechodzi maskowanie regex, a zapis zgłoszenia dodatkowo maskowanie imion i nazwisk przez AI (do zrobienia).
+- Wynik bazowy wyszukiwania awaryjnego (bez AI) na 30 zapytaniach: Hit@3 79,3%, MRR 0,76 (`npx tsx scripts/eval-swatka.ts --lex`).
+
 ---
 
 ## 2. Wyzwanie w skrócie
@@ -616,12 +635,12 @@ Dodatkowo spełniamy część WCAG 2.2: rozmiar celu (2.5.8), fokus niezasłoni�
 ### 11.1 Stos technologiczny (rekomendacja: szybko i do utrzymania)
 | Warstwa | Wybór | Dlaczego |
 |---|---|---|
-| Frontend + API | **Next.js 15 (App Router) + TypeScript** | jeden projekt, szybkie wdrożenie, route handlers jako API |
-| UI | **Tailwind CSS + shadcn/ui (Radix)** | gotowe, dostępne komponenty (role ARIA, fokus) |
+| Frontend + API | **Next.js 16 (App Router) + TypeScript** | jeden projekt, szybkie wdrożenie, route handlers jako API |
+| UI | **Tailwind CSS 4 + własne komponenty na `radix-ui`** | gotowe, dostępne komponenty (role ARIA, fokus) |
 | Baza | **PostgreSQL + pgvector + pg_trgm**, na hackathon **Supabase** | relacje, wyszukiwanie tekstowe i wektorowe, realtime do powiadomień, storage na pliki |
 | ORM | Drizzle albo klient Supabase | szybko, typowane |
 | Hosting demo | **Vercel** (frontend/API) + Supabase (baza) | publiczny link w kilka minut |
-| AI | **Anthropic Claude API**, model `claude-opus-5-5`, za warstwą `lib/ai.ts` (wymienny dostawca) | najlepsza jakość po polsku w prototypie; docelowo PLLuM lub Bielik |
+| AI | **Anthropic Claude API**, model `claude-sonnet-5-5` (docelowo do porównania z `claude-opus-5-5`), za warstwą `lib/ai.ts` (wymienny dostawca) | najlepsza jakość po polsku w prototypie; docelowo PLLuM lub Bielik |
 | Embeddingi (etap 2) | `BAAI/bge-m3` albo `sdadas/mmlw-retrieval-roberta-large` (polski) na małym serwisie w Pythonie; na hackathon niepotrzebne (pełny kontekst) | otwarte, bez kosztów za zapytanie |
 | Głos | Web Speech API (rozpoznawanie `pl-PL`) + SpeechSynthesis; docelowo Whisper na własnym serwerze | zero kosztów w demo |
 | Mapa | react-leaflet albo kartogram SVG + GeoJSON powiatów Małopolski | czytelny Radar |

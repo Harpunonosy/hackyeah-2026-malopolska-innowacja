@@ -1,0 +1,97 @@
+@import "tailwindcss";
+
+/* Tryb prosty: elementy .zaawansowane znikają, reszta rośnie. */
+@custom-variant prosty (&:where([data-prosty="tak"] *));
+
+:root {
+  --bg: #f4f6fa;
+  --fg: #14213d;
+  --muted: #3d4a66;
+  --card: #ffffff;
+  --border: #8a94a8;
+  --primary: #b3203a;
+  --primary-fg: #ffffff;
+  --accent: #d9a21b;
+  --accent-fg: #14213d;
+  --focus: #14213d;
+  --focus-halo: #ffffff;
+  --ok: #17603a;
+  --warn: #7a4300;
+  --link: #14213d;
+}
+
+/* Wysoki kontrast: czarne tło, biały tekst, żółte akcenty. */
+html[data-kontrast="wysoki"] {
+  --bg: #000000;
+  --fg: #ffffff;
+  --muted: #e6e6e6;
+  --card: #0a0a0a;
+  --border: #ffffff;
+  --primary: #ffd400;
+  --primary-fg: #000000;
+  --accent: #ffd400;
+  --accent-fg: #000000;
+  --focus: #ffd400;
+  --focus-halo: #000000;
+  --ok: #7dff9f;
+  --warn: #ffb95c;
+  --link: #ffd400;
+}
+
+@theme inline {
+  --font-sans: var(--font-atkinson), ui-sans-serif, system-ui, "Segoe UI", Roboto, Arial, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-atkinson), ui-sans-serif, system-ui, sans-serif;
+  --color-bg: var(--bg);
+  --color-fg: var(--fg);
+  --color-muted: var(--muted);
+  --color-card: var(--card);
+  --color-line: var(--border);
+  --color-primary: var(--primary);
+  --color-primary-fg: var(--primary-fg);
+  --color-accent: var(--accent);
+  --color-accent-fg: var(--accent-fg);
+  --color-ok: var(--ok);
+  --color-warn: var(--warn);
+}
+
+html {
+  font-size: 112.5%; /* 18 px bazowo */
+  scroll-padding-top: 5rem;
+}
+html[data-rozmiar="duzy"] { font-size: 131%; }
+html[data-rozmiar="bardzo-duzy"] { font-size: 150%; }
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  font-family: var(--font-sans);
+  line-height: 1.6;
+  min-height: 100dvh;
+}
+
+h1, h2, h3 { font-family: var(--font-display); line-height: 1.2; letter-spacing: -0.01em; }
+
+a { color: var(--link); text-underline-offset: 0.2em; }
+
+:focus-visible {
+  outline: 3px solid var(--focus);
+  outline-offset: 3px;
+  box-shadow: 0 0 0 6px var(--focus-halo);
+  border-radius: 0.25rem;
+}
+
+[data-prosty="tak"] .zaawansowane { display: none !important; }
+[data-prosty="tak"] body { line-height: 1.75; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+@media print {
+  .nie-drukuj { display: none !important; }
+}

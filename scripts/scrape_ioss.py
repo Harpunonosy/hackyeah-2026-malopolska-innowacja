@@ -60,6 +60,8 @@ def main() -> None:
         if labels and values:
             names, vals = json.loads(labels.group(1)), json.loads(values.group(1))
             for powiat, value in zip(names, vals):
+                if isinstance(value, float) and value != value:
+                    value = None  # NaN nie jest poprawnym JSON-em
                 rows.append({**{k: ind[k] for k in ("id", "kategoria", "wskaznik", "rok")}, "powiat": powiat, "wartosc": value})
             ind["n"] = len(names)
 

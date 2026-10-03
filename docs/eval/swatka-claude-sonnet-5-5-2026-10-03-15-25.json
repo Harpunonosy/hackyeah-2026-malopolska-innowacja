@@ -1,0 +1,86 @@
+{
+ "hit3": 1,
+ "hit5": 1,
+ "mrr": 1,
+ "wiersze": [
+  {
+   "id": "q01",
+   "typ": "opis",
+   "zapytanie": "Od kiedy zmarł mąż, rzadko wychodzę z domu. Czuję się samotna i gubię się w lekach i suplementach.",
+   "oczekiwane": [
+    "inteligentny-organizer-do-lekow",
+    "senior-cuder",
+    "centrum-antydepresyjne",
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "wirtualne-izby-pamieci"
+   ],
+   "zwrocone": [
+    "inteligentny-organizer-do-lekow",
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "centrum-antydepresyjne",
+    "senior-cuder"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 8663,
+   "tryb": "ai"
+  },
+  {
+   "id": "q02",
+   "typ": "slowa_kluczowe",
+   "zapytanie": "samotność senior leki",
+   "oczekiwane": [
+    "inteligentny-organizer-do-lekow",
+    "senior-cuder",
+    "centrum-antydepresyjne",
+    "mobilne-centrum-pomocy-dla-osob-starszych"
+   ],
+   "zwrocone": [
+    "inteligentny-organizer-do-lekow",
+    "mobilne-centrum-pomocy-dla-osob-starszych",
+    "organizator-kompleksowej-opieki-w-miejscu-zamieszkania"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 5763,
+   "tryb": "ai"
+  },
+  {
+   "id": "q03",
+   "typ": "opis",
+   "zapytanie": "Jestem na wózku, mam porażenie czterokończynowe i nie mówię. Pracuję zdalnie, ale chciałbym wychodzić z domu, poznawać ludzi i bywać w kulturze.",
+   "oczekiwane": [
+    "nakreceni-na-aktywnosc",
+    "moduly-niezaleznosci",
+    "ev-modul-do-wozkow-inwalidzkich",
+    "spotkania-kulturlove",
+    "my-way-to-culture",
+    "zdobadz-swoje-szczyty"
+   ],
+   "zwrocone": [
+    "spotkania-kulturlove",
+    "nakreceni-na-aktywnosc",
+    "my-way-to-culture"
+   ],
+   "hit3": true,
+   "hit5": true,
+   "rr": 1,
+   "brakOczekiwany": false,
+   "brakZwrocony": false,
+   "czasMs": 5556,
+   "tryb": "ai"
+  }
+ ],
+ "koszt": {
+  "wejscie": 290,
+  "wyjscie": 2161,
+  "cacheZapis": 43259,
+  "cacheOdczyt": 86518
+ }
+}

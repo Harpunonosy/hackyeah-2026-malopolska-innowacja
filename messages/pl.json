@@ -1,0 +1,179 @@
+{
+  "marka": {
+    "nazwa": "Splot",
+    "haslo": "Tu potrzeby Małopolan spotykają sprawdzone rozwiązania.",
+    "opisStrony": "Splot łączy potrzeby mieszkańców z innowacjami społecznymi Małopolski. Prototyp dla Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków)."
+  },
+  "nav": {
+    "glowna": "Główna nawigacja",
+    "start": "Start",
+    "problem": "Mam problem",
+    "wiedza": "Wiedza",
+    "przejdzDoTresci": "Przejdź do treści",
+    "moje": "Moje sprawy"
+  },
+  "dostepnosc": {
+    "etykieta": "Ustawienia dostępności",
+    "przycisk": "Dostępność: tryb prosty, tekst, kontrast",
+    "trybProsty": "Tryb prosty",
+    "rozmiar": "Rozmiar tekstu",
+    "rozmiarNormalny": "Normalny tekst",
+    "rozmiarDuzy": "Duży tekst",
+    "rozmiarBardzoDuzy": "Bardzo duży tekst",
+    "kontrast": "Wysoki kontrast",
+    "czytaj": "Czytaj na głos",
+    "zatrzymaj": "Zatrzymaj czytanie",
+    "czytanieNiedostepne": "Czytanie na głos nie działa w tej przeglądarce."
+  },
+  "stopka": {
+    "dane": "Dane demonstracyjne. Prototyp na HackYeah 2026.",
+    "ai": "Odpowiedzi asystenta AI są podpowiedzią. Decyzje podejmuje człowiek.",
+    "zrodlo": "Treści innowacji: Biblioteka Innowacji Społecznych ROPS Kraków."
+  },
+  "start": {
+    "tytul": "Co chcesz zrobić?",
+    "podtytul": "Wybierz jedno z zadań. Pomożemy krok po kroku.",
+    "wkrotce": "Wkrótce",
+    "kafelki": {
+      "problem": {
+        "tytul": "Mam problem i szukam pomocy",
+        "opis": "Opisz swoją sytuację. Znajdziemy sprawdzone rozwiązania."
+      },
+      "instytucja": {
+        "tytul": "Szukam rozwiązania dla mojej instytucji",
+        "opis": "Gmina, ośrodek lub organizacja: wybierz innowację i zobacz plan wdrożenia."
+      },
+      "pomysl": {
+        "tytul": "Mam pomysł",
+        "opis": "Opisz pomysł na innowację społeczną i sprawdź, czy ma szanse."
+      },
+      "testy": {
+        "tytul": "Chcę testować nowe rozwiązania",
+        "opis": "Zapisz się do testów i powiedz, co działa, a co nie."
+      },
+      "wiedza": {
+        "tytul": "Wiedza i inspiracje",
+        "opis": "Biblioteka 115 innowacji, filmy i materiały ROPS."
+      },
+      "rozmowa": {
+        "tytul": "Zapytaj ROPS lub eksperta",
+        "opis": "Zadaj pytanie i znajdź partnerów do współpracy."
+      },
+      "moje": {
+        "tytul": "Moje sprawy",
+        "opis": "Sprawdź, co dzieje się z Twoim zgłoszeniem."
+      }
+    }
+  },
+  "swatka": {
+    "tytul": "Opisz swój problem",
+    "podpowiedz": "Napisz lub powiedz własnymi słowami, co się dzieje. Wystarczy kilka zdań albo kilka słów kluczowych.",
+    "uwagaDane": "Nie podawaj imienia, nazwiska, adresu ani numeru telefonu.",
+    "poleEtykieta": "Twój opis",
+    "polePlaceholder": "Na przykład: Od śmierci męża rzadko wychodzę z domu i gubię się w lekach.",
+    "licznik": "{ile} z {max} znaków",
+    "przyklady": "Nie wiesz, jak zacząć? Kliknij przykład:",
+    "kimJestem": "Kim jesteś?",
+    "rolaMieszkaniec": "Mieszkaniec",
+    "rolaMieszkaniecOpis": "Szukam pomocy dla siebie lub bliskiej osoby",
+    "rolaInstytucja": "Instytucja lub organizacja",
+    "rolaInstytucjaOpis": "Szukam rozwiązania do wdrożenia",
+    "powiat": "Powiat (nieobowiązkowo)",
+    "powiatPodpowiedz": "Zacznij pisać nazwę powiatu",
+    "szukaj": "Znajdź pomoc",
+    "szukam": "Asystent AI czyta Twój opis i szuka wśród 115 sprawdzonych rozwiązań. To potrwa kilka sekund.",
+    "blad": "Nie udało się teraz wyszukać. Spróbuj ponownie za chwilę.",
+    "zaDuzo": "Zbyt wiele zapytań naraz. Poczekaj pół minuty i spróbuj ponownie.",
+    "mikrofon": "Powiedz opis",
+    "mikrofonSluchamy": "Słucham. Mów swobodnie, a potem kliknij, aby zakończyć.",
+    "mikrofonNiedostepny": "Dyktowanie działa w Chrome i Edge. Możesz wpisać tekst.",
+    "mikrofonBlad": "Nie udało się uruchomić mikrofonu. Sprawdź zgodę w przeglądarce albo wpisz tekst.",
+    "mikrofonInfo": "Dyktowanie obsługuje przeglądarka (w Chrome może korzystać z usługi Google).",
+    "wyniki": "Wyniki",
+    "znalezionoN": "{ile, plural, one {Znaleziono # rozwiązanie} few {Znaleziono # rozwiązania} many {Znaleziono # rozwiązań} other {Znaleziono # rozwiązania}}",
+    "zrozumialemTak": "Zrozumiałem to tak",
+    "obszar": "Obszar",
+    "grupa": "Dla kogo",
+    "potrzeby": "Twoje potrzeby",
+    "dlaczego": "Dlaczego to pasuje",
+    "czyDziala": "Czy to działa?",
+    "ktoWdroz": "Kto może to wdrożyć",
+    "pelnyOpis": "Zobacz pełny opis",
+    "film": "Obejrzyj film (nowa karta)",
+    "dopasowanieBardzoDobre": "Bardzo dobre dopasowanie",
+    "dopasowanieDobre": "Dobre dopasowanie",
+    "dopasowanieCzesciowe": "Częściowe dopasowanie",
+    "dopasowanieWstepne": "Wstępne dopasowanie po słowach",
+    "pomoze": "To mi pomoże",
+    "nieTo": "To nie to",
+    "dzieki": "Dziękujemy za informację.",
+    "brakTytul": "Nie mamy jeszcze gotowego rozwiązania dla tej sytuacji",
+    "brakOpis": "To ważna informacja dla ROPS: Twoja potrzeba jest na mapie braków w Małopolsce. Poniżej najbliższe rozwiązania, które mogą pomóc w części problemu.",
+    "najblizsze": "Najbliższe rozwiązania",
+    "pytanie": "Aby lepiej pomóc, odpowiedz na pytanie",
+    "fakty": "Co mówią raporty ROPS",
+    "zrodlo": "Źródło: {zrodlo}, s. {strona}",
+    "oznaczenieAi": "Odpowiedź przygotowana z pomocą AI. Sprawdź ją i w razie wątpliwości zapytaj pracownika ROPS.",
+    "trybAwaryjny": "Asystent AI jest chwilowo niedostępny, więc wyszukaliśmy po słowach z Twojego opisu. Wyniki mogą być mniej trafne.",
+    "zamaskowano": "Ukryliśmy w opisie dane osobowe ({rodzaje}), zanim trafił do asystenta.",
+    "nowaProba": "Szukaj ponownie"
+  },
+  "kryzys": {
+    "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",
+    "tytulPrzemoc": "Jeśli doświadczasz przemocy lub ktoś Ci grozi",
+    "opis": "Zadzwoń teraz. Rozmowa jest bezpłatna. Nie musisz być sam lub sama.",
+    "zadzwon": "Zadzwoń"
+  },
+  "wiedza": {
+    "tytul": "Biblioteka Innowacji Społecznych",
+    "podtytul": "115 sprawdzonych rozwiązań ROPS Kraków. Wybierz kategorię albo wróć do wyszukiwania.",
+    "wroc": "Wróć do wyszukiwania",
+    "wBibliotece": "Biblioteka",
+    "naCzymPolega": "Na czym polega rozwiązanie?",
+    "problem": "Jakich problemów dotyczy?",
+    "grupa": "Do kogo jest skierowane?",
+    "ktoMoze": "Kto może z niego skorzystać (wdrożyć)?",
+    "czyDziala": "Czy to działa?",
+    "autor": "Autor",
+    "wybrane": "Wybrane do upowszechniania w projekcie",
+    "materialy": "Materiały do pobrania",
+    "folder": "Folder (PDF)",
+    "paczka": "Paczka materiałów (ZIP)",
+    "filmy": "Filmy",
+    "zrodlo": "Źródło: Biblioteka Innowacji Społecznych ROPS Kraków",
+    "otworz": "Otwórz stronę w Bibliotece ROPS"
+  },
+  "zgloszenie": {
+    "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",
+    "opis": "Wyślij zgłoszenie do pracowników ROPS Kraków. Dostaniesz numer, po którym sprawdzisz, co się z nim dzieje.",
+    "przycisk": "Wyślij zgłoszenie do ROPS",
+    "sprawdz": "Sprawdź przed wysłaniem",
+    "twojaTresc": "Treść zgłoszenia (dane osobowe zostały ukryte)",
+    "email": "Adres e-mail (nieobowiązkowo)",
+    "emailPomoc": "Podaj go, jeśli chcesz dostać wiadomość o odpowiedzi. Bez e-maila sprawdzisz odpowiedź po numerze zgłoszenia.",
+    "zgoda": "Zgadzam się na przekazanie tego zgłoszenia pracownikom ROPS Kraków.",
+    "wyslij": "Wyślij zgłoszenie",
+    "anuluj": "Wróć",
+    "wysylam": "Wysyłam zgłoszenie…",
+    "gotowe": "Zgłoszenie wysłane",
+    "numer": "Twój numer zgłoszenia",
+    "numerPomoc": "Zapisz ten numer. Po nim sprawdzisz status i odpowiedź.",
+    "sprawdzStatus": "Sprawdź status zgłoszenia",
+    "blad": "Nie udało się wysłać zgłoszenia. Spróbuj ponownie."
+  },
+  "moje": {
+    "tytul": "Moje sprawy",
+    "podtytul": "Wpisz numer zgłoszenia, aby sprawdzić, co się z nim dzieje.",
+    "etykieta": "Numer zgłoszenia",
+    "szukaj": "Sprawdź status",
+    "nieZnaleziono": "Nie znaleziono zgłoszenia o takim numerze. Sprawdź, czy numer jest przepisany bez błędów.",
+    "oS": "Zgłoszenie {numer}",
+    "os": "Oś czasu",
+    "odpowiedz": "Odpowiedź ROPS",
+    "aiOdpowiedz": "Odpowiedź przygotowana z pomocą AI i sprawdzona przez pracownika ROPS.",
+    "dopasowania": "Rozwiązania, które Ci podpowiedzieliśmy",
+    "ocenaPytanie": "Czy odpowiedź Ci pomogła?",
+    "ocenaDzieki": "Dziękujemy za ocenę.",
+    "odswiezanie": "Status odświeża się sam co kilka sekund."
+  }
+}

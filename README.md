@@ -32,6 +32,18 @@ Splot łączy każdą potrzebę zgłoszoną w Małopolsce ze sprawdzoną innowac
 
 Źródła danych: ROPS Kraków (Biblioteka Innowacji, Mapa Wyzwań, IOSS, raporty, kanwa INNO AGH), GUS, NIK. Linki w [PLAN.md, rozdział 24](PLAN.md#24-źródła). Odświeżenie danych: `python3 scripts/scrape_biblioteka.py` i `python3 scripts/scrape_ioss.py`.
 
+## Uruchomienie
+
+```bash
+npm install
+cp .env.example .env.local     # wpisz ANTHROPIC_API_KEY (nigdy do repozytorium)
+npm run dev                    # http://localhost:3000
+npx tsx --env-file=.env.local scripts/eval-swatka.ts   # pomiar trafności Swatki (30 zapytań)
+npx tsx scripts/eval-swatka.ts --lex                   # to samo bez AI (wyszukiwanie awaryjne)
+```
+
+Stos: Next.js 16, React 19, Tailwind 4, `radix-ui`, `next-intl`, Anthropic SDK, zod. Zależności i licencje: `docs/zaleznosci.md` (generowane przed oddaniem).
+
 ## Status
 
 Start prac: 3.10.2026. Oddanie: 4.10.2026, 11:00 (HackTribe).

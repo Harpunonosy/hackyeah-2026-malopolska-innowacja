@@ -1,0 +1,21 @@
+# sekrety: nigdy do repozytorium
+.env
+.env.*
+!.env.example
+
+# zależności i build
+node_modules/
+.next/
+out/
+.vercel/
+*.tsbuildinfo
+next-env.d.ts
+
+# testy i wyniki lokalne
+playwright-report/
+test-results/
+coverage/
+docs/eval/*.local.json
+
+# system
+.DS_Store
