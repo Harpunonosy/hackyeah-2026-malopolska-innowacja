@@ -2,6 +2,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { SchematNaboru } from "@/lib/nabor-schemat";
 import { powiadomONaborze } from "@/lib/nabory-powiadomienia";
+import { zapiszWDzienniku } from "@/lib/dziennik";
 import { czyAdmin } from "@/lib/sesja";
 
 const Wejscie = z.object({
@@ -32,5 +33,6 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
     await c.query("update nabory set schemat=$2, zmiana_at=now() where id=$1", [id, JSON.stringify(w.data.schemat)]);
     powiadomiono += await powiadomONaborze(id, "nabor_zmiana", "zmieniły się pola lub kryteria wniosku");
   }
+  await zapiszWDzienniku("zmiana naboru", id, JSON.stringify({ aktywny: w.data.aktywny, termin: w.data.otwartyDo, schemat: !!w.data.schemat }));
   return Response.json({ ok: true, powiadomiono });
 }

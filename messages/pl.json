@@ -241,7 +241,12 @@
     "wybraneKrotko": "wybrana do upowszechniania",
     "zobacz": "Zobacz opis",
     "wdroz": "Wdróż u siebie",
-    "ocen": "Oceń to rozwiązanie"
+    "ocen": "Oceń to rozwiązanie",
+    "nieaktualne": "Zgłoś nieaktualną informację",
+    "nieaktualneDzieki": "Dziękujemy. Zespół ROPS sprawdzi i zaktualizuje kartę.",
+    "nieaktualnePytanie": "Co jest nieaktualne lub błędne?",
+    "wyslij": "Wyślij",
+    "nieaktualneBlad": "Nie udało się wysłać. Spróbuj ponownie."
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",

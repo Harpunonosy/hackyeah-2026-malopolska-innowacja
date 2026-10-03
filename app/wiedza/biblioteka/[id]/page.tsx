@@ -1,3 +1,4 @@
+import { ZglosNieaktualne } from "@/components/biblioteka/zglos-nieaktualne";
 import { czyWdrazalna } from "@/lib/swatka";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -69,6 +70,7 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
             <Button asChild wariant="obrys" className="w-full">
               <Link href={`/testy?innowacja=${i.id}`}>{t("ocen")}</Link>
             </Button>
+            <ZglosNieaktualne id={i.id} nazwa={i.nazwa} />
             {i.film.map((f, n) => (
               <Button key={f} asChild wariant="obrys" className="w-full">
                 <a href={f} target="_blank" rel="noopener noreferrer">

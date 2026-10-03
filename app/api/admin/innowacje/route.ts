@@ -2,6 +2,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { katalog, uniewaznijKatalog } from "@/lib/katalog";
 import { OBSZAR_KATEGORII } from "@/lib/obszary";
+import { zapiszWDzienniku } from "@/lib/dziennik";
 import { czyAdmin } from "@/lib/sesja";
 
 const slug = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "").slice(0, 70);
@@ -24,5 +25,6 @@ export async function POST(req: Request) {
     [id, d.nazwa, d.kategoria, [OBSZAR_KATEGORII[d.kategoria]].filter(Boolean), d.na_czym_polega, d.problem, d.grupa_docelowa, d.kto_moze_skorzystac, d.czy_to_dziala, d.autor_organizacja, d.url || null, d.publikuj ? "opublikowana" : "szkic"],
   );
   uniewaznijKatalog();
+  await zapiszWDzienniku(d.publikuj ? "dodanie i publikacja innowacji" : "dodanie szkicu innowacji", id, d.nazwa);
   return Response.json({ id }, { status: 201 });
 }

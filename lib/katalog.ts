@@ -20,7 +20,19 @@ export async function katalog(): Promise<{ lista: Innowacja[]; mapa: Map<string,
   } catch {
     /* baza chwilowo niedostępna: zostaje katalog z pliku */
   }
-  const lista = [...statyczne, ...dodane].sort((a, b) => a.id.localeCompare(b.id));
+  // Nadpisania kart z Biblioteki (edycja w Centrali) i ukryte pozycje.
+  const nadpisania = new Map<string, Innowacja>();
+  const ukryte = new Set<string>();
+  try {
+    const { rows } = await db().query("select * from innowacje where zrodlo = 'nadpisana'");
+    for (const r of rows) {
+      if (r.status === "ukryta") ukryte.add(r.id);
+      else nadpisania.set(r.id, { ...(statyczne.find((s) => s.id === r.id) as Innowacja), nazwa: r.nazwa, kategoria: r.kategoria, naCzymPolega: r.na_czym_polega ?? "", problem: r.problem ?? "", grupaDocelowa: r.grupa_docelowa ?? "", ktoMozeSkorzystac: r.kto_moze_skorzystac ?? "", czyToDziala: r.czy_to_dziala ?? "", autor: r.autor_organizacja ?? "" });
+    }
+  } catch {
+    /* brak tabeli lub bazy: katalog z pliku */
+  }
+  const lista = [...statyczne.filter((i) => !ukryte.has(i.id)).map((i) => nadpisania.get(i.id) ?? i), ...dodane].sort((a, b) => a.id.localeCompare(b.id));
   g.__katalog = { t: teraz, lista, mapa: new Map(lista.map((i) => [i.id, i])) };
   return g.__katalog;
 }
