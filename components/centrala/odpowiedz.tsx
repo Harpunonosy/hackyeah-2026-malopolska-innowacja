@@ -5,7 +5,7 @@ import { useRouter } from "next/navigation";
 import { Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
 
-export function Odpowiedz({ id, szkic, zablokowane }: { id: string; szkic: string | null; zablokowane: boolean }) {
+export function Odpowiedz({ id, szkic, zablokowane, adres, etykieta = "Odpowiedź do autora" }: { id: string; szkic: string | null; zablokowane: boolean; adres?: string; etykieta?: string }) {
   const router = useRouter();
   const [tresc, setTresc] = React.useState(szkic ?? "");
   const [zAi, setZAi] = React.useState(false);
@@ -14,10 +14,10 @@ export function Odpowiedz({ id, szkic, zablokowane }: { id: string; szkic: strin
   async function wyslij(e: React.FormEvent) {
     e.preventDefault();
     setStan("wysylam");
-    const r = await fetch(`/api/admin/zgloszenia/${id}/odpowiedz`, {
+    const r = await fetch(adres ?? `/api/admin/zgloszenia/${id}/odpowiedz`, {
       method: "POST",
       headers: { "content-type": "application/json" },
-      body: JSON.stringify({ tresc, zAi }),
+      body: JSON.stringify({ id, tresc, zAi }),
     });
     setStan(r.ok ? "ok" : "blad");
     if (r.ok) router.refresh();
@@ -27,7 +27,7 @@ export function Odpowiedz({ id, szkic, zablokowane }: { id: string; szkic: strin
     <form onSubmit={wyslij} className="space-y-3">
       <div className="flex flex-wrap items-center justify-between gap-2">
         <label htmlFor="odp-tresc" className="text-xl font-bold">
-          Odpowiedź do autora
+          {etykieta}
         </label>
         {szkic && (
           <Button

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound, redirect } from "next/navigation";
 import { Odpowiedz } from "@/components/centrala/odpowiedz";
+import { PrzekazEksperta } from "@/components/centrala/przekaz-eksperta";
 import { ZmienStatus } from "@/components/centrala/zmien-status";
 import { Chip } from "@/components/ui/chip";
 import { db } from "@/lib/db";
@@ -27,11 +28,12 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
     await zmienStatus(id, "przeczytane", "Otwarte w Centrali");
     z.status = "przeczytane";
   }
-  const [dop, hist, wiad, pow] = await Promise.all([
+  const [dop, hist, wiad, pow, eks] = await Promise.all([
     c.query("select i.id, i.nazwa, i.kategoria, d.trafnosc, d.dlaczego from dopasowania d join innowacje i on i.id=d.innowacja_id where d.zgloszenie_id=$1 order by d.pozycja", [id]),
     c.query("select status, notatka, at from historia_statusu where zgloszenie_id=$1 order by at", [id]),
-    c.query("select w.tresc, w.created_at, w.wygenerowane_przez_ai, w.od from wiadomosci w join watki t on t.id=w.watek_id where t.typ='zgloszenie' and t.obiekt_id=$1 order by w.created_at", [id]),
+    c.query("select w.tresc, w.created_at, w.wygenerowane_przez_ai, w.od, w.nadawca from wiadomosci w join watki t on t.id=w.watek_id where t.typ='zgloszenie' and t.obiekt_id=$1 order by w.created_at", [id]),
     c.query("select typ, tresc, kanal, created_at from powiadomienia where adresat='autor' and numer_sprawy=$1 order by created_at desc limit 5", [z.numer]),
+    c.query("select uzytkownik_id as id, nazwa from eksperci order by nazwa"),
   ]);
 
   return (
@@ -102,7 +104,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
           {wiad.rows.map((w) => (
             <p key={w.created_at} className="whitespace-pre-line karta-mala p-3">
               {w.tresc}
-              <span className="mt-1 block text-sm text-muted">{w.od === "autor" ? "Autor zgłoszenia · " : "ROPS · "}{fmt(w.created_at)}{w.wygenerowane_przez_ai ? " · ze szkicu AI" : ""}</span>
+              <span className="mt-1 block text-sm text-muted">{w.od === "autor" ? "Autor zgłoszenia · " : w.od === "ekspert" ? `${w.nadawca ?? "Ekspert"} · ` : "ROPS · "}{fmt(w.created_at)}{w.wygenerowane_przez_ai ? " · ze szkicu AI" : ""}</span>
             </p>
           ))}
           {pow.rows.map((p) => (
@@ -116,6 +118,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
       <section aria-labelledby="dzialanie-h" className="space-y-4">
         <h2 id="dzialanie-h" className="text-2xl font-bold">Działanie</h2>
         <ZmienStatus id={id} status={z.status} />
+        <PrzekazEksperta id={id} eksperci={eks.rows} aktualny={z.ekspert_id} />
         <Odpowiedz id={id} szkic={z.szkic_odpowiedzi} zablokowane={false} />
       </section>
 

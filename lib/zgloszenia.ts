@@ -8,6 +8,7 @@ import { zamaskuj } from "./maskowanie";
 import { OBSZAR_IDS } from "./obszary";
 import { normalizujPowiat } from "./powiaty";
 import { powiadom } from "./powiadomienia";
+import { przypiszEksperta } from "./ekspert";
 import type { Status } from "./statusy";
 
 export const WejscieZgloszenia = z.object({
@@ -121,6 +122,10 @@ export async function oceńZgloszenie(id: string): Promise<void> {
       [id, dane.tekst_zanonimizowany || rows[0].tresc_zamaskowana, dane.obszar, dane.tagi.slice(0, 5), dane.grupa_docelowa,
         kryzys ? 0 : Math.max(1, priorytet), kryzys, dane.streszczenie, dane.szkic_odpowiedzi, dane],
     );
+    if (rows[0].typ === "pytanie" || rows[0].typ === "pomysl") {
+      const eid = await przypiszEksperta(id, dane.obszar);
+      if (eid) await powiadom({ adresat: "rops", typ: "pytanie_eksperta", tytul: "Sprawa przekazana ekspertowi", tresc: `Automatycznie według obszaru: ${dane.obszar}.`, link: `/centrala/zgloszenia/${id}` });
+    }
   } catch (e) {
     console.error("Ocena AI zgłoszenia nie powiodła się:", e instanceof Error ? e.message : "?");
   }

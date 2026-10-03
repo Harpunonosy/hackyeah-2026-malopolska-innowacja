@@ -13,7 +13,7 @@ type Dane = {
   numer: string;
   status: Status;
   historia: { status: Status; notatka: string | null; at: string }[];
-  wiadomosci: { tresc: string; created_at: string; wygenerowane_przez_ai: boolean; od: string }[];
+  wiadomosci: { tresc: string; created_at: string; wygenerowane_przez_ai: boolean; od: string; nadawca: string | null }[];
   dopasowania: { id: string; nazwa: string; dlaczego: string | null }[];
   ocena_pomocy: number | null;
   created_at: string;
@@ -113,7 +113,7 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
             <article key={w.created_at} className="space-y-2 karta p-5">
               <p className="whitespace-pre-line text-lg">{w.tresc}</p>
               <p className="text-sm text-muted">
-                {w.od === "autor" ? "Ty · " : "ROPS · "}{fmt(w.created_at)}
+                {w.od === "autor" ? "Ty · " : w.od === "ekspert" ? `${w.nadawca ?? "Ekspert"} · ` : "ROPS · "}{fmt(w.created_at)}
                 {w.wygenerowane_przez_ai ? ` · ${t("aiOdpowiedz")}` : ""}
               </p>
             </article>

@@ -33,10 +33,10 @@ export function Pytanie({ eksperci }: { eksperci: { id: string; nazwa: string }[
       onSubmit={async (e) => {
         e.preventDefault();
         setStan("pracuje");
-        const r = await fetch("/api/zgloszenia", {
+        const r = await fetch("/api/pytania", {
           method: "POST",
           headers: { "content-type": "application/json" },
-          body: JSON.stringify({ tekst: (doKogo ? `[Pytanie do: ${doKogo}] ` : "[Pytanie do ROPS] ") + tekst, zgoda, email: email || undefined, kanal: "web" }),
+          body: JSON.stringify({ tekst, ekspertId: doKogo || undefined, zgoda, email: email || undefined }),
         });
         const d = await r.json();
         if (!r.ok) { setKomunikat(d.komunikat ?? t("blad")); return setStan("blad"); }
@@ -52,7 +52,7 @@ export function Pytanie({ eksperci }: { eksperci: { id: string; nazwa: string }[
         <label htmlFor="ry-kogo" className="block text-lg font-bold">{t("doKogo")}</label>
         <select id="ry-kogo" value={doKogo} onChange={(e) => setDoKogo(e.target.value)} className="block min-h-12 w-full max-w-md rounded-xl border-2 border-line bg-card px-3 text-lg hover:border-fg">
           <option value="">{t("rops")}</option>
-          {eksperci.map((x) => <option key={x.id} value={x.nazwa}>{x.nazwa}</option>)}
+          {eksperci.map((x) => <option key={x.id} value={x.id}>{x.nazwa}</option>)}
         </select>
       </div>
       <div className="space-y-1">
