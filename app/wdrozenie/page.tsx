@@ -20,7 +20,7 @@ export default async function Wdrozenie(props: PageProps<"/wdrozenie">) {
   return (
     <Strona>
       <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")} />
-      <FormularzKrawca innowacje={wdrazalne.map((i) => ({ id: i.id, nazwa: i.nazwa, kategoria: i.kategoria }))} poczatkowa={id} />
+      <FormularzKrawca innowacje={wdrazalne.map((i) => ({ id: i.id, nazwa: i.nazwa, kategoria: i.kategoria }))} poczatkowa={id} poczatkowyPowiat={typeof sp.powiat === "string" ? sp.powiat : undefined} />
     </Strona>
   );
 }

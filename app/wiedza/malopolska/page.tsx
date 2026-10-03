@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ExternalLink } from "lucide-react";
 import { MapaWskaznikow } from "@/components/wiedza/mapa-wskaznikow";
 import { Zapytaj } from "@/components/wiedza/zapytaj";
@@ -30,6 +31,7 @@ export default async function Malopolska() {
       <section aria-labelledby="mapa-h" className="space-y-4">
         <h2 id="mapa-h" className="text-3xl font-extrabold">Mapa wskaźników w powiatach</h2>
         <MapaWskaznikow powiaty={mapa.powiaty} obszary={mapa.obszary} />
+        <p className="text-lg">Szukasz diagnozy dla swojej gminy? <Link href="/wiedza/powiat" className="font-semibold">Zobacz profile powiatów</Link>.</p>
       </section>
 
       <section aria-labelledby="zap-h" className="max-w-4xl space-y-4">

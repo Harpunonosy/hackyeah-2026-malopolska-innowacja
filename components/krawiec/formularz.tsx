@@ -46,13 +46,13 @@ function Liczba({ id, etykieta, wartosc, zmien }: { id: string; etykieta: string
   );
 }
 
-export function FormularzKrawca({ innowacje, poczatkowa }: { innowacje: Pozycja[]; poczatkowa?: string }) {
+export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { innowacje: Pozycja[]; poczatkowa?: string; poczatkowyPowiat?: string }) {
   const t = useTranslations("krawiec");
   const router = useRouter();
   const [wybrana, setWybrana] = React.useState<string | null>(poczatkowa ?? null);
   const [fraza, setFraza] = React.useState("");
   const [typ, setTyp] = React.useState<keyof typeof TYPY_INSTYTUCJI>("gmina");
-  const [powiat, setPowiat] = React.useState("");
+  const [powiat, setPowiat] = React.useState(poczatkowyPowiat?.replace(/^powiat\s+/, "") ?? "");
   const [odbiorcy, setOdbiorcy] = React.useState("50");
   const [kadra, setKadra] = React.useState("3");
   const [lata, setLata] = React.useState("3");

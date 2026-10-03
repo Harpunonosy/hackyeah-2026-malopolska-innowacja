@@ -80,7 +80,7 @@ type Zgloszenie = { powiat: string | null; obszar: ObszarId | null; najlepsze: n
 export async function wczytajZgloszenia(): Promise<Zgloszenie[]> {
   const { rows } = await db().query(
     `select powiat, obszar, najlepsze_dopasowanie as najlepsze, coalesce(tagi,'{}') as tagi, tresc_zamaskowana as tresc, created_at
-     from zgloszenia where created_at > now() - ($1 || ' weeks')::interval and obszar is not null and powiat is not null`,
+     from zgloszenia where created_at > now() - ($1 || ' weeks')::interval and obszar is not null and powiat is not null and typ in ('problem','wyzwanie')`,
     [String(OKRES_TYGODNI)],
   );
   return rows;
