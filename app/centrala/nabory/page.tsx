@@ -24,6 +24,15 @@ export default async function Nabory() {
         <h1 className="text-4xl font-bold sm:text-5xl">Nabory i wnioski</h1>
         <p className="mt-2 max-w-3xl text-lg text-muted">Otwarcie naboru włącza w Pracowni generator wniosków dla mieszkańców i organizacji. Szkice tematów z Radaru czekają tu na decyzję.</p>
       </div>
+      <section aria-labelledby="int-h" className="karta space-y-3 p-6">
+        <h2 id="int-h" className="text-2xl font-bold">Integracje z innymi systemami Hubu</h2>
+        <p className="text-muted">Eksporty i otwarte API przygotowują platformę do współpracy z bazą grantową i innymi narzędziami ROPS.</p>
+        <ul className="flex flex-wrap gap-3">
+          <li><a className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/api/admin/eksport/zgloszenia">Zgłoszenia (CSV)</a></li>
+          <li><a className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/api/admin/eksport/wnioski">Wnioski z naborów (JSON)</a></li>
+          <li><a className="inline-flex min-h-12 items-center rounded-xl border-2 border-fg px-4 font-semibold no-underline hover:bg-fg hover:text-bg" href="/api/v1/innowacje">Katalog innowacji, API tylko do odczytu (JSON)</a></li>
+        </ul>
+      </section>
       <ul className="space-y-5">
         {nabory.rows.map((n) => {
           const w = wnioski.rows.filter((x) => x.nabor_id === n.id);

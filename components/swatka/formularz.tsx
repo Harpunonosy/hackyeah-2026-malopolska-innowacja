@@ -281,6 +281,20 @@ function Wyniki({ wynik }: { wynik: WynikSwatki }) {
         </div>
       )}
 
+      {(wynik.podobnePrzypadki || wynik.fakty.length > 0) && (
+        <aside className="karta-mala space-y-2 p-5">
+          {wynik.podobnePrzypadki && (
+            <p className="font-semibold">{t("podobne", { liczba: wynik.podobnePrzypadki.liczba, zakres: wynik.podobnePrzypadki.zakres })}</p>
+          )}
+          {wynik.fakty[0] && (
+            <p className="text-muted">
+              <span className="font-bold text-fg">{t("fakty")}: </span>
+              {wynik.fakty[0].tekst} <span className="text-sm">({t("zrodlo", { zrodlo: wynik.fakty[0].zrodlo, strona: wynik.fakty[0].strona ?? "–" })})</span>
+            </p>
+          )}
+        </aside>
+      )}
+
       <div className="space-y-1 text-sm text-muted">
         <p>{t("oznaczenieAi")}</p>
         {wynik.zamaskowano.length > 0 && <p>{t("zamaskowano", { rodzaje: wynik.zamaskowano.join(", ") })}</p>}

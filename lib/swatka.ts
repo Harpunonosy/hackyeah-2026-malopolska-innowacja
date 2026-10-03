@@ -2,6 +2,7 @@
 // Przepływ: maskowanie -> wykrycie kryzysu -> AI (cały katalog w cache'owanym kontekście)
 // -> walidacja -> próg "brak dopasowania". Gdy AI zawiedzie, działa wyszukiwanie awaryjne.
 import { z } from "zod";
+import { db } from "./db";
 import { zapytajJson, AiNiedostepneError, DOMYSLNY_MODEL, type Effort, type UzycieAi } from "./ai";
 import { katalogDoPromptu, skroc, type Innowacja } from "./biblioteka";
 import { katalog } from "./katalog";
@@ -9,6 +10,7 @@ import { faktyDlaObszaru, type Fakt } from "./fakty";
 import { wykryjKryzys, type RodzajKryzysu } from "./kryzys";
 import { zamaskuj } from "./maskowanie";
 import { nazwaObszaru, OBSZARY, OBSZAR_IDS, type ObszarId } from "./obszary";
+import { normalizujPowiat } from "./powiaty";
 import { szukaj } from "./szukaj";
 
 export const PROG_DOPASOWANIA = 55;
@@ -64,6 +66,7 @@ export type WynikSwatki = {
   brakDopasowania: boolean;
   pytanie: string | null;
   fakty: Fakt[];
+  podobnePrzypadki: { liczba: number; zakres: string } | null;
   zamaskowano: string[];
   metryki: { czasMs: number; uzycie: UzycieAi | null };
 };
@@ -132,6 +135,7 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
     const slabsze = lista.filter((d) => d.trafnosc < PROG_DOPASOWANIA);
     const kryzysAi = dane.kryzys ? (kryzysRegula ?? "zycie") : kryzysRegula;
 
+    const podobne = await podobnePrzypadki(dane.obszar, wejscie.powiat);
     return {
       tryb: "ai",
       powodAwarii: null,
@@ -148,6 +152,7 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
       brakDopasowania: dobre.length === 0,
       pytanie: dane.pytanie_doprecyzowujace,
       fakty: faktyDlaObszaru(dane.obszar),
+      podobnePrzypadki: podobne,
       zamaskowano,
       metryki: { czasMs: Date.now() - start, uzycie },
     };
@@ -156,6 +161,21 @@ export async function dopasuj(wejscie: WejscieSwatki): Promise<WynikSwatki> {
     if (!(e instanceof AiNiedostepneError)) console.error("Swatka: nieoczekiwany błąd", e instanceof Error ? e.message : "?");
     else if (e.powod !== "brak_klucza") console.error("Swatka: AI niedostępne:", e.powod, e.message);
     return awaryjnie(mapa, tekst, zamaskowano, kryzysRegula, powod, Date.now() - start);
+  }
+}
+
+// Anonimowa informacja o podobnych sprawach. Pokazujemy ją dopiero od 5 zgłoszeń, żeby nie dało się zidentyfikować autora.
+async function podobnePrzypadki(obszar: string, powiat?: string): Promise<{ liczba: number; zakres: string } | null> {
+  try {
+    const p = normalizujPowiat(powiat);
+    if (p) {
+      const r = await db().query("select count(*)::int n from zgloszenia where obszar=$1 and powiat=$2 and created_at > now() - interval '6 months'", [obszar, p]);
+      if (r.rows[0].n >= 5) return { liczba: r.rows[0].n, zakres: `w powiecie ${p.replace("powiat ", "")}` };
+    }
+    const r = await db().query("select count(*)::int n from zgloszenia where obszar=$1 and created_at > now() - interval '6 months'", [obszar]);
+    return r.rows[0].n >= 5 ? { liczba: r.rows[0].n, zakres: "w Małopolsce" } : null;
+  } catch {
+    return null;
   }
 }
 
@@ -183,6 +203,7 @@ function awaryjnie(
     brakDopasowania: karty.length === 0,
     pytanie: null,
     fakty: [],
+    podobnePrzypadki: null,
     zamaskowano,
     metryki: { czasMs, uzycie: null },
   };

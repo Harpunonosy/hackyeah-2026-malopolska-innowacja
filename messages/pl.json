@@ -186,7 +186,8 @@
     "twojOpis": "Twój opis",
     "przykladDla": "Znaleźliśmy {ile, plural, one {# rozwiązanie} few {# rozwiązania} many {# rozwiązań} other {# rozwiązania}} dla Ciebie",
     "szukamTytul": "Szukamy rozwiązań dla Ciebie",
-    "wdroz": "Wdróż u siebie"
+    "wdroz": "Wdróż u siebie",
+    "podobne": "Nie jesteś sam ani sama: w ciągu ostatnich 6 miesięcy {liczba} osób {zakres} zgłosiło podobną sprawę."
   },
   "kryzys": {
     "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",

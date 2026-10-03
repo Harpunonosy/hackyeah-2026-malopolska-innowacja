@@ -32,6 +32,20 @@ Splot łączy każdą potrzebę zgłoszoną w Małopolsce ze sprawdzoną innowac
 
 Źródła danych: ROPS Kraków (Biblioteka Innowacji, Mapa Wyzwań, IOSS, raporty, kanwa INNO AGH), GUS, NIK. Linki w [PLAN.md, rozdział 24](PLAN.md#24-źródła). Odświeżenie danych: `python3 scripts/scrape_biblioteka.py` i `python3 scripts/scrape_ioss.py`.
 
+## Status modułów (4.10.2026, rano)
+
+| Moduł | Gdzie | Stan |
+|---|---|---|
+| I. Swatka | `/`, `/problem` | działa: tekst i głos, uzasadnienia, podobne sprawy (od 5 zgłoszeń), fakty z raportów, tryb awaryjny |
+| II. Skarbnica | `/wiedza/biblioteka`, `/wiedza/malopolska` | Biblioteka z wyszukiwarką, Kondycja Małopolski, pytania do raportów, materiały; trendy tylko w Centrali |
+| III. Pracownia | `/pomysl` | fiszka, kanwa INNO AGH, ocena wg karty IWS 2.0, generator wniosku tylko przy otwartym naborze |
+| IV. Próbownia | `/testy` | otwarte testy, zapisy, opinie o rozwiązaniach |
+| V. Rynek | `/rynek`, `/moje` | pytania do ROPS i ekspertów, wątek z autorem, tablica partnerstw |
+| VI. Centrala | `/centrala` (hasło) | skrzynka, pomysły i opinie, nabory i wnioski, treści (import AI), Radar, eksporty CSV/JSON |
+| VII. Krawiec | `/wdrozenie` | plan wdrożenia i kwalifikowalność do „Usługi Wrażliwej” |
+
+Otwarte API (tylko do odczytu): `GET /api/v1/innowacje`.
+
 ## Uruchomienie
 
 ```bash
