@@ -27,4 +27,6 @@ Checkout nie zawiera `.env.local`, Node.js ani przeglądarki. Node.js i czytnik 
 
 ## Wynik weryfikacji
 
-45/45 testów (bez pominięć), TypeScript i ESLint przeszły. Sprawdzono transakcje, konflikty edycji, rollback importu, odtworzenie i ponowne migracje, komunikację z natywnym Notification oraz dostępność nowych ekranów (axe 0, 320 px bez overflow). Build przeszedł przed końcową korektą invalidacji cache; końcową korektę sprawdzono testami, TypeScript i ESLint. Na prośbę użytkownika nie uruchamiano kolejnych usług ani globalnej regresji na VM. Własne usługi testowe zatrzymano. Migracje 013–014 pozostają do zastosowania na docelowej bazie przez użytkownika przed wdrożeniem.
+Pierwszy pełny przebieg: 45/45 testów (bez pominięć), TypeScript i ESLint przeszły. Sprawdzono transakcje, konflikty edycji, rollback importu, odtworzenie i ponowne migracje, komunikację z natywnym Notification oraz dostępność nowych ekranów (axe 0, 320 px bez overflow). Własne usługi testowe zatrzymano.
+
+Wersja do bezpośredniego pushowania: Vercel automatycznie zastosuje migracje 013–014 przed buildem, przez istniejące DATABASE_URL. Końcowy build i lint przeszły. Po dodaniu kroku wdrożenia: 45 PASS, 0 FAIL, 7 SKIP (testy bazy bez ponownego uruchamiania usług); w tym 7 nowych testów migratora. Nie łączono się z bazą docelową ani nie uruchamiano ponownie serwera lub PostgreSQL na VM.

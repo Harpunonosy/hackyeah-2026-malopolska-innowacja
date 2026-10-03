@@ -5,6 +5,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "build:vercel": "node scripts/migruj.mjs && npm run build",
     "start": "next start",
     "lint": "eslint",
     "test": "tsx --test tests/*.test.ts lib/*.test.ts scripts/odpytywanie.test.ts"

@@ -59,7 +59,7 @@ npx tsx scripts/eval-swatka.ts --lex                   # to samo bez AI (wyszuki
 
 Stos: Next.js 16, React 19, Tailwind 4, `radix-ui`, `next-intl`, Anthropic SDK, zod. Zależności i licencje: `docs/zaleznosci.md`.
 
-Przed wdrożeniem aktualizacji na istniejącej bazie zastosuj `db/013_akademia.sql` i `db/014_odtwarzalnosc.sql`. Instrukcja i zmienne Vercela: [docs/WDROZENIE.md](docs/WDROZENIE.md). Testy logiki: `npm test`; testy integracyjne wymagają oddzielnej bazy testowej opisanej w instrukcji.
+Aktualizacja istniejącego demo na Vercelu: push do podłączonego repozytorium. Konfiguracja `vercel.json` automatycznie wykonuje migracje 013–014 przez istniejące `DATABASE_URL`, a następnie buduje aplikację. Instrukcja i zmienne Vercela: [docs/WDROZENIE.md](docs/WDROZENIE.md). Testy logiki: `npm test`; testy integracyjne wymagają oddzielnej bazy testowej opisanej w instrukcji.
 
 ## Status
 

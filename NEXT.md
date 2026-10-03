@@ -1,5 +1,9 @@
 # Aktualizacja po domknięciu wymagań HubMI
 
+**Wersja do bezpośredniego pushowania na Vercel:** dodano `vercel.json` i `npm run build:vercel`. Migracje 013–014 wykonują się automatycznie przez istniejące `DATABASE_URL` przed buildem, w transakcji z blokadą i dziennikiem SHA256/RLS. Nie trzeba ręcznie stosować migracji. Starsza instrukcja ręcznego SQL poniżej jest zastąpiona tym krokiem. Nie uruchamiano ponownie serwera ani PostgreSQL na VM; nie łączono się z docelową bazą. Użytkownik wykona push i przetestuje deployment.
+
+Weryfikacja tej wersji: końcowy `npm run build` (z TypeScript) i lint przeszły. `npm test`: 45 PASS, 0 FAIL, 7 SKIP (testy wymagające bazy; wcześniej wszystkie siedem przeszło). Siedem nowych testów kroku migracji przeszło; obejmują transakcję, rollback, dziennik, pomijanie zastosowanych plików, zmianę SHA256 i konfigurację Vercela. Sprawdzono również, że brak `DATABASE_URL` zatrzymuje `build:vercel` przed buildem aplikacji. Automatycznego kroku nie wykonywano na docelowej bazie z VM; wykona go Vercel podczas wdrożenia.
+
 Poniższy blok zastępuje informacje o brakach i niezacommitowanych zmianach ze starszego przekazania. Przeczytano `hub.pdf`, `PLAN.md`, `NEXT.md` i `DROGA_DO_90.md`.
 
 - Gotowe: `/centrala/akademia` (szkice, publikacja, wersja łatwa, quiz, źródła, konflikty edycji i dziennik) oraz `/centrala/dane` (CSV IOSS, podgląd, walidacja, atomowy import i dziennik). Publiczne lekcje zachowują zatwierdzoną wersję podczas edycji szkicu.
@@ -7,7 +11,7 @@ Poniższy blok zastępuje informacje o brakach i niezacommitowanych zmianach ze 
 - Komunikacja sprawdzona w Chromium: nowy pomysł → Centrala → natywne `Notification` → odpowiedź ROPS → autor. Powiadomienie po 1806 ms w osobnej lokalnej bazie. Awaria sieci nie zatrzymuje odpytywania; starsze sprawy spoza pierwszych 200 nie wywołują fałszywych powiadomień.
 - Uzupełniono teksty PL/UK nowych ścieżek oraz brakujące ukraińskie teksty Sieci i trybu asystowanego.
 - Pełny zestaw: **45/45 testów, zero pominiętych**, TypeScript i ESLint bez błędów. Sprawdzono odtwarzanie schematu i powtórne migracje na oddzielnej bazie. Nowe ekrany Akademii i IOSS: axe 0 naruszeń, 320 px bez overflow; quiz sprawdzony klawiaturą. Pełny build przeszedł przed końcową korektą invalidacji cache; tę korektę objęły końcowe testy, TypeScript i ESLint. Nie powtórzono globalnej regresji przeglądarkowej wszystkich stron.
-- **Przed Vercel:** zastosuj `db/013_akademia.sql` i `db/014_odtwarzalnosc.sql` na docelowej bazie. Naprawiono brakujące `nabory.schemat`. Migracji nie wykonywano na wspólnej bazie demo — checkout nie zawierał jej połączenia. Instrukcja: `docs/WDROZENIE.md`.
+- **Vercel:** migracje `db/013_akademia.sql` i `db/014_odtwarzalnosc.sql` wykona automatyczny build po pushu. Naprawiono brakujące `nabory.schemat`. Nie łączono się z docelową bazą z VM — checkout nie zawierał jej połączenia. Instrukcja: `docs/WDROZENIE.md`.
 - Wszystkie zmiany zapisane lokalnie, bez pushowania i bez współautora. Użytkownik sam wypchnie repozytorium i uruchomi Vercel. Na jego prośbę zatrzymano własny serwer testowy i lokalny PostgreSQL; nie uruchamiać kolejnych usług na tej VM bez nowego polecenia.
 - Haiku pozostaje bez zmian; e-mail/SMS nadal symulowane. Nie wykonywano nowych płatnych testów AI ani badań z ludźmi/czytnikiem ekranu. Nie przygotowywano slajdów ani filmu.
 

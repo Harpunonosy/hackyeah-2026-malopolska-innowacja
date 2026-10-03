@@ -97,7 +97,7 @@ Pozostałe funkcje AI nie były mierzone tak samo. W tabeli kosztów na slajd po
    - `SESSION_SECRET`: co najmniej 16 losowych znaków;
    - `DEMO_ADMIN_PASSWORD`: hasło do Centrali w demo;
    - `SPLOT_URL`: publiczny adres (linki w webhookach i kodach QR).
-4. Budowanie: `npm ci && npm run build && npm start` (albo połączenie repozytorium z Vercelem).
+4. Budowanie: `npm ci && npm run build && npm start`. Na istniejącym demo Vercela wystarczy push do podłączonego repozytorium: `vercel.json` uruchamia `npm run build:vercel`, czyli migracje 013–014 przez `DATABASE_URL`, następnie build aplikacji.
 5. Kontrola: `npx tsc --noEmit`, `npm run lint`, `scripts/a11y-i-zrzuty.ts` (axe, WCAG 2.1 AA), `scripts/szerokosc-320.ts` (reflow), `scripts/eval-swatka.ts` (trafność).
 
 ## 8. Inne województwo albo inny ośrodek
@@ -126,17 +126,19 @@ To szacunek zespołu, a nie pomiar. Do potwierdzenia w pilotażu.
 
 - **Materiały edukacyjne** (`/centrala/akademia`): treść, wersja łatwa, quiz i źródła. Zapis szkicu zachowuje publiczną wersję; publikacja aktualizuje ją bez restartu. Konflikt równoczesnej edycji nie nadpisuje cudzej pracy. Zapis i dziennik działają w jednej transakcji.
 - **Dane IOSS** (`/centrala/dane`): UTF-8 CSV z sześcioma kolumnami zgodnymi z `data/zrodla/ioss_powiaty.csv`. Administrator ogląda podgląd przed zatwierdzeniem. Cały plik przechodzi walidację; błąd albo awaria dziennika wycofuje cały import. Podpis podglądu wiąże zatwierdzenie z dokładnie sprawdzonym plikiem. Limit 1 MB, 10 000 wierszy.
-- Nowe migracje: `013_akademia.sql` (szkice/publikacje oraz RLS), `014_odtwarzalnosc.sql` (brakujące `nabory.schemat`, generator wniosków). Na istniejącej bazie stosuj oba pliki w tej kolejności. Na czystej bazie najpierw `schema.sql`, potem wszystkie numerowane migracje rosnąco. Migracje sprawdzono również przy ponownym zastosowaniu.
+- Nowe migracje: `013_akademia.sql` (szkice/publikacje oraz RLS), `014_odtwarzalnosc.sql` (brakujące `nabory.schemat`, generator wniosków). Na Vercelu wykonują się automatycznie przed buildem, przez istniejące `DATABASE_URL`. Nie trzeba ręcznie wykonywać SQL. Na czystej bazie najpierw `schema.sql`, potem wszystkie numerowane migracje rosnąco; automatyczny krok aktualizuje istniejące demo z migracjami do 012. Migracje sprawdzono również przy ponownym zastosowaniu.
 - Nie zmieniono modelu AI i nie dodano zależności produkcyjnych. E-mail oraz SMS nadal są symulowane.
 
 ```bash
-psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -1 -f db/013_akademia.sql
-psql "$DATABASE_URL" -v ON_ERROR_STOP=1 -1 -f db/014_odtwarzalnosc.sql
 npm test
 npx tsc --noEmit
 npm run lint
 npm run build
 ```
+
+Konfiguracja Vercela jest w repozytorium i nadpisuje polecenie builda w panelu ([dokumentacja `buildCommand`](https://vercel.com/docs/project-configuration/vercel-json#buildcommand)). `scripts/migruj.mjs` używa istniejącego sterownika `pg`, nie wymaga `psql` ani nowych zależności. Migruje w jednej transakcji z blokadą `pg_advisory_xact_lock`, zgodną z poolerem transakcyjnym Supabase. Dziennik `public.splot_migracje` z RLS przechowuje sumy SHA256, więc kolejne wdrożenia pomijają zastosowane pliki. Migracje wykonane wcześniej ręcznie są bezpiecznie ponawiane przez `IF NOT EXISTS`, a następnie zapisane w dzienniku. Błąd połączenia, uprawnień albo SQL zatrzymuje build; nie publikujemy aplikacji z niepełną migracją. `DATABASE_URL` musi być dostępne również podczas builda i wskazywać rolę właściciela istniejącej bazy.
+
+Przy wdrożeniu poza Vercelem migracje można wykonać jawnie: `node --env-file=.env.local scripts/migruj.mjs`. Zwykłe `npm run build` nie łączy się z bazą w celu migracji.
 
 `npm test` uruchamia testy walidacji i logiki; testy bazy są pomijane bez jawnej konfiguracji testowej. Pełny przebieg wymaga odrębnej bazy (nigdy współdzielonego demo): `DATABASE_URL`, `IOSS_TEST_DATABASE_URL`, `SCHEMA_TEST_DATABASE_URL`. Test Akademii dodatkowo wymusza lokalny `localhost:55432/splot_test`. `SCHEMA_TEST_WITHOUT_VECTOR=1` pozwala testować migracje lokalnie bez pgvector, jawnie zamieniając wyłącznie nieużywaną w tych testach kolumnę embedding na text; nie stanowi to testu wyszukiwania wektorowego.
 
