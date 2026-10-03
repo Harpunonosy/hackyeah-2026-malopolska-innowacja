@@ -21,6 +21,7 @@ export function FormularzPomyslu() {
   const [wynik, setWynik] = React.useState<WynikAnalizy | null>(null);
   const [fiszka, setFiszka] = React.useState<WynikAnalizy["fiszka"] | null>(null);
   const [kanwa, setKanwa] = React.useState<KanwaStan | null>(null);
+  const [numer, setNumer] = React.useState<string | null>(null);
   const [wysylka, setWysylka] = React.useState<"" | "wysylam" | "ok" | "blad">("");
 
   async function analizuj(e: React.FormEvent) {
@@ -53,6 +54,7 @@ export function FormularzPomyslu() {
       headers: { "content-type": "application/json" },
       body: JSON.stringify({ kanwa, tytul: fiszka.tytul, opis: fiszka.krotki_opis, istota: fiszka.istota, dla_kogo: fiszka.dla_kogo, etap: fiszka.etap, oceny: wynik.oceny, podobne: wynik.podobne }),
     });
+    if (r.ok) setNumer((await r.json()).numer ?? null);
     setWysylka(r.ok ? "ok" : "blad");
   }
 
@@ -167,7 +169,15 @@ export function FormularzPomyslu() {
 
           <div className="karta flex flex-wrap items-center gap-4 p-6">
             {wysylka === "ok" ? (
-              <p role="status" className="text-lg"><strong>{t("wyslano")}.</strong> {t("wyslanoOpis")}</p>
+              <div role="status" className="space-y-3">
+                <p className="text-lg"><strong>{t("wyslano")}.</strong> {t("wyslanoOpis")}</p>
+                {numer && (
+                  <>
+                    <p className="text-lg">{t("numerSprawy")}: <strong className="font-mono text-2xl">{numer}</strong> <span className="text-muted">{t("zachowajNumer")}</span></p>
+                    <Button asChild><Link href={`/moje/${numer}`}>{t("sprawdzStatus")}</Link></Button>
+                  </>
+                )}
+              </div>
             ) : (
               <>
                 <Button type="button" rozmiar="lg" onClick={wyslij} disabled={wysylka === "wysylam"}>{wysylka === "wysylam" ? t("wysylam") : t("wyslij")}</Button>

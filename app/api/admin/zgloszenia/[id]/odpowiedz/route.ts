@@ -1,6 +1,7 @@
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { czyAdmin } from "@/lib/sesja";
+import { powiadom } from "@/lib/powiadomienia";
 import { zmienStatus } from "@/lib/zgloszenia";
 
 const Wejscie = z.object({ tresc: z.string().trim().min(3).max(3000), zAi: z.boolean().default(false) });
@@ -21,12 +22,8 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   await c.query("insert into wiadomosci (watek_id, tresc, wygenerowane_przez_ai) values ($1,$2,$3)", [watek, w.data.tresc, w.data.zAi]);
   await zmienStatus(id, "odpowiedz", "Odpowiedź ROPS");
 
-  // Powiadomienie autora (w MVP symulowane: zapis z podglądem treści; SMTP i bramka SMS na mapie drogowej).
-  if (z.rows[0].autor_id) {
-    await c.query(
-      "insert into powiadomienia (uzytkownik_id, typ, tresc, link, kanal) values ($1,'odpowiedz',$2,$3,'email')",
-      [z.rows[0].autor_id, `Masz odpowiedź na zgłoszenie ${z.rows[0].numer}: ${w.data.tresc.slice(0, 160)}`, `/moje/${z.rows[0].numer}`],
-    );
-  }
+  await c.query("update zgloszenia set pierwsza_odpowiedz_at = coalesce(pierwsza_odpowiedz_at, now()) where id=$1", [id]);
+  // Powiadomienie autora (w MVP symulowane: widoczne w "Moje sprawy" i w skrzynce nadawczej Centrali).
+  await powiadom({ adresat: "autor", typ: "odpowiedz", tresc: `Masz odpowiedź na sprawę ${z.rows[0].numer}: ${w.data.tresc.slice(0, 160)}`, link: `/moje/${z.rows[0].numer}`, numerSprawy: z.rows[0].numer, kanal: z.rows[0].autor_id ? "email" : "aplikacja" });
   return Response.json({ ok: true });
 }

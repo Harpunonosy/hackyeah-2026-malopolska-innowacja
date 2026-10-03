@@ -1,17 +1,18 @@
 import Link from "next/link";
 import { db } from "@/lib/db";
 
-type Aktywna = "skrzynka" | "pomysly" | "nabory" | "tresci" | "radar";
+type Aktywna = "skrzynka" | "pomysly" | "nabory" | "tresci" | "radar" | "powiadomienia";
 
 async function liczniki() {
   try {
-    const [z, f] = await Promise.all([
+    const [z, f, p] = await Promise.all([
       db().query("select count(*)::int as n from zgloszenia where status = 'wyslane'"),
       db().query("select count(*)::int as n from fiszki where status = 'zgloszona'"),
+      db().query("select count(*)::int as n from powiadomienia where adresat='rops' and przeczytane_at is null"),
     ]);
-    return { zgloszenia: z.rows[0].n as number, fiszki: f.rows[0].n as number };
+    return { zgloszenia: z.rows[0].n as number, fiszki: f.rows[0].n as number, powiadomienia: p.rows[0].n as number };
   } catch {
-    return { zgloszenia: 0, fiszki: 0 };
+    return { zgloszenia: 0, fiszki: 0, powiadomienia: 0 };
   }
 }
 
@@ -23,6 +24,7 @@ export async function CentralaNav({ aktywna }: { aktywna: Aktywna }) {
     { id: "nabory", href: "/centrala/nabory", etykieta: "Nabory i wnioski", licznik: 0 },
     { id: "tresci", href: "/centrala/tresci", etykieta: "Treści", licznik: 0 },
     { id: "radar", href: "/centrala/radar", etykieta: "Radar potrzeb", licznik: 0 },
+    { id: "powiadomienia", href: "/centrala/powiadomienia", etykieta: "Powiadomienia", licznik: n.powiadomienia },
   ] as const;
   return (
     <nav aria-label="Centrala" className="mb-6 flex flex-wrap gap-2 border-b-2 border-line-soft pb-4">

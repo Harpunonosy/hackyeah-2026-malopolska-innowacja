@@ -262,7 +262,13 @@
     "odswiezanie": "Status odświeża się sam co kilka sekund.",
     "napisz": "Chcesz coś dopisać?",
     "wyslijOdp": "Wyślij wiadomość",
-    "wyslanoOdp": "Wiadomość wysłana. ROPS ją zobaczy."
+    "wyslanoOdp": "Wiadomość wysłana. ROPS ją zobaczy.",
+    "odpowiedzianoW": "Pierwsza odpowiedź po {czas}",
+    "terminOdpowiedzi": "Odpowiemy do {data}",
+    "powiadomienia": "Powiadomienia",
+    "kanalEmail": "e-mail (symulacja)",
+    "kanalAplikacja": "w aplikacji",
+    "otworz": "otwórz"
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -272,7 +278,7 @@
     "krok2": "Opisz swoją instytucję",
     "krok3": "Przygotuj plan",
     "szukaj": "Szukaj innowacji",
-    "szukajPlaceholder": "Na przykład: Senior CUDER, leki, autyzm",
+    "szukajPlaceholder": "Na przykład: Strażnik, leki, autyzm",
     "wybrana": "Wybrana innowacja",
     "zmien": "Zmień",
     "typ": "Rodzaj instytucji",
@@ -372,7 +378,7 @@
     "wyslij": "Wyślij pomysł do ROPS",
     "wysylam": "Wysyłam…",
     "wyslano": "Pomysł wysłany",
-    "wyslanoOpis": "Pracownicy ROPS zobaczą Twoją fiszkę. Dziękujemy za pomysł.",
+    "wyslanoOpis": "Pracownicy ROPS dostali powiadomienie i odpowiedzą w systemie. Numer sprawy pozwoli Ci sprawdzić status bez logowania.",
     "blad2": "Nie udało się wysłać. Spróbuj ponownie.",
     "oznaczenie": "Fiszka i ocena przygotowane z pomocą AI. Sprawdź je przed wysłaniem.",
     "kanwa": "Kanwa innowacji (INNO AGH)",
@@ -420,7 +426,10 @@
     "zlozWniosek": "Złóż wniosek w ROPS",
     "zlozony": "Wniosek złożony. ROPS zobaczy go w panelu naboru.",
     "drukujWniosek": "Drukuj lub zapisz jako PDF",
-    "znaki": "{n} znaków"
+    "znaki": "{n} znaków",
+    "numerSprawy": "Numer sprawy",
+    "sprawdzStatus": "Sprawdź status",
+    "zachowajNumer": "Zapisz ten numer albo zrób zdjęcie ekranu."
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",
@@ -438,7 +447,7 @@
     "emailPomoc": "Podaj go, jeśli chcesz dostać przypomnienie o terminie.",
     "zapisz": "Zapisz mnie",
     "zapisujac": "Zapisuję…",
-    "zapisano": "Jesteś zapisany. Dziękujemy!",
+    "zapisano": "Zapisaliśmy Cię. Dziękujemy!",
     "pelny": "Brak wolnych miejsc",
     "blad": "Nie udało się zapisać. Spróbuj ponownie.",
     "ocenTytul": "Oceń rozwiązanie z Biblioteki",

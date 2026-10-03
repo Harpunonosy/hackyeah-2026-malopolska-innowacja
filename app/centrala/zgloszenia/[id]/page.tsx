@@ -7,6 +7,7 @@ import { Chip } from "@/components/ui/chip";
 import { db } from "@/lib/db";
 import { nazwaObszaru, type ObszarId } from "@/lib/obszary";
 import { czyAdmin } from "@/lib/sesja";
+import { ETYKIETY_TYPOW, type TypSprawy } from "@/lib/sprawy-etykiety";
 import { ETYKIETY_PRIORYTETU, ETYKIETY_STATUSOW, type Status } from "@/lib/statusy";
 import { zmienStatus } from "@/lib/zgloszenia";
 
@@ -30,7 +31,7 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
     c.query("select i.id, i.nazwa, i.kategoria, d.trafnosc, d.dlaczego from dopasowania d join innowacje i on i.id=d.innowacja_id where d.zgloszenie_id=$1 order by d.pozycja", [id]),
     c.query("select status, notatka, at from historia_statusu where zgloszenie_id=$1 order by at", [id]),
     c.query("select w.tresc, w.created_at, w.wygenerowane_przez_ai, w.od from wiadomosci w join watki t on t.id=w.watek_id where t.typ='zgloszenie' and t.obiekt_id=$1 order by w.created_at", [id]),
-    z.autor_id ? c.query("select typ, tresc, kanal, created_at from powiadomienia where uzytkownik_id=$1 order by created_at desc limit 5", [z.autor_id]) : Promise.resolve({ rows: [] }),
+    c.query("select typ, tresc, kanal, created_at from powiadomienia where adresat='autor' and numer_sprawy=$1 order by created_at desc limit 5", [z.numer]),
   ]);
 
   return (
@@ -40,9 +41,10 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
       </p>
       <header className="space-y-3">
         <h1 className="text-4xl font-bold">
-          Zgłoszenie <span className="font-mono">{z.numer}</span>
+          {ETYKIETY_TYPOW[z.typ as TypSprawy] ?? "Zgłoszenie"} <span className="font-mono">{z.numer}</span>
         </h1>
         <div className="flex flex-wrap gap-2">
+          {z.tytul && <Chip>{z.tytul}</Chip>}
           {z.kryzys && <Chip className="border-primary bg-primary text-primary-fg">Kryzys, odpowiedz natychmiast</Chip>}
           <Chip>{ETYKIETY_STATUSOW[z.status as Status].etykieta}</Chip>
           <Chip>Priorytet: {ETYKIETY_PRIORYTETU[z.priorytet]}</Chip>
@@ -53,6 +55,10 @@ export default async function Page(props: PageProps<"/centrala/zgloszenia/[id]">
         </div>
         <p className="text-muted">Wpłynęło {fmt(z.created_at)}. Termin odpowiedzi {fmt(z.termin_sla)}.</p>
       </header>
+
+      {z.typ === "pomysl" && z.obiekt_id && (
+        <p><Link href="/centrala/pomysly">Zobacz pełną fiszkę i ocenę wstępną w panelu pomysłów</Link></p>
+      )}
 
       <section aria-labelledby="tresc-h" className="space-y-2">
         <h2 id="tresc-h" className="text-2xl font-bold">Treść (dane osobowe zamaskowane)</h2>

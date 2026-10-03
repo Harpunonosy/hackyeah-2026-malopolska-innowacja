@@ -5,7 +5,9 @@ import { useTranslations } from "next-intl";
 import { CheckCircle2, Circle } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
+import { Chip } from "@/components/ui/chip";
 import { ETYKIETY_STATUSOW, STATUSY, type Status } from "@/lib/statusy";
+import { ETYKIETY_TYPOW, type TypSprawy } from "@/lib/sprawy-etykiety";
 
 type Dane = {
   numer: string;
@@ -14,8 +16,18 @@ type Dane = {
   wiadomosci: { tresc: string; created_at: string; wygenerowane_przez_ai: boolean; od: string }[];
   dopasowania: { id: string; nazwa: string; dlaczego: string | null }[];
   ocena_pomocy: number | null;
+  created_at: string;
+  typ: string;
+  tytul: string | null;
+  termin_sla: string;
+  pierwsza_odpowiedz_at: string | null;
+  powiadomienia: { typ: string; tytul: string; tresc: string; link: string | null; kanal: string; created_at: string }[];
 };
 
+function czasOdpowiedzi(od: string, do_: string) {
+  const min = Math.max(1, Math.round((new Date(do_).getTime() - new Date(od).getTime()) / 60000));
+  return min < 120 ? `${min} min` : min < 2880 ? `${Math.round(min / 60)} godz.` : `${Math.round(min / 1440)} dni`;
+}
 const fmt = (d: string) => new Date(d).toLocaleString("pl-PL", { dateStyle: "medium", timeStyle: "short" });
 
 export function StatusZgloszenia({ numer }: { numer: string }) {
@@ -55,6 +67,15 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
 
   return (
     <div className="space-y-8">
+      <p className="flex flex-wrap items-center gap-2">
+        <Chip>{ETYKIETY_TYPOW[dane.typ as TypSprawy] ?? dane.typ}</Chip>
+        {dane.tytul && <span className="font-display text-xl font-bold">{dane.tytul}</span>}
+        <span className="text-muted">
+          {dane.pierwsza_odpowiedz_at
+            ? t("odpowiedzianoW", { czas: czasOdpowiedzi(dane.created_at, dane.pierwsza_odpowiedz_at) })
+            : t("terminOdpowiedzi", { data: fmt(dane.termin_sla) })}
+        </span>
+      </p>
       <section aria-labelledby="os-czasu" className="space-y-3">
         <h2 id="os-czasu" className="text-2xl font-bold">
           {t("os")}
@@ -128,6 +149,21 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
               </div>
             )}
           </div>
+        </section>
+      )}
+
+      {dane.powiadomienia.length > 0 && (
+        <section aria-labelledby="pow" className="space-y-3" aria-live="polite">
+          <h2 id="pow" className="text-2xl font-bold">{t("powiadomienia")}</h2>
+          <ul className="space-y-2">
+            {dane.powiadomienia.map((p) => (
+              <li key={p.created_at + p.typ} className="karta-mala space-y-1 p-4">
+                <p className="font-bold">{p.tytul}</p>
+                <p>{p.tresc}</p>
+                <p className="text-sm text-muted">{fmt(p.created_at)} · {p.kanal === "email" ? t("kanalEmail") : t("kanalAplikacja")}{p.link && <> · <Link href={p.link}>{t("otworz")}</Link></>}</p>
+              </li>
+            ))}
+          </ul>
         </section>
       )}
 

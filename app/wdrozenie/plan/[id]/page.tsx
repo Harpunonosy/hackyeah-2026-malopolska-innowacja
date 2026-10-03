@@ -10,7 +10,7 @@ import { Chip } from "@/components/ui/chip";
 import { Strona } from "@/components/strona";
 import { innowacjaPoIdAsync } from "@/lib/katalog";
 import { db } from "@/lib/db";
-import { BUDZETY, TYPY_INSTYTUCJI, type Kwalifikowalnosc, type PlanWdrozenia, type TypInstytucji } from "@/lib/krawiec";
+import { BUDZETY, NABOR_ETYKIETA, TYPY_INSTYTUCJI, type Kwalifikowalnosc, type PlanWdrozenia, type TypInstytucji } from "@/lib/krawiec";
 
 export const metadata: Metadata = { title: "Plan wdrożenia" };
 
@@ -52,6 +52,7 @@ export default async function Plan(props: PageProps<"/wdrozenie/plan/[id]">) {
           <Chip>{profil.powiat.replace("powiat ", "")}</Chip>
           <Chip>{profil.odbiorcy} odbiorców</Chip>
           <Chip>{BUDZETY[profil.budzet]}</Chip>
+          <Chip>{NABOR_ETYKIETA}</Chip>
         </p>
         <p className="karta-mala flex items-start gap-3 border-2 border-accent p-4">
           <Sparkles aria-hidden className="mt-0.5 size-5 shrink-0" />

@@ -31,10 +31,36 @@ export type ProfilInstytucji = z.infer<typeof ProfilInstytucji>;
 export type WynikWarunku = "spelnia" | "nie_spelnia" | "do_sprawdzenia";
 export type Kwalifikowalnosc = { id: string; warunek: string; wynik: WynikWarunku; uwaga: string }[];
 
+// Innowacje z kategorii naboru "Usługa Wrażliwa" 2025/2026 (data/nabory_rops.json, kategorie_naboru_2025_2026).
+export const INNOWACJE_NABORU: Record<string, string> = {
+  "bez-presji-z-depresji": "Bez presji z depresji",
+  straznik: "Strażnik (Alarm Ally)",
+  "himalaje-autyzmu": "Himalaje Autyzmu",
+  "rodzina-adopcyjna-dorasta": "Rodzina Adopcyjna Dorasta",
+  "gluchy-czytelnik-w-bibliotece": "Głuchy czytelnik w bibliotece",
+};
+export const NABOR_ETYKIETA = "Na zasadach naboru „Usługa Wrażliwa” 2025/2026";
+
 export function sprawdzKwalifikowalnosc(p: ProfilInstytucji): Kwalifikowalnosc {
   const opisy = Object.fromEntries(nabory.usluga_wrazliwa_wdrozenia.warunki_kwalifikowalnosci.map((w) => [w.id, w.warunek]));
   const oswiadczenie = "Potwierdza wnioskodawca w oświadczeniu. Sprawdź przed złożeniem wniosku.";
+  const wNaborze = p.innowacjaId in INNOWACJE_NABORU;
   const wynik: Kwalifikowalnosc = [
+    {
+      id: "kategoria", warunek: "Innowacja należy do jednej z 5 kategorii naboru (wniosek składa się na jedną kategorię)",
+      wynik: wNaborze ? "spelnia" : "nie_spelnia",
+      uwaga: wNaborze
+        ? `Kategoria naboru: ${INNOWACJE_NABORU[p.innowacjaId]}.`
+        : "Ta innowacja nie jest w kategoriach naboru 2025/2026 (Bez presji z depresji, Strażnik, Himalaje Autyzmu, Rodzina Adopcyjna Dorasta, Głuchy czytelnik w bibliotece). Inne źródła: budżet gminy lub powiatu, zlecanie zadań organizacjom, kolejne nabory FEM.",
+    },
+    {
+      id: "termin", warunek: "Nabór jest otwarty (składanie wniosków 22.12.2025–30.01.2026)",
+      wynik: "do_sprawdzenia", uwaga: "Nabór 2025/2026 jest zakończony. Plan jest przygotowaniem do kolejnego naboru; sprawdź ogłoszenia ROPS.",
+    },
+    {
+      id: "jednostka_wm", warunek: "Wnioskodawca nie jest jednostką organizacyjną Województwa Małopolskiego",
+      wynik: "do_sprawdzenia", uwaga: "Takie jednostki są wykluczone z naboru. Potwierdza wnioskodawca w oświadczeniu.",
+    },
     {
       id: "uprawniony", warunek: "Uprawniony typ podmiotu (jednostka sektora finansów publicznych, osoba prawna lub jednostka z zdolnością prawną)",
       wynik: p.typ === "inna" ? "do_sprawdzenia" : "spelnia", uwaga: p.typ === "inna" ? "Sprawdź formę prawną instytucji." : TYPY_INSTYTUCJI[p.typ],

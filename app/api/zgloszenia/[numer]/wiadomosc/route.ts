@@ -2,6 +2,7 @@ import { z } from "zod";
 import { db } from "@/lib/db";
 import { czyWolno } from "@/lib/limit";
 import { zamaskuj } from "@/lib/maskowanie";
+import { powiadom } from "@/lib/powiadomienia";
 import { zmienStatus } from "@/lib/zgloszenia";
 
 export async function POST(req: Request, ctx: { params: Promise<{ numer: string }> }) {
@@ -17,5 +18,6 @@ export async function POST(req: Request, ctx: { params: Promise<{ numer: string 
   if (!watek) watek = (await c.query("insert into watki (typ, obiekt_id, temat) values ('zgloszenie',$1,$2) returning id", [z0.id, `Zgłoszenie ${z0.numer}`])).rows[0].id;
   await c.query("insert into wiadomosci (watek_id, tresc, wygenerowane_przez_ai, od) values ($1,$2,false,'autor')", [watek, zamaskuj(w.data.tresc).tekst]);
   await zmienStatus(z0.id, "w_analizie", "Odpowiedź autora");
+  await powiadom({ adresat: "rops", typ: "pytanie_autora", tresc: `Autor odpisał w sprawie ${z0.numer}.`, link: `/centrala/zgloszenia/${z0.id}`, numerSprawy: z0.numer });
   return Response.json({ ok: true });
 }
