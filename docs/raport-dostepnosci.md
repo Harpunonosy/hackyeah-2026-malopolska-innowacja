@@ -66,7 +66,13 @@ Ograniczenie: skrypt nie ocenia, czy kolejność jest logiczna, ani czy komunika
 - Brak limitów czasu dla mieszkańców; formularze zachowują wpisany tekst przy błędzie.
 - Nagłówki stron i sekcji w kolejności, regiony (`main`, `nav`, `header`, `footer`), komunikaty błędów w `role="alert"`.
 
-## 6. Czego nie sprawdziliśmy (plan przed wdrożeniem)
+## 6. Weryfikacja uproszczonej Pracowni i planu wdrożenia (3.10.2026)
+
+Chromium, rzeczywiste komponenty z CSS aplikacji i atrapami API, bez uruchamiania serwera lub zapisu do bazy. Pracownia: podgląd po AI bez widocznych pól tekstowych, cztery pola po wybraniu edycji, zachowanie ręcznych odpowiedzi kanwy po zwinięciu i ponownej analizie, ponowienie wysyłki po błędzie sieci. Plan: pięć rozwijanych grup, otwieranie odnośnikami także po ponownym zwinięciu, obsługa Enter, zachowanie pełnej treści starszych planów.
+
+axe: 0 naruszeń w sprawdzonych widokach przy 1280 i 320 px, także z rozwiniętymi szczegółami planu; brak przewijania w poziomie. Generowanie rzeczywistego PDF potwierdziło obecność treści wszystkich pięciu grup, mimo że były zwinięte przed drukowaniem. Po drukowaniu wraca wcześniejszy stan sekcji. Pięć testów renderowania planu włączono do `npm test`. Ta runda obejmowała zmienione komponenty, nie ponowny audyt 33 stron ani badanie z użytkownikami lub czytnikiem ekranu.
+
+## 7. Czego nie sprawdziliśmy (plan przed wdrożeniem)
 
 1. Test z czytnikiem ekranu: NVDA + Firefox i VoiceOver + Safari (iOS) na trzech ścieżkach: zgłoszenie problemu, pomysł, odpowiedź w panelu.
 2. Powiększenie 200% i 400% w przeglądarce (zoom) poza testem 320 px.

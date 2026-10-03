@@ -1,4 +1,13 @@
-# Aktualizacja po domknięciu wymagań HubMI
+# Aktualizacja po uwagach użytkownika do czytelności (3.10.2026)
+
+- Pracownia: AI przygotowuje krótszą fiszkę. Domyślnie użytkownik widzi podgląd; przycisk „Popraw fiszkę” pokazuje cztery pola i etap. Ocena, asystent, kanwa i generator wniosku są opcjonalnymi, rozwijanymi sekcjami. Wysyłka jest obok fiszki. Zwinięcie sekcji i ponowna analiza zachowują ręczne odpowiedzi pełnej kanwy; błędy sieci pozwalają ponowić wysyłkę.
+- Plan wdrożenia: na początku krótki cel, trzy liczby, istotne ostrzeżenia i trzy pierwsze kroki. Pełna treść pozostaje w pięciu rozwijanych grupach. Wydruk otwiera wszystkie szczegóły i przywraca ich wcześniejszy stan. Zachowana zgodność ze starszymi planami.
+- Strona główna: usunięto dolny, powtórzony wybór zadań; górny panel pozostał.
+- Weryfikacja końcowa: produkcyjny build z TypeScript i ESLint przeszły. `npm test`: **50 PASS, 0 FAIL, 7 SKIP** (testy bazy; nie uruchamiano PostgreSQL). Chromium z atrapami API: edycja i wysyłka fiszki, ponowienie po błędzie, zachowanie danych, klawiatura, odnośniki do szczegółów, axe **0 naruszeń**, brak przewijania w poziomie przy 320 px. Rzeczywisty PDF planu zawiera treści wszystkich pięciu wcześniej zwiniętych grup. Testy dotyczyły zmienionych komponentów, nie ponownego audytu wszystkich stron.
+- `.env.local` jest już skonfigurowany i ignorowany przez Git. W poprzednim kroku potwierdzono połączenie z bazą tylko do odczytu i wykonanie migracji z wycofaniem transakcji. W tej rundzie UX nie uruchamiano usług ani nie wykonywano zapytań do wspólnej bazy lub płatnych wywołań AI. Zmienne środowiskowe muszą być także ustawione w Vercelu.
+- Wersja przeznaczona do pushowania przez użytkownika; agent nie wykonuje push ani deployu i nie dodaje współautora.
+
+# Wcześniejsza aktualizacja po domknięciu wymagań HubMI
 
 **Wersja do bezpośredniego pushowania na Vercel:** dodano `vercel.json` i `npm run build:vercel`. Migracje 013–014 wykonują się automatycznie przez istniejące `DATABASE_URL` przed buildem, w transakcji z blokadą i dziennikiem SHA256/RLS. Nie trzeba ręcznie stosować migracji. Starsza instrukcja ręcznego SQL poniżej jest zastąpiona tym krokiem. Nie uruchamiano ponownie serwera ani PostgreSQL na VM; nie łączono się z docelową bazą. Użytkownik wykona push i przetestuje deployment.
 
