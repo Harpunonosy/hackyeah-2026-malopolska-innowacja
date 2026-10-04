@@ -18,12 +18,15 @@
   --ok: #17603a;
   --warn: #7a4300;
   --link: #14213d;
-  --line-soft: #d6dce9;
-  --soft: #e9edf6;
+  --line-soft: #ddd4c4;
+  --soft: #f0e9dd;
   --primary-soft: #fbebee;
   --hero-bg: #14213d;
   --hero-fg: #ffffff;
   --shadow: 0 1px 2px rgb(20 33 61 / 0.06), 0 12px 28px -14px rgb(20 33 61 / 0.28);
+  /* Nici znaku i ilustracji: czerwona (działanie) i złota (wyróżnienie). */
+  --logo-nic: #b3203a;
+  --nic-zlota: #d9a21b;
 }
 
 /* Wysoki kontrast: czarne tło, biały tekst, żółte akcenty. */
@@ -48,6 +51,8 @@ html[data-kontrast="wysoki"] {
   --hero-bg: #000000;
   --hero-fg: #ffffff;
   --shadow: none;
+  --logo-nic: #ffd400;
+  --nic-zlota: #ffffff;
 }
 
 @theme inline {
@@ -110,6 +115,10 @@ body {
 
 [data-prosty="tak"] .zaawansowane { display: none !important; }
 [data-prosty="tak"] body { line-height: 1.75; }
+
+/* Nić rysuje się przez trzy kroki „Jak to działa” (przy ograniczonym ruchu od razu jest cała). */
+@keyframes nic-rysuj { from { clip-path: inset(0 0 100% 0); } to { clip-path: inset(0 0 0 0); } }
+.nic-rysuj { animation: nic-rysuj 1.6s cubic-bezier(.4,0,.2,1) 0.2s both; }
 
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {

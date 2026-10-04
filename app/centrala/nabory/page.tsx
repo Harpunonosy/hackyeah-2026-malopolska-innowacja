@@ -62,7 +62,7 @@ export default async function Nabory() {
                     <li key={x.id}>
                       <details className="karta-mala px-4 py-2">
                         <summary className="min-h-10 cursor-pointer font-semibold">Wniosek z {fmt(x.created_at)} ({(x.pola as Pole[]).find((p) => p.nr === 1)?.tresc.slice(0, 80) ?? "bez tytułu"})</summary>
-                        <dl className="space-y-3 py-2">{(x.pola as Pole[]).map((p) => <div key={p.nr}><dt className="text-sm font-bold uppercase text-muted">Pole {p.nr}</dt><dd className="whitespace-pre-line">{p.tresc}</dd></div>)}</dl>
+                        <dl className="space-y-3 py-2">{(x.pola as Pole[]).map((p) => <div key={p.nr}><dt className="text-sm font-bold text-muted">Pole {p.nr}</dt><dd className="whitespace-pre-line">{p.tresc}</dd></div>)}</dl>
                       </details>
                       <OcenaWniosku id={x.id} etap={x.status === "zlozony" || !x.status ? "zlozony" : x.status} numer={x.numer} decyzja={x.decyzja} przekazano={x.eksport_at ? x.eksport_at.toISOString() : null} />
                     </li>

@@ -7,8 +7,8 @@ import { cn } from "@/lib/utils";
 export function GlownaNawigacja({ etykieta, linki }: { etykieta: string; linki: { href: string; etykieta: string }[] }) {
   const sciezka = usePathname();
   return (
-    <nav aria-label={etykieta}>
-      <ul className="flex flex-wrap gap-1">
+    <nav aria-label={etykieta} className="w-full sm:w-auto">
+      <ul className="grid grid-cols-2 gap-1 sm:flex sm:flex-wrap">
         {linki.map((l) => {
           const aktywny = l.href === "/" ? sciezka === "/" : sciezka.startsWith(l.href);
           return (
@@ -17,8 +17,8 @@ export function GlownaNawigacja({ etykieta, linki }: { etykieta: string; linki: 
                 href={l.href}
                 aria-current={aktywny ? "page" : undefined}
                 className={cn(
-                  "inline-flex min-h-12 items-center rounded-full px-4 font-semibold no-underline transition-colors",
-                  aktywny ? "bg-fg text-bg" : "text-fg hover:bg-soft",
+                  "flex min-h-12 items-center justify-center rounded-xl px-3 sm:rounded-full sm:px-4 text-center font-semibold leading-tight no-underline transition-colors",
+                  aktywny ? "bg-fg text-bg" : "bg-soft text-fg hover:bg-line-soft sm:bg-transparent sm:hover:bg-soft",
                 )}
               >
                 {l.etykieta}

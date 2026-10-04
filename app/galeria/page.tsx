@@ -31,9 +31,9 @@ export default async function Galeria() {
             <h2 className="font-display text-2xl font-bold">{f.tytul}</h2>
             <p className="text-lg">{f.opis}</p>
             <dl className="space-y-2">
-              <div><dt className="text-sm font-bold uppercase text-muted">{t("naCzymPolega")}</dt><dd>{f.istota}</dd></div>
-              <div><dt className="text-sm font-bold uppercase text-muted">{t("dlaKogo")}</dt><dd>{f.dla_kogo}</dd></div>
-              {f.wyniki_testu && <div><dt className="text-sm font-bold uppercase text-muted">{t("wyniki")}</dt><dd>{f.wyniki_testu}</dd></div>}
+              <div><dt className="text-sm font-bold text-muted">{t("naCzymPolega")}</dt><dd>{f.istota}</dd></div>
+              <div><dt className="text-sm font-bold text-muted">{t("dlaKogo")}</dt><dd>{f.dla_kogo}</dd></div>
+              {f.wyniki_testu && <div><dt className="text-sm font-bold text-muted">{t("wyniki")}</dt><dd>{f.wyniki_testu}</dd></div>}
             </dl>
             <div className="mt-auto space-y-2">
               <p className="font-semibold">{t("cochcesz")}</p>

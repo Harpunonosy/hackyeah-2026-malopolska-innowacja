@@ -2,7 +2,8 @@
   "marka": {
     "nazwa": "Splot",
     "haslo": "Tu potrzeby Małopolan spotykają sprawdzone rozwiązania.",
-    "opisStrony": "Splot łączy potrzeby mieszkańców z innowacjami społecznymi Małopolski. Prototyp dla Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków)."
+    "opisStrony": "Splot łączy potrzeby mieszkańców z innowacjami społecznymi Małopolski. Prototyp dla Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków).",
+    "podpis": "Małopolski Hub Innowacji Społecznych"
   },
   "nav": {
     "glowna": "Główna nawigacja",
@@ -137,7 +138,9 @@
     "pomocNawigacja": "Pomoc w korzystaniu",
     "pomocGlos": "Wolę powiedzieć",
     "pomocLatwy": "Proste instrukcje",
-    "pomocOsoba": "Pomagam innej osobie"
+    "pomocOsoba": "Pomagam innej osobie",
+    "przyklady": "Nie wiesz, jak zacząć? Kliknij przykład:",
+    "inneSposoby": "Inne sposoby"
   },
   "swatka": {
     "tytul": "Opisz swój problem",

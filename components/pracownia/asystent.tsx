@@ -146,7 +146,7 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
               {szkic.svg && <a href={svgDoUrl(szkic.svg)} download="szkic-pomyslu.svg" className="inline-flex min-h-12 items-center font-semibold underline">{t("szkicPobierz")}</a>}
             </figure>
             <div className="space-y-3">
-              <h4 ref={naglowekSzkicu} tabIndex={-1} className="text-xl font-bold outline-none"><span className="text-sm font-bold uppercase text-muted">{t(`szkicRodzaj_${szkic.rodzaj}`)}</span><span className="block">{szkic.nazwa}</span></h4>
+              <h4 ref={naglowekSzkicu} tabIndex={-1} className="text-xl font-bold outline-none"><span className="text-sm font-bold text-muted">{t(`szkicRodzaj_${szkic.rodzaj}`)}</span><span className="block">{szkic.nazwa}</span></h4>
               <p className="font-bold">{t("szkicCzesci")}</p>
               <dl className="space-y-2">{szkic.czesci.map((c) => <div key={c.nazwa}><dt className="font-semibold">{c.nazwa}</dt><dd className="text-muted">{c.funkcja}</dd></div>)}</dl>
               {szkic.materialy.length > 0 && <p><strong>{t("szkicMaterialy")}:</strong> {szkic.materialy.join(", ")}</p>}

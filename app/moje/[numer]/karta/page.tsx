@@ -34,7 +34,7 @@ export default async function Karta(props: PageProps<"/moje/[numer]/karta">) {
         <header className="flex flex-wrap items-start justify-between gap-4">
           <div className="space-y-1">
             <h1 className="text-4xl font-bold">{t("tytul")}</h1>
-            <p className="text-sm font-bold uppercase text-muted">{t("numer")}</p>
+            <p className="text-sm font-bold text-muted">{t("numer")}</p>
             <p className="font-mono text-4xl font-bold tracking-wider">{numer}</p>
             <p>{t("zachowaj")}</p>
           </div>
@@ -46,8 +46,8 @@ export default async function Karta(props: PageProps<"/moje/[numer]/karta">) {
         </header>
         <p className="text-sm">{t("albo")} <span className="break-all font-mono">{adres}</span></p>
         <dl className="grid gap-2 sm:grid-cols-2">
-          <div><dt className="text-sm font-bold uppercase text-muted">{t("data")}</dt><dd>{new Date(z.created_at).toLocaleDateString("pl-PL", { dateStyle: "long" })}</dd></div>
-          {z.placowka && <div><dt className="text-sm font-bold uppercase text-muted">{t("przyjeta")}</dt><dd>{z.placowka}</dd></div>}
+          <div><dt className="text-sm font-bold text-muted">{t("data")}</dt><dd>{new Date(z.created_at).toLocaleDateString("pl-PL", { dateStyle: "long" })}</dd></div>
+          {z.placowka && <div><dt className="text-sm font-bold text-muted">{t("przyjeta")}</dt><dd>{z.placowka}</dd></div>}
         </dl>
         <section aria-labelledby="k-potrzeba" className="space-y-1">
           <h2 id="k-potrzeba" className="text-2xl font-bold">{t("potrzeba")}</h2>

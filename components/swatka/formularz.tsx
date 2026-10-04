@@ -25,7 +25,7 @@ const POWIATY = [
 
 function Krok({ n, tytul }: { n: number; tytul: string }) {
   return (
-    <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-wider text-primary">
+    <p className="flex items-center gap-3 text-base font-bold text-primary">
       <span aria-hidden className="flex size-7 items-center justify-center rounded-full bg-primary text-sm text-primary-fg">{n}</span>
       {tytul}
     </p>

@@ -38,10 +38,10 @@ export default async function Testy(props: PageProps<"/testy">) {
               <h3 className="font-display text-2xl font-bold">{r.tytul}</h3>
               <p className="text-lg">{r.opis}</p>
               <dl className="grid gap-2 text-base sm:grid-cols-2">
-                <div><dt className="text-sm font-bold uppercase text-muted">{t("kogo")}</dt><dd>{r.kogo_szukamy?.opis}</dd></div>
-                <div><dt className="text-sm font-bold uppercase text-muted">{t("gdzie")}</dt><dd>{String(r.powiat).replace("powiat ", "")}</dd></div>
-                <div><dt className="text-sm font-bold uppercase text-muted">{t("kiedy")}</dt><dd>{r.termin}</dd></div>
-                <div><dt className="text-sm font-bold uppercase text-muted">{t("dostepnosc")}</dt><dd>{r.dostepnosc}</dd></div>
+                <div><dt className="text-sm font-bold text-muted">{t("kogo")}</dt><dd>{r.kogo_szukamy?.opis}</dd></div>
+                <div><dt className="text-sm font-bold text-muted">{t("gdzie")}</dt><dd>{String(r.powiat).replace("powiat ", "")}</dd></div>
+                <div><dt className="text-sm font-bold text-muted">{t("kiedy")}</dt><dd>{r.termin}</dd></div>
+                <div><dt className="text-sm font-bold text-muted">{t("dostepnosc")}</dt><dd>{r.dostepnosc}</dd></div>
               </dl>
               <p className="font-bold">{t("miejsca", { wolne: Math.max(0, r.liczba_miejsc - r.zajete), razem: r.liczba_miejsc })}</p>
               <div className="mt-auto space-y-3">

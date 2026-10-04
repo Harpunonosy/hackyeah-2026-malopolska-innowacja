@@ -17,7 +17,7 @@ const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,
 
 function Krok({ n, tytul }: { n: number; tytul: string }) {
   return (
-    <h2 className="flex items-center gap-3 text-sm font-bold uppercase tracking-wider text-primary">
+    <h2 className="flex items-center gap-3 text-base font-bold text-primary">
       <span aria-hidden className="flex size-7 items-center justify-center rounded-full bg-primary text-sm text-primary-fg">{n}</span>
       {tytul}
     </h2>
@@ -103,7 +103,7 @@ export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { i
         {wybranaPoz ? (
           <div className="karta-mala flex flex-wrap items-center justify-between gap-3 p-4">
             <p>
-              <span className="text-sm font-bold uppercase text-muted">{t("wybrana")}</span>
+              <span className="text-sm font-bold text-muted">{t("wybrana")}</span>
               <span className="block font-display text-xl font-bold">{wybranaPoz.nazwa}</span>
               <span className="text-muted">{wybranaPoz.kategoria}</span>
             </p>

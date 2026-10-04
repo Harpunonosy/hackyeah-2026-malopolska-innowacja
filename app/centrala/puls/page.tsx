@@ -43,7 +43,7 @@ export default async function Puls() {
 
   const kafel = (etykieta: string, wartosc: string, podpis?: string) => (
     <div className="karta-mala space-y-1 p-4 break-inside-avoid">
-      <p className="text-sm font-bold uppercase text-muted">{etykieta}</p>
+      <p className="text-sm font-bold text-muted">{etykieta}</p>
       <p className="font-display text-3xl font-bold">{wartosc}</p>
       {podpis && <p className="text-sm">{podpis}</p>}
     </div>
@@ -53,7 +53,7 @@ export default async function Puls() {
     <div className="space-y-8">
       <div className="nie-drukuj"><CentralaNav aktywna="puls" /></div>
       <header className="space-y-2">
-        <p className="text-sm font-bold uppercase tracking-wider text-primary">{t("nadtytul")}</p>
+        <p className="text-sm font-bold text-primary">{t("nadtytul")}</p>
         <h1 className="text-4xl font-bold sm:text-5xl">{t("tytul")}</h1>
         <p className="max-w-3xl text-lg text-muted">{t("opis")}</p>
         <p>{t("okres", { od: data(new Date(teraz.getTime() - 30 * 86_400_000)), do: data(teraz) })} {t("demo")}</p>

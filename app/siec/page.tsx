@@ -29,7 +29,7 @@ export default async function Siec() {
       <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")} />
       <dl className="grid grid-cols-2 gap-3 sm:grid-cols-4">
         {([[liderzy.length, t("liderow")], [sektorow, t("sektorow")], [innowacji, t("innowacji")], [wdrozenia.length, t("wdrozen")]] as const).map(([n, e]) => (
-          <div key={e} className="karta-mala p-4"><dt className="text-sm font-bold uppercase text-muted">{e}</dt><dd className="font-display text-4xl font-bold">{n}</dd></div>
+          <div key={e} className="karta-mala p-4"><dt className="text-sm font-bold text-muted">{e}</dt><dd className="font-display text-4xl font-bold">{n}</dd></div>
         ))}
       </dl>
 

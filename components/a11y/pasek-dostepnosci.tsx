@@ -16,9 +16,9 @@ function Przelacznik({ id, etykieta, wlaczony, zmien }: { id: string; etykieta: 
         id={id}
         checked={wlaczony}
         onCheckedChange={zmien}
-        className="relative h-8 w-14 shrink-0 rounded-full border-2 border-hero-fg/70 bg-transparent data-[state=checked]:border-accent data-[state=checked]:bg-accent"
+        className="relative h-8 w-14 shrink-0 rounded-full border-2 border-fg bg-card data-[state=checked]:bg-fg"
       >
-        <Switch.Thumb className="block size-5 translate-x-1 rounded-full bg-hero-fg transition-transform data-[state=checked]:translate-x-7 data-[state=checked]:bg-accent-fg" />
+        <Switch.Thumb className="block size-5 translate-x-1 rounded-full bg-fg transition-transform data-[state=checked]:translate-x-7 data-[state=checked]:bg-bg" />
       </Switch.Root>
       {/* Cała etykieta (48 px wysokości) przełącza ustawienie, nie tylko mały suwak. */}
       <label htmlFor={id} className="flex min-h-12 cursor-pointer items-center ps-2.5 text-sm font-semibold">
@@ -82,7 +82,7 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
   ];
 
   return (
-    <section aria-label={t("etykieta")} className="nie-drukuj bg-hero text-hero-fg">
+    <section aria-label={t("etykieta")} className="nie-drukuj border-b border-line-soft bg-soft text-fg">
       <div className="kontener sm:hidden">
         <button
           type="button"
@@ -91,15 +91,15 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
           onClick={() => setRozwiniety((v) => !v)}
           className="inline-flex min-h-12 items-center gap-2 font-semibold"
         >
-          <Accessibility aria-hidden className="size-5" />
+          <Accessibility aria-hidden className="size-6 text-primary" />
           {t("przycisk")}
         </button>
       </div>
       <div
         id="a11y-panel"
-        className={cn("kontener flex-wrap items-center gap-x-6 gap-y-0 pb-1 sm:flex sm:py-0.5", rozwiniety ? "flex" : "hidden")}
+        className={cn("kontener flex-wrap items-center gap-x-4 gap-y-0 xl:gap-x-6 pb-1 sm:flex sm:py-0.5", rozwiniety ? "flex" : "hidden")}
       >
-        <Accessibility aria-hidden className="hidden size-5 text-accent sm:block" />
+        <Accessibility aria-hidden className="hidden size-6 text-primary sm:block" />
         <Przelacznik id="a11y-prosty" etykieta={t("trybProsty")} wlaczony={u.prosty} zmien={(v) => ustaw({ prosty: v })} />
 
         <div className="flex min-h-12 items-center gap-2.5">
@@ -111,14 +111,14 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
             value={u.rozmiar}
             onValueChange={(v) => v && ustaw({ rozmiar: v as RozmiarTekstu })}
             aria-labelledby="a11y-rozmiar"
-            className="flex overflow-hidden rounded-lg border-2 border-hero-fg/70"
+            className="flex overflow-hidden rounded-lg border-2 border-fg bg-card"
           >
             {rozmiary.map((r) => (
               <ToggleGroup.Item
                 key={r.v}
                 value={r.v}
                 aria-label={r.opis}
-                className="h-12 min-w-12 px-2 text-sm font-bold data-[state=on]:bg-accent data-[state=on]:text-accent-fg"
+                className="h-12 min-w-12 px-2 text-sm font-bold hover:bg-soft data-[state=on]:bg-fg data-[state=on]:text-bg"
               >
                 {r.etykieta}
               </ToggleGroup.Item>
@@ -135,7 +135,7 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
 
         <div role="group" aria-label={t("jezyk")} className="flex min-h-12 items-center gap-2.5">
           <span className="text-sm font-semibold" aria-hidden="true">{t("jezyk")}</span>
-          <div className="flex overflow-hidden rounded-lg border-2 border-hero-fg/70">
+          <div className="flex overflow-hidden rounded-lg border-2 border-fg bg-card">
             {([["pl", "PL", t("jezykPlOpis"), "pl"], ["uk", "UA", t("jezykUkOpis"), "uk"]] as const).map(([kod, skrot, opis, lang]) => (
               <button
                 key={kod}
@@ -147,7 +147,7 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
                   document.cookie = `${COOKIE_JEZYK}=${kod}; path=/; max-age=31536000; samesite=lax`;
                   router.refresh();
                 }}
-                className="h-12 min-w-12 px-2 text-sm font-bold aria-pressed:bg-accent aria-pressed:text-accent-fg"
+                className="h-12 min-w-12 px-2 text-sm font-bold hover:bg-soft aria-pressed:bg-fg aria-pressed:text-bg"
               >
                 {skrot}
               </button>
@@ -165,7 +165,7 @@ export function PasekDostepnosci({ poczatkowe }: { poczatkowe: UstawieniaDostepn
           {czyta ? t("zatrzymaj") : t("czytaj")}
         </button>
         {blad && (
-          <p role="status" className="text-sm font-medium text-accent">
+          <p role="status" className="text-sm font-semibold text-primary">
             {t("czytanieNiedostepne")}
           </p>
         )}

@@ -1,0 +1,111 @@
+/* ==========================================================================
+   Design tokens — 1:1 with the Figma variable collection "Theme" (modes Light / Dark).
+   Replace every value with your own palette. Keep the names semantic (role, not color).
+   Theme: data-theme="light" | "dark" on <html>; with no attribute, follow the OS.
+   ========================================================================== */
+
+:root {
+  --bg-page: #f2ece2;
+  --surface-card: #ffffff;
+  --surface-raised: #f7f2ea;
+  --surface-sunken: #e5dbca;
+
+  --border-subtle: #d8ccb8;
+  --border-strong: #bfb199;
+
+  --text-primary: #1c2430;
+  --text-secondary: #6a6151;
+  --text-muted: #968b78;
+  --text-inverse: #ffffff;
+
+  --accent-brand: #1b2e4f;
+  --accent-action: #2f62b8;
+  --accent-danger: #a5140f;
+
+  /* shadows need far more alpha in dark mode — drive them with one token */
+  --shadow-a: 0.16;
+
+  --radius-card: 18px;
+  --font-sans: "Inter", system-ui, sans-serif;
+  --font-display: "Fraunces", Georgia, serif;
+  --font-mono: "JetBrains Mono", ui-monospace, monospace;
+
+  color-scheme: light;
+}
+
+/* Dark values are written twice: once for "OS says dark and user didn't pick light",
+   once for "user explicitly picked dark". Keep both blocks identical. */
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    --bg-page: #0e131e;
+    --surface-card: #1a2231;
+    --surface-raised: #232c3d;
+    --surface-sunken: #0d121c;
+    --border-subtle: #2a3446;
+    --border-strong: #3a465c;
+    --text-primary: #ece6dc;
+    --text-secondary: #9ba5b5;
+    --text-muted: #6b7686;
+    --text-inverse: #0e131e;
+    --accent-brand: #7ba7e8;
+    --accent-action: #6f9fe8;
+    --accent-danger: #d9463f;
+    --shadow-a: 0.55;
+    color-scheme: dark;
+  }
+}
+:root[data-theme="dark"] {
+  --bg-page: #0e131e;
+  --surface-card: #1a2231;
+  --surface-raised: #232c3d;
+  --surface-sunken: #0d121c;
+  --border-subtle: #2a3446;
+  --border-strong: #3a465c;
+  --text-primary: #ece6dc;
+  --text-secondary: #9ba5b5;
+  --text-muted: #6b7686;
+  --text-inverse: #0e131e;
+  --accent-brand: #7ba7e8;
+  --accent-action: #6f9fe8;
+  --accent-danger: #d9463f;
+  --shadow-a: 0.55;
+  color-scheme: dark;
+}
+
+body {
+  background: var(--bg-page);
+  color: var(--text-primary);
+  font: 14px/1.45 var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+}
+
+:focus-visible {
+  outline: 2px solid color-mix(in srgb, var(--accent-action) 60%, transparent);
+  outline-offset: 2px;
+}
+::selection {
+  background: color-mix(in srgb, var(--accent-action) 28%, transparent);
+}
+
+/* Example: card shadow scales with theme via --shadow-a */
+.card {
+  background: var(--surface-card);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-card);
+  box-shadow:
+    0 24px 56px -12px rgba(0, 0, 0, var(--shadow-a)),
+    0 4px 10px -4px rgba(0, 0, 0, calc(var(--shadow-a) * 0.8));
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+    scroll-behavior: auto !important;
+  }
+}
+
+/* Put this inline in <head> BEFORE the stylesheet paints, to avoid a theme flash:
+   <script>try{var t=localStorage.getItem("app-theme");if(t)document.documentElement.dataset.theme=t}catch(e){}</script>
+*/

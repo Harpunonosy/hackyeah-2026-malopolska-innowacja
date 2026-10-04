@@ -48,14 +48,14 @@ export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopa
       </header>
 
       <div className="rounded-xl bg-primary-soft p-4">
-        <h4 className="text-sm font-bold uppercase tracking-wide text-primary">{t("dlaczego")}</h4>
+        <h4 className="text-sm font-bold text-primary">{t("dlaczego")}</h4>
         <p className="mt-1 text-lg">{k.dlaczego}</p>
       </div>
 
       <details className="karta-mala group px-4 py-2">
         <summary className="flex min-h-10 cursor-pointer items-center font-semibold">{t("czyDziala")}</summary>
         <p className="pb-2 pt-1 text-muted">{k.czyToDziala}</p>
-        <h4 className="pt-2 text-sm font-bold uppercase tracking-wide text-muted">{t("ktoWdroz")}</h4>
+        <h4 className="pt-2 text-sm font-bold text-muted">{t("ktoWdroz")}</h4>
         <p className="pb-2 text-muted">{k.ktoMozeWdrozyc}</p>
       </details>
 

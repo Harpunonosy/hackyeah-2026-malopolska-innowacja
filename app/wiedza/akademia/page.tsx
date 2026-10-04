@@ -17,7 +17,7 @@ export default async function Akademia() {
     <ul className="grid auto-rows-fr gap-5 md:grid-cols-2">
       {lekcje.map((l,i)=><li key={l.slug} className="flex">
         <Link href={`/wiedza/akademia/${l.slug}`} className="karta flex w-full flex-col gap-3 p-6 text-fg no-underline transition-transform hover:-translate-y-0.5">
-          <span className="text-sm font-bold uppercase tracking-wider text-primary">{t('lekcjaNr',{n:i+1})}</span>
+          <span className="text-sm font-bold text-primary">{t('lekcjaNr',{n:i+1})}</span>
           <span className="font-display text-2xl font-bold">{l.tytul}</span>
           <span className="mt-auto flex items-center justify-between text-muted"><span className="inline-flex items-center gap-2"><Clock aria-hidden className="size-5"/>{t('minuty',{n:l.minuty})}</span><ArrowRight aria-hidden className="size-6 text-primary"/></span>
         </Link>

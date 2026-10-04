@@ -34,7 +34,7 @@ export default async function Plan(props: PageProps<"/wdrozenie/plan/[id]">) {
   const polecany = eksperci.find((e) => obszarInn && e.obszary?.includes(obszarInn))?.id ?? null;
   return <Strona className="max-w-4xl">
       <header className="space-y-3">
-        <p className="text-sm font-bold uppercase tracking-wider text-primary">{t("nadtytul")}</p>
+        <p className="text-sm font-bold text-primary">{t("nadtytul")}</p>
         <h1 className="text-[clamp(2rem,1.2rem+2.6vw,3.25rem)] font-bold">{t("planDla", { nazwa: inn?.nazwa ?? "" })}</h1>
         <p className="flex flex-wrap gap-2">
           <Chip>{TYPY_INSTYTUCJI[profil.typ]}</Chip>

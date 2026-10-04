@@ -53,12 +53,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           </a>
           <PasekDostepnosci poczatkowe={ustawienia} />
           <header className="nie-drukuj border-b border-line-soft bg-bg">
-            <div className="kontener flex flex-wrap items-center justify-between gap-x-6 gap-y-1 py-2">
-              <Link href="/" className="flex items-center gap-3 text-fg no-underline">
-                <Logo className="size-11 text-fg" />
+            <div className="kontener flex flex-wrap items-center justify-between gap-x-6 gap-y-2 py-3">
+              <Link href="/" className="flex min-h-12 items-center gap-3 text-fg no-underline">
+                <Logo className="size-12 text-fg" />
                 <span>
-                  <span className="block font-display text-2xl font-bold leading-none">{t("marka.nazwa")}</span>
-                  
+                  <span className="block font-display text-[1.75rem] font-bold leading-none tracking-tight">{t("marka.nazwa")}</span>
+                  <span className="mt-1 hidden text-sm text-muted xl:block">{t("marka.podpis")}</span>
                 </span>
               </Link>
               <GlownaNawigacja
@@ -78,7 +78,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <footer className="nie-drukuj mt-20 bg-hero text-hero-fg">
             <div className="kontener flex flex-wrap items-center justify-between gap-x-8 gap-y-3 py-8">
               <p className="flex items-center gap-3 font-display text-2xl font-bold">
-                <Logo className="size-9 text-hero-fg" />
+                <Logo className="size-10 text-hero-fg [--logo-tlo:var(--hero-bg)]" />
                 {t("marka.nazwa")}
               </p>
               <p className="max-w-xl">{t("stopka.ai")}</p>

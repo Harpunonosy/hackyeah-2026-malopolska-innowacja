@@ -1,12 +1,11 @@
 import Link from "next/link";
 import { getTranslations } from "next-intl/server";
-import { ArrowRight, BookOpen, Building2, ClipboardList, FlaskConical, Lightbulb, MessagesSquare } from "lucide-react";
+import { ArrowRight, BookOpen, BookOpenText, Building2, ClipboardList, FlaskConical, HandHeart, Lightbulb, MessagesSquare, Mic } from "lucide-react";
 import type { LucideIcon } from "lucide-react";
+import { JakToDziala } from "@/components/home/jak-to-dziala";
 import { PoleOpisu } from "@/components/home/pole-opisu";
-import { Logo } from "@/components/logo";
-import { cn } from "@/lib/utils";
 
-const KAFELKI: { klucz: string; ikona: LucideIcon; href?: string }[] = [
+const KAFELKI: { klucz: string; ikona: LucideIcon; href: string }[] = [
   { klucz: "wiedza", ikona: BookOpen, href: "/wiedza/biblioteka" },
   { klucz: "moje", ikona: ClipboardList, href: "/moje" },
   { klucz: "pomysl", ikona: Lightbulb, href: "/pomysl" },
@@ -15,58 +14,63 @@ const KAFELKI: { klucz: string; ikona: LucideIcon; href?: string }[] = [
   { klucz: "rozmowa", ikona: MessagesSquare, href: "/rynek" },
 ];
 
+const INNE_SPOSOBY: { klucz: string; ikona: LucideIcon; href: string }[] = [
+  { klucz: "pomocGlos", ikona: Mic, href: "/rozmowa" },
+  { klucz: "pomocLatwy", ikona: BookOpenText, href: "/latwy" },
+  { klucz: "pomocOsoba", ikona: HandHeart, href: "/asystowane" },
+];
+
 export default async function Start() {
   const t = await getTranslations("start");
   return (
     <>
-      <section className="kontener grid items-center gap-12 py-12 lg:grid-cols-[1.15fr_0.85fr] lg:py-16">
+      <section className="kontener grid items-start gap-10 py-10 sm:py-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-14 lg:py-14">
         <div className="space-y-7">
-          <h1 className="text-balance text-[clamp(2.5rem,1.4rem+3.6vw,4.25rem)] font-extrabold leading-[1.05]">{t("hero.tytul")}</h1>
-          <p className="max-w-xl text-balance text-xl text-muted sm:text-2xl">{t("hero.opis")}</p>
+          <h1 className="text-balance text-[clamp(2.5rem,1.4rem+3.6vw,4rem)] font-extrabold leading-[1.05] tracking-tight">{t("hero.tytul")}</h1>
+          <p className="max-w-xl text-balance text-xl sm:text-2xl">{t("hero.opis")}</p>
           <PoleOpisu />
-          <nav aria-label={t("pomocNawigacja")} className="flex flex-wrap gap-3">
-            <Link href="/rozmowa" className="inline-flex min-h-12 items-center rounded-full border-2 border-line px-4 font-semibold">{t("pomocGlos")}</Link>
-            <Link href="/latwy" className="inline-flex min-h-12 items-center rounded-full border-2 border-line px-4 font-semibold">{t("pomocLatwy")}</Link>
-            <Link href="/asystowane" className="inline-flex min-h-12 items-center px-4 underline">{t("pomocOsoba")}</Link>
+          <nav aria-labelledby="inne-sposoby" className="space-y-2">
+            <p id="inne-sposoby" className="font-semibold">{t("inneSposoby")}</p>
+            <ul className="flex flex-wrap gap-2">
+              {INNE_SPOSOBY.map(({ klucz, ikona: Ikona, href }) => (
+                <li key={klucz}>
+                  <Link
+                    href={href}
+                    className="inline-flex min-h-12 items-center gap-2 rounded-full border-2 border-fg bg-card px-4 font-semibold text-fg no-underline hover:bg-fg hover:text-bg"
+                  >
+                    <Ikona aria-hidden className="size-5" />
+                    {t(klucz)}
+                  </Link>
+                </li>
+              ))}
+            </ul>
           </nav>
         </div>
-
-        <div aria-hidden="true" className="relative mx-auto hidden aspect-square w-full max-w-lg lg:block">
-          <div className="absolute inset-[6%] rounded-full bg-soft" />
-          <div className="absolute inset-0 rounded-full border-[3px] border-dotted border-accent" />
-          <Logo className="absolute left-1/2 top-[44%] size-[62%] -translate-x-1/2 -translate-y-1/2 text-fg" />
+        <div className="lg:pt-40">
+          <JakToDziala />
         </div>
       </section>
 
-      <section className="kontener space-y-7 pb-4" aria-labelledby="wybierz-h">
+      <section className="kontener space-y-6 pb-4 pt-4" aria-labelledby="wybierz-h">
         <h2 id="wybierz-h" className="text-3xl font-extrabold sm:text-4xl">{t("wybierz")}</h2>
-        <ul className="grid auto-rows-fr gap-5 sm:grid-cols-2 lg:grid-cols-3">
-          {KAFELKI.map(({ klucz, ikona: Ikona, href }) => {
-            const wnetrze = (
-              <>
-                <span className={cn("flex size-14 shrink-0 items-center justify-center rounded-2xl sm:size-[4.5rem] sm:rounded-[1.25rem]", href ? "bg-primary text-primary-fg" : "bg-soft text-fg")}>
-                  <Ikona aria-hidden className="size-8" />
+        <ul className="grid gap-4 sm:grid-cols-2 sm:gap-5 lg:grid-cols-3">
+          {KAFELKI.map(({ klucz, ikona: Ikona, href }) => (
+            <li key={klucz} className="flex">
+              <Link
+                href={href}
+                className="karta group flex w-full items-center gap-3 p-4 text-fg no-underline transition-colors hover:border-fg sm:gap-4 sm:p-5"
+              >
+                <span className="flex size-12 shrink-0 items-center justify-center rounded-xl bg-primary text-primary-fg sm:size-14 sm:rounded-2xl">
+                  <Ikona aria-hidden className="size-6 sm:size-7" />
                 </span>
                 <span className="min-w-0 flex-1">
-                  <span className="block font-display text-2xl font-bold leading-tight">{t(`kafelki.${klucz}.tytul`)}</span>
-                  <span className="mt-1 block text-lg text-muted">{t(`kafelki.${klucz}.opis`)}</span>
-                  {!href && <span className="mt-2 inline-block rounded-full bg-soft px-3 py-0.5 text-sm font-bold text-muted">{t("wkrotce")}</span>}
+                  <span className="block font-display text-xl font-bold leading-tight sm:text-[1.375rem]">{t(`kafelki.${klucz}.tytul`)}</span>
+                  <span className="mt-1 block text-lg leading-snug text-muted">{t(`kafelki.${klucz}.opis`)}</span>
                 </span>
-                {href && <ArrowRight aria-hidden className="size-6 shrink-0 text-primary" />}
-              </>
-            );
-            return (
-              <li key={klucz} className="flex">
-                {href ? (
-                  <Link href={href} className="karta flex w-full items-center gap-4 p-5 sm:gap-5 sm:p-6 text-fg no-underline transition-transform hover:-translate-y-0.5">
-                    {wnetrze}
-                  </Link>
-                ) : (
-                  <div className="flex w-full items-center gap-4 rounded-[1.25rem] border-2 border-line-soft p-5 sm:gap-5 sm:p-6">{wnetrze}</div>
-                )}
-              </li>
-            );
-          })}
+                <ArrowRight aria-hidden className="size-5 shrink-0 sm:size-6 text-primary transition-transform group-hover:translate-x-1" />
+              </Link>
+            </li>
+          ))}
         </ul>
       </section>
     </>

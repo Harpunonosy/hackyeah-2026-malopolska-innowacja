@@ -54,9 +54,9 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
     <Szczegoly id="plan-usluga" tytul={t("uxGrupaUsluga")} etykiety={etykietySzczegolow}>
       <Sekcja tytul={t("sekcjaKarta")}>
         <dl className="space-y-2">
-          <div><dt className="text-sm font-bold uppercase text-muted">{t("uxNazwaUslugi")}</dt><dd className="font-bold">{plan.karta_uslugi.nazwa}</dd></div>
+          <div><dt className="text-sm font-bold text-muted">{t("uxNazwaUslugi")}</dt><dd className="font-bold">{plan.karta_uslugi.nazwa}</dd></div>
           {([["cel", plan.karta_uslugi.cel], ["odbiorcyKarta", plan.karta_uslugi.odbiorcy], ["zakres", plan.karta_uslugi.zakres], ["standard", plan.karta_uslugi.standard]] as const).map(([k, v]) => (
-            <div key={k}><dt className="text-sm font-bold uppercase text-muted">{t(k)}</dt><dd className="text-lg">{v}</dd></div>
+            <div key={k}><dt className="text-sm font-bold text-muted">{t(k)}</dt><dd className="text-lg">{v}</dd></div>
           ))}
         </dl>
       </Sekcja>
@@ -64,7 +64,7 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
         <p className="text-lg">{plan.uzasadnienie_lokalne}</p>
         {dane.wskazniki.length > 0 && (
           <div className="rounded-xl bg-soft p-4">
-            <p className="text-sm font-bold uppercase text-muted">{t("wskaznikiLokalne")}</p>
+            <p className="text-sm font-bold text-muted">{t("wskaznikiLokalne")}</p>
             <ul className="mt-1 grid gap-x-6 sm:grid-cols-2">
               {dane.wskazniki.map((w) => (
                 <li key={w.nazwa}>{w.nazwa}: <strong>{w.wartosc.toLocaleString("pl-PL")}</strong> <span className="text-sm text-muted">({t("sredniaRegionu")} {w.sredniaRegionu.toLocaleString("pl-PL")})</span></li>
@@ -120,7 +120,7 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
                 <p className="flex flex-wrap gap-2"><Chip>{t("odbiorcow", { n: w.odbiorcy })}</Chip><Chip>{t("kosztCalk", { kwota: zl(w.koszt_zl) })}</Chip></p>
                 {w.odbiorcy > 0 && <p className="text-lg font-bold">{t("kosztNaOdbiorce", { kwota: zl(w.koszt_zl / w.odbiorcy) })}</p>}
                 <p>{w.opis}</p>
-                <p className="text-sm font-bold uppercase text-muted">{t("obejmuje")}</p>
+                <p className="text-sm font-bold text-muted">{t("obejmuje")}</p>
                 <ul className="list-disc pl-5">{w.obejmuje.map((o) => <li key={o}>{o}</li>)}</ul>
                 {w.wariant === "minimum" && <p><span className="font-bold">{t("rezygnujemy")}: </span>{w.rezygnujemy_z}</p>}
               </li>

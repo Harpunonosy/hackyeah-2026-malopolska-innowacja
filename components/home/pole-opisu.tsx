@@ -11,6 +11,8 @@ const MAX = 1500;
 
 export function PoleOpisu() {
   const t = useTranslations("start.hero");
+  const tStart = useTranslations("start");
+  const poleRef = React.useRef<HTMLTextAreaElement>(null);
   const router = useRouter();
   const jezyk = useLocale();
   const [tekst, setTekst] = React.useState("");
@@ -34,36 +36,46 @@ export function PoleOpisu() {
         <label htmlFor="start-opis" className="sr-only">{t("poleEtykieta")}</label>
         <textarea
           id="start-opis"
+          ref={poleRef}
           value={tekst}
           onChange={(e) => { setBlad(false); setTekst(e.target.value.slice(0, MAX)); }}
           rows={4}
           placeholder={t("placeholder")}
           aria-describedby={blad ? "start-blad" : undefined}
           aria-invalid={blad || undefined}
-          className="block w-full rounded-2xl border-2 border-line-soft bg-bg p-4 text-xl placeholder:text-muted/80 hover:border-fg"
+          className="block w-full rounded-2xl border-2 border-line bg-bg p-4 text-xl placeholder:text-muted/80 hover:border-fg"
         />
         {blad && <p id="start-blad" role="alert" className="font-semibold text-primary">{t("zaKrotki")}</p>}
-        <div className="flex flex-wrap items-start gap-3">
-          <Mikrofon jezyk={jezyk} onZdanie={(z) => setTekst((p) => (p ? `${p} ${z}` : z).slice(0, MAX))} etykieta={t("powiedz")} />
+        {/* Mikrofon i „Znajdź pomoc” w jednym rzędzie, informacja o dyktowaniu pod nimi. */}
+        <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
+          <Mikrofon
+            jezyk={jezyk}
+            onZdanie={(z) => setTekst((p) => (p ? `${p} ${z}` : z).slice(0, MAX))}
+            etykieta={t("powiedz")}
+            className="contents [&>p]:order-last [&>p]:basis-full"
+          />
           <Button type="submit" rozmiar="lg" className="min-w-52 flex-1">
             {t("szukaj")}
             <ArrowRight aria-hidden className="size-5" />
           </Button>
         </div>
       </form>
-      <ul className="flex flex-wrap gap-2">
-        {(["p1", "p2", "p3"] as const).map((k) => (
-          <li key={k}>
-            <button
-              type="button"
-              onClick={() => setTekst(t(`${k}.tekst`))}
-              className="min-h-12 rounded-full bg-soft px-5 font-semibold text-fg hover:bg-fg hover:text-bg"
-            >
-              {t(`${k}.chip`)}
-            </button>
-          </li>
-        ))}
-      </ul>
+      <div className="space-y-2">
+        <p id="start-przyklady" className="font-semibold">{tStart("przyklady")}</p>
+        <ul aria-labelledby="start-przyklady" className="flex flex-wrap gap-2">
+          {(["p1", "p2", "p3"] as const).map((k) => (
+            <li key={k}>
+              <button
+                type="button"
+                onClick={() => { setBlad(false); setTekst(t(`${k}.tekst`)); poleRef.current?.focus(); }}
+                className="min-h-12 rounded-full border-2 border-line-soft bg-soft px-5 font-semibold text-fg hover:border-fg"
+              >
+                {t(`${k}.chip`)}
+              </button>
+            </li>
+          ))}
+        </ul>
+      </div>
     </div>
   );
 }
