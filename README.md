@@ -36,7 +36,7 @@ Splot łączy każdą potrzebę zgłoszoną w Małopolsce ze sprawdzoną innowac
 
 | Moduł | Gdzie | Stan |
 |---|---|---|
-| I. Swatka (matchmaking) | `/`, `/problem`, `/rozmowa`, `/widzet` | tekst i głos, nici potrzeb, uzasadnienia, podobne sprawy, fakty z raportów, tryb awaryjny bez AI; Hit@3 96,6% (Haiku 4.5) |
+| I. Swatka (matchmaking) | `/`, `/problem`, `/rozmowa`, `/widzet` | tekst i głos, nici potrzeb, uzasadnienia, podobne sprawy, fakty z raportów, tryb awaryjny bez AI; Hit@3 96,6% (historyczny pomiar Haiku 4.5) |
 | II. Skarbnica | `/wiedza/*`, `/galeria` | Biblioteka z filmami, Akademia ze szkicami i publikacją lekcji, Kondycja Małopolski, profile 22 powiatów; import IOSS z CSV w Centrali |
 | III. Pracownia | `/pomysl` | fiszka, kanwa INNO AGH, ocena wg karty IWS 2.0, asystent i scenorys, wniosek pod konkretny nabór |
 | IV. Próbownia | `/testy` | otwarte testy, zapisy, opinie |
@@ -51,13 +51,13 @@ Integracje: API v1 z opisem OpenAPI (`/integracje`, `/api/v1/openapi.json`), web
 
 ```bash
 npm install
-cp .env.example .env.local     # wpisz ANTHROPIC_API_KEY (nigdy do repozytorium)
+cp .env.example .env.local     # wpisz DEEPSEEK_API_KEY (nigdy do repozytorium)
 npm run dev                    # http://localhost:3000
 npx tsx --env-file=.env.local scripts/eval-swatka.ts   # pomiar trafności Swatki (30 zapytań)
 npx tsx scripts/eval-swatka.ts --lex                   # to samo bez AI (wyszukiwanie awaryjne)
 ```
 
-Stos: Next.js 16, React 19, Tailwind 4, `radix-ui`, `next-intl`, Anthropic SDK, zod. Zależności i licencje: `docs/zaleznosci.md`.
+Stos: Next.js 16, React 19, Tailwind 4, `radix-ui`, `next-intl`, DeepSeek API (fetch), zod. Zależności i licencje: `docs/zaleznosci.md`.
 
 Aktualizacja istniejącego demo na Vercelu: push do podłączonego repozytorium. Konfiguracja `vercel.json` automatycznie wykonuje migracje 013–014 przez istniejące `DATABASE_URL`, a następnie buduje aplikację. Instrukcja i zmienne Vercela: [docs/WDROZENIE.md](docs/WDROZENIE.md). Testy logiki: `npm test`; testy integracyjne wymagają oddzielnej bazy testowej opisanej w instrukcji.
 

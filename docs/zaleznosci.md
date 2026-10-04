@@ -1,6 +1,6 @@
 # Wykaz zależności i licencji
 
-Stan na 3.10.2026, commit z tego dnia. Wykaz powstał ze skanu `package-lock.json` i plików `package.json` w `node_modules` (skrypt w sekcji „Jak odtworzyć”). Wykaz jest elementem umowy: zasada projektu to licencje MIT, Apache-2.0, BSD i ISC dla bibliotek wchodzących w skład aplikacji.
+Zależności bezpośrednie zaktualizowano 4.10.2026 po usunięciu Anthropic SDK; wywołania DeepSeek używają wbudowanego `fetch`. Zestawienie licencji przechodnich poniżej pochodzi ze skanu 3.10.2026. Wykaz powstał ze skanu `package-lock.json` i plików `package.json` w `node_modules` (skrypt w sekcji „Jak odtworzyć”). Wykaz jest elementem umowy: zasada projektu to licencje MIT, Apache-2.0, BSD i ISC dla bibliotek wchodzących w skład aplikacji.
 
 ## Zależności bezpośrednie
 
@@ -16,7 +16,6 @@ Stan na 3.10.2026, commit z tego dnia. Wykaz powstał ze skanu `package-lock.jso
 | class-variance-authority | 0.7.1 | Apache-2.0 | warianty przycisków |
 | clsx | 2.1.1 | MIT | łączenie klas CSS |
 | tailwind-merge | 3.7.0 | MIT | łączenie klas CSS |
-| @anthropic-ai/sdk | 0.131.0 | MIT | wywołania modelu AI (tylko przez `lib/ai.ts`) |
 | zod | 4.6.5 | MIT | walidacja danych i strukturalne odpowiedzi AI |
 | pg | 8.23.1 | MIT | połączenie z bazą PostgreSQL |
 | qrcode | 1.5.4 | MIT | kody QR (plakat pomysłu, karta potrzeby) |
@@ -63,7 +62,7 @@ Stan na 3.10.2026, commit z tego dnia. Wykaz powstał ze skanu `package-lock.jso
 
 | Usługa | Rola | Dane |
 |---|---|---|
-| Anthropic API (model Claude) | AI: dopasowanie, ocena, szkice | tylko tekst po maskowaniu danych osobowych (`lib/maskowanie.ts`) |
+| DeepSeek API (model deepseek-flash) | AI: dopasowanie, ocena, szkice | tylko tekst po maskowaniu danych osobowych (`lib/maskowanie.ts`) |
 | Supabase (PostgreSQL, UE) | baza danych | dane demo są syntetyczne |
 | Vercel | hosting demo | logi bez treści zgłoszeń |
 | YouTube (youtube-nocookie.com) | odtwarzanie filmów ROPS po kliknięciu | brak ciasteczek śledzących przed kliknięciem |

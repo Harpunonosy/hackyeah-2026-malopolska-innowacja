@@ -72,6 +72,10 @@ Chromium, rzeczywiste komponenty z CSS aplikacji i atrapami API, bez uruchamiani
 
 axe: 0 naruszeń w sprawdzonych widokach przy 1280 i 320 px, także z rozwiniętymi szczegółami planu; brak przewijania w poziomie. Generowanie rzeczywistego PDF potwierdziło obecność treści wszystkich pięciu grup, mimo że były zwinięte przed drukowaniem. Po drukowaniu wraca wcześniejszy stan sekcji. Pięć testów renderowania planu włączono do `npm test`. Ta runda obejmowała zmienione komponenty, nie ponowny audyt 33 stron ani badanie z użytkownikami lub czytnikiem ekranu.
 
+### Osobne kafelki fiszki i formularza instytucji (4.10.2026)
+
+Cztery sekcje fiszki sprawdzono oddzielnie: zwinięte domyślnie, poprawne liczniki 0 i 2 oraz wynik punktowy w nagłówku, niezależne rozwijanie i etykiety akcji. Formularz instytucji: dwa zwinięte kafelki, zachowanie zmienionych pól po zwinięciu i błędzie sieci, otwieranie ukrytego błędnego pola oraz fokus, widoczna informacja o możliwych przeszkodach grantu. Podstawowe dane pozostają widoczne. Plan zachowuje pełny wydruk i odnośniki otwierające szczegóły. Chromium z atrapami wszystkich API: axe 0 naruszeń przy 1280 i 320 px; brak przewijania w poziomie. Sprawdzono Enter na nagłówkach kafelków. Nie uruchamiano usług, nie zapisywano testów do wspólnej bazy i nie powtarzano audytu wszystkich stron.
+
 ## 7. Czego nie sprawdziliśmy (plan przed wdrożeniem)
 
 1. Test z czytnikiem ekranu: NVDA + Firefox i VoiceOver + Safari (iOS) na trzech ścieżkach: zgłoszenie problemu, pomysł, odpowiedź w panelu.

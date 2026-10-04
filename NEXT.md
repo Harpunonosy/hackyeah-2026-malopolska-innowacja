@@ -1,3 +1,12 @@
+# Aktualizacja kafelków i dostawcy AI (4.10.2026)
+
+- Fiszka: cztery osobne, domyślnie zwinięte kafelki — „Czy to już istnieje?” z liczbą znalezisk, „Wstępna ocena według karty ROPS” z punktami, „Trudne pytania komisji” i „Nietuzinkowe warianty”. Nagłówki mają akcję „Rozwiń szczegóły” / „Zwiń szczegóły”. Główna fiszka i wysyłka pozostają widoczne.
+- „Dla instytucji”: podstawowe dane i wybór innowacji widoczne; zespół/doświadczenie/partnerzy oraz warunki grantu w dwóch zwiniętych kafelkach. Krótsze opisy i etykiety. Niepotwierdzone warunki zaczynają od „Nie wiem” zamiast deklaracji braku przeszkód. Niepoprawne ukryte pole otwiera swoją sekcję i otrzymuje fokus. Gotowy plan zachowuje koszt, ostrzeżenia i pierwsze kroki; pięć kafelków szczegółów ma tylko nagłówek i akcję rozwijania.
+- UI sprawdzone w Chromium na atrapach API: liczby znalezisk 0/2, punkty, niezależne rozwijanie, klawiatura, zachowanie danych, walidacja ukrytego pola, błędy sieci i ponowienie, payload formularza, druk wszystkich sekcji. Axe 0 naruszeń i reflow 320 px w sprawdzonych komponentach. Bez serwera, bazy i płatnych wywołań AI. Zmiany UX: commit `47507e2`.
+- Odczyt listy modeli DeepSeek (`GET /models`, bez generowania) potwierdził poprawność klucza i dostępność `deepseek-flash`. Użytkownik zlecił przejście z Claude na DeepSeek; wcześniejsza decyzja o pozostawieniu Haiku jest zastąpiona. Klucz zapisano tylko w ignorowanym `.env.local`. Na Vercelu trzeba ustawić `DEEPSEEK_API_KEY` oraz `AI_MODEL=deepseek-flash` (albo usunąć `AI_MODEL`); `.env.local` nie jest przesyłany przez Git. Historyczne wyniki Haiku nie opisują nowego modelu.
+
+- Adapter DeepSeek: 20 testów na atrapach (JSON/schema, brak klucza, stare modele Claude, odmowa/limit tokenów, błędy HTTP/sieci, maksymalnie jedno ponowienie, timeout całego odczytu). Usunięto Anthropic SDK. Końcowe `npm run build` z TypeScript i `npm run lint` przeszły; `npm test`: **70 PASS, 0 FAIL, 7 SKIP** (testy bazy). Odczytowy przegląd kodu bez istotnych uwag. Nie wykonano generowania na prawdziwym modelu ani nowych pomiarów trafności DeepSeek. Wszystko zapisane lokalnie, bez pushu i deployu.
+
 # Aktualizacja po uwagach użytkownika do czytelności (3.10.2026)
 
 - Pracownia: AI przygotowuje krótszą fiszkę. Domyślnie użytkownik widzi podgląd; przycisk „Popraw fiszkę” pokazuje cztery pola i etap. Ocena, asystent, kanwa i generator wniosku są opcjonalnymi, rozwijanymi sekcjami. Wysyłka jest obok fiszki. Zwinięcie sekcji i ponowna analiza zachowują ręczne odpowiedzi pełnej kanwy; błędy sieci pozwalają ponowić wysyłkę.

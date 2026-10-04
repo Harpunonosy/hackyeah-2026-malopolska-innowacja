@@ -1,6 +1,6 @@
 # Wdrożenie Splotu: architektura, skalowanie, integracje
 
-Stan na 3.10.2026. Dokument dla zespołu IT ROPS Kraków i przyszłego wykonawcy. Liczby w rozdz. 3 i 4 pochodzą z pomiarów opisanych przy każdej tabeli.
+Stan na 4.10.2026. Dokument dla zespołu IT ROPS Kraków i przyszłego wykonawcy. Liczby w rozdz. 3 i 4 pochodzą z pomiarów opisanych przy każdej tabeli.
 
 ## 1. Architektura w jednym akapicie
 
@@ -11,7 +11,7 @@ Przeglądarka / widżet na stronie gminy / systemy Hubu (API, webhooki)
         │
    Next.js (Vercel albo dowolny serwer Node 20+, kontener)
    ├─ strony i API (app/)                  ← bez AI: szybkie, cache w pamięci
-   ├─ lib/ai.ts → model Claude (Anthropic) ← tylko tekst po maskowaniu
+   ├─ lib/ai.ts → DeepSeek API (deepseek-flash) ← tylko tekst po maskowaniu
    ├─ lib/powiadomienia.ts → e-mail/SMS (adapter), webhooki HMAC
    └─ lib/db.ts → PostgreSQL (Supabase, UE)
 ```
@@ -20,7 +20,7 @@ Przeglądarka / widżet na stronie gminy / systemy Hubu (API, webhooki)
 |---|---|---|
 | Aplikacja | Vercel (funkcje serwerowe, limit 120 s dla Krawca i Pracowni) | Vercel Pro albo 2 kontenery w chmurze w UE / w serwerowni Urzędu Marszałkowskiego |
 | Baza | Supabase PostgreSQL (UE) | zarządzany PostgreSQL 16 w UE z kopią zapasową dzienną |
-| AI | Claude Haiku 4.5 (Anthropic API) | to samo albo model w polskiej infrastrukturze (PLLuM, Bielik): podmiana jednego pliku `lib/ai.ts` |
+| AI | DeepSeek Flash (DeepSeek API) | to samo albo model w polskiej infrastrukturze (PLLuM, Bielik): podmiana jednego pliku `lib/ai.ts` |
 | E-mail, SMS | symulowane (podgląd w Centrali) | adapter SMTP i bramka SMS w `lib/powiadomienia.ts` |
 | Logowanie | hasło demo (Centrala, eksperci) | login.gov.pl dla mieszkańców (opcjonalnie), konta pracowników z SSO Urzędu |
 
@@ -44,6 +44,8 @@ Przeglądarka / widżet na stronie gminy / systemy Hubu (API, webhooki)
 - Dane, które zmieniają się rzadko (IOSS, mapa wskaźników, profil powiatu, katalog), są trzymane w pamięci procesu (`lib/pamiec.ts`, 20 s–10 min). Przy wielu procesach każdy ma własną kopię. Przed użyciem IOSS, map i profili instancja sprawdza wspólną wersję importu w dzienniku (najwyższy identyfikator i liczba importów), najwyżej raz na 3 sekundy. Zmiana wersji unieważnia wszystkie te widoki; lokalny import unieważnia je od razu. To okno świeżości obejmuje wyłącznie zmiany przez import w Centrali; bezpośrednie zmiany SQL wymagają odświeżenia cache lub restartu.
 
 **Zapytania z AI** są wolniejsze i droższe, dlatego mają osobne limity (`lib/limit.ts`: na adres i globalnie na godzinę):
+
+Poniższe pomiary czasu, kosztów i trafności pochodzą z wcześniejszej wersji na Claude Haiku 4.5. Po przełączeniu na DeepSeek 4.10.2026 nie stanowią pomiaru nowego modelu; nie wykonywano nowych płatnych prób.
 
 | Funkcja | Czas (Haiku 4.5, pomiar 3.10.2026) |
 |---|---|
@@ -92,11 +94,12 @@ Pozostałe funkcje AI nie były mierzone tak samo. W tabeli kosztów na slajd po
 2. Dane: `npx tsx --env-file=.env.local scripts/seed.ts` (Biblioteka, IOSS, Mapa Wyzwań, nabory, eksperci). Dane demo: `scripts/seed-*.ts`, czyszczenie: `scripts/reset-demo.ts`.
 3. Zmienne środowiskowe (`.env.local` lokalnie, ustawienia projektu w hostingu):
    - `DATABASE_URL`: połączenie z bazą;
-   - `ANTHROPIC_API_KEY`: klucz do modelu AI;
-   - `AI_MODEL`: domyślnie `claude-haiku-4-5`;
+   - `DEEPSEEK_API_KEY`: klucz do DeepSeek API;
+   - `AI_MODEL`: domyślnie `deepseek-flash`; stare wartości `claude-*` są ignorowane;
    - `SESSION_SECRET`: co najmniej 16 losowych znaków;
    - `DEMO_ADMIN_PASSWORD`: hasło do Centrali w demo;
    - `SPLOT_URL`: publiczny adres (linki w webhookach i kodach QR).
+   Przy przejściu z Claude ustaw na Vercelu `DEEPSEEK_API_KEY` i zmień `AI_MODEL` na `deepseek-flash` (albo usuń `AI_MODEL`, aby użyć wartości domyślnej). `.env.local` jest ignorowany przez Git i nie przenosi tych zmiennych na hosting. Wszystkie wywołania przechodzą przez DeepSeek JSON Output i lokalną walidację zod. Oficjalna dokumentacja: [JSON Output](https://api-docs.deepseek.com/guides/json_mode/), [modele](https://api-docs.deepseek.com/quick_start/pricing/).
 4. Budowanie: `npm ci && npm run build && npm start`. Na istniejącym demo Vercela wystarczy push do podłączonego repozytorium: `vercel.json` uruchamia `npm run build:vercel`, czyli migracje 013–014 przez `DATABASE_URL`, następnie build aplikacji.
 5. Kontrola: `npx tsc --noEmit`, `npm run lint`, `scripts/a11y-i-zrzuty.ts` (axe, WCAG 2.1 AA), `scripts/szerokosc-320.ts` (reflow), `scripts/eval-swatka.ts` (trafność).
 
