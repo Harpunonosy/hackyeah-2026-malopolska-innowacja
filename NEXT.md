@@ -1,3 +1,8 @@
+# Korekta kontekstu dla wiadomości bez opisu sprawy (4.10.2026)
+
+- Naprawiono przypadek „działasz?”: prośba AI o doprecyzowanie nie powoduje pobierania lub wyświetlania statystyk, podobnych zgłoszeń, pomocnych rozwiązań ani faktów przypisanego obszaru. Sam obszar z modelu nie wystarcza; wspólny warunek serwera i widoku wymaga rozpoznanej potrzeby lub dopasowania oraz braku pytania doprecyzowującego. Rzeczywisty problem bez pasującej innowacji zachowuje kontekst. Widok nie sugeruje wtedy rozpoznanego obszaru ani luki w ofercie dla testowej wiadomości.
+- Cztery testy rzeczywistego potoku z atrapami API i zapytań SQL: przed poprawką odtworzyły oba zgłoszone cytaty, po poprawce przeszły. Chromium: pytanie zachowane, brak niepowiązanego kontekstu także przy starej odpowiedzi zawierającej dane; kontekst widoczny po opisaniu potrzeby, axe 0, reflow 320 px. Końcowy build z TypeScript i lint przeszły; `npm test`: **74 PASS, 0 FAIL, 7 SKIP** (testy bazy). Bez usług, zapisu do bazy ani rzeczywistych zapytań do modelu.
+
 # Aktualizacja kafelków i dostawcy AI (4.10.2026)
 
 - Fiszka: cztery osobne, domyślnie zwinięte kafelki — „Czy to już istnieje?” z liczbą znalezisk, „Wstępna ocena według karty ROPS” z punktami, „Trudne pytania komisji” i „Nietuzinkowe warianty”. Nagłówki mają akcję „Rozwiń szczegóły” / „Zwiń szczegóły”. Główna fiszka i wysyłka pozostają widoczne.
