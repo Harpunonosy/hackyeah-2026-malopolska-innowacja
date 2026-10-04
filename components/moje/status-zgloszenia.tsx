@@ -10,6 +10,7 @@ import { Chip } from "@/components/ui/chip";
 import { ETYKIETY_STATUSOW, STATUSY, type Status } from "@/lib/statusy";
 import { ETYKIETY_TYPOW, type TypSprawy } from "@/lib/sprawy-etykiety";
 import { odpytywanie } from "@/lib/odpytywanie";
+import { useTrybProsty } from "@/components/a11y/tryb-prosty";
 
 type Dane = {
   numer: string;
@@ -92,6 +93,7 @@ function DrogaWniosku({ w }: { w: NonNullable<Dane["wniosek"]> }) {
 
 export function StatusZgloszenia({ numer }: { numer: string }) {
   const t = useTranslations("moje");
+  const prosty = useTrybProsty();
   const [dane, setDane] = React.useState<Dane | null>(null);
   const [brak, setBrak] = React.useState(false);
   const [ocena, setOcena] = React.useState<number | null>(null);
@@ -136,7 +138,22 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
     <div className="space-y-8">
       {info && <p role="alert">{info}</p>}
       {bladSieci && <p role="status" className="rounded-xl border-2 border-primary p-4 font-semibold">{t("bladSieci")}</p>}
-      <p className="flex flex-wrap items-center gap-2">
+      {prosty && (
+        <section aria-labelledby="teraz-h" className="karta space-y-2 border-l-8 border-l-primary p-6">
+          <h2 id="teraz-h" className="text-lg font-bold text-muted">{t("teraz")}</h2>
+          <p className="font-display text-3xl font-bold">{ETYKIETY_STATUSOW[dane.status].etykieta}</p>
+          <p className="text-xl">{ETYKIETY_STATUSOW[dane.status].opis}</p>
+          {etapy.includes(dane.status) && <p className="text-lg text-muted">{t("krokZ", { n: etapy.indexOf(dane.status) + 1, z: etapy.length })}</p>}
+          {(dane.pierwsza_odpowiedz_at || !["odpowiedz", "zamkniete"].includes(dane.status)) && (
+            <p className="text-lg">
+              {dane.pierwsza_odpowiedz_at
+                ? t("odpowiedzianoW", { czas: czasOdpowiedzi(dane.created_at, dane.pierwsza_odpowiedz_at) })
+                : t("terminOdpowiedzi", { data: fmt(dane.termin_sla) })}
+            </p>
+          )}
+        </section>
+      )}
+      {!prosty && <p className="flex flex-wrap items-center gap-2">
         <Chip>{ETYKIETY_TYPOW[dane.typ as TypSprawy] ?? dane.typ}</Chip>
         {dane.tytul && <span className="font-display text-xl font-bold">{dane.tytul}</span>}
         <span className="text-muted">
@@ -144,9 +161,9 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
             ? t("odpowiedzianoW", { czas: czasOdpowiedzi(dane.created_at, dane.pierwsza_odpowiedz_at) })
             : t("terminOdpowiedzi", { data: fmt(dane.termin_sla) })}
         </span>
-      </p>
+      </p>}
       {dane.wniosek && <DrogaWniosku w={dane.wniosek} />}
-      <section aria-labelledby="os-czasu" className="space-y-3">
+      <section aria-labelledby="os-czasu" className={prosty ? "hidden" : "space-y-3"}>
         <h2 id="os-czasu" className="text-2xl font-bold">
           {t("os")}
         </h2>
@@ -234,7 +251,7 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
         </section>
       )}
 
-      {dane.powiadomienia.length > 0 && (
+      {dane.powiadomienia.length > 0 && !prosty && (
         <section aria-labelledby="pow" className="space-y-3" aria-live="polite">
           <h2 id="pow" className="text-2xl font-bold">{t("powiadomienia")}</h2>
           <ul className="space-y-2">

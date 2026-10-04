@@ -6,6 +6,7 @@ import { useTranslations } from "next-intl";
 import { ArrowRight, Search, Video } from "lucide-react";
 import { Chip } from "@/components/ui/chip";
 import { cn } from "@/lib/utils";
+import { useTrybProsty } from "@/components/a11y/tryb-prosty";
 
 export type Pozycja = { id: string; nazwa: string; kategoria: string; problem: string; film: boolean; wybrana: boolean; grupa: string; kto: string; dziala: string };
 
@@ -13,11 +14,14 @@ const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,
 
 export function ListaBiblioteki({ pozycje, kategorie }: { pozycje: Pozycja[]; kategorie: string[] }) {
   const t = useTranslations("wiedza");
+  const prosty = useTrybProsty();
   const [fraza, setFraza] = React.useState("");
   const [kategoria, setKategoria] = React.useState<string | null>(null);
   const [tylkoFilm, setTylkoFilm] = React.useState(false);
   const [tylkoWdrazalne, setTylkoWdrazalne] = React.useState(false);
   const [porownanie, setPorownanie] = React.useState<string[]>([]);
+  // Tryb prosty startuje bez listy; „Wszystkie kategorie” pokazuje pełną listę zamiast rzędów.
+  const [wszystkieProsto, setWszystkieProsto] = React.useState(false);
 
   const wyniki = React.useMemo(() => {
     const slowa = fold(fraza).split(/\s+/).filter(Boolean);
@@ -29,7 +33,7 @@ export function ListaBiblioteki({ pozycje, kategorie }: { pozycje: Pozycja[]; ka
   const karta = (p: Pozycja) => (
     <>
       <Link href={`/wiedza/biblioteka/${p.id}`} className="karta flex w-full flex-1 flex-col gap-3 p-5 text-fg no-underline transition-transform hover:-translate-y-0.5">
-        <span className="flex flex-wrap gap-2">
+        <span className={prosty ? "hidden" : "flex flex-wrap gap-2"}>
           <Chip>{p.kategoria}</Chip>
           {p.film && (
             <Chip className="gap-1">
@@ -45,7 +49,7 @@ export function ListaBiblioteki({ pozycje, kategorie }: { pozycje: Pozycja[]; ka
           <ArrowRight aria-hidden className="size-5" />
         </span>
       </Link>
-      <label className="flex min-h-12 cursor-pointer items-center gap-2 px-2 font-semibold">
+      <label className={prosty ? "hidden" : "flex min-h-12 cursor-pointer items-center gap-2 px-2 font-semibold"}>
         <input type="checkbox" checked={porownanie.includes(p.id)} disabled={!porownanie.includes(p.id) && porownanie.length >= 3} onChange={(e) => setPorownanie(e.target.checked ? [...porownanie, p.id] : porownanie.filter((x) => x !== p.id))} className="size-5 accent-current" />
         {t("porownaj")}<span className="sr-only">: {p.nazwa}</span>
       </label>
@@ -89,11 +93,11 @@ export function ListaBiblioteki({ pozycje, kategorie }: { pozycje: Pozycja[]; ka
             <button
               key={k ?? "wszystkie"}
               type="button"
-              aria-pressed={kategoria === k}
-              onClick={() => setKategoria(k)}
+              aria-pressed={kategoria === k && (k !== null || !prosty || wszystkieProsto)}
+              onClick={() => { setKategoria(k); setWszystkieProsto(k === null); }}
               className={cn(
                 "min-h-12 rounded-full border-2 px-4 font-semibold transition-colors",
-                kategoria === k ? "border-fg bg-fg text-bg" : "border-line-soft bg-soft text-fg hover:border-fg",
+                kategoria === k && (k !== null || !prosty || wszystkieProsto) ? "border-fg bg-fg text-bg" : "border-line-soft bg-soft text-fg hover:border-fg",
               )}
             >
               {k ?? t("wszystkie")}
@@ -102,14 +106,14 @@ export function ListaBiblioteki({ pozycje, kategorie }: { pozycje: Pozycja[]; ka
         </div>
       </div>
 
-      <div role="group" aria-label={t("filtryDodatkowe")} className="flex flex-wrap gap-2">
+      <div role="group" aria-label={t("filtryDodatkowe")} className={prosty ? "hidden" : "flex flex-wrap gap-2"}>
         <button type="button" aria-pressed={tylkoFilm} onClick={() => setTylkoFilm(!tylkoFilm)} className={cn("min-h-12 rounded-full border-2 px-4 font-semibold", tylkoFilm ? "border-fg bg-fg text-bg" : "border-line-soft bg-soft hover:border-fg")}>{t("zFilmem")}</button>
         <button type="button" aria-pressed={tylkoWdrazalne} onClick={() => setTylkoWdrazalne(!tylkoWdrazalne)} className={cn("min-h-12 rounded-full border-2 px-4 font-semibold", tylkoWdrazalne ? "border-fg bg-fg text-bg" : "border-line-soft bg-soft hover:border-fg")}>{t("doWdrozenia")}</button>
       </div>
 
-      <p role="status" className="font-semibold text-muted">{t("wynikow", { ile: wyniki.length })}</p>
+      <p role="status" className="font-semibold text-muted">{prosty && widokRzedow && !wszystkieProsto ? t("prostyWybierz") : t("wynikow", { ile: wyniki.length })}</p>
 
-      {porownanie.length >= 2 && (
+      {porownanie.length >= 2 && !prosty && (
         <section aria-labelledby="por-h" className="karta space-y-3 overflow-x-auto p-5">
           <h2 id="por-h" className="text-2xl font-bold">{t("porownanie")}</h2>
           <table className="w-full min-w-[40rem] text-left">
@@ -125,7 +129,7 @@ export function ListaBiblioteki({ pozycje, kategorie }: { pozycje: Pozycja[]; ka
         </section>
       )}
 
-      {widokRzedow ? (
+      {widokRzedow && prosty && !wszystkieProsto ? null : widokRzedow && !prosty ? (
         <div className="space-y-10">
           {rzedy.map((r) => (
             <section key={r.id} aria-labelledby={`rz-${r.id}`} className="space-y-3">

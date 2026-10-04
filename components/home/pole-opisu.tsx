@@ -54,7 +54,7 @@ export function PoleOpisu() {
             etykieta={t("powiedz")}
             className="contents [&>p]:order-last [&>p]:basis-full"
           />
-          <Button type="submit" rozmiar="lg" className="min-w-52 flex-1">
+          <Button type="submit" rozmiar="lg" className="flex-1 basis-52">
             {t("szukaj")}
             <ArrowRight aria-hidden className="size-5" />
           </Button>

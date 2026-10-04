@@ -3,25 +3,40 @@
 import * as React from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { CircleCheck, CircleX, Loader2, Pencil, Sparkles } from "lucide-react";
+import { CircleCheck, CircleX, Loader2, Send, Sparkles } from "lucide-react";
 import { Mikrofon } from "@/components/a11y/mikrofon";
 import { Button } from "@/components/ui/button";
 import { Postep } from "@/components/ui/postep";
 import { Szczegoly } from "@/components/ui/szczegoly";
 import { wskaznikiDojrzalosci, type KanwaStan } from "@/components/pracownia/kanwa";
 import { Asystent } from "@/components/pracownia/asystent";
-import { KanwaPelna, type KanwaPelnaStan } from "@/components/pracownia/kanwa-pelna";
+import { KanwaPelna, POLA_KANWY, type KanwaPelnaStan } from "@/components/pracownia/kanwa-pelna";
+import { useTrybProsty } from "@/components/a11y/tryb-prosty";
 import { Wniosek } from "@/components/pracownia/wniosek";
-import type { WynikAnalizy } from "@/lib/pracownia";
+import type { KanwaStan as KanwaAI, WynikAnalizy } from "@/lib/pracownia";
 
 const ETAPY = ["pomysl", "prototyp", "przetestowane", "gotowe"] as const;
 type PoleFiszki = Exclude<keyof WynikAnalizy["fiszka"], "etap">;
 const LIMITY: Record<PoleFiszki, number> = { tytul: 160, krotki_opis: 600, istota: 1200, dla_kogo: 400 };
 
+/** Odpowiedzi AI wpisane wstępnie do pełnej kanwy INNO AGH (tylko pola o tym samym znaczeniu). Użytkownik je sprawdza. */
+function kanwaZAnalizy(k: KanwaAI, etap: string): KanwaPelnaStan {
+  const skala = (n: number) => String(Math.max(1, Math.min(4, Math.round(n))));
+  const tekst = (s: string) => s.trim();
+  const wynik: KanwaPelnaStan = {
+    intensywnosc: skala(k.intensywnosc), czestotliwosc: skala(k.czestotliwosc), skala: skala(k.skala),
+    gotowosc: String(Math.max(1, ETAPY.indexOf(etap as (typeof ETAPY)[number]) + 1)),
+    glowny_dochod: skala(k.dochod_pewnosc), skalowanie_dochodu: skala(k.skalowanie),
+    wplyw_osoba: skala(k.wplyw_osoba), wplyw_spolecznosc: skala(k.wplyw_spolecznosc), wplyw_srodowisko: skala(k.wplyw_srodowisko),
+    wspieraja: tekst(k.kto_wspiera), utrudniaja: tekst(k.kto_utrudnia), koszty_stale: tekst(k.koszty_stale), koszty_zmienne: tekst(k.koszty_zmienne),
+  };
+  return Object.fromEntries(Object.entries(wynik).filter(([, v]) => v));
+}
+
 export function FormularzPomyslu() {
   const t = useTranslations("pracownia");
   const jezyk = useLocale();
-  const etykietySzczegolow = { rozwin: t("rozwinSzczegoly"), zwin: t("zwinSzczegoly") };
+  const prosty = useTrybProsty();
   const [opis, setOpis] = React.useState("");
   const [stan, setStan] = React.useState<"" | "pracuje" | "blad">("");
   const [komunikat, setKomunikat] = React.useState("");
@@ -31,9 +46,8 @@ export function FormularzPomyslu() {
   const [pelna, setPelna] = React.useState<KanwaPelnaStan>({});
   const [numer, setNumer] = React.useState<string | null>(null);
   const [wysylka, setWysylka] = React.useState<"" | "wysylam" | "ok" | "blad">("");
-  const [edycja, setEdycja] = React.useState(false);
   const [bledyPol, setBledyPol] = React.useState<PoleFiszki[]>([]);
-  const naglowekFiszki = React.useRef<HTMLHeadingElement>(null);
+  const naglowekFiszki = React.useRef<HTMLDivElement>(null);
   const maFiszke = !!fiszka;
   React.useEffect(() => {
     if (maFiszke) naglowekFiszki.current?.focus();
@@ -54,10 +68,10 @@ export function FormularzPomyslu() {
       setWynik(d);
       setFiszka(d.fiszka);
       setKanwa(d.kanwa);
+      setPelna(kanwaZAnalizy(d.kanwa, d.fiszka.etap));
       setNumer(null);
       setWysylka("");
       setBledyPol([]);
-      setEdycja(false);
       setStan("");
     } catch {
       setKomunikat(t("blad"));
@@ -70,7 +84,6 @@ export function FormularzPomyslu() {
     const bledy = (Object.keys(LIMITY) as PoleFiszki[]).filter((k) => fiszka[k].trim().length < 3 || fiszka[k].trim().length > LIMITY[k]);
     setBledyPol(bledy);
     if (bledy.length) {
-      setEdycja(true);
       requestAnimationFrame(() => document.getElementById(`f-${bledy[0]}`)?.focus());
     }
     return bledy.length === 0;
@@ -88,7 +101,6 @@ export function FormularzPomyslu() {
       if (!r.ok) throw new Error("wysylka");
       setNumer((await r.json()).numer ?? null);
       setWysylka("ok");
-      setEdycja(false);
     } catch {
       setWysylka("blad");
     }
@@ -102,7 +114,6 @@ export function FormularzPomyslu() {
     setNumer(null);
     setWysylka("");
     setBledyPol([]);
-    setEdycja(true);
   }
 
   const tekstFiszki = fiszka ? `Tytuł: ${fiszka.tytul}. Opis: ${fiszka.krotki_opis}. Na czym polega: ${fiszka.istota}. Dla kogo: ${fiszka.dla_kogo}. Etap: ${fiszka.etap}.` : "";
@@ -110,7 +121,7 @@ export function FormularzPomyslu() {
   const pole = (id: PoleFiszki, etykieta: string, wiersze = 2) => (
     <div className="space-y-1">
       <label htmlFor={`f-${id}`} className="block text-lg font-bold">{etykieta}</label>
-      <textarea id={`f-${id}`} rows={wiersze} maxLength={LIMITY[id]} disabled={wysylka === "wysylam" || stan === "pracuje"} value={fiszka?.[id] ?? ""} aria-invalid={bledyPol.includes(id) || undefined} aria-describedby={bledyPol.includes(id) ? "fiszka-blad" : undefined} onChange={(e) => { setFiszka((f) => (f ? { ...f, [id]: e.target.value } : f)); setBledyPol((b) => b.filter((p) => p !== id)); }} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
+      <textarea id={`f-${id}`} rows={wiersze} maxLength={LIMITY[id]} value={fiszka?.[id] ?? ""} aria-invalid={bledyPol.includes(id) || undefined} aria-describedby={bledyPol.includes(id) ? "fiszka-blad" : undefined} onChange={(e) => { setFiszka((f) => (f ? { ...f, [id]: e.target.value } : f)); setBledyPol((b) => b.filter((p) => p !== id)); }} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
     </div>
   );
 
@@ -119,8 +130,8 @@ export function FormularzPomyslu() {
         <label htmlFor="pomysl" className="block text-xl font-bold">{t("poleEtykieta")}</label>
         <p id="pomysl-pomoc" className="text-muted">{t("polePomoc")}</p>
         <textarea id="pomysl" aria-describedby="pomysl-pomoc" rows={4} value={opis} onChange={(e) => setOpis(e.target.value.slice(0, 2500))} placeholder={t("placeholder")} className="block w-full rounded-xl border-2 border-line bg-card p-4 text-lg hover:border-fg" />
-        <div className="flex flex-wrap items-start gap-3">
-          <Mikrofon jezyk={jezyk} etykieta={t("powiedz")} onZdanie={(z) => setOpis((p) => (p ? `${p} ${z}` : z).slice(0, 2500))} />
+        <div className="flex flex-wrap items-start gap-x-3 gap-y-2">
+          <Mikrofon jezyk={jezyk} etykieta={t("powiedz")} onZdanie={(z) => setOpis((p) => (p ? `${p} ${z}` : z).slice(0, 2500))} className="contents [&>p]:order-last [&>p]:basis-full" />
           <Button type="submit" rozmiar="lg" disabled={opis.trim().length < 20 || stan === "pracuje" || wysylka === "wysylam"}>
             {stan === "pracuje" ? <Loader2 aria-hidden className="size-5 animate-spin" /> : <Sparkles aria-hidden className="size-5" />}
             {t("analizuj")}
@@ -134,121 +145,171 @@ export function FormularzPomyslu() {
       </form>
   );
 
+  // Jeden przewijany formularz: części idą po kolei, a wysyłka do ROPS jest zawsze na samym dole.
+  const czesci = [
+    { id: "cz-fiszka", tytul: t("fiszka") },
+    ...(wynik ? [{ id: "cz-istnieje", tytul: t("istnieje") }, { id: "cz-ocena", tytul: t("ocena") }] : []),
+    ...(wynik && !prosty ? [{ id: "cz-pytania", tytul: t("pytaniaWarianty") }] : []),
+    { id: "cz-kanwa", tytul: t("kanwaSzczegoly") },
+    { id: "cz-narzedzia", tytul: t("narzedzia") },
+    { id: "cz-wyslij", tytul: t("wyslijSekcja") },
+  ];
+  const nr = (id: string) => czesci.findIndex((c) => c.id === id) + 1;
+  const czesc = (id: string, opisCzesci?: string) => (
+    <div className="space-y-1">
+      <h2 id={`${id}-h`} className="flex items-center gap-3 text-2xl font-bold">
+        <span aria-hidden="true" className="flex size-10 shrink-0 items-center justify-center rounded-full bg-primary font-display text-lg text-primary-fg">{nr(id)}</span>
+        <span><span className="sr-only">{t("czescNr", { n: nr(id) })}: </span>{czesci.find((c) => c.id === id)?.tytul}</span>
+      </h2>
+      {opisCzesci && <p className="text-lg text-muted">{opisCzesci}</p>}
+    </div>
+  );
+  const wypelnioneKanwy = POLA_KANWY.filter((p) => pelna[p]?.trim()).length;
+  const zablokowane = wysylka === "ok" || wysylka === "wysylam" || stan === "pracuje";
+
+  const kanwaTresc = (
+    <fieldset disabled={zablokowane} className="space-y-4">
+      <legend className="sr-only">{t("kanwaPelna")}</legend>
+      {wynik && <p className="rounded-xl bg-primary-soft p-4 text-lg">{t("kanwaAiInfo")}</p>}
+      <KanwaPelna stan={pelna} zmien={setPelna} fiszkaTekst={tekstFiszki} />
+      {wysylka === "ok" && <p lang="pl">Kanwa została zapisana wraz z pomysłem. Uzupełnienia prześlij w wątku swojej sprawy.</p>}
+    </fieldset>
+  );
+  const narzedziaTresc = (
+    <div className="space-y-4">
+      {tekstFiszki.length >= 20 && fiszka && <Szczegoly tytul={t("asystentSzczegoly")} opis={t("asystentSzczegolyOpis")}><Asystent fiszkaTekst={tekstFiszki} tytul={fiszka.tytul} opis={fiszka.krotki_opis} numer={numer} wskazniki={kanwa ? Object.entries(wskaznikiDojrzalosci(kanwa, fiszka.etap)).map(([k, v]) => ({ nazwa: t(`wsk.${k}`), v: v.v, max: v.max })) : []} /></Szczegoly>}
+      {fiszka && <Szczegoly tytul={t("wniosekSzczegoly")} opis={t("wniosekSzczegolyOpis")}>
+        <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik?.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik?.doUzupelnienia.join("; ") ?? ""}\nOdbiorcy i wartość: ${Object.entries(pelna).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join("; ")}`} />
+      </Szczegoly>}
+    </div>
+  );
+
   return (
-    <div className="max-w-4xl space-y-6">
+    <div className="max-w-4xl space-y-8">
       {fiszka ? <Szczegoly tytul={t("zmienOpis")}>{formularzOpisu}</Szczegoly> : <div className="karta p-6 sm:p-8">{formularzOpisu}</div>}
 
       {fiszka && (
-        <div className="space-y-6">
-          <section className="karta space-y-4 p-6" aria-labelledby="h-fiszka">
-            <h2 ref={naglowekFiszki} tabIndex={-1} id="h-fiszka" className="text-2xl font-bold">{t("fiszka")}</h2>
-            <p className="text-sm text-muted">{wynik ? t("oznaczenie") : t("trybRecznyInfo")}</p>
-            {edycja ? <div className="space-y-4">
-            {pole("tytul", t("tytulPole"), 1)}
-            {pole("krotki_opis", t("opisPole"))}
-            {pole("istota", t("istotaPole"), 3)}
-            {pole("dla_kogo", t("kogoPole"))}
-            <fieldset className="space-y-2">
-              <legend className="text-lg font-bold">{t("etapPole")}</legend>
-              <div className="flex flex-wrap gap-2">
-                {ETAPY.map((e) => (
-                  <label key={e} className="flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border-2 border-line-soft bg-card px-4 hover:border-fg has-[:checked]:border-fg has-[:checked]:bg-accent has-[:checked]:text-accent-fg">
-                    <input type="radio" name="etap" disabled={wysylka === "wysylam" || stan === "pracuje"} checked={fiszka.etap === e} onChange={() => setFiszka({ ...fiszka, etap: e })} className="size-4 accent-current" />
-                    {t(`etap.${e}`)}
-                  </label>
-                ))}
-              </div>
-            </fieldset>
-              <Button type="button" wariant="obrys" disabled={wysylka === "wysylam" || stan === "pracuje"} onClick={() => { if (sprawdzFiszke()) setEdycja(false); }}>{t("zakonczPoprawki")}</Button>
-            </div> : <div className="space-y-4">
-              <h3 className="text-2xl font-bold">{fiszka.tytul}</h3>
-              <p className="max-w-prose text-lg">{fiszka.krotki_opis}</p>
-              <div className="rounded-xl bg-soft p-4"><p className="text-sm font-bold text-muted">{t("kogoPole")}</p><p className="text-lg">{fiszka.dla_kogo}</p></div>
-              <p className="text-sm"><span className="font-bold">{t("etapPole")}: </span>{t(`etap.${fiszka.etap}`)}</p>
-              <Szczegoly poziom={3} className="shadow-none" tytul={t("istotaPole")}><p className="max-w-prose">{fiszka.istota}</p></Szczegoly>
-              {wysylka !== "ok" && <Button type="button" wariant="obrys" disabled={wysylka === "wysylam" || stan === "pracuje"} onClick={() => setEdycja(true)}><Pencil aria-hidden className="size-5" />{t("poprawFiszke")}</Button>}
-            </div>}
-            {bledyPol.length > 0 && <p id="fiszka-blad" role="alert" className="font-semibold text-primary">{t("sprawdzPola")}</p>}
-            <div className="space-y-3 border-t border-line-soft pt-5">
-              {wysylka === "ok" ? (
-                <div role="status" className="space-y-3">
-                  <p className="text-lg"><strong>{t("wyslano")}.</strong> {t("wyslanoOpis")}</p>
-                  {numer && <><p>{t("numerSprawy")}: <strong className="font-mono text-xl">{numer}</strong></p><Button asChild><Link href={`/moje/${numer}`}>{t("sprawdzStatus")}</Link></Button></>}
+        <>
+          <nav aria-labelledby="spis-h" className="karta-mala space-y-3 border-2 border-fg p-5">
+            <h2 id="spis-h" className="text-xl font-bold">{t("spisTytul")}</h2>
+            <p className="text-lg">{t("spisOpis")}</p>
+            <ol className="grid gap-1 sm:grid-cols-2">
+              {czesci.map((c, i) => (
+                <li key={c.id}><a href={`#${c.id}`} className="inline-flex min-h-12 items-center gap-2 font-semibold"><span aria-hidden="true">{i + 1}.</span>{c.tytul}</a></li>
+              ))}
+            </ol>
+          </nav>
+
+          <section id="cz-fiszka" aria-labelledby="cz-fiszka-h" className="karta space-y-5 p-6 sm:p-8">
+            <div ref={naglowekFiszki} tabIndex={-1} className="outline-none">{czesc("cz-fiszka", wynik ? t("oznaczenie") : t("trybRecznyInfo"))}</div>
+            <fieldset disabled={zablokowane} className="space-y-4">
+              <legend className="sr-only">{t("fiszka")}</legend>
+              {pole("tytul", t("tytulPole"), 1)}
+              {pole("krotki_opis", t("opisPole"))}
+              {pole("istota", t("istotaPole"), 3)}
+              {pole("dla_kogo", t("kogoPole"))}
+              <fieldset className="space-y-2">
+                <legend className="text-lg font-bold">{t("etapPole")}</legend>
+                <div className="flex flex-wrap gap-2">
+                  {ETAPY.map((e) => (
+                    <label key={e} className="flex min-h-12 cursor-pointer items-center gap-2 rounded-xl border-2 border-line-soft bg-card px-4 hover:border-fg has-[:checked]:border-fg has-[:checked]:bg-accent has-[:checked]:text-accent-fg">
+                      <input type="radio" name="etap" checked={fiszka.etap === e} onChange={() => setFiszka({ ...fiszka, etap: e })} className="size-4 accent-current" />
+                      {t(`etap.${e}`)}
+                    </label>
+                  ))}
                 </div>
-              ) : (
-                <>
-                  <p className="text-sm text-muted">{t("gotoweDoWyslania")}</p>
-                  <Button type="button" rozmiar="lg" onClick={wyslij} disabled={wysylka === "wysylam" || stan === "pracuje"}>{wysylka === "wysylam" ? t("wysylam") : t("wyslij")}</Button>
-                  {wysylka === "blad" && <p role="alert" className="font-semibold text-primary">{t("blad2")}</p>}
-                </>
-              )}
-            </div>
+              </fieldset>
+            </fieldset>
+            {bledyPol.length > 0 && <p id="fiszka-blad" role="alert" className="font-semibold text-primary">{t("sprawdzPola")}</p>}
           </section>
 
-          <div className="space-y-2"><h2 className="text-2xl font-bold">{t("dopracujTytul")}</h2><p className="text-muted">{t("dopracujOpis")}</p></div>
-
           {wynik && (
-            <>
-              <Szczegoly tytul={t("istnieje")} wartosc={t("liczbaZnalezisk", { n: wynik.podobne.length })} etykiety={etykietySzczegolow}>
-                {wynik.podobne.length === 0 ? <p className="text-lg">{t("istniejeBrak")}</p> : (
-                  <>
-                    <p className="text-muted">{t("istniejeOpis")}</p>
-                    <ul className="space-y-3">
-                      {wynik.podobne.map((p) => (
-                        <li key={p.id} className="karta-mala p-4">
-                          <Link href={`/wiedza/biblioteka/${p.id}`} className="font-display text-xl font-bold">{p.nazwa}</Link>
-                          <p className="mt-1">{p.roznica}</p>
-                        </li>
-                      ))}
-                    </ul>
-                  </>
-                )}
-              </Szczegoly>
-
-              <Szczegoly tytul={t("ocena")} wartosc={t("wynikKrotki", { suma: wynik.suma })} etykiety={etykietySzczegolow}>
-                <p className="text-muted">{t("ocenaOpis")}</p>
-                <p className={`flex items-center gap-2 text-xl font-bold ${wynik.spelniaProgi ? "text-ok" : "text-primary"}`}>
-                  {wynik.spelniaProgi ? <CircleCheck aria-hidden className="size-6" /> : <CircleX aria-hidden className="size-6" />}
-                  {wynik.spelniaProgi ? t("spelniaProgi") : t("niespelniaProgi")}
-                </p>
-                {wynik.doUzupelnienia.length > 0 && <div className="rounded-xl bg-soft p-4"><h3 className="font-bold">{t("doUzupelnienia")}</h3><ul className="mt-2 list-disc space-y-1 pl-6">{wynik.doUzupelnienia.map((x) => <li key={x}>{x}</li>)}</ul></div>}
-                <ul className="space-y-4">
-                  {wynik.oceny.map((o) => (
-                    <li key={o.id} className="space-y-1">
-                      <div className="flex flex-wrap items-baseline justify-between gap-2">
-                        <p className="font-bold">{o.nazwa}</p>
-                        <p className={`font-bold ${o.ok ? "text-ok" : "text-primary"}`}>{t("pkt", { p: o.punkty })} <span className="text-sm font-normal text-muted">({t("prog", { prog: o.prog })})</span></p>
-                      </div>
-                      <div aria-hidden="true" className="h-3 overflow-hidden rounded-full bg-soft"><div className="h-full rounded-full bg-primary" style={{ width: `${o.punkty * 10}%` }} /></div>
-                      <p>{o.uzasadnienie}</p>
-                      <p className="text-muted"><strong className="text-fg">{t("wskazowka")}:</strong> {o.wskazowka}</p>
+            <section id="cz-istnieje" aria-labelledby="cz-istnieje-h" className="karta space-y-4 p-6 sm:p-8">
+              {czesc("cz-istnieje", wynik.podobne.length ? t("istniejeOpis") : undefined)}
+              {wynik.podobne.length === 0 ? <p className="text-lg">{t("istniejeBrak")}</p> : (
+                <ul className="space-y-3">
+                  {wynik.podobne.map((p) => (
+                    <li key={p.id} className="karta-mala p-4">
+                      <Link href={`/wiedza/biblioteka/${p.id}`} className="font-display text-xl font-bold">{p.nazwa}</Link>
+                      <p className="mt-1">{p.roznica}</p>
                     </li>
                   ))}
                 </ul>
-              </Szczegoly>
-
-              <Szczegoly tytul={t("adwokat")} etykiety={etykietySzczegolow}>
-                <ul className="list-disc space-y-2 pl-5">{wynik.adwokat.map((x) => <li key={x}>{x}</li>)}</ul>
-              </Szczegoly>
-              <Szczegoly tytul={t("nietuzinkowe")} etykiety={etykietySzczegolow}>
-                <ul className="list-disc space-y-2 pl-5">{wynik.nietuzinkowe.map((x) => <li key={x}>{x}</li>)}</ul>
-              </Szczegoly>
-            </>
+              )}
+            </section>
           )}
 
-          {tekstFiszki.length >= 20 && <Szczegoly tytul={t("asystentSzczegoly")} opis={t("asystentSzczegolyOpis")}><Asystent fiszkaTekst={tekstFiszki} tytul={fiszka.tytul} opis={fiszka.krotki_opis} numer={numer} wskazniki={kanwa ? Object.entries(wskaznikiDojrzalosci(kanwa, fiszka.etap)).map(([k, v]) => ({ nazwa: t(`wsk.${k}`), v: v.v, max: v.max })) : []} /></Szczegoly>}
+          {wynik && (
+            <section id="cz-ocena" aria-labelledby="cz-ocena-h" className="karta space-y-5 p-6 sm:p-8">
+              {czesc("cz-ocena", prosty ? undefined : t("ocenaOpis"))}
+              <p className={`flex items-center gap-2 text-xl font-bold ${wynik.spelniaProgi ? "text-ok" : "text-primary"}`}>
+                {wynik.spelniaProgi ? <CircleCheck aria-hidden className="size-6 shrink-0" /> : <CircleX aria-hidden className="size-6 shrink-0" />}
+                {t("suma", { suma: wynik.suma })}. {wynik.spelniaProgi ? t("spelniaProgi") : t("niespelniaProgi")}
+              </p>
+              {wynik.doUzupelnienia.length > 0 && <div className="rounded-xl bg-soft p-4"><h3 className="text-lg font-bold">{t("doUzupelnienia")}</h3><ul className="mt-2 list-disc space-y-1 pl-6 text-lg">{wynik.doUzupelnienia.map((x) => <li key={x}>{x}</li>)}</ul></div>}
+              {!prosty && <ul className="space-y-5">
+                {wynik.oceny.map((o) => (
+                  <li key={o.id} className="space-y-1">
+                    <div className="flex flex-wrap items-baseline justify-between gap-2">
+                      <h3 className="text-lg font-bold">{o.nazwa}</h3>
+                      <p className={`font-bold ${o.ok ? "text-ok" : "text-primary"}`}>{t("pkt", { p: o.punkty })} <span className="text-sm font-normal text-muted">({t("prog", { prog: o.prog })})</span></p>
+                    </div>
+                    <div aria-hidden="true" className="h-3 overflow-hidden rounded-full bg-soft"><div className="h-full rounded-full bg-primary" style={{ width: `${o.punkty * 10}%` }} /></div>
+                    <p>{o.uzasadnienie}</p>
+                    <p className="text-muted"><strong className="text-fg">{t("wskazowka")}:</strong> {o.wskazowka}</p>
+                  </li>
+                ))}
+              </ul>}
+            </section>
+          )}
 
-          <Szczegoly tytul={t("kanwaSzczegoly")} opis={t("kanwaSzczegolyOpis")}>
+          {wynik && !prosty && (
+            <section id="cz-pytania" aria-labelledby="cz-pytania-h" className="karta space-y-5 p-6 sm:p-8">
+              {czesc("cz-pytania")}
+              <div className="grid gap-6 md:grid-cols-2">
+                <div className="space-y-2"><h3 className="text-lg font-bold">{t("adwokat")}</h3><ul className="list-disc space-y-2 pl-5">{wynik.adwokat.map((x) => <li key={x}>{x}</li>)}</ul></div>
+                <div className="space-y-2"><h3 className="text-lg font-bold">{t("nietuzinkowe")}</h3><ul className="list-disc space-y-2 pl-5">{wynik.nietuzinkowe.map((x) => <li key={x}>{x}</li>)}</ul></div>
+              </div>
+            </section>
+          )}
 
-            <fieldset disabled={wysylka === "ok" || wysylka === "wysylam"}><legend className="sr-only">{t("kanwaPelna")}</legend><KanwaPelna stan={pelna} zmien={setPelna} fiszkaTekst={tekstFiszki} /></fieldset>
-            {wysylka === "ok" && <p lang="pl" className="mt-3">Kanwa została zapisana wraz z pomysłem. Uzupełnienia prześlij w wątku swojej sprawy.</p>}
-          </Szczegoly>
+          <section id="cz-kanwa" aria-labelledby="cz-kanwa-h" className="karta space-y-5 p-6 sm:p-8">
+            {czesc("cz-kanwa", t("kanwaSzczegolyOpis"))}
+            {prosty ? <Szczegoly id="kanwa-pytania" poziom={3} className="shadow-none" tytul={t("kanwaRozwin")} wartosc={t("kanwaPola", { n: wypelnioneKanwy, z: POLA_KANWY.length })}>{kanwaTresc}</Szczegoly> : kanwaTresc}
+          </section>
 
-          <Szczegoly tytul={t("wniosekSzczegoly")} opis={t("wniosekSzczegolyOpis")}>
-          <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik?.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik?.doUzupelnienia.join("; ") ?? ""}\nOdbiorcy i wartość: ${Object.entries(pelna).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join("; ")}`} />
+          <section id="cz-narzedzia" aria-labelledby="cz-narzedzia-h" className="space-y-4">
+            {czesc("cz-narzedzia", t("narzedziaOpis"))}
+            {narzedziaTresc}
+          </section>
 
-          </Szczegoly>
-        </div>
+          <section id="cz-wyslij" aria-labelledby="cz-wyslij-h" className="karta space-y-5 border-2 border-primary p-6 sm:p-8">
+            {czesc("cz-wyslij")}
+            {wysylka === "ok" ? (
+              <div role="status" className="space-y-3">
+                <p className="text-lg"><strong>{t("wyslano")}.</strong> {t("wyslanoOpis")}</p>
+                {numer && <><p>{t("numerSprawy")}: <strong className="font-mono text-xl">{numer}</strong></p><Button asChild><Link href={`/moje/${numer}`}>{t("sprawdzStatus")}</Link></Button></>}
+              </div>
+            ) : (
+              <>
+                <div className="space-y-2">
+                  <p className="text-lg font-bold">{t("podsumowanie")}</p>
+                  <ul className="space-y-1 text-lg">
+                    <li className="flex items-start gap-2"><CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" />{t("podsumFiszka", { tytul: fiszka.tytul || "…" })}</li>
+                    <li className="flex items-start gap-2">
+                      {wypelnioneKanwy > 0 ? <CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" /> : <CircleX aria-hidden className="mt-1 size-5 shrink-0 text-primary" />}
+                      <span>{t("kanwaPola", { n: wypelnioneKanwy, z: POLA_KANWY.length })}{wypelnioneKanwy < POLA_KANWY.length && <> · <a href={prosty ? "#kanwa-pytania" : "#cz-kanwa"}>{t("uzupelnijKanwe")}</a></>}</span>
+                    </li>
+                    {wynik && <li className="flex items-start gap-2"><CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" />{t("podsumOcena", { suma: wynik.suma })}</li>}
+                  </ul>
+                </div>
+                <p className="text-muted">{t("gotoweDoWyslania")}</p>
+                <Button type="button" rozmiar="lg" className="w-full sm:w-auto" onClick={wyslij} disabled={wysylka === "wysylam" || stan === "pracuje"}><Send aria-hidden className="size-5" />{wysylka === "wysylam" ? t("wysylam") : t("wyslij")}</Button>
+                {wysylka === "blad" && <p role="alert" className="font-semibold text-primary">{t("blad2")}</p>}
+              </>
+            )}
+          </section>
+        </>
       )}
     </div>
   );

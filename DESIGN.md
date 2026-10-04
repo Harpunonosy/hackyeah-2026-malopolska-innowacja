@@ -99,7 +99,29 @@ Zasady czytelności: bez wersalików w etykietach (zdania zaczynamy wielką lite
 
 ---
 
-## 7. Zasady, które pilnujemy
+## 7. Tryb prosty
+
+Cel: senior dostaje minimum tekstu, ale nic nie ginie. To, co schowane, jest pod jednym przyciskiem albo pod „Pokaż wszystko”.
+
+Mechanika: `data-prosty="tak"` na `<html>` (cookie, bez migotania). Style: wariant Tailwind `prosty:` (np. `prosty:hidden`). Komponenty klienta: `useTrybProsty()` z `components/a11y/tryb-prosty.tsx`. Przełączenie działa od razu, bez przeładowania.
+
+| Miejsce | Tryb prosty |
+|---|---|
+| Cały serwis | tekst 20 px, złoty pasek „Tryb prosty… / Pokaż wszystko”, bez nadtytułów, w stopce tylko linki dla mieszkańca |
+| Start | bez „Jak to działa”; 3 kafelki mieszkańca, reszta pod „Więcej możliwości” |
+| Opisz problem | jedno pole i jeden przycisk; bez numerów kroków, wyboru roli i powiatu; krótka podpowiedź |
+| Wyniki | karta = nazwa, poziom dopasowania, „dlaczego pasuje”, „Zobacz pełny opis”; bez kategorii, „Czy to działa”, „Tak rozumiemy”, „Co warto wiedzieć” |
+| Zgłoszenie | bez zgody na testy; duży przycisk na całą szerokość |
+| Karta rozwiązania | od razu tekst łatwy do czytania (AI); pełna karta ROPS pod „Pokaż pełny opis” (otwiera się sama, gdy AI zawiedzie) |
+| Biblioteka | wyszukiwarka i tematy zamiast 11 rzędów; bez porównywarki i dodatkowych filtrów |
+| Moja sprawa | duża karta „Twoja sprawa teraz” (status, krok X z 4, termin) zamiast osi czasu i listy powiadomień |
+| Fiszka pomysłu | ocena tylko w skrócie, bez „Trudnych pytań”; kanwa zwinięta z licznikiem pól |
+
+## 8. Fiszka pomysłu
+
+Jeden przewijany formularz z ponumerowanymi częściami i spisem treści na górze: 1 Fiszka (pola od razu do edycji), 2 Czy to już istnieje, 3 Wstępna ocena, 4 Trudne pytania, 5 Kanwa (wszystkie obszary rozwinięte, wstępnie wypełnione odpowiedziami AI), 6 Dodatkowe narzędzia (zwinięte, nieobowiązkowe), 7 Wyślij do ROPS. Wysyłka jest zawsze na samym dole i pokazuje, co trafi do ROPS (w tym „Kanwa: uzupełnione X z 26 pól”).
+
+## 9. Zasady, które pilnujemy
 
 - Główne działanie („Znajdź pomoc”) widać bez przewijania przy 1440 i 375 px.
 - Cele dotykowe min. 48 px, widoczny fokus (3 px + poświata), każda ikona z tekstem.

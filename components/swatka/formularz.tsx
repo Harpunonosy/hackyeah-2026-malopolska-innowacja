@@ -14,6 +14,7 @@ import { Phone } from "lucide-react";
 import Link from "next/link";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { WyslijZgloszenie } from "@/components/swatka/wyslij-zgloszenie";
+import { useTrybProsty } from "@/components/a11y/tryb-prosty";
 
 const MAX = 1500;
 const POWIATY = [
@@ -37,6 +38,7 @@ type Stan = { typ: "start" } | { typ: "laduje" } | { typ: "wynik"; wynik: WynikS
 export function FormularzSwatki({ auto = false, children }: { auto?: boolean; children?: React.ReactNode }) {
   const t = useTranslations("swatka");
   const jezyk = useLocale();
+  const prosty = useTrybProsty();
   const [tekst, setTekst] = React.useState("");
   const [edycja, setEdycja] = React.useState(false);
   const autoUruchomiono = React.useRef(false);
@@ -119,12 +121,12 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
       {pokazFormularz && (
       <form onSubmit={wyslij} className="karta space-y-8 p-6 sm:p-8" aria-describedby="swatka-uwaga">
         <div className="space-y-3">
-          <Krok n={1} tytul={t("krok1")} />
+          {!prosty && <Krok n={1} tytul={t("krok1")} />}
           <label htmlFor="opis" className="block text-xl font-bold">
             {t("poleEtykieta")}
           </label>
           <p id="swatka-uwaga" className="text-muted">
-            {t("podpowiedz")} <strong className="text-fg">{t("uwagaDane")}</strong>
+            {prosty ? <>{t("podpowiedzProsta")} <strong className="text-fg">{t("uwagaDaneProsta")}</strong></> : <>{t("podpowiedz")} <strong className="text-fg">{t("uwagaDane")}</strong></>}
           </p>
           <textarea
             id="opis"
@@ -142,7 +144,7 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
           <div className="space-y-2 pt-2">
             <p className="font-semibold">{t("przyklady")}</p>
             <ul className="flex flex-wrap gap-2">
-              {(t.raw("przyklady_lista") as string[]).map((p) => (
+              {(t.raw("przyklady_lista") as string[]).slice(0, prosty ? 3 : undefined).map((p) => (
                 <li key={p}>
                   <button
                     type="button"
@@ -157,7 +159,8 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
           </div>
         </div>
 
-        <fieldset className="space-y-3">
+        {/* Tryb prosty: jedna rzecz naraz. Mieszkaniec jest domyślny, powiat jest nieobowiązkowy. */}
+        {!prosty && <fieldset className="space-y-3">
           <legend className="sr-only">{t("kimJestem")}</legend>
           <Krok n={2} tytul={t("krok2")} />
           <div className="grid auto-rows-fr gap-3 sm:grid-cols-2">
@@ -193,11 +196,11 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
               ))}
             </datalist>
           </div>
-        </fieldset>
+        </fieldset>}
 
         <div className="space-y-3">
-          <Krok n={3} tytul={t("krok3")} />
-          <Button type="submit" rozmiar="lg" disabled={laduje} className="w-full sm:w-auto">
+          {!prosty && <Krok n={3} tytul={t("krok3")} />}
+          <Button type="submit" rozmiar="lg" disabled={laduje} className={prosty ? "w-full" : "w-full sm:w-auto"}>
             {laduje ? <Loader2 aria-hidden className="size-5 animate-spin" /> : <Search aria-hidden className="size-5" />}
             {t("szukaj")}
           </Button>
@@ -219,7 +222,7 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
         )}
       </div>
 
-      {stan.typ === "wynik" && <Wyniki wynik={stan.wynik} instytucja={rola === "instytucja"} />}
+      {stan.typ === "wynik" && <Wyniki wynik={stan.wynik} instytucja={rola === "instytucja"} prosty={prosty} />}
     </div>
     <aside className="space-y-4 lg:sticky lg:top-6" aria-label="Informacje pomocnicze">
       {stan.typ === "wynik" && <WyslijZgloszenie tekst={tekst} rola={rola} powiat={powiat} wynik={stan.wynik} />}
@@ -230,7 +233,7 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
   );
 }
 
-function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean }) {
+function Wyniki({ wynik, instytucja, prosty }: { wynik: WynikSwatki; instytucja: boolean; prosty: boolean }) {
   const t = useTranslations("swatka");
   const tk = useTranslations("kryzys");
   const z = wynik.zrozumiano;
@@ -266,7 +269,7 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
 
       {wynik.tryb === "awaryjny" && <p className="karta-mala border-2 border-warn p-4 font-medium">{t("trybAwaryjny")}</p>}
 
-      {wynik.tryb === "ai" && maKontekst && (
+      {wynik.tryb === "ai" && maKontekst && !prosty && (
         <div className="karta-mala flex flex-wrap items-center gap-x-3 gap-y-2 p-4">
           <span className="font-bold">{t("zrozumialemTak")}:</span>
           <Chip>{z.obszarNazwa}</Chip>
@@ -284,7 +287,7 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
         </p>
       )}
 
-      {rozpoznane.length > 0 && (
+      {rozpoznane.length > 0 && !prosty && (
         <p className="flex flex-wrap items-center gap-2 text-sm">
           <span className="font-bold">{t("rozpoznalismy")}:</span>
           {rozpoznane.map((r) => (
@@ -299,34 +302,34 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
           {wynik.nici.map((n, i) => (
             <section key={n.potrzeba} aria-labelledby={`nic-${i}`} className="space-y-4 border-l-8 border-l-primary pl-4 sm:pl-6">
               <h2 id={`nic-${i}`} className="text-2xl font-bold"><span className="text-primary">{t("sprawaNr", { n: i + 1 })}:</span> {n.potrzeba}</h2>
-              {n.karty.length === 0 ? <p className="text-muted">{t("niciBrak")}</p> : n.karty.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />)}
+              {n.karty.length === 0 ? <p className="text-muted">{t("niciBrak")}</p> : n.karty.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} prosty={prosty} />)}
             </section>
           ))}
           {pozostale.length > 0 && (
             <section aria-labelledby="jeszcze-h" className="space-y-4">
               <h2 id="jeszcze-h" className="text-2xl font-bold">{t("jeszczePasuje")}</h2>
-              {pozostale.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />)}
+              {pozostale.map((k) => <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} prosty={prosty} />)}
             </section>
           )}
         </>
       ) : (
         <div className="space-y-5">
           {karty.map((k) => (
-            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />
+            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} prosty={prosty} />
           ))}
         </div>
       )}
 
-      {wynik.najblizsze.length > 0 && (
+      {wynik.najblizsze.length > 0 && (!prosty || karty.length === 0) && (
         <div className="space-y-4">
           <h2 className="text-2xl font-bold">{t("najblizsze")}</h2>
           {wynik.najblizsze.slice(0, 2).map((k) => (
-            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} />
+            <KartaInnowacji key={k.id} k={k} obszar={z.obszar} instytucja={instytucja} prosty={prosty} />
           ))}
         </div>
       )}
 
-      {maKontekst && (wynik.podobnePrzypadki || wynik.coPomoglo.length > 0 || wynik.fakty.length > 0) && (
+      {maKontekst && !prosty && (wynik.podobnePrzypadki || wynik.coPomoglo.length > 0 || wynik.fakty.length > 0) && (
         <section aria-labelledby="wiedz-h" className="karta-mala space-y-4 p-5">
           <h2 id="wiedz-h" className="text-xl font-bold">{t("coWarto")}</h2>
           {wynik.podobnePrzypadki && (
@@ -368,7 +371,7 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
 
       <div className="space-y-1 text-sm text-muted">
         <p>{t("oznaczenieAi")}</p>
-        {wynik.zamaskowano.length > 0 && <p>{t("zamaskowano", { rodzaje: wynik.zamaskowano.join(", ") })}</p>}
+        {wynik.zamaskowano.length > 0 && !prosty && <p>{t("zamaskowano", { rodzaje: wynik.zamaskowano.join(", ") })}</p>}
       </div>
     </section>
   );

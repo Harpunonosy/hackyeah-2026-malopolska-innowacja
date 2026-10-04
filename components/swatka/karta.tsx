@@ -15,7 +15,7 @@ function poziomDopasowania(trafnosc: number | null) {
   return trafnosc >= 85 ? 3 : trafnosc >= 70 ? 2 : 1;
 }
 
-export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopasowania; obszar?: string; instytucja?: boolean }) {
+export function KartaInnowacji({ k, obszar, instytucja = false, prosty = false }: { k: KartaDopasowania; obszar?: string; instytucja?: boolean; prosty?: boolean }) {
   const [wysylanie, setWysylanie] = React.useState(false);
   const [blad, setBlad] = React.useState(false);
   const zapisz = async (wartosc: 1 | -1) => {
@@ -34,7 +34,7 @@ export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopa
     <article className={cn("karta flex flex-col gap-4 border-l-8 p-6", poziom === 3 ? "border-l-primary" : poziom === 2 ? "border-l-accent" : "border-l-line")}>
       <header className="space-y-2">
         <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-          <Chip>{k.kategoria}</Chip>
+          {!prosty && <Chip>{k.kategoria}</Chip>}
           <span className="inline-flex items-center gap-2 text-sm font-bold">
             <span aria-hidden className="flex gap-1">
               {[1, 2, 3].map((i) => (
@@ -52,15 +52,15 @@ export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopa
         <p className="mt-1 text-lg">{k.dlaczego}</p>
       </div>
 
-      <details className="karta-mala group px-4 py-2">
+      {!prosty && <details className="karta-mala group px-4 py-2">
         <summary className="flex min-h-10 cursor-pointer items-center font-semibold">{t("czyDziala")}</summary>
         <p className="pb-2 pt-1 text-muted">{k.czyToDziala}</p>
         <h4 className="pt-2 text-sm font-bold text-muted">{t("ktoWdroz")}</h4>
         <p className="pb-2 text-muted">{k.ktoMozeWdrozyc}</p>
-      </details>
+      </details>}
 
       <footer className="mt-auto flex flex-wrap items-center gap-3 pt-1">
-        <Button asChild>
+        <Button asChild rozmiar={prosty ? "lg" : "md"}>
           <Link href={`/wiedza/biblioteka/${k.id}`}>
             {t("pelnyOpis")}
             <ArrowRight aria-hidden className="size-5" />

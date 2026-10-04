@@ -2,6 +2,7 @@ import { Film } from "@/components/biblioteka/film";
 import { Prosciej } from "@/components/biblioteka/prosciej";
 import { idAutora } from "@/lib/siec-stale";
 import { ZglosNieaktualne } from "@/components/biblioteka/zglos-nieaktualne";
+import { ZwijanePrzyProstym } from "@/components/a11y/zwijane-przy-prostym";
 import { czyWdrazalna } from "@/lib/swatka";
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
@@ -57,24 +58,28 @@ export default async function Innowacja(props: PageProps<"/wiedza/biblioteka/[id
 
       <div className="kontener grid items-start gap-8 py-10 lg:grid-cols-[minmax(0,1fr)_20rem]">
         <div className="space-y-5">
-          <Sekcja tytul={t("naCzymPolega")} tekst={i.naCzymPolega} wyroznienie />
-          <Prosciej id={i.id} />
-          <Sekcja tytul={t("problem")} tekst={i.problem} />
-          <Sekcja tytul={t("grupa")} tekst={i.grupaDocelowa} />
-          <Sekcja tytul={t("ktoMoze")} tekst={i.ktoMozeSkorzystac} />
-          <Sekcja tytul={t("czyDziala")} tekst={i.czyToDziala} />
+          {/* W trybie prostym najpierw tekst łatwy do czytania, pełna karta ROPS pod jednym przyciskiem. */}
+          <Prosciej id={i.id} tryb="prosty" />
+          <ZwijanePrzyProstym id="pelny-opis" tytul={t("pelnyOpisKarty")}>
+            <Sekcja tytul={t("naCzymPolega")} tekst={i.naCzymPolega} wyroznienie />
+            <Prosciej id={i.id} tryb="zwykly" />
+            <Sekcja tytul={t("problem")} tekst={i.problem} />
+            <Sekcja tytul={t("grupa")} tekst={i.grupaDocelowa} />
+            <Sekcja tytul={t("ktoMoze")} tekst={i.ktoMozeSkorzystac} />
+            <Sekcja tytul={t("czyDziala")} tekst={i.czyToDziala} />
+          </ZwijanePrzyProstym>
         </div>
         <aside className="space-y-4 lg:sticky lg:top-28">
-          <section className="karta space-y-3 p-5">
+          <section className={i.film.length ? "karta space-y-3 p-5" : "karta space-y-3 p-5 prosty:hidden"}>
             {czyWdrazalna(i) && (
-              <Button asChild className="w-full">
+              <Button asChild className="w-full prosty:hidden">
                 <Link href={`/wdrozenie?innowacja=${i.id}`}>{t("wdroz")}</Link>
               </Button>
             )}
-            <Button asChild wariant="obrys" className="w-full">
+            <Button asChild wariant="obrys" className="w-full prosty:hidden">
               <Link href={`/testy?innowacja=${i.id}`}>{t("ocen")}</Link>
             </Button>
-            <ZglosNieaktualne id={i.id} nazwa={i.nazwa} />
+            <div className="prosty:hidden"><ZglosNieaktualne id={i.id} nazwa={i.nazwa} /></div>
             {i.film.map((f, n) => (
               <Film key={f} url={f} tytul={i.nazwa} etykieta={`${t("filmy")}${i.film.length > 1 ? ` ${n + 1}` : ""}`} />
             ))}

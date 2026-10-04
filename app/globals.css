@@ -80,6 +80,8 @@ html {
   font-size: 112.5%; /* 18 px bazowo */
   scroll-padding-top: 5rem;
 }
+/* Tryb prosty sam powiększa tekst do 20 px; większe rozmiary z paska mają pierwszeństwo. */
+html[data-prosty="tak"] { font-size: 125%; }
 html[data-rozmiar="duzy"] { font-size: 131%; }
 html[data-rozmiar="bardzo-duzy"] { font-size: 150%; }
 

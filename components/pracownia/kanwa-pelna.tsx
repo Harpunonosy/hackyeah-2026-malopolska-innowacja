@@ -3,7 +3,6 @@ import { apiFetch } from "@/lib/fetch-klient";
 import * as React from "react";
 import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
-import { Szczegoly } from "@/components/ui/szczegoly";
 import kanwa from "@/data/kanwa_inno_agh.json";
 
 export type KanwaPelnaStan = Record<string, string>;
@@ -12,6 +11,8 @@ type Pole = { id: string; nazwa: string; pytanie?: string; opis?: string; typ: s
 type Sekcja = { id: string; nazwa: string; opis?: string; pytanie?: string; pola: Pole[]; status_partnera?: string[]; skala_wplywu?: Opcja[] };
 const sekcje: Sekcja[] = kanwa.arkusze.flatMap<Sekcja>(a => a.sekcje as Sekcja[]);
 const liczbaPol = sekcje.reduce((n, s) => n + s.pola.length, 0);
+/** Identyfikatory wszystkich pól kanwy: do licznika „uzupełnione X z Y”. */
+export const POLA_KANWY = sekcje.flatMap((s) => s.pola.map((p) => p.id));
 const klasaPola = "block w-full rounded-xl border-2 border-line bg-card p-3 text-base hover:border-fg";
 
 export function KanwaPelna({ stan, zmien, fiszkaTekst }: { stan: KanwaPelnaStan; zmien: (s: KanwaPelnaStan) => void; fiszkaTekst: string }) {
@@ -36,7 +37,9 @@ export function KanwaPelna({ stan, zmien, fiszkaTekst }: { stan: KanwaPelnaStan;
       <a href={kanwa.url}>Oryginalna kanwa INNO AGH (PDF, 3 strony)</a>
     </div>
     {blad && <p role="alert">{blad}</p>}
-    {sekcje.map((s, nr) => <div key={s.id} lang="pl"><Szczegoly poziom={3} tytul={`${nr + 1}. ${s.nazwa}`} className="shadow-none">
+    {/* Wszystkie obszary są rozwinięte: to zwykły przewijany formularz, nic nie ginie pod przyciskiem. */}
+    {sekcje.map((s, nr) => <section key={s.id} lang="pl" aria-labelledby={`kp-s-${s.id}`} className="space-y-4 border-t-2 border-line-soft pt-6">
+      <h4 id={`kp-s-${s.id}`} className="text-xl font-bold">{nr + 1}. {s.nazwa}</h4>
       <div className="space-y-6">
         {(s.opis || s.pytanie) && <p>{s.opis ?? s.pytanie}</p>}
         {s.status_partnera && <p>Przy każdym partnerze dopisz status: {s.status_partnera.join(", ")}.</p>}
@@ -75,7 +78,7 @@ export function KanwaPelna({ stan, zmien, fiszkaTekst }: { stan: KanwaPelnaStan;
           </fieldset>;
         })}
       </div>
-    </Szczegoly></div>)}
+    </section>)}
     <button type="button" className="min-h-12 rounded-full border-2 border-fg px-4 font-semibold hover:bg-fg hover:text-bg" onClick={() => window.print()}>{t("drukujKanwe")}</button>
   </section>;
 }

@@ -6,12 +6,14 @@ import { useTranslations } from "next-intl";
 import { Printer, Send } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import type { WynikSwatki } from "@/lib/swatka";
+import { useTrybProsty } from "@/components/a11y/tryb-prosty";
 
 type Props = { tekst: string; rola: string; powiat: string; wynik: WynikSwatki };
 
 export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
   const t = useTranslations("zgloszenie");
   const tk = useTranslations("karta");
+  const prosty = useTrybProsty();
   const [krok, setKrok] = React.useState<"start" | "podglad" | "wysylka" | "gotowe">("start");
   const [email, setEmail] = React.useState("");
   const [zgoda, setZgoda] = React.useState(false);
@@ -76,7 +78,7 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
       <h3 className="text-2xl font-bold">{t("tytul")}</h3>
       <p>{t("opis")}</p>
       {krok === "start" ? (
-        <Button type="button" onClick={() => setKrok("podglad")}>
+        <Button type="button" rozmiar={prosty ? "lg" : "md"} className={prosty ? "w-full" : undefined} onClick={() => setKrok("podglad")}>
           <Send aria-hidden className="size-5" />
           {t("przycisk")}
         </Button>
@@ -108,10 +110,10 @@ export function WyslijZgloszenie({ tekst, rola, powiat, wynik }: Props) {
             <input type="checkbox" checked={zgoda} onChange={(e) => setZgoda(e.target.checked)} className="mt-1.5 size-6 accent-current" />
             <span className="text-lg">{t("zgoda")}</span>
           </label>
-          <label className="flex cursor-pointer items-start gap-3">
+          {!prosty && <label className="flex cursor-pointer items-start gap-3">
             <input type="checkbox" checked={testy} onChange={(e) => setTesty(e.target.checked)} className="mt-1.5 size-6 accent-current" />
             <span className="text-lg">{t("zgodaTesty")}</span>
-          </label>
+          </label>}
           {blad && (
             <p role="alert" className="font-semibold text-primary">
               {blad}

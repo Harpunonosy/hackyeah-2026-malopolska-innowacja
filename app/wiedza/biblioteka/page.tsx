@@ -22,9 +22,9 @@ export default async function Biblioteka() {
   }));
   return (
     <Strona>
-      <p><Link href="/wiedza/materialy" className="inline-flex min-h-12 items-center font-semibold underline" lang="pl">Raporty i publikacje ROPS — pełny katalog materiałów</Link></p>
+      <p className="prosty:hidden"><Link href="/wiedza/materialy" className="inline-flex min-h-12 items-center font-semibold underline" lang="pl">Raporty i publikacje ROPS — pełny katalog materiałów</Link></p>
       <NaglowekStrony tytul={t("tytul")} nadtytul="Skarbnica wiedzy" opis={t("podtytul")} />
-      <div className="flex flex-wrap gap-3">
+      <div className="flex flex-wrap gap-3 prosty:hidden">
         <Button asChild wariant="obrys"><Link href="/wiedza/malopolska">Kondycja Małopolski: raporty i mapa wskaźników</Link></Button>
         <Button asChild wariant="obrys"><Link href="/wiedza/akademia">Akademia: krótkie lekcje</Link></Button>
         <Button asChild wariant="obrys"><Link href="/galeria">Galeria pomysłów i dobrych praktyk</Link></Button>

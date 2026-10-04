@@ -5,6 +5,7 @@ import Link from "next/link";
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getTranslations } from "next-intl/server";
 import { PasekDostepnosci } from "@/components/a11y/pasek-dostepnosci";
+import { PasekTrybuProstego, UstawieniaDostawca } from "@/components/a11y/tryb-prosty";
 import { GlownaNawigacja } from "@/components/glowna-nawigacja";
 import { Logo } from "@/components/logo";
 import { COOKIE_DOSTEPNOSC, odczytajUstawienia } from "@/lib/dostepnosc";
@@ -45,6 +46,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
     >
       <body className="flex flex-col">
         <NextIntlClientProvider>
+          <UstawieniaDostawca poczatkowe={ustawienia}>
           <a
             href="#tresc"
             className="sr-only z-50 rounded-lg bg-fg px-4 py-3 font-semibold text-bg focus:not-sr-only focus:fixed focus:left-4 focus:top-4"
@@ -58,7 +60,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 <Logo className="size-12 text-fg" />
                 <span>
                   <span className="block font-display text-[1.75rem] font-bold leading-none tracking-tight">{t("marka.nazwa")}</span>
-                  <span className="mt-1 hidden text-sm text-muted xl:block">{t("marka.podpis")}</span>
+                  <span className="mt-1 hidden text-sm text-muted xl:block xl:prosty:hidden">{t("marka.podpis")}</span>
                 </span>
               </Link>
               <GlownaNawigacja
@@ -72,6 +74,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               />
             </div>
           </header>
+          <PasekTrybuProstego />
           <main id="tresc" tabIndex={-1} className="flex-1 outline-none">
             {children}
           </main>
@@ -82,16 +85,18 @@ export default async function RootLayout({ children }: { children: React.ReactNo
                 {t("marka.nazwa")}
               </p>
               <p className="max-w-xl">{t("stopka.ai")}</p>
-              <Link href="/centrala" className="inline-flex min-h-12 items-center font-semibold text-hero-fg">{t("stopka.centrala")}</Link>
+              <Link href="/centrala" className="inline-flex min-h-12 items-center font-semibold text-hero-fg prosty:hidden">{t("stopka.centrala")}</Link>
             </div>
             <nav aria-label={t("stopka.zaufanie")} className="kontener pb-8">
               <ul className="flex flex-wrap gap-x-6">
-                {[["/ocena", t("stopka.ocena")], ["/zaufanie", t("stopka.zaufanieLink")], ["/dostepnosc", t("stopka.dostepnoscLink")], ["/latwy", t("stopka.latwyLink")], ["/ekspert", t("stopka.ekspert")], ["/integracje", t("stopka.integracjeLink")], ["/siec", t("stopka.siecLink")]].map(([href, etykieta]) => (
-                  <li key={href}><Link href={href} className="inline-flex min-h-12 items-center font-semibold text-hero-fg">{etykieta}</Link></li>
+                {/* W trybie prostym zostają linki dla mieszkańca; reszta jest dla Jury, ekspertów i integratorów. */}
+                {([["/ocena", t("stopka.ocena"), false], ["/zaufanie", t("stopka.zaufanieLink"), true], ["/dostepnosc", t("stopka.dostepnoscLink"), true], ["/latwy", t("stopka.latwyLink"), true], ["/ekspert", t("stopka.ekspert"), false], ["/integracje", t("stopka.integracjeLink"), false], ["/siec", t("stopka.siecLink"), false]] as const).map(([href, etykieta, dlaMieszkanca]) => (
+                  <li key={href} className={dlaMieszkanca ? undefined : "prosty:hidden"}><Link href={href} className="inline-flex min-h-12 items-center font-semibold text-hero-fg">{etykieta}</Link></li>
                 ))}
               </ul>
             </nav>
           </footer>
+          </UstawieniaDostawca>
         </NextIntlClientProvider>
       </body>
     </html>

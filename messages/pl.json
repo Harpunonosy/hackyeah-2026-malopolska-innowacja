@@ -31,7 +31,9 @@
     "jezykUk": "Українська",
     "jezykPlOpis": "Zmień język na polski",
     "jezykUkOpis": "Змінити мову на українську",
-    "latwy": "Tekst łatwy do czytania"
+    "latwy": "Tekst łatwy do czytania",
+    "prostyWlaczony": "Tryb prosty: widzisz tylko to, co najważniejsze.",
+    "pokazWszystko": "Pokaż wszystko"
   },
   "stopka": {
     "dane": "Dane demonstracyjne. Prototyp na HackYeah 2026.",
@@ -140,7 +142,8 @@
     "pomocLatwy": "Proste instrukcje",
     "pomocOsoba": "Pomagam innej osobie",
     "przyklady": "Nie wiesz, jak zacząć? Kliknij przykład:",
-    "inneSposoby": "Inne sposoby"
+    "inneSposoby": "Inne sposoby",
+    "wiecej": "Więcej możliwości"
   },
   "swatka": {
     "tytul": "Opisz swój problem",
@@ -233,7 +236,9 @@
       "Mój syn zamknął się w sobie i całe dni siedzi przy komputerze.",
       "głusi alarm pożarowy"
     ],
-    "bladOceny": "Nie udało się zapisać oceny. Spróbuj ponownie."
+    "bladOceny": "Nie udało się zapisać oceny. Spróbuj ponownie.",
+    "podpowiedzProsta": "Napisz albo powiedz, co się dzieje.",
+    "uwagaDaneProsta": "Bez nazwiska i adresu."
   },
   "kryzys": {
     "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",
@@ -305,7 +310,9 @@
     "rzadFilmy": "Zobacz na filmie",
     "zobaczWszystkie": "Zobacz wszystkie ({n})",
     "rzadPrzewin": "{nazwa}: przewiń w bok, aby zobaczyć więcej",
-    "autorWSieci": "skontaktuj przez Sieć liderów"
+    "autorWSieci": "skontaktuj przez Sieć liderów",
+    "pelnyOpisKarty": "Pokaż pełny opis z Biblioteki ROPS",
+    "prostyWybierz": "Wybierz temat albo wpisz, czego szukasz."
   },
   "zgloszenie": {
     "tytul": "Chcesz, żeby ROPS Ci odpowiedział?",
@@ -378,7 +385,9 @@
     "sledzenie": "Śledzenie zgłoszenia",
     "bladSieci": "Nie udało się odświeżyć sprawy. Ponawiamy połączenie automatycznie. Ostatnie pobrane informacje pozostają widoczne.",
     "ladowanie": "Ładujemy Twoją sprawę…",
-    "bladWysylki": "Nie udało się zapisać. Treść została w polu — spróbuj ponownie."
+    "bladWysylki": "Nie udało się zapisać. Treść została w polu — spróbuj ponownie.",
+    "teraz": "Twoja sprawa teraz",
+    "krokZ": "Krok {n} z {z}"
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -650,7 +659,7 @@
     "czuje": "Czuje",
     "scenorysAi": "Scenorys przygotowano z pomocą AI. Role zamiast imion, bez danych osobowych.",
     "kanwaPelna": "Pełna kanwa innowacji społecznych INNO AGH",
-    "kanwaPelnaOpis": "Wybierz obszar, który chcesz dopracować. Nie musisz odpowiadać na wszystko.",
+    "kanwaPelnaOpis": "Odpowiedz na pytania, które znasz. Nie musisz odpowiadać na wszystko.",
     "niewiem": "Nie wiem, pomóż",
     "propozycje": "Propozycje (kliknij, aby dodać)",
     "drukujKanwe": "Drukuj kanwę (A4)",
@@ -694,7 +703,21 @@
     "zwinSzczegoly": "Zwiń szczegóły",
     "liczbaZnalezisk": "{n, plural, one {# znalezisko} few {# znaleziska} many {# znalezisk} other {# znaleziska}}",
     "wynikKrotki": "{suma}/50 pkt",
-    "wniosekRecznie": "Wypełnij samodzielnie (bez AI)"
+    "wniosekRecznie": "Wypełnij samodzielnie (bez AI)",
+    "pytaniaWarianty": "Trudne pytania i nietuzinkowe warianty",
+    "narzedzia": "Dodatkowe narzędzia",
+    "narzedziaOpis": "Nieobowiązkowe. Asystent pomoże rozwinąć pomysł, a generator przygotuje wniosek do naboru.",
+    "wyslijSekcja": "Wyślij pomysł do ROPS",
+    "spisTytul": "Co jest na tej stronie",
+    "spisOpis": "Przewiń w dół i uzupełnij kolejne części. Na samym końcu wyślesz pomysł do ROPS.",
+    "czescNr": "Część {n}",
+    "kanwaAiInfo": "AI wstępnie zaznaczyło część odpowiedzi na podstawie Twojego opisu. Sprawdź je i popraw to, co nie pasuje.",
+    "kanwaRozwin": "Pokaż pytania kanwy",
+    "kanwaPola": "Kanwa: uzupełnione {n} z {z} pól",
+    "uzupelnijKanwe": "uzupełnij kanwę",
+    "podsumowanie": "Do ROPS trafi:",
+    "podsumFiszka": "fiszka „{tytul}”",
+    "podsumOcena": "wstępna ocena: {suma} z 50 pkt"
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",
