@@ -23,12 +23,13 @@ async function main() {
   let bledy = 0;
   for (const p of probki) {
     const w = await dopasuj(WejscieSwatki.parse({ tekst: p.tekst }));
-    console.log(JSON.stringify({ przypadek: p.id, tekst: p.tekst, tryb: w.tryb, grupa: w.zrozumiano.grupaDocelowa, dopasowania: [...w.dopasowania, ...w.najblizsze].map(k => ({ id: k.id, trafnosc: k.trafnosc, dlaczego: k.dlaczego })), metryki: w.metryki }));
+    console.log(JSON.stringify({ przypadek: p.id, tekst: p.tekst, tryb: w.tryb, pytanie: w.pytanie, grupa: w.zrozumiano.grupaDocelowa, dopasowania: [...w.dopasowania, ...w.najblizsze].map(k => ({ id: k.id, trafnosc: k.trafnosc, dlaczego: k.dlaczego })), metryki: w.metryki }));
     try {
       assert.equal(w.tryb, "ai", "Test musi sprawdzać rzeczywisty model");
       if (p.pasuje) {
         const k = w.dopasowania.find(k => k.id === p.pasuje);
         assert.ok(k && k.trafnosc !== null && k.trafnosc >= p.minimum, `${p.pasuje}: oczekiwano co najmniej ${p.minimum}, otrzymano ${k?.trafnosc ?? "brak"}`);
+        assert.equal(w.pytanie, null, "Znalezione dopasowanie nie wymaga blokującego doprecyzowania");
       }
       if (p.nieznanaGrupa) assert.doesNotMatch(w.zrozumiano.grupaDocelowa, /senior|starsz|dorosł|dzieci|niepełnosprawn|niepelnosprawn|intelektualn|obcokraj|cudzoziem|migran/i, "Nie przypisuj użytkownikowi wieku, pochodzenia ani diagnozy, których nie podał");
       if (p.niePasuje) assert.ok(!w.dopasowania.some(k => k.id === p.niePasuje && (k.trafnosc ?? 0) >= 70), "Edukacja nie realizuje rezerwacji wizyty");

@@ -69,6 +69,35 @@ test("pytanie o doprecyzowanie wyklucza kontekst także przy ogólnych potrzebac
   assert.deepEqual(wynik.coPomoglo, []);
 });
 
+for (const trafnosc of [55, 72]) {
+  test(`dopasowanie ${trafnosc} pkt usuwa sprzeczne pytanie modelu i zachowuje kontekst potrzeby`, async (t) => {
+    atrapy(t, {
+      pytanie: "Czy przeszkadza Ci niepełnosprawność, wiek lub język?",
+      potrzeby: ["Wyjaśnienie korzystania z usług medycznych"],
+      dopasowania: [{ id: "pelnia-zdrowia", trafnosc, dlaczego: "Narzędzie uczy korzystania z usług medycznych.", ocena: { potrzeba: trafnosc === 55 ? "czesciowa" : "glowna", odbiorca: "nieustalony", forma: "zgodna" } }],
+    });
+    const w = await dopasuj({ tekst: "nie wiem jak umowic sie do lekarza", rola: "mieszkaniec", jezyk: "pl" });
+    assert.equal(w.tryb, "ai");
+    assert.equal(w.dopasowania[0]?.id, "pelnia-zdrowia");
+    assert.equal(w.pytanie, null, "Znalezione rozwiązanie nie może być jednocześnie blokowane pytaniem o brak rozpoznania potrzeby");
+    assert.ok(w.fakty.length > 0);
+    assert.equal(w.podobnePrzypadki?.liczba, 5);
+  });
+}
+
+test("nieznana karta i luźne podobieństwo nie usuwają potrzebnego doprecyzowania", async (t) => {
+  const pytanie = "Z jaką czynnością potrzebujesz pomocy?";
+  atrapy(t, { pytanie, potrzeby: [], dopasowania: [
+    { id: "nieistniejaca-innowacja", trafnosc: 99, dlaczego: "Nieznana karta.", ocena: { potrzeba: "bezposrednia", odbiorca: "nieustalony", forma: "zgodna" } },
+    { id: "pelnia-zdrowia", trafnosc: 99, dlaczego: "Nie realizuje wskazanej czynności.", ocena: { potrzeba: "luzna", odbiorca: "nieustalony", forma: "niezgodna" } },
+  ] });
+  const w = await dopasuj({ tekst: "potrzebuję pomocy", rola: "mieszkaniec", jezyk: "pl" });
+  assert.equal(w.tryb, "ai");
+  assert.equal(w.dopasowania.length, 0);
+  assert.equal(w.pytanie, pytanie);
+  assert.deepEqual(w.fakty, []);
+});
+
 test("sama klasyfikacja obszaru bez potrzeby i dopasowań nie uruchamia kontekstu", async (t) => {
   atrapy(t, { pytanie: null, potrzeby: ["  "] });
   const wynik = await dopasuj({ tekst: "Witam!", rola: "mieszkaniec", jezyk: "pl" });
