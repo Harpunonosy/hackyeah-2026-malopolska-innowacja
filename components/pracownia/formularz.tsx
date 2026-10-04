@@ -3,7 +3,7 @@
 import * as React from "react";
 import Link from "next/link";
 import { useLocale, useTranslations } from "next-intl";
-import { CircleCheck, CircleX, Loader2, Send, Sparkles } from "lucide-react";
+import { CircleCheck, CircleX, Lightbulb, Loader2, Send, Sparkles } from "lucide-react";
 import { Mikrofon } from "@/components/a11y/mikrofon";
 import { Button } from "@/components/ui/button";
 import { Postep } from "@/components/ui/postep";
@@ -11,6 +11,7 @@ import { Szczegoly } from "@/components/ui/szczegoly";
 import { wskaznikiDojrzalosci, type KanwaStan } from "@/components/pracownia/kanwa";
 import { Asystent } from "@/components/pracownia/asystent";
 import { KanwaPelna, POLA_KANWY, type KanwaPelnaStan } from "@/components/pracownia/kanwa-pelna";
+import { KanwaKrotka, POLA_KROTKIE } from "@/components/pracownia/kanwa-krotka";
 import { useTrybProsty } from "@/components/a11y/tryb-prosty";
 import { Wniosek } from "@/components/pracownia/wniosek";
 import type { KanwaStan as KanwaAI, WynikAnalizy } from "@/lib/pracownia";
@@ -148,10 +149,10 @@ export function FormularzPomyslu() {
   // Jeden przewijany formularz: części idą po kolei, a wysyłka do ROPS jest zawsze na samym dole.
   const czesci = [
     { id: "cz-fiszka", tytul: t("fiszka") },
-    ...(wynik ? [{ id: "cz-istnieje", tytul: t("istnieje") }, { id: "cz-ocena", tytul: t("ocena") }] : []),
-    ...(wynik && !prosty ? [{ id: "cz-pytania", tytul: t("pytaniaWarianty") }] : []),
-    { id: "cz-kanwa", tytul: t("kanwaSzczegoly") },
-    { id: "cz-narzedzia", tytul: t("narzedzia") },
+    ...(wynik ? [{ id: "cz-istnieje", tytul: t("istnieje") }] : []),
+    { id: "cz-pytania", tytul: t("krotkieTytul") },
+    // Ocena na końcu: najpierw uzupełniasz, potem widzisz, co jeszcze można poprawić.
+    ...(wynik ? [{ id: "cz-ocena", tytul: t("ocena") }] : []),
     { id: "cz-wyslij", tytul: t("wyslijSekcja") },
   ];
   const nr = (id: string) => czesci.findIndex((c) => c.id === id) + 1;
@@ -165,20 +166,20 @@ export function FormularzPomyslu() {
     </div>
   );
   const wypelnioneKanwy = POLA_KANWY.filter((p) => pelna[p]?.trim()).length;
+  const wypelnioneKrotkie = POLA_KROTKIE.filter((p) => pelna[p]?.trim()).length;
   const zablokowane = wysylka === "ok" || wysylka === "wysylam" || stan === "pracuje";
 
   const kanwaTresc = (
     <fieldset disabled={zablokowane} className="space-y-4">
       <legend className="sr-only">{t("kanwaPelna")}</legend>
-      {wynik && <p className="rounded-xl bg-primary-soft p-4 text-lg">{t("kanwaAiInfo")}</p>}
       <KanwaPelna stan={pelna} zmien={setPelna} fiszkaTekst={tekstFiszki} />
       {wysylka === "ok" && <p lang="pl">Kanwa została zapisana wraz z pomysłem. Uzupełnienia prześlij w wątku swojej sprawy.</p>}
     </fieldset>
   );
   const narzedziaTresc = (
     <div className="space-y-4">
-      {tekstFiszki.length >= 20 && fiszka && <Szczegoly tytul={t("asystentSzczegoly")} opis={t("asystentSzczegolyOpis")}><Asystent fiszkaTekst={tekstFiszki} tytul={fiszka.tytul} opis={fiszka.krotki_opis} numer={numer} wskazniki={kanwa ? Object.entries(wskaznikiDojrzalosci(kanwa, fiszka.etap)).map(([k, v]) => ({ nazwa: t(`wsk.${k}`), v: v.v, max: v.max })) : []} /></Szczegoly>}
-      {fiszka && <Szczegoly tytul={t("wniosekSzczegoly")} opis={t("wniosekSzczegolyOpis")}>
+      {tekstFiszki.length >= 20 && fiszka && <Szczegoly poziom={3} className="shadow-none" tytul={t("asystentSzczegoly")} opis={t("asystentSzczegolyOpis")}><Asystent fiszkaTekst={tekstFiszki} tytul={fiszka.tytul} opis={fiszka.krotki_opis} numer={numer} wskazniki={kanwa ? Object.entries(wskaznikiDojrzalosci(kanwa, fiszka.etap)).map(([k, v]) => ({ nazwa: t(`wsk.${k}`), v: v.v, max: v.max })) : []} /></Szczegoly>}
+      {fiszka && <Szczegoly poziom={3} className="shadow-none" tytul={t("wniosekSzczegoly")} opis={t("wniosekSzczegolyOpis")}>
         <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik?.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik?.doUzupelnienia.join("; ") ?? ""}\nOdbiorcy i wartość: ${Object.entries(pelna).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join("; ")}`} />
       </Szczegoly>}
     </div>
@@ -239,49 +240,50 @@ export function FormularzPomyslu() {
             </section>
           )}
 
+          <section id="cz-pytania" aria-labelledby="cz-pytania-h" className="karta space-y-6 p-6 sm:p-8">
+            {czesc("cz-pytania", t("krotkieOpis"))}
+            {wynik && <p className="rounded-xl bg-primary-soft p-4 text-lg">{t("kanwaAiInfo")}</p>}
+            <fieldset disabled={zablokowane} className="min-w-0">
+              <legend className="sr-only">{t("krotkieTytul")}</legend>
+              <KanwaKrotka stan={pelna} zmien={setPelna} />
+            </fieldset>
+            <Szczegoly id="kanwa-pytania" poziom={3} className="shadow-none" tytul={t("kanwaPelnaNieob")} opis={t("kanwaPelnaNieobOpis")} wartosc={t("kanwaPola", { n: wypelnioneKanwy, z: POLA_KANWY.length })}>{kanwaTresc}</Szczegoly>
+          </section>
+
           {wynik && (
             <section id="cz-ocena" aria-labelledby="cz-ocena-h" className="karta space-y-5 p-6 sm:p-8">
-              {czesc("cz-ocena", prosty ? undefined : t("ocenaOpis"))}
-              <p className={`flex items-center gap-2 text-xl font-bold ${wynik.spelniaProgi ? "text-ok" : "text-primary"}`}>
-                {wynik.spelniaProgi ? <CircleCheck aria-hidden className="size-6 shrink-0" /> : <CircleX aria-hidden className="size-6 shrink-0" />}
-                {t("suma", { suma: wynik.suma })}. {wynik.spelniaProgi ? t("spelniaProgi") : t("niespelniaProgi")}
+              {czesc("cz-ocena", t("ocenaNaKoniec"))}
+              <p className={`flex items-center gap-2 text-xl font-bold ${wynik.spelniaProgi ? "text-ok" : "text-fg"}`}>
+                {wynik.spelniaProgi ? <CircleCheck aria-hidden className="size-6 shrink-0" /> : <Lightbulb aria-hidden className="size-6 shrink-0 text-primary" />}
+                {t("suma", { suma: wynik.suma })}. {wynik.spelniaProgi ? t("spelniaProgi") : t("niespelniaProgiLagodnie")}
               </p>
-              {wynik.doUzupelnienia.length > 0 && <div className="rounded-xl bg-soft p-4"><h3 className="text-lg font-bold">{t("doUzupelnienia")}</h3><ul className="mt-2 list-disc space-y-1 pl-6 text-lg">{wynik.doUzupelnienia.map((x) => <li key={x}>{x}</li>)}</ul></div>}
-              {!prosty && <ul className="space-y-5">
-                {wynik.oceny.map((o) => (
-                  <li key={o.id} className="space-y-1">
-                    <div className="flex flex-wrap items-baseline justify-between gap-2">
-                      <h3 className="text-lg font-bold">{o.nazwa}</h3>
-                      <p className={`font-bold ${o.ok ? "text-ok" : "text-primary"}`}>{t("pkt", { p: o.punkty })} <span className="text-sm font-normal text-muted">({t("prog", { prog: o.prog })})</span></p>
-                    </div>
-                    <div aria-hidden="true" className="h-3 overflow-hidden rounded-full bg-soft"><div className="h-full rounded-full bg-primary" style={{ width: `${o.punkty * 10}%` }} /></div>
-                    <p>{o.uzasadnienie}</p>
-                    <p className="text-muted"><strong className="text-fg">{t("wskazowka")}:</strong> {o.wskazowka}</p>
-                  </li>
-                ))}
-              </ul>}
+              {wynik.doUzupelnienia.length > 0 && <div className="rounded-xl bg-soft p-4"><h3 className="text-lg font-bold">{t("coDopisac")}</h3><ul className="mt-2 list-disc space-y-1 pl-6 text-lg">{wynik.doUzupelnienia.map((x) => <li key={x}>{x}</li>)}</ul></div>}
+              {!prosty && (
+                <Szczegoly poziom={3} className="shadow-none" tytul={t("ocenaSzczegolyTytul")}>
+                  <p className="text-muted">{t("ocenaOpis")}</p>
+                  <ul className="space-y-5">
+                    {wynik.oceny.map((o) => (
+                      <li key={o.id} className="space-y-1">
+                        <div className="flex flex-wrap items-baseline justify-between gap-2">
+                          <h4 className="text-lg font-bold">{o.nazwa}</h4>
+                          <p className={`font-bold ${o.ok ? "text-ok" : "text-primary"}`}>{t("pkt", { p: o.punkty })} <span className="text-sm font-normal text-muted">({t("prog", { prog: o.prog })})</span></p>
+                        </div>
+                        <div aria-hidden="true" className="h-3 overflow-hidden rounded-full bg-soft"><div className="h-full rounded-full bg-primary" style={{ width: `${o.punkty * 10}%` }} /></div>
+                        <p>{o.uzasadnienie}</p>
+                        <p className="text-muted"><strong className="text-fg">{t("wskazowka")}:</strong> {o.wskazowka}</p>
+                      </li>
+                    ))}
+                  </ul>
+                  <div className="grid gap-6 border-t border-line-soft pt-5 md:grid-cols-2">
+                    <div className="space-y-2"><h4 className="text-lg font-bold">{t("adwokat")}</h4><ul className="list-disc space-y-2 pl-5">{wynik.adwokat.map((x) => <li key={x}>{x}</li>)}</ul></div>
+                    <div className="space-y-2"><h4 className="text-lg font-bold">{t("nietuzinkowe")}</h4><ul className="list-disc space-y-2 pl-5">{wynik.nietuzinkowe.map((x) => <li key={x}>{x}</li>)}</ul></div>
+                  </div>
+                </Szczegoly>
+              )}
             </section>
           )}
 
-          {wynik && !prosty && (
-            <section id="cz-pytania" aria-labelledby="cz-pytania-h" className="karta space-y-5 p-6 sm:p-8">
-              {czesc("cz-pytania")}
-              <div className="grid gap-6 md:grid-cols-2">
-                <div className="space-y-2"><h3 className="text-lg font-bold">{t("adwokat")}</h3><ul className="list-disc space-y-2 pl-5">{wynik.adwokat.map((x) => <li key={x}>{x}</li>)}</ul></div>
-                <div className="space-y-2"><h3 className="text-lg font-bold">{t("nietuzinkowe")}</h3><ul className="list-disc space-y-2 pl-5">{wynik.nietuzinkowe.map((x) => <li key={x}>{x}</li>)}</ul></div>
-              </div>
-            </section>
-          )}
-
-          <section id="cz-kanwa" aria-labelledby="cz-kanwa-h" className="karta space-y-5 p-6 sm:p-8">
-            {czesc("cz-kanwa", t("kanwaSzczegolyOpis"))}
-            {prosty ? <Szczegoly id="kanwa-pytania" poziom={3} className="shadow-none" tytul={t("kanwaRozwin")} wartosc={t("kanwaPola", { n: wypelnioneKanwy, z: POLA_KANWY.length })}>{kanwaTresc}</Szczegoly> : kanwaTresc}
-          </section>
-
-          <section id="cz-narzedzia" aria-labelledby="cz-narzedzia-h" className="space-y-4">
-            {czesc("cz-narzedzia", t("narzedziaOpis"))}
-            {narzedziaTresc}
-          </section>
+          <Szczegoly tytul={t("narzedzia")} opis={t("narzedziaOpis")}>{narzedziaTresc}</Szczegoly>
 
           <section id="cz-wyslij" aria-labelledby="cz-wyslij-h" className="karta space-y-5 border-2 border-primary p-6 sm:p-8">
             {czesc("cz-wyslij")}
@@ -297,9 +299,10 @@ export function FormularzPomyslu() {
                   <ul className="space-y-1 text-lg">
                     <li className="flex items-start gap-2"><CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" />{t("podsumFiszka", { tytul: fiszka.tytul || "…" })}</li>
                     <li className="flex items-start gap-2">
-                      {wypelnioneKanwy > 0 ? <CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" /> : <CircleX aria-hidden className="mt-1 size-5 shrink-0 text-primary" />}
-                      <span>{t("kanwaPola", { n: wypelnioneKanwy, z: POLA_KANWY.length })}{wypelnioneKanwy < POLA_KANWY.length && <> · <a href={prosty ? "#kanwa-pytania" : "#cz-kanwa"}>{t("uzupelnijKanwe")}</a></>}</span>
+                      {wypelnioneKrotkie === POLA_KROTKIE.length ? <CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" /> : <CircleX aria-hidden className="mt-1 size-5 shrink-0 text-primary" />}
+                      <span>{t("krotkiePola", { n: wypelnioneKrotkie, z: POLA_KROTKIE.length })}{wypelnioneKrotkie < POLA_KROTKIE.length && <> · <a href="#cz-pytania">{t("uzupelnijOdpowiedzi")}</a></>}</span>
                     </li>
+                    {wypelnioneKanwy > wypelnioneKrotkie && <li className="flex items-start gap-2"><CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" />{t("kanwaPola", { n: wypelnioneKanwy, z: POLA_KANWY.length })}</li>}
                     {wynik && <li className="flex items-start gap-2"><CircleCheck aria-hidden className="mt-1 size-5 shrink-0 text-ok" />{t("podsumOcena", { suma: wynik.suma })}</li>}
                   </ul>
                 </div>

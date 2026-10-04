@@ -115,11 +115,19 @@ Mechanika: `data-prosty="tak"` na `<html>` (cookie, bez migotania). Style: waria
 | Karta rozwiązania | od razu tekst łatwy do czytania (AI); pełna karta ROPS pod „Pokaż pełny opis” (otwiera się sama, gdy AI zawiedzie) |
 | Biblioteka | wyszukiwarka i tematy zamiast 11 rzędów; bez porównywarki i dodatkowych filtrów |
 | Moja sprawa | duża karta „Twoja sprawa teraz” (status, krok X z 4, termin) zamiast osi czasu i listy powiadomień |
-| Fiszka pomysłu | ocena tylko w skrócie, bez „Trudnych pytań”; kanwa zwinięta z licznikiem pól |
+| Fiszka pomysłu | ocena tylko w skrócie (bez szczegółów kryteriów) |
 
 ## 8. Fiszka pomysłu
 
-Jeden przewijany formularz z ponumerowanymi częściami i spisem treści na górze: 1 Fiszka (pola od razu do edycji), 2 Czy to już istnieje, 3 Wstępna ocena, 4 Trudne pytania, 5 Kanwa (wszystkie obszary rozwinięte, wstępnie wypełnione odpowiedziami AI), 6 Dodatkowe narzędzia (zwinięte, nieobowiązkowe), 7 Wyślij do ROPS. Wysyłka jest zawsze na samym dole i pokazuje, co trafi do ROPS (w tym „Kanwa: uzupełnione X z 26 pól”).
+Jeden przewijany formularz do wypełnienia w kilka minut. Części po kolei, spis na górze:
+
+1. **Fiszka**: 5 pól od razu do edycji.
+2. **Czy to już istnieje**: podobne rozwiązania z Biblioteki.
+3. **Kilka pytań o pomysł**: 6 krótkich pytań z pełnej kanwy INNO AGH (powaga problemu, skala, kto pomoże, kto przeszkodzi, koszty, pieniądze po grancie), wstępnie wypełnionych przez AI. Odpowiedź to kliknięcie albo kilka słów. Pełna kanwa (26 pytań) jest zwinięta i nieobowiązkowa; ma te same pola, więc odpowiedzi się nie dublują.
+4. **Wstępna ocena** na końcu, żeby nie zniechęcać przed uzupełnieniem: wynik, „Co warto dopisać”, szczegóły kryteriów i trudne pytania zwinięte.
+5. **Wyślij do ROPS**: zawsze na samym dole, z podsumowaniem, co trafi do ROPS.
+
+Asystent i generator wniosku są zwinięte w „Dodatkowe narzędzia” przed wysyłką.
 
 ## 9. Zasady, które pilnujemy
 

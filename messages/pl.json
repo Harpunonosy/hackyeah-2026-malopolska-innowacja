@@ -717,7 +717,27 @@
     "uzupelnijKanwe": "uzupełnij kanwę",
     "podsumowanie": "Do ROPS trafi:",
     "podsumFiszka": "fiszka „{tytul}”",
-    "podsumOcena": "wstępna ocena: {suma} z 50 pkt"
+    "podsumOcena": "wstępna ocena: {suma} z 50 pkt",
+    "krotkieTytul": "Kilka pytań o pomysł",
+    "krotkieOpis": "Sześć krótkich pytań. Wystarczy kliknąć odpowiedź albo wpisać kilka słów.",
+    "krotkie": {
+      "intensywnosc": "Jak poważny jest problem?",
+      "skala": "Ilu osób dotyczy?",
+      "wspieraja": "Kto pomoże albo poprze pomysł?",
+      "utrudniaja": "Kto lub co może przeszkodzić?",
+      "koszty_stale": "Na co pójdą główne pieniądze?",
+      "glowny_dochod": "Skąd będą pieniądze po zakończeniu grantu?"
+    },
+    "krotkieWiele": "Możesz zaznaczyć kilka.",
+    "krotkieInne": "Inne (nieobowiązkowo)",
+    "krotkiePola": "Odpowiedzi na pytania: {n} z {z}",
+    "uzupelnijOdpowiedzi": "uzupełnij",
+    "kanwaPelnaNieob": "Pełna kanwa INNO AGH (nieobowiązkowo)",
+    "kanwaPelnaNieobOpis": "Więcej pytań o odbiorców, kanały, partnerów i wpływ. Dla osób, które chcą dopracować pomysł.",
+    "ocenaNaKoniec": "Na podstawie Twojego pierwszego opisu. To podpowiedź, nie decyzja komisji.",
+    "niespelniaProgiLagodnie": "Dopisz kilka rzeczy, a pomysł będzie mocniejszy. Możesz go wysłać już teraz.",
+    "coDopisac": "Co warto dopisać",
+    "ocenaSzczegolyTytul": "Szczegóły oceny i trudne pytania komisji"
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",
