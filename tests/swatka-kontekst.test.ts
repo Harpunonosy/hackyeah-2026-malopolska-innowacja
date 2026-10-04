@@ -4,8 +4,9 @@ import { Pool } from "pg";
 import { dopasuj } from "../lib/swatka";
 import { uniewaznijKatalog } from "../lib/katalog";
 import { odswiezFakty } from "../lib/fakty-baza";
+import type { skalibrujTrafnosc } from "../lib/swatka-ocena";
 
-function atrapy(t: TestContext, odpowiedz: { pytanie: string | null; potrzeby: string[] }) {
+function atrapy(t: TestContext, odpowiedz: { pytanie: string | null; potrzeby: string[]; dopasowania?: { id: string; trafnosc: number; dlaczego: string; ocena: Parameters<typeof skalibrujTrafnosc>[1] }[] }) {
   const klucze = ["DATABASE_URL", "DEEPSEEK_API_KEY", "AI_MODEL"] as const;
   const przed = klucze.map((k) => process.env[k]);
   process.env.DATABASE_URL = "postgresql://test:fake@localhost/swatka_bez_polaczenia";
@@ -30,7 +31,7 @@ function atrapy(t: TestContext, odpowiedz: { pytanie: string | null; potrzeby: s
   t.mock.method(globalThis, "fetch", async () => Response.json({
     choices: [{ finish_reason: "stop", message: { content: JSON.stringify({
       obszar: "zdrowie", grupa_docelowa: "", potrzeby: odpowiedz.potrzeby, slowa_kluczowe: [], kryzys: false,
-      dopasowania: [], pytanie_doprecyzowujace: odpowiedz.pytanie, nici: [],
+      dopasowania: odpowiedz.dopasowania ?? [], pytanie_doprecyzowujace: odpowiedz.pytanie, nici: [],
     }) } }],
   }));
   return zapytania;
@@ -46,6 +47,18 @@ test('„działasz?” zachowuje pytanie, bez statystyk, przykładów i faktów 
   assert.equal(wynik.podobnePrzypadki, null);
   assert.deepEqual(wynik.coPomoglo, []);
   assert.ok(!zapytania.some((sql) => /from (zgloszenia|reakcje|fakty)\b/.test(sql)), "Nie pobieramy kontekstu wymuszonego obszaru AI");
+});
+
+test("wyniki są sortowane i dzielone według zgodności potrzeby, a nie sprzecznej surowej punktacji", async (t) => {
+  atrapy(t, { pytanie: null, potrzeby: ["Nauka korzystania z usług medycznych"], dopasowania: [
+    { id: "inteligentny-organizer-do-lekow", trafnosc: 99, dlaczego: "Organizuje leki, nie wyjaśnia korzystania z przychodni.", ocena: { potrzeba: "luzna", odbiorca: "nieustalony", forma: "niezgodna" } },
+    { id: "pelnia-zdrowia", trafnosc: 55, dlaczego: "Uczy korzystania z usług medycznych.", ocena: { potrzeba: "glowna", odbiorca: "nieustalony", forma: "zgodna" } },
+  ] });
+  const w = await dopasuj({ tekst: "nie wiem jak umowic sie do lekarza", rola: "mieszkaniec", jezyk: "pl" });
+  assert.equal(w.tryb, "ai");
+  assert.deepEqual(w.dopasowania.map(k => [k.id, k.trafnosc]), [["pelnia-zdrowia", 70]]);
+  assert.deepEqual(w.najblizsze.map(k => [k.id, k.trafnosc]), [["inteligentny-organizer-do-lekow", 54]]);
+  assert.equal(w.brakDopasowania, false);
 });
 
 test("pytanie o doprecyzowanie wyklucza kontekst także przy ogólnych potrzebach modelu", async (t) => {
