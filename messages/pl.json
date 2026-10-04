@@ -374,7 +374,7 @@
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
     "tytul": "Wdróż innowację u siebie",
-    "opis": "Wybierz innowację i powiedz nam kilka rzeczy o swojej instytucji. Przygotujemy szkic planu wdrożenia i sprawdzimy, czy kwalifikujecie się do grantu „Usługa Wrażliwa”.",
+    "opis": "Wybierz innowację i podaj dane instytucji. Przygotujemy plan i wstępnie sprawdzimy warunki grantu.",
     "krok1": "Wybierz innowację",
     "krok2": "Opisz swoją instytucję",
     "krok3": "Przygotuj plan",
@@ -385,14 +385,14 @@
     "typ": "Rodzaj instytucji",
     "powiat": "Powiat",
     "powiatPodpowiedz": "Zacznij pisać nazwę powiatu",
-    "odbiorcy": "Ilu odbiorców chcecie objąć wsparciem?",
-    "kadra": "Ile osób kadry może się zająć wdrożeniem?",
-    "lata": "Ile lat macie doświadczenia w pracy z tą grupą?",
+    "odbiorcy": "Liczba odbiorców",
+    "kadra": "Liczba osób w zespole",
+    "lata": "Lata doświadczenia z tą grupą",
     "budzet": "Orientacyjny budżet",
     "partnerzy": "Partnerzy (nieobowiązkowo)",
     "partnerzyPlaceholder": "Na przykład: lokalna fundacja, szkoła, przychodnia",
-    "zaleglosci": "Czy instytucja ma zaległości w podatkach lub składkach ZUS?",
-    "podwojne": "Czy te same koszty są już finansowane z innych środków publicznych?",
+    "zaleglosci": "Zaległości w podatkach lub ZUS?",
+    "podwojne": "Te same koszty finansowane z innych środków publicznych?",
     "brak": "Nie",
     "sa": "Tak",
     "nieWiem": "Nie wiem",
@@ -500,7 +500,24 @@
     "uxNazwaUslugi": "Nazwa usługi",
     "uxTyp_produktu": "Produktu",
     "uxTyp_rezultatu": "Rezultatu",
-    "uxTyp_wplywu": "Wpływu"
+    "uxTyp_wplywu": "Wpływu",
+    "rozwinSzczegoly": "Rozwiń szczegóły",
+    "zwinSzczegoly": "Zwiń szczegóły",
+    "zasobyTytul": "Zespół, doświadczenie i partnerzy",
+    "zasobySkrot": "Zespół: {kadra} · Doświadczenie: {lata} lat",
+    "warunkiTytul": "Warunki grantu",
+    "warunkiDoSprawdzenia": "Do sprawdzenia",
+    "warunkiPrzeszkody": "Możliwe przeszkody",
+    "warunkiBrakPrzeszkod": "Odpowiedzi: brak przeszkód",
+    "sprawdzPole": "Sprawdź pole: {pole}.",
+    "typy": {
+      "gmina": "Gmina lub powiat",
+      "ops_cus": "OPS / CUS",
+      "ngo": "Organizacja pozarządowa",
+      "ekonomia_spoleczna": "Ekonomia społeczna",
+      "szkola": "Szkoła lub placówka oświatowa",
+      "inna": "Inna instytucja"
+    }
   },
   "pracownia": {
     "nadtytul": "Pracownia: kreator pomysłów",
@@ -663,7 +680,11 @@
     "kanwaSzczegoly": "Kanwa pomysłu",
     "kanwaSzczegolyOpis": "Dopracuj odbiorców, partnerów i koszty. Możesz wrócić do tego później.",
     "wniosekSzczegoly": "Wniosek do naboru",
-    "wniosekSzczegolyOpis": "Dla osób, które chcą ubiegać się o finansowanie."
+    "wniosekSzczegolyOpis": "Dla osób, które chcą ubiegać się o finansowanie.",
+    "rozwinSzczegoly": "Rozwiń szczegóły",
+    "zwinSzczegoly": "Zwiń szczegóły",
+    "liczbaZnalezisk": "{n, plural, one {# znalezisko} few {# znaleziska} many {# znalezisk} other {# znaleziska}}",
+    "wynikKrotki": "{suma}/50 pkt"
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",

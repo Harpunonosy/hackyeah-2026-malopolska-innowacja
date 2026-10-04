@@ -17,6 +17,7 @@ function Sekcja({tytul,children}: {tytul:string;children:ReactNode}) {
   return <section className="min-w-0 space-y-3 break-inside-avoid"><h3 className="text-xl font-bold">{tytul}</h3>{children}</section>;
 }
 export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdrozenia;dane:DanePlanu;profil:ProfilPlanu;kw:Kwalifikowalnosc;inn:Innowacja|null;t:Tl;konsultacja?:ReactNode}) {
+  const etykietySzczegolow = { rozwin: t("rozwinSzczegoly"), zwin: t("zwinSzczegoly") };
   const stale=plan.budzet.pozycje.filter(p=>p.rodzaj==="stale");
   const zmienne=plan.budzet.pozycje.filter(p=>p.rodzaj==="zmienne");
   const niespelnione=kw.filter(k=>k.wynik==="nie_spelnia");
@@ -50,7 +51,7 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
       <a href="#plan-realizacja" className="inline-flex min-h-12 items-center font-semibold underline">{t("uxWszystkieKroki")}</a>
     </section>}
     <p className="text-sm text-muted nie-drukuj">{t("uxSzczegolyOpis")}</p>
-    <Szczegoly id="plan-usluga" tytul={t("uxGrupaUsluga")} opis={t("uxOpisUsluga")}>
+    <Szczegoly id="plan-usluga" tytul={t("uxGrupaUsluga")} etykiety={etykietySzczegolow}>
       <Sekcja tytul={t("sekcjaKarta")}>
         <dl className="space-y-2">
           <div><dt className="text-sm font-bold uppercase text-muted">{t("uxNazwaUslugi")}</dt><dd className="font-bold">{plan.karta_uslugi.nazwa}</dd></div>
@@ -73,7 +74,7 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
         )}
       </Sekcja>
     </Szczegoly>
-    <Szczegoly id="plan-realizacja" tytul={t("uxGrupaRealizacja")} opis={t("uxOpisRealizacja")}>
+    <Szczegoly id="plan-realizacja" tytul={t("uxGrupaRealizacja")} etykiety={etykietySzczegolow}>
       <Sekcja tytul={t("sekcjaModel")}>
         <ol className="space-y-3">
           {plan.model_realizacji.map((m, i) => (
@@ -95,7 +96,7 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
         </ol>
       </Sekcja>
     </Szczegoly>
-    <Szczegoly id="plan-koszty" tytul={t("uxGrupaKoszty")} opis={t("uxOpisKoszty")}>
+    <Szczegoly id="plan-koszty" tytul={t("uxGrupaKoszty")} etykiety={etykietySzczegolow}>
       <Sekcja tytul={t("sekcjaBudzet")}>
         <p className="text-muted">{plan.budzet.zalozenia}</p>
         {[[t("stale"),stale],[t("zmienne"),zmienne]].map(([nazwa,pozycje])=><div key={nazwa as string} className="space-y-2">
@@ -131,7 +132,7 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
         <ul className="space-y-3">{plan.finansowanie.map((f) => <li key={f.zrodlo}><strong>{f.zrodlo}</strong><span className="block text-muted">{f.opis}</span></li>)}</ul>
       </Sekcja>
     </Szczegoly>
-    <Szczegoly id="plan-grant" tytul={t("uxGrupaGrant")} opis={t("uxOpisGrant")}>
+    <Szczegoly id="plan-grant" tytul={t("uxGrupaGrant")} etykiety={etykietySzczegolow}>
       <Sekcja tytul={t("sekcjaKwal")}>
         <p className="text-muted">{t("kwalOpis")}</p>
         <ul className="space-y-3">
@@ -172,7 +173,7 @@ export function PlanTresc({plan,dane,profil,kw,inn,t,konsultacja}: {plan:PlanWdr
         </Sekcja>
       )}
     </Szczegoly>
-    <Szczegoly id="plan-efekty" tytul={t("uxGrupaEfekty")} opis={t("uxOpisEfekty")}>
+    <Szczegoly id="plan-efekty" tytul={t("uxGrupaEfekty")} etykiety={etykietySzczegolow}>
       <Sekcja tytul={t("sekcjaWskazniki")}>
         <ul className="space-y-3">{plan.wskazniki.map((w,i)=><li key={i} className="space-y-1 rounded-xl bg-soft p-4">
           <h4 className="font-bold">{w.nazwa}</h4>

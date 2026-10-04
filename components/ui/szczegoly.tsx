@@ -5,9 +5,11 @@ import { ChevronDown } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /** Szczegóły pozostają w DOM, więc zwinięcie nie usuwa wpisanych danych. */
-export function Szczegoly({ tytul, opis, children, className, id, poziom = 2 }: {
+export function Szczegoly({ tytul, opis, wartosc, etykiety, children, className, id, poziom = 2 }: {
   tytul: string;
   opis?: string;
+  wartosc?: string;
+  etykiety?: { rozwin: string; zwin: string };
   children: React.ReactNode;
   className?: string;
   id?: string;
@@ -50,15 +52,21 @@ export function Szczegoly({ tytul, opis, children, className, id, poziom = 2 }: 
   }, [id]);
 
   return (
-    <details ref={ref} id={id} data-splot-szczegoly className={cn("karta group", className)}>
+    <details ref={ref} id={id} data-splot-szczegoly className={cn("karta [&[open]>summary_.szczegoly-rozwin]:hidden [&:not([open])>summary_.szczegoly-zwin]:hidden [&[open]>summary_.szczegoly-strzalka]:rotate-180", className)}>
       <summary className="min-h-12 cursor-pointer list-none rounded-[1.25rem] p-5 hover:bg-soft sm:p-6 [&::-webkit-details-marker]:hidden">
-        <Naglowek className="flex items-start justify-between gap-4 text-xl font-bold">
-          <span className="min-w-0">
-            <span className="block">{tytul}</span>
+        <div className="flex flex-wrap items-center justify-between gap-3">
+          <Naglowek className={cn("min-w-0 flex-1 text-xl font-bold", etykiety && "basis-full sm:basis-auto")}>
+            <span className="flex flex-wrap items-center gap-x-3 gap-y-2">
+              <span>{tytul}</span>
+              {wartosc && <span className="rounded-full bg-soft px-3 py-1 font-sans text-base font-bold tabular-nums">{wartosc}</span>}
+            </span>
             {opis && <span className="mt-1 block font-sans text-base font-normal leading-normal text-muted">{opis}</span>}
+          </Naglowek>
+          <span className={cn("inline-flex shrink-0 items-center gap-2 print:hidden", etykiety && "min-h-12 rounded-xl border-2 border-line-soft px-3 font-semibold")}>
+            {etykiety && <><span className="szczegoly-rozwin">{etykiety.rozwin}</span><span className="szczegoly-zwin">{etykiety.zwin}</span></>}
+            <ChevronDown aria-hidden className="szczegoly-strzalka size-6 shrink-0 transition-transform" />
           </span>
-          <ChevronDown aria-hidden className="mt-0.5 size-6 shrink-0 transition-transform group-open:rotate-180 print:hidden" />
-        </Naglowek>
+        </div>
       </summary>
       <div className="space-y-6 border-t border-line-soft p-5 sm:p-6">{children}</div>
     </details>

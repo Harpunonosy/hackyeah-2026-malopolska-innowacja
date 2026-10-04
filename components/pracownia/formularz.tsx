@@ -21,6 +21,7 @@ const LIMITY: Record<PoleFiszki, number> = { tytul: 160, krotki_opis: 600, istot
 export function FormularzPomyslu() {
   const t = useTranslations("pracownia");
   const jezyk = useLocale();
+  const etykietySzczegolow = { rozwin: t("rozwinSzczegoly"), zwin: t("zwinSzczegoly") };
   const [opis, setOpis] = React.useState("");
   const [stan, setStan] = React.useState<"" | "pracuje" | "blad">("");
   const [komunikat, setKomunikat] = React.useState("");
@@ -187,59 +188,52 @@ export function FormularzPomyslu() {
           <div className="space-y-2"><h2 className="text-2xl font-bold">{t("dopracujTytul")}</h2><p className="text-muted">{t("dopracujOpis")}</p></div>
 
           {wynik && (
-            <Szczegoly tytul={t("ocenaSzczegoly")} opis={t("ocenaSzczegolyOpis", { suma: wynik.suma })}>
-          {wynik.doUzupelnienia.length > 0 && <div className="rounded-xl bg-soft p-4"><h3 className="font-bold">{t("doUzupelnienia")}</h3><ul className="mt-2 list-disc space-y-1 pl-6">{wynik.doUzupelnienia.map((x) => <li key={x}>{x}</li>)}</ul></div>}
-          <section className="karta space-y-4 p-6" aria-labelledby="h-istnieje">
-            <h2 id="h-istnieje" className="text-2xl font-bold">{t("istnieje")}</h2>
-            {wynik.podobne.length === 0 ? <p className="text-lg">{t("istniejeBrak")}</p> : (
-              <>
-                <p className="text-muted">{t("istniejeOpis")}</p>
-                <ul className="space-y-3">
-                  {wynik.podobne.map((p) => (
-                    <li key={p.id} className="karta-mala p-4">
-                      <Link href={`/wiedza/biblioteka/${p.id}`} className="font-display text-xl font-bold">{p.nazwa}</Link>
-                      <p className="mt-1">{p.roznica}</p>
+            <>
+              <Szczegoly tytul={t("istnieje")} wartosc={t("liczbaZnalezisk", { n: wynik.podobne.length })} etykiety={etykietySzczegolow}>
+                {wynik.podobne.length === 0 ? <p className="text-lg">{t("istniejeBrak")}</p> : (
+                  <>
+                    <p className="text-muted">{t("istniejeOpis")}</p>
+                    <ul className="space-y-3">
+                      {wynik.podobne.map((p) => (
+                        <li key={p.id} className="karta-mala p-4">
+                          <Link href={`/wiedza/biblioteka/${p.id}`} className="font-display text-xl font-bold">{p.nazwa}</Link>
+                          <p className="mt-1">{p.roznica}</p>
+                        </li>
+                      ))}
+                    </ul>
+                  </>
+                )}
+              </Szczegoly>
+
+              <Szczegoly tytul={t("ocena")} wartosc={t("wynikKrotki", { suma: wynik.suma })} etykiety={etykietySzczegolow}>
+                <p className="text-muted">{t("ocenaOpis")}</p>
+                <p className={`flex items-center gap-2 text-xl font-bold ${wynik.spelniaProgi ? "text-ok" : "text-primary"}`}>
+                  {wynik.spelniaProgi ? <CircleCheck aria-hidden className="size-6" /> : <CircleX aria-hidden className="size-6" />}
+                  {wynik.spelniaProgi ? t("spelniaProgi") : t("niespelniaProgi")}
+                </p>
+                {wynik.doUzupelnienia.length > 0 && <div className="rounded-xl bg-soft p-4"><h3 className="font-bold">{t("doUzupelnienia")}</h3><ul className="mt-2 list-disc space-y-1 pl-6">{wynik.doUzupelnienia.map((x) => <li key={x}>{x}</li>)}</ul></div>}
+                <ul className="space-y-4">
+                  {wynik.oceny.map((o) => (
+                    <li key={o.id} className="space-y-1">
+                      <div className="flex flex-wrap items-baseline justify-between gap-2">
+                        <p className="font-bold">{o.nazwa}</p>
+                        <p className={`font-bold ${o.ok ? "text-ok" : "text-primary"}`}>{t("pkt", { p: o.punkty })} <span className="text-sm font-normal text-muted">({t("prog", { prog: o.prog })})</span></p>
+                      </div>
+                      <div aria-hidden="true" className="h-3 overflow-hidden rounded-full bg-soft"><div className="h-full rounded-full bg-primary" style={{ width: `${o.punkty * 10}%` }} /></div>
+                      <p>{o.uzasadnienie}</p>
+                      <p className="text-muted"><strong className="text-fg">{t("wskazowka")}:</strong> {o.wskazowka}</p>
                     </li>
                   ))}
                 </ul>
-              </>
-            )}
-          </section>
+              </Szczegoly>
 
-          <section className="karta space-y-4 p-6" aria-labelledby="h-ocena">
-            <h2 id="h-ocena" className="text-2xl font-bold">{t("ocena")}</h2>
-            <p className="text-muted">{t("ocenaOpis")}</p>
-            <p className={`flex items-center gap-2 text-xl font-bold ${wynik.spelniaProgi ? "text-ok" : "text-primary"}`}>
-              {wynik.spelniaProgi ? <CircleCheck aria-hidden className="size-6" /> : <CircleX aria-hidden className="size-6" />}
-              {t("suma", { suma: wynik.suma })}. {wynik.spelniaProgi ? t("spelniaProgi") : t("niespelniaProgi")}
-            </p>
-            <ul className="space-y-4">
-              {wynik.oceny.map((o) => (
-                <li key={o.id} className="space-y-1">
-                  <div className="flex flex-wrap items-baseline justify-between gap-2">
-                    <p className="font-bold">{o.nazwa}</p>
-                    <p className={`font-bold ${o.ok ? "text-ok" : "text-primary"}`}>{t("pkt", { p: o.punkty })} <span className="text-sm font-normal text-muted">({t("prog", { prog: o.prog })})</span></p>
-                  </div>
-                  <div aria-hidden="true" className="h-3 overflow-hidden rounded-full bg-soft"><div className="h-full rounded-full bg-primary" style={{ width: `${o.punkty * 10}%` }} /></div>
-                  <p>{o.uzasadnienie}</p>
-                  <p className="text-muted"><strong className="text-fg">{t("wskazowka")}:</strong> {o.wskazowka}</p>
-                </li>
-              ))}
-            </ul>
-          </section>
-
-          <div className="grid gap-6 md:grid-cols-2">
-            <section className="karta space-y-2 p-6" aria-labelledby="h-adw">
-              <h2 id="h-adw" className="text-xl font-bold">{t("adwokat")}</h2>
-              <ul className="list-disc space-y-2 pl-5">{wynik.adwokat.map((x) => <li key={x}>{x}</li>)}</ul>
-            </section>
-            <section className="karta space-y-2 p-6" aria-labelledby="h-niet">
-              <h2 id="h-niet" className="text-xl font-bold">{t("nietuzinkowe")}</h2>
-              <ul className="list-disc space-y-2 pl-5">{wynik.nietuzinkowe.map((x) => <li key={x}>{x}</li>)}</ul>
-            </section>
-          </div>
-
-            </Szczegoly>
+              <Szczegoly tytul={t("adwokat")} etykiety={etykietySzczegolow}>
+                <ul className="list-disc space-y-2 pl-5">{wynik.adwokat.map((x) => <li key={x}>{x}</li>)}</ul>
+              </Szczegoly>
+              <Szczegoly tytul={t("nietuzinkowe")} etykiety={etykietySzczegolow}>
+                <ul className="list-disc space-y-2 pl-5">{wynik.nietuzinkowe.map((x) => <li key={x}>{x}</li>)}</ul>
+              </Szczegoly>
+            </>
           )}
 
           {tekstFiszki.length >= 20 && <Szczegoly tytul={t("asystentSzczegoly")} opis={t("asystentSzczegolyOpis")}><Asystent fiszkaTekst={tekstFiszki} tytul={fiszka.tytul} opis={fiszka.krotki_opis} numer={numer} wskazniki={kanwa ? Object.entries(wskaznikiDojrzalosci(kanwa, fiszka.etap)).map(([k, v]) => ({ nazwa: t(`wsk.${k}`), v: v.v, max: v.max })) : []} /></Szczegoly>}

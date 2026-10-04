@@ -7,8 +7,9 @@ import { Loader2, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Postep } from "@/components/ui/postep";
 import { Wybor } from "@/components/ui/wybor";
+import { Szczegoly } from "@/components/ui/szczegoly";
 import { BUDZETY, TYPY_INSTYTUCJI } from "@/lib/krawiec-stale";
-import { POWIATY_IOSS } from "@/lib/powiaty";
+import { normalizujPowiat, POWIATY_IOSS } from "@/lib/powiaty";
 import { cn } from "@/lib/utils";
 
 type Pozycja = { id: string; nazwa: string; kategoria: string };
@@ -16,10 +17,10 @@ const fold = (s: string) => s.toLowerCase().normalize("NFD").replace(/[̀-ͯ]/g,
 
 function Krok({ n, tytul }: { n: number; tytul: string }) {
   return (
-    <p className="flex items-center gap-3 text-sm font-bold uppercase tracking-wider text-primary">
+    <h2 className="flex items-center gap-3 text-sm font-bold uppercase tracking-wider text-primary">
       <span aria-hidden className="flex size-7 items-center justify-center rounded-full bg-primary text-sm text-primary-fg">{n}</span>
       {tytul}
-    </p>
+    </h2>
   );
 }
 
@@ -35,6 +36,7 @@ function Liczba({ id, etykieta, wartosc, zmien }: { id: string; etykieta: string
 export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { innowacje: Pozycja[]; poczatkowa?: string; poczatkowyPowiat?: string }) {
   const t = useTranslations("krawiec");
   const router = useRouter();
+  const etykietySzczegolow = { rozwin: t("rozwinSzczegoly"), zwin: t("zwinSzczegoly") };
   const [wybrana, setWybrana] = React.useState<string | null>(poczatkowa ?? null);
   const [fraza, setFraza] = React.useState("");
   const [typ, setTyp] = React.useState<keyof typeof TYPY_INSTYTUCJI>("gmina");
@@ -44,8 +46,8 @@ export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { i
   const [lata, setLata] = React.useState("3");
   const [budzet, setBudzet] = React.useState<keyof typeof BUDZETY>("od_150_do_350");
   const [partnerzy, setPartnerzy] = React.useState("");
-  const [zaleglosci, setZaleglosci] = React.useState<"brak" | "sa" | "nie_wiem">("brak");
-  const [podwojne, setPodwojne] = React.useState<"brak" | "jest" | "nie_wiem">("brak");
+  const [zaleglosci, setZaleglosci] = React.useState<"brak" | "sa" | "nie_wiem">("nie_wiem");
+  const [podwojne, setPodwojne] = React.useState<"brak" | "jest" | "nie_wiem">("nie_wiem");
   const [stan, setStan] = React.useState<"" | "pracuje" | "blad">("");
   const [komunikat, setKomunikat] = React.useState("");
 
@@ -57,7 +59,23 @@ export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { i
 
   async function wyslij(e: React.FormEvent) {
     e.preventDefault();
-    if (!wybrana) return;
+    if (!wybrana || stan === "pracuje") return;
+    const liczbaOK = (v: string, min: number, max: number) => Number.isInteger(Number(v)) && Number(v) >= min && Number(v) <= max;
+    const niepoprawne = [
+      { id: "kr-powiat", pole: "powiat", ok: normalizujPowiat(powiat) !== null },
+      { id: "kr-odbiorcy", pole: "odbiorcy", ok: liczbaOK(odbiorcy, 1, 5000) },
+      { id: "kr-kadra", pole: "kadra", ok: liczbaOK(kadra, 0, 500) },
+      { id: "kr-lata", pole: "lata", ok: liczbaOK(lata, 0, 100) },
+    ].find((p) => !p.ok);
+    if (niepoprawne) {
+      setStan("blad");
+      setKomunikat(t("sprawdzPole", { pole: t(niepoprawne.pole) }));
+      const pole = document.getElementById(niepoprawne.id);
+      const szczegoly = pole?.closest("details");
+      if (szczegoly) szczegoly.open = true;
+      pole?.focus();
+      return;
+    }
     setStan("pracuje");
     setKomunikat("");
     try {
@@ -79,8 +97,8 @@ export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { i
   }
 
   return (
-    <form onSubmit={wyslij} className="karta max-w-3xl space-y-8 p-6 sm:p-8">
-      <div className="space-y-3">
+    <form onSubmit={wyslij} className="max-w-3xl space-y-6">
+      <section className="karta space-y-3 p-5 sm:p-6">
         <Krok n={1} tytul={t("krok1")} />
         {wybranaPoz ? (
           <div className="karta-mala flex flex-wrap items-center justify-between gap-3 p-4">
@@ -110,29 +128,35 @@ export function FormularzKrawca({ innowacje, poczatkowa, poczatkowyPowiat }: { i
             </ul>
           </div>
         )}
-      </div>
+      </section>
 
-      <div className="space-y-6">
+      <section className="karta space-y-6 p-5 sm:p-6">
         <Krok n={2} tytul={t("krok2")} />
-        <Wybor nazwa="typ" legenda={t("typ")} opcje={Object.entries(TYPY_INSTYTUCJI) as [keyof typeof TYPY_INSTYTUCJI, string][]} wartosc={typ} zmien={setTyp} />
+        <Wybor nazwa="typ" legenda={t("typ")} opcje={Object.keys(TYPY_INSTYTUCJI).map((k) => [k, t(`typy.${k}`)] as [keyof typeof TYPY_INSTYTUCJI, string])} wartosc={typ} zmien={setTyp} />
         <div className="space-y-1">
           <label htmlFor="kr-powiat" className="block text-lg font-bold">{t("powiat")}</label>
           <input id="kr-powiat" list="kr-powiaty" value={powiat} onChange={(e) => setPowiat(e.target.value)} placeholder={t("powiatPodpowiedz")} autoComplete="off" className="block min-h-12 w-full max-w-sm rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" />
           <datalist id="kr-powiaty">{POWIATY_IOSS.map((p) => <option key={p} value={p.replace("powiat ", "")} />)}</datalist>
         </div>
+        <Liczba id="kr-odbiorcy" etykieta={t("odbiorcy")} wartosc={odbiorcy} zmien={setOdbiorcy} />
+        <Wybor nazwa="budzet" legenda={t("budzet")} opcje={Object.entries(BUDZETY) as [keyof typeof BUDZETY, string][]} wartosc={budzet} zmien={setBudzet} />
+      </section>
+
+      <Szczegoly tytul={t("zasobyTytul")} wartosc={t("zasobySkrot", { kadra: kadra || "0", lata: lata || "0" })} etykiety={etykietySzczegolow}>
         <div className="flex flex-wrap gap-6">
-          <Liczba id="kr-odbiorcy" etykieta={t("odbiorcy")} wartosc={odbiorcy} zmien={setOdbiorcy} />
           <Liczba id="kr-kadra" etykieta={t("kadra")} wartosc={kadra} zmien={setKadra} />
           <Liczba id="kr-lata" etykieta={t("lata")} wartosc={lata} zmien={setLata} />
         </div>
-        <Wybor nazwa="budzet" legenda={t("budzet")} opcje={Object.entries(BUDZETY) as [keyof typeof BUDZETY, string][]} wartosc={budzet} zmien={setBudzet} />
         <div className="space-y-1">
           <label htmlFor="kr-partnerzy" className="block text-lg font-bold">{t("partnerzy")}</label>
           <input id="kr-partnerzy" value={partnerzy} onChange={(e) => setPartnerzy(e.target.value.slice(0, 300))} placeholder={t("partnerzyPlaceholder")} className="block min-h-12 w-full rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" />
         </div>
+      </Szczegoly>
+
+      <Szczegoly tytul={t("warunkiTytul")} wartosc={t(zaleglosci === "sa" || podwojne === "jest" ? "warunkiPrzeszkody" : zaleglosci === "nie_wiem" || podwojne === "nie_wiem" ? "warunkiDoSprawdzenia" : "warunkiBrakPrzeszkod")} etykiety={etykietySzczegolow}>
         <Wybor nazwa="zaleglosci" legenda={t("zaleglosci")} opcje={[["brak", t("brak")], ["sa", t("sa")], ["nie_wiem", t("nieWiem")]]} wartosc={zaleglosci} zmien={setZaleglosci} />
         <Wybor nazwa="podwojne" legenda={t("podwojne")} opcje={[["brak", t("brak")], ["jest", t("sa")], ["nie_wiem", t("nieWiem")]]} wartosc={podwojne} zmien={setPodwojne} />
-      </div>
+      </Szczegoly>
 
       <div className="space-y-3">
         <Krok n={3} tytul={t("krok3")} />
