@@ -8,6 +8,7 @@ import { Button } from "@/components/ui/button";
 import { Chip } from "@/components/ui/chip";
 import { KartaInnowacji } from "@/components/swatka/karta";
 import type { WynikSwatki } from "@/lib/swatka";
+import { maRozpoznanaPotrzebe } from "@/lib/swatka-stan";
 import { TELEFONY_KRYZYSOWE } from "@/lib/kryzys";
 import { Phone } from "lucide-react";
 import Link from "next/link";
@@ -91,7 +92,9 @@ export function FormularzSwatki({ auto = false, children }: { auto?: boolean; ch
 
   const tytul =
     stan.typ === "wynik" && !edycja
-      ? stan.wynik.brakDopasowania
+      ? stan.wynik.pytanie?.trim()
+        ? t("krok1")
+        : stan.wynik.brakDopasowania
         ? stan.wynik.najblizsze.some((k) => (k.trafnosc ?? 0) >= 45)
           ? t("brakTytulCzesciowy")
           : t("brakTytul")
@@ -231,6 +234,7 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
   const t = useTranslations("swatka");
   const tk = useTranslations("kryzys");
   const z = wynik.zrozumiano;
+  const maKontekst = maRozpoznanaPotrzebe({ pytanie: wynik.pytanie, potrzeby: z.potrzeby, dopasowania: wynik.dopasowania });
   const telefony = TELEFONY_KRYZYSOWE.filter((x) => wynik.kryzys && (x.rodzaje as readonly string[]).includes(wynik.kryzys));
   const karty = wynik.dopasowania.slice(0, 3);
   const wiele = wynik.nici.length >= 2 && wynik.nici.every((n) => n.karty.length > 0 || true) && wynik.nici.some((n) => n.karty.length > 0);
@@ -262,7 +266,7 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
 
       {wynik.tryb === "awaryjny" && <p className="karta-mala border-2 border-warn p-4 font-medium">{t("trybAwaryjny")}</p>}
 
-      {wynik.tryb === "ai" && (
+      {wynik.tryb === "ai" && maKontekst && (
         <div className="karta-mala flex flex-wrap items-center gap-x-3 gap-y-2 p-4">
           <span className="font-bold">{t("zrozumialemTak")}:</span>
           <Chip>{z.obszarNazwa}</Chip>
@@ -270,7 +274,7 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
         </div>
       )}
 
-      {wynik.brakDopasowania && wynik.tryb === "ai" && (
+      {wynik.brakDopasowania && wynik.tryb === "ai" && maKontekst && (
         <p className="text-lg">{wynik.najblizsze.some((k) => (k.trafnosc ?? 0) >= 45) ? t("czesciowoOpis") : t("brakOpis")}</p>
       )}
 
@@ -322,7 +326,7 @@ function Wyniki({ wynik, instytucja }: { wynik: WynikSwatki; instytucja: boolean
         </div>
       )}
 
-      {(wynik.podobnePrzypadki || wynik.coPomoglo.length > 0 || wynik.fakty.length > 0) && (
+      {maKontekst && (wynik.podobnePrzypadki || wynik.coPomoglo.length > 0 || wynik.fakty.length > 0) && (
         <section aria-labelledby="wiedz-h" className="karta-mala space-y-4 p-5">
           <h2 id="wiedz-h" className="text-xl font-bold">{t("coWarto")}</h2>
           {wynik.podobnePrzypadki && (
