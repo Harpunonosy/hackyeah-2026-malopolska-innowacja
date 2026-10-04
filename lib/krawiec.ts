@@ -1,3 +1,4 @@
+import { zamaskuj } from "./maskowanie";
 // Krawiec (Middleman Innowacji): plan wdrożenia innowacji dla konkretnej instytucji + kwalifikowalność
 // do naboru "Usługa Wrażliwa" (FEM 2021-2027, działanie 6.23). Parametry z data/nabory_rops.json.
 import { z } from "zod";
@@ -169,7 +170,7 @@ export async function przygotujPlan(p: ProfilInstytucji) {
       `INNOWACJA: ${inn.nazwa} (${inn.kategoria})\nNa czym polega: ${skroc(inn.naCzymPolega, 1500)}\nProblemy: ${skroc(inn.problem, 800)}\n` +
       `Odbiorcy: ${skroc(inn.grupaDocelowa, 500)}\nKto może wdrożyć: ${skroc(inn.ktoMozeSkorzystac, 600)}\nCzy działa: ${skroc(inn.czyToDziala, 800)}\nAutor/organizacja: ${inn.autor || "brak danych"}\n\n` +
       `INSTYTUCJA: ${TYPY_INSTYTUCJI[p.typ]}, ${powiat}; planowana liczba odbiorców: ${p.odbiorcy}; kadra: ${p.kadra} osób; doświadczenie: ${p.lata} lat; ` +
-      `budżet orientacyjny do ${limit} zł; partnerzy: ${p.partnerzy || "brak"}.\n\n` +
+      `budżet orientacyjny do ${limit} zł; partnerzy: ${zamaskuj(p.partnerzy || "brak").tekst}.\n\n` +
       `DANE LOKALNE (IOSS, obszar ${nazwaObszaru(obszar)}): ${wskazniki.map((w) => `${w.nazwa}: ${w.wartosc} (średnia regionu ${w.sredniaRegionu})`).join("; ") || "brak"}\n` +
       `FAKTY Z RAPORTÓW: ${fakty.map((f) => `${f.tekst} (${f.zrodlo}${f.strona ? ", s. " + f.strona : ""})`).join(" | ")}`,
     model: DOMYSLNY_MODEL(),

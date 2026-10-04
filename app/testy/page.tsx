@@ -24,6 +24,8 @@ export default async function Testy(props: PageProps<"/testy">) {
   ).catch(() => db().query(`select t.id, t.innowacja_id, t.tytul, t.opis, t.kogo_szukamy, t.powiat, t.termin, t.liczba_miejsc, t.dostepnosc,
             (select count(*)::int from zapisy_testy z where z.test_id = t.id) as zajete from testy t where t.status = 'otwarty' order by t.tytul`));
 
+  const testDoOceny = typeof sp.test === "string" && /^[0-9a-f-]{36}$/i.test(sp.test) ? (await db().query("select id,tytul from testy where id=$1 and status in ('otwarty','zakonczony')", [sp.test])).rows[0] : null;
+
   return (
     <Strona>
       <NaglowekStrony nadtytul={t("nadtytul")} tytul={t("tytul")} opis={t("opis")} />
@@ -43,6 +45,7 @@ export default async function Testy(props: PageProps<"/testy">) {
               </dl>
               <p className="font-bold">{t("miejsca", { wolne: Math.max(0, r.liczba_miejsc - r.zajete), razem: r.liczba_miejsc })}</p>
               <div className="mt-auto space-y-3">
+                <Link href={`/testy?test=${r.id}#ocen-h`} className="inline-flex min-h-12 items-center underline">{t("ocenTenTest")}</Link>
                 <Zapis id={r.id} wolne={r.liczba_miejsc - r.zajete} />
                 {innowacjaPoId.has(r.innowacja_id) && <Link href={`/wiedza/biblioteka/${r.innowacja_id}`} className="inline-flex min-h-10 items-center font-semibold">{innowacjaPoId.get(r.innowacja_id)!.nazwa}</Link>}
               </div>
@@ -57,7 +60,7 @@ export default async function Testy(props: PageProps<"/testy">) {
       </section>
       <section aria-labelledby="ocen-h" className="max-w-3xl space-y-4">
         <h2 id="ocen-h" className="text-3xl font-extrabold">{t("ocenTytul")}</h2>
-        {oceniana ? (
+        {testDoOceny ? <><p className="text-lg font-bold">{testDoOceny.tytul}</p><Opinia testId={testDoOceny.id}/></> : oceniana ? (
           <>
             <p className="text-lg"><span className="font-bold">{t("wybierz")}:</span> {oceniana.nazwa}</p>
             <Opinia innowacjaId={oceniana.id} />

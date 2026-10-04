@@ -1,13 +1,15 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
+import { bledyWniosku } from "@/lib/wniosek-walidacja";
 import { FileText, Loader2, Printer, Sparkles } from "lucide-react";
 import Link from "next/link";
 import { Button } from "@/components/ui/button";
 import { Postep } from "@/components/ui/postep";
 
-type Nabor = { id: string; nazwa: string; temat: string | null; przyklad: boolean; otwarty_do: string | null; schemat: { limity: string } } | null;
+type Nabor = { id: string; nazwa: string; temat: string | null; przyklad: boolean; otwarty_do: string | null; schemat: { limity: string; pola: Omit<Pole, "tresc" | "doUzupelnienia">[] } } | null;
 type Pole = { nr: number; pole: string; podpowiedz: string; limit: number | null; tresc: string; doUzupelnienia: boolean };
 type Ocena = { kryteria: { id: string; nazwa: string; max: number; prog: number | null; punkty: number; ok: boolean; uzasadnienie: string; wskazowka: string }[]; suma: number; maxSuma: number; braki: string[] };
 
@@ -20,11 +22,12 @@ export function Wniosek({ dane }: { dane: string }) {
   const [stan, setStan] = React.useState<"" | "pracuje" | "blad" | "zlozony">("");
   const [numer, setNumer] = React.useState<string | null>(null);
   const [ocena, setOcena] = React.useState<Ocena | null>(null);
+  const [walidacja, setWalidacja] = React.useState<string[]>([]);
   const [ocenianie, setOcenianie] = React.useState(false);
 
   React.useEffect(() => {
     let ok = true;
-    fetch("/api/nabory/aktywny").then((r) => r.json()).then((d) => { if (ok) { setWszystkie(d.nabory ?? []); setLadowanie(false); } }).catch(() => ok && setLadowanie(false));
+    apiFetch("/api/nabory/aktywny").then((r) => r.json()).then((d) => { if (ok) { setWszystkie(d.nabory ?? []); setLadowanie(false); } }).catch(() => ok && setLadowanie(false));
     return () => { ok = false; };
   }, []);
 
@@ -57,21 +60,23 @@ export function Wniosek({ dane }: { dane: string }) {
       <p className="text-lg"><strong>{t("wniosekOtwarty", { nazwa: nabor.nazwa })}</strong>{nabor.przyklad && <span className="block text-sm text-muted">{t("wniosekPrzykład")}</span>}</p>
       {nabor.schemat.limity && <p className="text-muted">{t("limityNaboru")}: {nabor.schemat.limity}</p>}
       {!pola && (
+        <div className="flex flex-wrap gap-3"><Button type="button" wariant="obrys" disabled={stan === "pracuje"} onClick={() => { setStan(""); setPola(nabor.schemat.pola.map(p => ({...p,tresc:"",doUzupelnienia:true}))); }}>{t("wniosekRecznie")}</Button>
         <Button type="button" rozmiar="lg" disabled={stan === "pracuje"} onClick={async () => {
           setStan("pracuje");
-          const r = await fetch("/api/pracownia/wniosek", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ naborId: nabor.id, dane }) });
+          const r = await apiFetch("/api/pracownia/wniosek", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ naborId: nabor.id, dane }) });
           if (!r.ok) return setStan("blad");
           setPola((await r.json()).pola);
           setStan("");
         }}>
           {stan === "pracuje" ? <Loader2 aria-hidden className="size-5 animate-spin" /> : <FileText aria-hidden className="size-5" />}
           {t("przygotujWniosek")}
-        </Button>
+        </Button></div>
       )}
       <div>
         {stan === "pracuje" && <Postep kroki={t("wniosekPostepKroki")} sekund={30} />}
         {stan === "blad" && <p role="alert" className="font-semibold text-primary">{t("wniosekBlad")}</p>}
       </div>
+      {walidacja.length > 0 && <ul role="alert" className="list-disc pl-6 text-primary">{walidacja.map(b=><li key={b}>{b}</li>)}</ul>}
       {pola && (
         <div className="space-y-5">
           <p className="karta-mala border-2 border-accent p-3">{t("wniosekPomoc")}</p>
@@ -79,7 +84,7 @@ export function Wniosek({ dane }: { dane: string }) {
             <div key={p.nr} className="space-y-1">
               <label htmlFor={`w-${p.nr}`} className="block text-lg font-bold">{p.nr}. {p.pole}{p.doUzupelnienia && <span className="ml-2 rounded-full bg-accent px-2 py-0.5 text-sm text-accent-fg">{t("doUzup")}</span>}</label>
               <p className="text-sm text-muted">{p.podpowiedz}</p>
-              <textarea id={`w-${p.nr}`} rows={4} value={p.tresc} onChange={(e) => setPola((l) => l && l.map((x) => (x.nr === p.nr ? { ...x, tresc: e.target.value } : x)))} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-base hover:border-fg" />
+              <textarea id={`w-${p.nr}`} rows={4} maxLength={p.limit ?? 4000} disabled={stan === "pracuje" || stan === "zlozony"} value={p.tresc} onChange={(e) => setPola((l) => l && l.map((x) => (x.nr === p.nr ? { ...x, tresc: e.target.value } : x)))} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-base hover:border-fg" />
               <p className={`text-right text-xs ${p.limit && p.tresc.length > p.limit ? "font-bold text-primary" : "text-muted"}`}>{p.limit ? t("znakiLimit", { n: p.tresc.length, limit: p.limit }) : t("znaki", { n: p.tresc.length })}</p>
             </div>
           ))}
@@ -93,15 +98,19 @@ export function Wniosek({ dane }: { dane: string }) {
               <>
                 <Button type="button" wariant="zloty" disabled={ocenianie} onClick={async () => {
                   setOcenianie(true);
-                  const r = await fetch("/api/pracownia/wniosek", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ naborId: nabor.id, pola: pola.map((x) => ({ nr: x.nr, tresc: x.tresc })) }) });
+                  const r = await apiFetch("/api/pracownia/wniosek", { method: "PATCH", headers: { "content-type": "application/json" }, body: JSON.stringify({ naborId: nabor.id, pola: pola.map((x) => ({ nr: x.nr, tresc: x.tresc })) }) });
                   setOcenianie(false);
                   if (r.ok) setOcena(await r.json()); else setStan("blad");
                 }}>
                   {ocenianie ? <Loader2 aria-hidden className="size-5 animate-spin" /> : <Sparkles aria-hidden className="size-5" />}
                   {ocenianie ? t("oceniamWniosek") : t("sprawdzWniosek")}
                 </Button>
-                <Button type="button" onClick={async () => {
-                  const r = await fetch("/api/pracownia/wniosek", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ naborId: nabor.id, pola: pola.map((x) => ({ nr: x.nr, tresc: x.tresc })) }) });
+                <Button type="button" disabled={stan === "pracuje"} onClick={async () => {
+                  const bledy = bledyWniosku(pola, nabor.schemat);
+                  setWalidacja(bledy);
+                  if (bledy.length) { document.getElementById(`w-${pola.find(p=>!p.tresc.trim() || /uzupełnij/i.test(p.tresc))?.nr ?? pola[0].nr}`)?.focus(); return; }
+                  setStan("pracuje");
+                  const r = await apiFetch("/api/pracownia/wniosek", { method: "PUT", headers: { "content-type": "application/json" }, body: JSON.stringify({ naborId: nabor.id, pola: pola.map((x) => ({ nr: x.nr, tresc: x.tresc })) }) });
                   if (r.ok) setNumer((await r.json()).numer ?? null);
                   setStan(r.ok ? "zlozony" : "blad");
                 }}>{t("zlozWniosek")}</Button>

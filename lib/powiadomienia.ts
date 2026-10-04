@@ -1,3 +1,4 @@
+import type { PoolClient } from "pg";
 // Magistrala powiadomień Splotu. Zdarzenie (nowy pomysł, odpowiedź ROPS, zmiana naboru, nowe rozwiązanie)
 // trafia do tabeli `powiadomienia`. Adresat "rops" widzi je w Centrali (plakietka, dźwięk, skrzynka nadawcza),
 // adresat "autor" w "Moje sprawy" po numerze. E-mail i SMS są w MVP symulowane (podgląd w skrzynce nadawczej);
@@ -35,9 +36,9 @@ export type NoweP = {
   kanal?: "aplikacja" | "email" | "sms";
 };
 
-export async function powiadom(p: NoweP): Promise<void> {
+export async function powiadom(p: NoweP, client?: PoolClient): Promise<void> {
   try {
-    await db().query(
+    await (client ?? db()).query(
       `insert into powiadomienia (adresat, typ, tytul, tresc, link, numer_sprawy, kanal, symulowane)
        values ($1,$2,$3,$4,$5,$6,$7,true)`,
       [p.adresat, p.typ, p.tytul ?? ETYKIETY_POWIADOMIEN[p.typ], p.tresc.slice(0, 400), p.link ?? null, p.numerSprawy ?? null, p.kanal ?? (p.adresat === "rops" ? "aplikacja" : "email")],
@@ -48,6 +49,7 @@ export async function powiadom(p: NoweP): Promise<void> {
       wyslijZdarzenie(zdarzenie, { numerSprawy: p.numerSprawy ?? null, typ: p.typ, tytul: zdarzenie === "nabor.zmiana" ? (p.tytul ?? null) : null, link: p.link ?? null });
     }
   } catch (e) {
+    if (client) throw e;
     console.error("Powiadomienie nie zostało zapisane:", e instanceof Error ? e.message : "?");
   }
 }

@@ -1,0 +1,138 @@
+
+> splot@0.1.0 build
+> next build
+
+▲ Next.js 16.3.8 (Turbopack)
+✓ Running next.config.ts took 80ms
+
+  Creating an optimized production build ...
+✓ Compiled successfully in 1021ms
+  Running TypeScript ...
+  Finished TypeScript in 4.6s ...
+  Collecting page data using 1 worker ...
+  Generating static pages using 1 worker (0/188) ...
+  Generating static pages using 1 worker (47/188)
+  Generating static pages using 1 worker (94/188)
+  Generating static pages using 1 worker (141/188)
+✓ Generating static pages using 1 worker (188/188) in 987ms
+Turbopack build encountered 1 warning:
+./
+Warning: Failed to find font override values for font `Atkinson Hyperlegible Next`
+Skipping generating a fallback font.
+
+
+  Finalizing page optimization ...
+
+Route (app)
+┌ ƒ /
+├ ƒ /_not-found
+├ ƒ /api/admin/akademia
+├ ƒ /api/admin/eksport/wnioski
+├ ƒ /api/admin/eksport/zgloszenia
+├ ƒ /api/admin/fakty
+├ ƒ /api/admin/fakty/wyciagnij
+├ ƒ /api/admin/fiszki/[id]/status
+├ ƒ /api/admin/innowacje
+├ ƒ /api/admin/innowacje/[id]
+├ ƒ /api/admin/innowacje/[id]/odbiorcy
+├ ƒ /api/admin/innowacje/import
+├ ƒ /api/admin/ioss/import
+├ ƒ /api/admin/liderzy/[id]
+├ ƒ /api/admin/nabory
+├ ƒ /api/admin/nabory/[id]
+├ ƒ /api/admin/opinie/podsumowanie
+├ ƒ /api/admin/powiadomienia/przeczytane
+├ ƒ /api/admin/reset-demo
+├ ƒ /api/admin/temat-naboru
+├ ƒ /api/admin/testy/[id]
+├ ƒ /api/admin/webhooki
+├ ƒ /api/admin/webhooki/[id]
+├ ƒ /api/admin/wnioski/[id]
+├ ƒ /api/admin/zgloszenia
+├ ƒ /api/admin/zgloszenia/[id]/ekspert
+├ ƒ /api/admin/zgloszenia/[id]/odpowiedz
+├ ƒ /api/admin/zgloszenia/[id]/status
+├ ƒ /api/centrala/logowanie
+├ ƒ /api/centrala/wyloguj
+├ ƒ /api/ekspert/logowanie
+├ ƒ /api/ekspert/odpowiedz
+├ ƒ /api/ekspert/wyloguj
+├ ƒ /api/krawiec/konsultacja
+├ ƒ /api/krawiec/plan
+├ ƒ /api/nabory/aktywny
+├ ƒ /api/opinie
+├ ƒ /api/partnerstwa
+├ ƒ /api/pracownia/analiza
+├ ƒ /api/pracownia/asystent
+├ ƒ /api/pracownia/fiszka
+├ ƒ /api/pracownia/wniosek
+├ ƒ /api/pytania
+├ ƒ /api/rozmowy
+├ ƒ /api/rozmowy/odpowiedz
+├ ƒ /api/siec
+├ ƒ /api/siec/kontakt
+├ ƒ /api/swatka/dopasuj
+├ ƒ /api/swatka/reakcja
+├ ƒ /api/testy
+├ ƒ /api/testy/[id]/zapis
+├ ƒ /api/testy/ogloszenie-ai
+├ ƒ /api/v1/dopasuj
+├ ƒ /api/v1/innowacje
+├ ƒ /api/v1/innowacje/[id]
+├ ƒ /api/v1/nabory
+├ ƒ /api/v1/odbiornik-testowy/[id]
+├ ƒ /api/v1/openapi.json
+├ ƒ /api/v1/potrzeby
+├ ƒ /api/wiedza/prosciej
+├ ƒ /api/wiedza/zapytaj
+├ ƒ /api/wyzwania
+├ ƒ /api/zgloszenia
+├ ƒ /api/zgloszenia/[numer]
+├ ƒ /api/zgloszenia/[numer]/ocena
+├ ƒ /api/zgloszenia/[numer]/wiadomosc
+├ ƒ /asystowane
+├ ƒ /centrala
+├ ƒ /centrala/akademia
+├ ƒ /centrala/dane
+├ ƒ /centrala/integracje
+├ ƒ /centrala/logowanie
+├ ƒ /centrala/nabory
+├ ƒ /centrala/pomysly
+├ ƒ /centrala/powiadomienia
+├ ƒ /centrala/puls
+├ ƒ /centrala/radar
+├ ƒ /centrala/tresci
+├ ƒ /centrala/zgloszenia
+├ ƒ /centrala/zgloszenia/[id]
+├ ƒ /dostepnosc
+├ ƒ /ekspert
+├ ƒ /ekspert/zgloszenia/[id]
+├ ƒ /galeria
+├ ƒ /integracje
+├ ƒ /latwy
+├ ƒ /moje
+├ ƒ /moje/[numer]
+├ ƒ /moje/[numer]/karta
+├ ƒ /ocena
+├ ƒ /pomysl
+├ ƒ /problem
+├ ƒ /rozmowa
+├ ƒ /rynek
+├ ƒ /siec
+├ ƒ /testy
+├ ƒ /wdrozenie
+├ ƒ /wdrozenie/plan/[id]
+├ ƒ /widzet
+├ ƒ /wiedza/akademia
+├ ƒ /wiedza/akademia/[slug]
+├ ƒ /wiedza/biblioteka
+├ ƒ /wiedza/biblioteka/[id]
+├ ƒ /wiedza/malopolska
+├ ƒ /wiedza/materialy
+├ ƒ /wiedza/materialy/[id]
+├ ƒ /wiedza/powiat
+├ ƒ /wiedza/powiat/[slug]
+└ ƒ /zaufanie
+
+
+ƒ  (Dynamic)  server-rendered on demand

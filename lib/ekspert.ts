@@ -6,7 +6,7 @@ import { db } from "./db";
 
 const NAZWA = "splot_ekspert";
 const WAZNOSC_S = 12 * 3600;
-export const HASLO_DEMO_EKSPERTA = process.env.DEMO_EKSPERT_PASSWORD || "ekspert-demo";
+export const HASLO_DEMO_EKSPERTA = process.env.DEMO_EKSPERT_PASSWORD || (process.env.SPLOT_PUBLIC_DEMO === "1" ? "ekspert-demo" : "");
 
 function sekret(): string {
   const s = process.env.SESSION_SECRET;
@@ -17,6 +17,7 @@ function sekret(): string {
 const podpis = (w: string) => createHmac("sha256", sekret()).update(w).digest("hex");
 
 export function hasloEkspertaZgodne(podane: string): boolean {
+  if (!HASLO_DEMO_EKSPERTA || !podane) return false;
   const a = Buffer.from(podane);
   const b = Buffer.from(HASLO_DEMO_EKSPERTA);
   return a.length === b.length && timingSafeEqual(a, b);

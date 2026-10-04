@@ -20,7 +20,13 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
 export async function DELETE(_req: Request, ctx: { params: Promise<{ id: string }> }) {
   if (!(await czyAdmin())) return Response.json({ blad: "brak_dostepu" }, { status: 401 });
   const { id } = await ctx.params;
-  await db().query("delete from innowacje where id=$1 and zrodlo='dodana'", [id]).catch(() => null);
+  try {
+    const r = await db().query("delete from innowacje where id=$1 and zrodlo='dodana'", [id]);
+    if (!r.rowCount) return Response.json({ blad: "nie_znaleziono" }, { status: 404 });
+  } catch (e) {
+    if (!(e && typeof e === "object" && "code" in e && e.code === "23503")) return Response.json({ blad: "zapis_nieudany" }, { status: 500 });
+    return Response.json({ blad: "powiazana_innowacja", komunikat: "Ta innowacja ma powiązane sprawy lub testy. Wycofaj ją do szkicu zamiast usuwać." }, { status: 409 });
+  }
   uniewaznijKatalog();
   await zapiszWDzienniku("usunięcie innowacji", id);
   return Response.json({ ok: true });
@@ -39,7 +45,7 @@ export async function PUT(req: Request, ctx: { params: Promise<{ id: string }> }
     await db().query(
       `insert into innowacje (id, nazwa, kategoria, na_czym_polega, problem, grupa_docelowa, kto_moze_skorzystac, czy_to_dziala, autor_organizacja, status, zrodlo)
        values ($1,$2,$3,$4,$5,$6,$7,$8,$9,'opublikowana','nadpisana')
-       on conflict (id) do update set nazwa=$2, na_czym_polega=$4, problem=$5, grupa_docelowa=$6, kto_moze_skorzystac=$7, czy_to_dziala=$8, autor_organizacja=$9, updated_at=now()`,
+       on conflict (id) do update set nazwa=$2, na_czym_polega=$4, problem=$5, grupa_docelowa=$6, kto_moze_skorzystac=$7, czy_to_dziala=$8, autor_organizacja=$9, zrodlo='nadpisana', updated_at=now()`,
       [id, d.nazwa, stat.kategoria, d.na_czym_polega, d.problem, d.grupa_docelowa, d.kto_moze_skorzystac, d.czy_to_dziala, d.autor_organizacja],
     );
   } else {

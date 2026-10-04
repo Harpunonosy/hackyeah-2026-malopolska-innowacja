@@ -1,10 +1,11 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import { useRouter } from "next/navigation";
 import { Button } from "@/components/ui/button";
 
-export function LogowanieEksperta({ eksperci, haslo }: { eksperci: { id: string; nazwa: string; opis: string }[]; haslo: string }) {
+export function LogowanieEksperta({ eksperci }: { eksperci: { id: string; nazwa: string; opis: string }[] }) {
   const router = useRouter();
   const [id, setId] = React.useState(eksperci[0]?.id ?? "");
   const [pass, setPass] = React.useState("");
@@ -14,7 +15,7 @@ export function LogowanieEksperta({ eksperci, haslo }: { eksperci: { id: string;
       className="karta max-w-2xl space-y-5 p-6"
       onSubmit={async (e) => {
         e.preventDefault();
-        const r = await fetch("/api/ekspert/logowanie", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, haslo: pass }) });
+        const r = await apiFetch("/api/ekspert/logowanie", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ id, haslo: pass }) });
         if (r.ok) router.refresh(); else setBlad(true);
       }}
     >
@@ -29,8 +30,8 @@ export function LogowanieEksperta({ eksperci, haslo }: { eksperci: { id: string;
       </fieldset>
       <div className="space-y-1">
         <label htmlFor="eks-haslo" className="block text-lg font-bold">Hasło demonstracyjne</label>
-        <p id="eks-haslo-info" className="text-muted">W wersji demo hasło to: <strong className="font-mono text-fg">{haslo}</strong>. Produkcyjnie logowanie odbywa się przez login.gov.pl.</p>
-        <input id="eks-haslo" type="password" autoComplete="off" aria-describedby="eks-haslo-info" value={pass} onChange={(e) => { setPass(e.target.value); setBlad(false); }} className="block min-h-12 w-full max-w-sm rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" />
+        <p id="eks-haslo-info" className="text-muted">Hasło otrzymasz od koordynatora Hubu. Każdy ekspert widzi tylko przypisane mu sprawy.</p>
+        <input id="eks-haslo" type="password" autoComplete="current-password" aria-describedby="eks-haslo-info" value={pass} onChange={(e) => { setPass(e.target.value); setBlad(false); }} className="block min-h-12 w-full max-w-sm rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" />
       </div>
       {blad && <p role="alert" className="font-semibold text-primary">Nieprawidłowe hasło.</p>}
       <Button type="submit">Wejdź do panelu eksperta</Button>
@@ -40,5 +41,5 @@ export function LogowanieEksperta({ eksperci, haslo }: { eksperci: { id: string;
 
 export function WylogujEksperta() {
   const router = useRouter();
-  return <Button type="button" wariant="obrys" onClick={async () => { await fetch("/api/ekspert/wyloguj", { method: "POST" }); router.refresh(); }}>Wyloguj</Button>;
+  return <Button type="button" wariant="obrys" onClick={async () => { await apiFetch("/api/ekspert/wyloguj", { method: "POST" }); router.refresh(); }}>Wyloguj</Button>;
 }

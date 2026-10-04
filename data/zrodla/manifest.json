@@ -1,0 +1,37 @@
+{
+  "pobrano": "2026-10-04T01:06:56+00:00",
+  "zrodla": [
+    {
+      "id": "biblioteka",
+      "url": "https://rops.krakow.pl/innowacje-spoleczne/biblioteka-innowacji-spolecznych/kategorie",
+      "plik": "biblioteka_innowacji_rops.json",
+      "rekordy": 115
+    },
+    {
+      "id": "ioss",
+      "url": "https://obserwator.rops.krakow.pl/",
+      "plik": "ioss_powiaty.json",
+      "rekordy": 3278
+    },
+    {
+      "id": "raporty",
+      "url": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "plik": "materialy_rops.json"
+    },
+    {
+      "id": "publikacje",
+      "url": "https://rops.krakow.pl/innowacje-spoleczne/publikacje-ze-swiata-innowacji",
+      "plik": "materialy_rops.json"
+    },
+    {
+      "id": "mapa",
+      "url": "https://rops.krakow.pl/mpliki/IS/IWS_20/za._nr_2._Mapa_Wyzwa_Spoecznych.pdf",
+      "plik": "../mapa_wyzwan.json"
+    },
+    {
+      "id": "kanwa",
+      "url": "https://rops.krakow.pl/mpliki/IS/Moj_folder/INNO_AGH_-_SOCIAL_CANVAS.pdf",
+      "plik": "../kanwa_inno_agh.json"
+    }
+  ]
+}

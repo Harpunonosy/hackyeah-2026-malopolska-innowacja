@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import Link from "next/link";
@@ -15,8 +16,14 @@ function poziomDopasowania(trafnosc: number | null) {
 }
 
 export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopasowania; obszar?: string; instytucja?: boolean }) {
-  const zapisz = (wartosc: 1 | -1) => {
-    void fetch("/api/swatka/reakcja", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ innowacjaId: k.id, obszar, wartosc }) }).catch(() => {});
+  const [wysylanie, setWysylanie] = React.useState(false);
+  const [blad, setBlad] = React.useState(false);
+  const zapisz = async (wartosc: 1 | -1) => {
+    if (ocena || wysylanie) return;
+    setWysylanie(true); setBlad(false);
+    const r = await apiFetch("/api/swatka/reakcja", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ innowacjaId: k.id, obszar, wartosc }) });
+    setWysylanie(false);
+    if (r.ok) setOcena(wartosc === 1 ? "tak" : "nie"); else setBlad(true);
   };
   const t = useTranslations("swatka");
   const [ocena, setOcena] = React.useState<"tak" | "nie" | null>(null);
@@ -45,7 +52,7 @@ export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopa
         <p className="mt-1 text-lg">{k.dlaczego}</p>
       </div>
 
-      <details className="zaawansowane karta-mala group px-4 py-2">
+      <details className="karta-mala group px-4 py-2">
         <summary className="flex min-h-10 cursor-pointer items-center font-semibold">{t("czyDziala")}</summary>
         <p className="pb-2 pt-1 text-muted">{k.czyToDziala}</p>
         <h4 className="pt-2 text-sm font-bold uppercase tracking-wide text-muted">{t("ktoWdroz")}</h4>
@@ -73,18 +80,18 @@ export function KartaInnowacji({ k, obszar, instytucja = false }: { k: KartaDopa
           </Button>
         )}
         <div className="zaawansowane ml-auto flex items-center gap-2">
-          <Button type="button" wariant="cichy" aria-pressed={ocena === "tak"} onClick={() => { if (!ocena) zapisz(1); setOcena("tak"); }} className="aria-pressed:bg-fg aria-pressed:text-bg">
+          <Button type="button" wariant="cichy" aria-pressed={ocena === "tak"} disabled={wysylanie || ocena !== null} onClick={() => zapisz(1)} className="aria-pressed:bg-fg aria-pressed:text-bg">
             <ThumbsUp aria-hidden className="size-5" />
             {t("pomoze")}
           </Button>
-          <Button type="button" wariant="cichy" aria-pressed={ocena === "nie"} onClick={() => { if (!ocena) zapisz(-1); setOcena("nie"); }} className="aria-pressed:bg-fg aria-pressed:text-bg">
+          <Button type="button" wariant="cichy" aria-pressed={ocena === "nie"} disabled={wysylanie || ocena !== null} onClick={() => zapisz(-1)} className="aria-pressed:bg-fg aria-pressed:text-bg">
             <ThumbsDown aria-hidden className="size-5" />
             {t("nieTo")}
           </Button>
         </div>
       </footer>
       <p role="status" className="text-sm font-medium empty:hidden">
-        {ocena && t("dzieki")}
+        {ocena && t("dzieki")}{blad && t("bladOceny")}
       </p>
     </article>
   );

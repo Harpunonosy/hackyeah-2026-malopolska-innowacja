@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import Link from "next/link";
@@ -34,7 +35,7 @@ export function Pytanie({ eksperci }: { eksperci: { id: string; nazwa: string }[
       onSubmit={async (e) => {
         e.preventDefault();
         setStan("pracuje");
-        const r = await fetch("/api/pytania", {
+        const r = await apiFetch("/api/pytania", {
           method: "POST",
           headers: { "content-type": "application/json" },
           body: JSON.stringify({ tekst, ekspertId: doKogo || undefined, zgoda, email: email || undefined }),

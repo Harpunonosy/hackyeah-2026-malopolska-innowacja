@@ -1,3 +1,4 @@
+import { bledyWniosku, naborOtwarty } from "@/lib/wniosek-walidacja";
 import { z } from "zod";
 import { db } from "@/lib/db";
 import { czyWolno } from "@/lib/limit";
@@ -15,8 +16,8 @@ export async function POST(req: Request) {
   if (!czyWolno(`wniosek:${ip}`, 4)) return Response.json({ blad: "za_duzo_zapytan" }, { status: 429 });
   const w = z.object({ naborId: z.string().regex(UUID), dane: z.string().min(20).max(6000) }).safeParse(await req.json().catch(() => null));
   if (!w.success) return Response.json({ blad: "walidacja" }, { status: 400 });
-  const n = (await db().query("select nazwa, temat, schemat from nabory where id=$1 and aktywny=true", [w.data.naborId])).rows[0];
-  if (!n) return Response.json({ blad: "nabor_zamkniety" }, { status: 409 });
+  const n = (await db().query("select nazwa, temat, schemat, aktywny, otwarty_od, otwarty_do from nabory where id=$1 and aktywny=true", [w.data.naborId])).rows[0];
+  if (!n || !naborOtwarty(n)) return Response.json({ blad: "nabor_zamkniety" }, { status: 409 });
   try {
     return Response.json({ pola: await przygotujWniosek(n, schematNaboru(n.schemat), zamaskuj(w.data.dane).tekst) });
   } catch (e) {
@@ -26,15 +27,27 @@ export async function POST(req: Request) {
 }
 
 export async function PUT(req: Request) {
+  const ip = req.headers.get("x-forwarded-for")?.split(",")[0]?.trim() || "lokalnie";
+  if (!czyWolno(`wniosek-zapis:${ip}`, 6)) return Response.json({ blad: "za_duzo_zapytan" }, { status: 429 });
   const w = z.object({ naborId: z.string().regex(UUID), pola: z.array(z.object({ nr: z.number(), tresc: z.string().max(4000) })).max(30) }).safeParse(await req.json().catch(() => null));
   if (!w.success) return Response.json({ blad: "walidacja" }, { status: 400 });
-  const n = (await db().query("select id, nazwa from nabory where id=$1 and aktywny=true", [w.data.naborId])).rows[0];
-  if (!n) return Response.json({ blad: "nabor_zamkniety" }, { status: 409 });
-  const pola = w.data.pola.map((p) => ({ nr: p.nr, tresc: zamaskuj(p.tresc).tekst }));
-  const { rows } = await db().query("insert into wnioski (nabor_id, pola, status) values ($1,$2,'zlozony') returning id", [w.data.naborId, JSON.stringify(pola)]);
-  const tytul = pola.find((p) => p.nr === 1)?.tresc.slice(0, 100) || n.nazwa;
-  const sprawa = await utworzSprawe({ typ: "wniosek", tytul: `Wniosek: ${tytul}`, tresc: `Wniosek w naborze ${n.nazwa}. ${pola.slice(0, 3).map((p) => p.tresc).join(" ")}`.slice(0, 1500), obiektId: rows[0].id });
-  return Response.json({ id: rows[0].id, numer: sprawa.numer }, { status: 201 });
+  const client = await db().connect();
+  try {
+    await client.query("begin");
+    const n = (await client.query("select id, nazwa, schemat, aktywny, otwarty_od, otwarty_do from nabory where id=$1 for share", [w.data.naborId])).rows[0];
+    if (!n || !naborOtwarty(n)) { await client.query("rollback"); return Response.json({ blad: "nabor_zamkniety" }, { status: 409 }); }
+    const bledy = bledyWniosku(w.data.pola, schematNaboru(n.schemat));
+    if (bledy.length) { await client.query("rollback"); return Response.json({ blad: "walidacja", komunikat: bledy[0], bledy }, { status: 400 }); }
+    const pola = w.data.pola.map((p) => ({ nr: p.nr, tresc: zamaskuj(p.tresc).tekst }));
+    const { rows } = await client.query("insert into wnioski (nabor_id, pola, status) values ($1,$2,'zlozony') returning id", [w.data.naborId, JSON.stringify(pola)]);
+    const tytul = pola.find((p) => p.nr === 1)?.tresc.slice(0, 100) || n.nazwa;
+    const sprawa = await utworzSprawe({ typ: "wniosek", tytul: `Wniosek: ${tytul}`, tresc: `Wniosek w naborze ${n.nazwa}. ${pola.slice(0, 3).map((p) => p.tresc).join(" ")}`.slice(0, 1500), obiektId: rows[0].id }, client);
+    await client.query("commit");
+    return Response.json({ id: rows[0].id, numer: sprawa.numer }, { status: 201 });
+  } catch {
+    await client.query("rollback");
+    return Response.json({ blad: "zapis_nieudany" }, { status: 500 });
+  } finally { client.release(); }
 }
 
 // PATCH {naborId, pola}: wstępna ocena wniosku według kryteriów tego naboru (pomoc, nie decyzja komisji).

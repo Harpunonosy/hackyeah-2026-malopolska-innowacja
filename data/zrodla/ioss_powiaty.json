@@ -1,5 +1,6 @@
 {
  "zrodlo": "https://obserwator.rops.krakow.pl",
+ "pobrano": "2026-10-04T01:22:13+00:00",
  "opis": "Wartości wskaźników IOSS (ROPS Kraków) dla 22 powiatów Małopolski, najnowszy rok domyślny na stronie analizy zróżnicowania.",
  "wskazniki": [
   {
@@ -1189,7 +1190,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "n": 22
   },
   {
@@ -1245,7 +1246,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "n": 22
   },
   {
@@ -1266,7 +1267,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "n": 22
   },
   {
@@ -27806,7 +27807,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat bocheński",
    "wartosc": 29426
   },
@@ -27814,7 +27815,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat brzeski",
    "wartosc": 25184
   },
@@ -27822,7 +27823,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat chrzanowski",
    "wartosc": 35728
   },
@@ -27830,7 +27831,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat dąbrowski",
    "wartosc": 15594
   },
@@ -27838,7 +27839,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat gorlicki",
    "wartosc": 29427
   },
@@ -27846,7 +27847,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat krakowski",
    "wartosc": 84212
   },
@@ -27854,7 +27855,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat limanowski",
    "wartosc": 34173
   },
@@ -27862,7 +27863,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat m. Kraków",
    "wartosc": 206225
   },
@@ -27870,7 +27871,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat m. Nowy Sącz",
    "wartosc": 22571
   },
@@ -27878,7 +27879,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat m. Tarnów",
    "wartosc": 29632
   },
@@ -27886,7 +27887,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat miechowski",
    "wartosc": 13573
   },
@@ -27894,7 +27895,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat myślenicki",
    "wartosc": 35404
   },
@@ -27902,7 +27903,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat nowosądecki",
    "wartosc": 56918
   },
@@ -27910,7 +27911,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat nowotarski",
    "wartosc": 50952
   },
@@ -27918,7 +27919,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat olkuski",
    "wartosc": 32073
   },
@@ -27926,7 +27927,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat oświęcimski",
    "wartosc": 43689
   },
@@ -27934,7 +27935,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat proszowicki",
    "wartosc": 12178
   },
@@ -27942,7 +27943,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat suski",
    "wartosc": 22873
   },
@@ -27950,7 +27951,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat tarnowski",
    "wartosc": 54190
   },
@@ -27958,7 +27959,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat tatrzański",
    "wartosc": 17773
   },
@@ -27966,7 +27967,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat wadowicki",
    "wartosc": 44388
   },
@@ -27974,7 +27975,7 @@
    "id": 233,
    "kategoria": "RODZINA",
    "wskaznik": "Liczba rodzin ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat wielicki",
    "wartosc": 38836
   },
@@ -29214,7 +29215,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat bocheński",
    "wartosc": 13.82
   },
@@ -29222,7 +29223,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat brzeski",
    "wartosc": 13.94
   },
@@ -29230,7 +29231,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat chrzanowski",
    "wartosc": 14.55
   },
@@ -29238,7 +29239,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat dąbrowski",
    "wartosc": 13.36
   },
@@ -29246,7 +29247,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat gorlicki",
    "wartosc": 18.65
   },
@@ -29254,7 +29255,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat krakowski",
    "wartosc": 12.99
   },
@@ -29262,7 +29263,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat limanowski",
    "wartosc": 12.0
   },
@@ -29270,7 +29271,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat m. Kraków",
    "wartosc": 13.87
   },
@@ -29278,7 +29279,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat m. Nowy Sącz",
    "wartosc": 13.27
   },
@@ -29286,7 +29287,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat m. Tarnów",
    "wartosc": 18.68
   },
@@ -29294,7 +29295,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat miechowski",
    "wartosc": 20.72
   },
@@ -29302,7 +29303,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat myślenicki",
    "wartosc": 12.92
   },
@@ -29310,7 +29311,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat nowosądecki",
    "wartosc": 11.93
   },
@@ -29318,7 +29319,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat nowotarski",
    "wartosc": 12.13
   },
@@ -29326,7 +29327,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat olkuski",
    "wartosc": 14.74
   },
@@ -29334,7 +29335,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat oświęcimski",
    "wartosc": 12.94
   },
@@ -29342,7 +29343,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat proszowicki",
    "wartosc": 18.15
   },
@@ -29350,7 +29351,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat suski",
    "wartosc": 12.85
   },
@@ -29358,7 +29359,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat tarnowski",
    "wartosc": 14.45
   },
@@ -29366,7 +29367,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat tatrzański",
    "wartosc": 12.63
   },
@@ -29374,7 +29375,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat wadowicki",
    "wartosc": 13.43
   },
@@ -29382,7 +29383,7 @@
    "id": 215,
    "kategoria": "NIEPEŁNOSPRAWNOŚĆ",
    "wskaznik": "Odsetek osób niepełnosprawnych ogółem",
-   "rok": "2024",
+   "rok": "2021",
    "powiat": "powiat wielicki",
    "wartosc": 11.81
   },
@@ -29742,7 +29743,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat bocheński",
    "wartosc": 0.96
   },
@@ -29750,7 +29751,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat brzeski",
    "wartosc": 0.97
   },
@@ -29758,7 +29759,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat chrzanowski",
    "wartosc": 0.96
   },
@@ -29766,7 +29767,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat dąbrowski",
    "wartosc": 1.04
   },
@@ -29774,7 +29775,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat gorlicki",
    "wartosc": 0.97
   },
@@ -29782,7 +29783,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat krakowski",
    "wartosc": 1.13
   },
@@ -29790,7 +29791,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat limanowski",
    "wartosc": 1.58
   },
@@ -29798,7 +29799,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat m. Kraków",
    "wartosc": 0.77
   },
@@ -29806,7 +29807,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat m. Nowy Sącz",
    "wartosc": 0.8
   },
@@ -29814,7 +29815,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat m. Tarnów",
    "wartosc": 0.65
   },
@@ -29822,7 +29823,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat miechowski",
    "wartosc": 1.63
   },
@@ -29830,7 +29831,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat myślenicki",
    "wartosc": 1.04
   },
@@ -29838,7 +29839,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat nowosądecki",
    "wartosc": 1.61
   },
@@ -29846,7 +29847,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat nowotarski",
    "wartosc": 1.46
   },
@@ -29854,7 +29855,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat olkuski",
    "wartosc": 0.86
   },
@@ -29862,7 +29863,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat oświęcimski",
    "wartosc": 0.81
   },
@@ -29870,7 +29871,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat proszowicki",
    "wartosc": 1.31
   },
@@ -29878,7 +29879,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat suski",
    "wartosc": 1.11
   },
@@ -29886,7 +29887,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat tarnowski",
    "wartosc": 1.07
   },
@@ -29894,7 +29895,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat tatrzański",
    "wartosc": 1.15
   },
@@ -29902,7 +29903,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat wadowicki",
    "wartosc": 0.96
   },
@@ -29910,7 +29911,7 @@
    "id": 23,
    "kategoria": "EDUKACJA",
    "wskaznik": "Dostępność przedszkoli",
-   "rok": "2024",
+   "rok": "2019",
    "powiat": "powiat wielicki",
    "wartosc": 1.06
   },

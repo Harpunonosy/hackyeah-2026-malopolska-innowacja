@@ -14,7 +14,7 @@ test('imports source CSV without losing missing values', () => {
   if (!wynik.ok) return;
   assert.equal(wynik.wiersze.length, 3278);
   assert.equal(wynik.wiersze.filter(w => w.wartosc === null).length, 1);
-  assert.equal(wynik.wiersze[0].wartosc, 21.09);
+  assert.equal(wynik.wiersze.find(w => w.wskaznik_id === 55 && w.powiat === 'powiat bocheński')?.wartosc, 21.09);
 });
 
 test('supports BOM, CRLF, quoting and semicolon decimal comma', () => {

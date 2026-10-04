@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
@@ -48,8 +49,8 @@ function RozmowaWlasciciela({ numer, nr, r }: { numer: string; nr: number; r: Da
       ))}
       <form className="space-y-2" onSubmit={async (e) => {
         e.preventDefault();
-        const odp = await fetch("/api/rozmowy/odpowiedz", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ numer, rozmowaId: r.id, tresc }) });
-        if (odp.ok) { setTresc(""); setInfo(t("wyslanoOdp")); }
+        const odp = await apiFetch("/api/rozmowy/odpowiedz", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ numer, rozmowaId: r.id, tresc }) });
+        if (odp.ok) { setTresc(""); setInfo(t("wyslanoOdp")); } else setInfo(t("bladWysylki"));
       }}>
         <label htmlFor={`rozm-${r.id}`} className="block font-bold">{t("odpiszOsobie")}</label>
         <textarea id={`rozm-${r.id}`} rows={3} value={tresc} onChange={(e) => setTresc(e.target.value)} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
@@ -95,13 +96,15 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
   const [brak, setBrak] = React.useState(false);
   const [ocena, setOcena] = React.useState<number | null>(null);
   const [odp, setOdp] = React.useState("");
+  const [info, setInfo] = React.useState("");
+  const [wysylanie, setWysylanie] = React.useState(false);
   const [wyslano, setWyslano] = React.useState(false);
   const [bladSieci, setBladSieci] = React.useState(false);
 
   React.useEffect(() => {
     let aktywny = true;
     async function pobierz(signal: AbortSignal) {
-      const r = await fetch(`/api/zgloszenia/${numer}`, { cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(15000)]) });
+      const r = await apiFetch(`/api/zgloszenia/${numer}`, { cache: "no-store", signal: AbortSignal.any([signal, AbortSignal.timeout(15000)]) });
       if (!aktywny) return;
       if (r.status === 404) return setBrak(true);
       if (!r.ok) throw new Error("sprawa_niedostepna");
@@ -119,8 +122,8 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
   }, [numer]);
 
   async function wystawOcene(n: number) {
-    setOcena(n);
-    await fetch(`/api/zgloszenia/${numer}/ocena`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ocena: n }) });
+    const r = await apiFetch(`/api/zgloszenia/${numer}/ocena`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ocena: n }) });
+    if (r.ok) { setOcena(n); setInfo(""); } else setInfo(t("bladWysylki"));
   }
 
   if (brak) return <p role="alert" className="text-lg font-semibold">{t("nieZnaleziono")}</p>;
@@ -131,6 +134,7 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
 
   return (
     <div className="space-y-8">
+      {info && <p role="alert">{info}</p>}
       {bladSieci && <p role="status" className="rounded-xl border-2 border-primary p-4 font-semibold">{t("bladSieci")}</p>}
       <p className="flex flex-wrap items-center gap-2">
         <Chip>{ETYKIETY_TYPOW[dane.typ as TypSprawy] ?? dane.typ}</Chip>
@@ -186,13 +190,15 @@ export function StatusZgloszenia({ numer }: { numer: string }) {
           ))}
           <form className="space-y-2" onSubmit={async (e) => {
             e.preventDefault();
-            if (odp.trim().length < 2) return;
-            const r = await fetch(`/api/zgloszenia/${numer}/wiadomosc`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tresc: odp }) });
-            if (r.ok) { setOdp(""); setWyslano(true); }
+            if (odp.trim().length < 2 || wysylanie) return;
+            setWysylanie(true); setWyslano(false); setInfo("");
+            const r = await apiFetch(`/api/zgloszenia/${numer}/wiadomosc`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tresc: odp }) });
+            setWysylanie(false);
+            if (r.ok) { setOdp(""); setWyslano(true); } else setInfo(t("bladWysylki"));
           }}>
             <label htmlFor="odp-autora" className="block text-lg font-bold">{t("napisz")}</label>
             <textarea id="odp-autora" rows={3} value={odp} onChange={(e) => setOdp(e.target.value)} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
-            <Button type="submit" disabled={odp.trim().length < 2}>{t("wyslijOdp")}</Button>
+            <Button type="submit" disabled={wysylanie || odp.trim().length < 2}>{t("wyslijOdp")}</Button>
             {wyslano && <p role="status" className="font-semibold text-ok">{t("wyslanoOdp")}</p>}
           </form>
           <div className="space-y-2">

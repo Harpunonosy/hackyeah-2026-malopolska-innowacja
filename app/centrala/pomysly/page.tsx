@@ -22,11 +22,11 @@ export default async function Page() {
   const { mapa: innowacjaPoId } = await katalog();
   const c = db();
   const [fiszki, opinie, testy, doAkceptacji] = await Promise.all([
-    c.query("select id, tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, status, publiczna, created_at from fiszki order by (status='zgloszona') desc, created_at desc limit 40"),
-    c.query(`select innowacja_id, count(*)::int as n, round(avg(ocena)::numeric,1) as srednia,
+    c.query("select id, tytul, opis, istota, dla_kogo, etap, ocena_wstepna, podobne, status, publiczna, wyniki_testu, created_at from fiszki order by (status='zgloszona') desc, created_at desc limit 40"),
+    c.query(`select innowacja_id, test_id, (select tytul from testy where id=opinie.test_id) as tytul_testu, count(*)::int as n, round(avg(ocena)::numeric,1) as srednia,
                count(*) filter (where odpowiedzi->>'polecilbys'='tak')::int as polecaja,
                (array_agg(propozycja order by created_at desc) filter (where propozycja <> ''))[1:3] as propozycje
-             from opinie group by innowacja_id order by n desc`),
+             from opinie group by innowacja_id, test_id order by n desc`),
     c.query(`select t.id, t.tytul, t.powiat, t.termin, t.liczba_miejsc, (select count(*)::int from zapisy_testy z where z.test_id=t.id) as zapisani from testy t where t.status='otwarty' order by t.tytul`),
     c.query("select id, tytul, opis, powiat, termin, liczba_miejsc, numer from testy where status='do_akceptacji' order by created_at"),
   ]);
@@ -60,15 +60,15 @@ export default async function Page() {
         {fiszki.rows.length === 0 && <p className="text-lg">Nie ma jeszcze zgłoszonych pomysłów.</p>}
         <ul className="space-y-4">
           {fiszki.rows.map((f) => {
-            const oceny = (f.ocena_wstepna as Ocena[] | null) ?? [];
+            const oceny = Array.isArray(f.ocena_wstepna) ? (f.ocena_wstepna as Ocena[]).filter(o=>o && typeof o.nazwa === "string" && Number.isFinite(o.punkty)) : [];
             const suma = oceny.reduce((s, o) => s + o.punkty, 0);
-            const podobne = (f.podobne as { id: string; nazwa: string }[] | null) ?? [];
+            const podobne = Array.isArray(f.podobne) ? (f.podobne as { id: string; nazwa: string }[]).filter(p=>p && typeof p.id === "string" && typeof p.nazwa === "string") : [];
             return (
               <li key={f.id} className={`karta space-y-3 p-6 ${f.status === "zgloszona" ? "border-l-8 border-l-primary" : ""}`}>
                 <div className="flex flex-wrap items-center gap-2">
                   <Chip className={f.status === "zgloszona" ? "bg-primary text-primary-fg" : ""}>{STATUS[f.status] ?? f.status}</Chip>
                   <Chip>{ETAP[f.etap] ?? f.etap}</Chip>
-                  {oceny.length > 0 && <Chip>Ocena wstępna AI: {suma}/50</Chip>}
+                  {oceny.length > 0 && <Chip>Ocena pomocnicza: {suma}/50</Chip>}
                   <span className="text-sm text-muted">{fmt(f.created_at)}</span>
                 </div>
                 <h3 className="font-display text-2xl font-bold">{f.tytul}</h3>
@@ -78,13 +78,14 @@ export default async function Page() {
                   <div className="space-y-3 py-2">
                     <p><strong>Na czym polega:</strong> {f.istota}</p>
                     <p><strong>Dla kogo:</strong> {f.dla_kogo}</p>
+                    {oceny.length > 0 && <p className="text-sm text-muted">Ocena przesłana z formularza autora; nie jest zweryfikowaną oceną komisji.</p>}
                     {oceny.length > 0 && (
                       <ul className="grid gap-x-6 sm:grid-cols-2">{oceny.map((o) => <li key={o.id}>{o.nazwa.split(" (")[0]}: <strong className={o.ok ? "text-ok" : "text-primary"}>{o.punkty}/10</strong></li>)}</ul>
                     )}
                     <p><strong>Podobne w Bibliotece:</strong>{" "}{podobne.length ? podobne.map((p, i) => <span key={p.id}>{i > 0 && ", "}<Link href={`/wiedza/biblioteka/${p.id}`}>{p.nazwa}</Link></span>) : "brak"}</p>
                   </div>
                 </details>
-                <StatusFiszki id={f.id} status={f.status} publiczna={f.publiczna} />
+                <StatusFiszki id={f.id} status={f.status} publiczna={f.publiczna} etap={f.etap} wyniki={f.wyniki_testu ?? ""} />
               </li>
             );
           })}
@@ -96,13 +97,13 @@ export default async function Page() {
         {opinie.rows.length === 0 && <p className="text-lg">Nie ma jeszcze opinii.</p>}
         <ul className="space-y-4">
           {opinie.rows.map((o) => (
-            <li key={o.innowacja_id} className="karta space-y-3 p-6">
-              <h3 className="font-display text-2xl font-bold">{innowacjaPoId.get(o.innowacja_id)?.nazwa ?? o.innowacja_id}</h3>
+            <li key={o.test_id ?? o.innowacja_id} className="karta space-y-3 p-6">
+              <h3 className="font-display text-2xl font-bold">{o.tytul_testu ?? innowacjaPoId.get(o.innowacja_id)?.nazwa ?? o.innowacja_id}</h3>
               <p className="flex flex-wrap gap-2">
                 <Chip>{o.n} opinii</Chip><Chip>średnia {String(o.srednia).replace(".", ",")}/5</Chip><Chip>poleca {o.polecaja} z {o.n}</Chip>
               </p>
               {o.propozycje?.length > 0 && <ul className="list-disc pl-6 text-muted">{o.propozycje.map((p: string) => <li key={p}>{p}</li>)}</ul>}
-              <PodsumujOpinie innowacjaId={o.innowacja_id} />
+              {o.innowacja_id && <PodsumujOpinie innowacjaId={o.innowacja_id} />}
             </li>
           ))}
         </ul>

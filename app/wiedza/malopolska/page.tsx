@@ -17,6 +17,7 @@ export default async function Malopolska() {
   const noweTeksty = new Set(dodane.map((f) => f.tekst));
   return (
     <Strona>
+      <p><Link href="/wiedza/materialy" className="inline-flex min-h-12 items-center font-semibold underline" lang="pl">Raporty i publikacje ROPS — pełny katalog materiałów</Link></p>
       <NaglowekStrony nadtytul="Skarbnica wiedzy" tytul="Kondycja Małopolski" opis="Najważniejsze wyzwania społeczne regionu na podstawie raportów ROPS i Mapy Wyzwań Społecznych." />
 
       <section aria-labelledby="wyz-h" className="space-y-5">

@@ -45,7 +45,7 @@ Przeglądarka / widżet na stronie gminy / systemy Hubu (API, webhooki)
 
 **Zapytania z AI** są wolniejsze i droższe, dlatego mają osobne limity (`lib/limit.ts`: na adres i globalnie na godzinę):
 
-Poniższe pomiary czasu, kosztów i trafności pochodzą z wcześniejszej wersji na Claude Haiku 4.5. Po przełączeniu na DeepSeek 4.10.2026 nie stanowią pomiaru nowego modelu; nie wykonywano nowych płatnych prób.
+Poniższe pomiary czasu, kosztów i trafności pochodzą z wcześniejszej wersji na Claude Haiku 4.5. Po przełączeniu na DeepSeek 4.10.2026 nie stanowią pomiaru nowego modelu; trzy nowe kontrole działania opisano w `HUB_TESTY.md`; nie stanowią one powtórzenia poniższego benchmarku.
 
 | Funkcja | Czas (Haiku 4.5, pomiar 3.10.2026) |
 |---|---|
@@ -74,16 +74,16 @@ Pozostałe funkcje AI nie były mierzone tak samo. W tabeli kosztów na slajd po
 - Nagłówki: Content-Security-Policy (bez zewnętrznych skryptów; ramki tylko youtube-nocookie), `X-Frame-Options` (widżet jako jedyny wyjątek), HSTS, `nosniff`, `Referrer-Policy`, `Permissions-Policy`.
 - Panel ROPS: sesja w podpisanym ciasteczku (`SESSION_SECRET`), produkcyjnie SSO Urzędu i role (pracownik, koordynator, ekspert).
 - Webhooki: podpis HMAC-SHA256 z czasem, bez treści zgłoszeń, dziennik dostaw.
-- Publiczne API: tylko odczyt katalogu, naborów i statystyk z progiem 3 zgłoszeń (k-anonimowość); matchmaking z limitem zapytań.
+- Publiczne API: odczyt katalogu i naborów oraz matchmaking z limitem zapytań. Statystyki potrzeb są dostępne wyłącznie dla zalogowanego administratora (dodatkowo próg minimum 3 zgłoszeń).
 - Do zrobienia przed produkcją: DPIA (ocena skutków dla ochrony danych), umowa powierzenia z dostawcą AI i hostingu, test penetracyjny, rotacja kluczy użytych w demo.
 
 ## 6. Integracje (gotowe w prototypie)
 
 | Integracja | Gdzie | Opis |
 |---|---|---|
-| API v1 + OpenAPI 3.1 | `/api/v1/*`, `/api/v1/openapi.json`, `/integracje` | katalog, nabory, statystyki potrzeb, matchmaking |
+| API v1 + OpenAPI 3.1 | `/api/v1/*`, `/api/v1/openapi.json`, `/integracje` | katalog, nabory, matchmaking; statystyki wyłącznie dla administratora |
 | Webhooki HMAC | Centrala → Integracje | `sprawa.nowa`, `pomysl.nowy`, `nabor.zmiana`, `wniosek.zmiana`, `ogloszenie.nowe`; odbiornik testowy w demo |
-| Eksport do bazy grantowej | `/api/admin/eksport/wnioski` (`?nowe=1`) | JSON z numerem sprawy, etapami oceny i decyzją |
+| Eksport do bazy grantowej | `/api/admin/eksport/wnioski` (`?nowe=1`) | JSON z numerem sprawy, etapami oceny i decyzją; GET nie zmienia statusu, POST potwierdza odbiór |
 | Eksport zgłoszeń | `/api/admin/eksport/zgloszenia` | CSV, treść zamaskowana |
 | Widżet „Znajdź pomoc” | `/widzet?powiat=…` | jedna linijka `<iframe>` na stronę gminy, OPS, biblioteki |
 | Powiadomienia | `lib/powiadomienia.ts` | jedna magistrala: aplikacja, e-mail, SMS (adapter), webhooki |
@@ -148,3 +148,15 @@ Przy wdrożeniu poza Vercelem migracje można wykonać jawnie: `node --env-file=
 Test pełnej komunikacji (ręczny pomysł → Centrala → odpowiedź → autor, bez płatnego AI): `SPLOT_TEST_BAZA_LOCALNA=1 DEMO_ADMIN_PASSWORD=… npx tsx scripts/komunikacja-test.ts http://localhost:3100`. Test zapisuje syntetyczną sprawę; uruchamiaj tylko z osobną lokalną bazą. Pełne Chromium jest potrzebne do testu natywnego `Notification` (Headless Shell zwraca odmowę mimo nadanych uprawnień).
 
 Skrypty przeglądarkowe korzystają z systemowego Chrome lub cache Playwright. Można podać `SPLOT_BROWSER_PATH` albo `SPLOT_BROWSER_CHANNEL`. Testy axe, 320 px i klawiatury kończą się niezerowym kodem przy naruszeniach oraz odrzucają błędne odpowiedzi HTTP. `--bez-zrzutow` w teście axe zachowuje istniejące zrzuty.
+
+
+## Aktualizacja zgodności z hub.pdf (4.10.2026)
+
+Szczegółowa macierz, bieżące wyniki testów i ograniczenia: [HUB_ZGODNOSC.md](HUB_ZGODNOSC.md). Historia wcześniejszych pomiarów powyżej nie stanowi testu obciążenia ani jakości AI tej wersji.
+
+- Lokalny katalog raportów/publikacji: `/wiedza/materialy`, 57 plików PDF zweryfikowanych u wydawcy, metadane i 15 opracowań wybranych fragmentów. Pełne PDF pozostają u ROPS.
+- Odświeżanie: `python3 scripts/scrape_biblioteka.py`, `python3 scripts/scrape_ioss.py`, `python3 scripts/scrape_materialy.py` (ostatni wymaga `pypdf`; opcjonalnie `--pdf-library /path/to/pypdf.whl`). Przegląd zmian przed publikacją: zakres, rok danych, dane osobowe, poprawność cytowań. Nowy hash PDF wyłącza stare opracowanie do czasu ponownego sprawdzenia.
+- Źródła pobierane są podczas przygotowania wersji, nie w żądaniu użytkownika. Nieaktualna kopia nie może być opisywana jako dane na żywo. IOSS odczytuje zaznaczony rok wykresu, nie pierwszy rok z listy.
+- Hasło eksperckie jest prywatne (`DEMO_EKSPERT_PASSWORD`). Domyślne hasło demonstracyjne istnieje tylko z jawnym `SPLOT_PUBLIC_DEMO=1`; ten tryb wolno stosować wyłącznie z danymi syntetycznymi.
+- Integrator po trwałym imporcie wniosków wywołuje `POST /api/admin/eksport/wnioski` z JSON `{"odebrane":["uuid-wniosku"]}`. Ponowione potwierdzenie nie zmienia pierwotnej daty. Samo pobranie `GET ?nowe=1` nie potwierdza doręczenia.
+- Baza testowa tego przeglądu jest osobna od środowiska głównego. Test bez pgvector nie jest walidacją wyszukiwania wektorowego.

@@ -1,0 +1,560 @@
+
+> splot@0.1.0 test
+> tsx --test tests/*.test.ts lib/*.test.ts scripts/odpytywanie.test.ts components/*/*.test.tsx
+
+TAP version 13
+# Subtest: najważniejsze koszty i ostrzeżenia są widoczne przed szczegółami
+ok 1 - najważniejsze koszty i ostrzeżenia są widoczne przed szczegółami
+  ---
+  duration_ms: 57.167086
+  type: 'test'
+  ...
+# Subtest: szczegóły są w pięciu grupach, bez poziomych tabel
+ok 2 - szczegóły są w pięciu grupach, bez poziomych tabel
+  ---
+  duration_ms: 12.218338
+  type: 'test'
+  ...
+# Subtest: stary plan zachowuje pełne dane i pokazuje start na podstawie modelu realizacji
+ok 3 - stary plan zachowuje pełne dane i pokazuje start na podstawie modelu realizacji
+  ---
+  duration_ms: 9.457987
+  type: 'test'
+  ...
+# Subtest: nowy plan zachowuje wszystkie pierwsze kroki i opcjonalne warianty
+ok 4 - nowy plan zachowuje wszystkie pierwsze kroki i opcjonalne warianty
+  ---
+  duration_ms: 15.661097
+  type: 'test'
+  ...
+# Subtest: dawne plany bez liczby odbiorców nie dzielą przez zero
+ok 5 - dawne plany bez liczby odbiorców nie dzielą przez zero
+  ---
+  duration_ms: 9.772631
+  type: 'test'
+  ...
+# Subtest: sends DeepSeek JSON schema with thinking disabled and maps token usage
+ok 6 - sends DeepSeek JSON schema with thinking disabled and maps token usage
+  ---
+  duration_ms: 70.146713
+  type: 'test'
+  ...
+# Subtest: ignores legacy Claude default and explicit model names
+ok 7 - ignores legacy Claude default and explicit model names
+  ---
+  duration_ms: 8.308494
+  type: 'test'
+  ...
+# Subtest: supports enum catch, nullable, optional, default and array schemas
+ok 8 - supports enum catch, nullable, optional, default and array schemas
+  ---
+  duration_ms: 12.967666
+  type: 'test'
+  ...
+# Subtest: missing key fails without sending a request
+ok 9 - missing key fails without sending a request
+  ---
+  duration_ms: 8.368615
+  type: 'test'
+  ...
+# Subtest: rejects invalid JSON without retry
+ok 10 - rejects invalid JSON without retry
+  ---
+  duration_ms: 4.268768
+  type: 'test'
+  ...
+# Subtest: rejects empty content without retry
+ok 11 - rejects empty content without retry
+  ---
+  duration_ms: 3.413079
+  type: 'test'
+  ...
+# Subtest: rejects invalid schema output without retry
+ok 12 - rejects invalid schema output without retry
+  ---
+  duration_ms: 3.892964
+  type: 'test'
+  ...
+# Subtest: rejects missing choice without retry
+ok 13 - rejects missing choice without retry
+  ---
+  duration_ms: 5.638344
+  type: 'test'
+  ...
+# Subtest: rejects null message without retry
+ok 14 - rejects null message without retry
+  ---
+  duration_ms: 4.092687
+  type: 'test'
+  ...
+# Subtest: invalid HTTP JSON is a format failure without retry
+ok 15 - invalid HTTP JSON is a format failure without retry
+  ---
+  duration_ms: 1.474737
+  type: 'test'
+  ...
+# Subtest: maps finish reason length before trying to parse JSON
+ok 16 - maps finish reason length before trying to parse JSON
+  ---
+  duration_ms: 1.260654
+  type: 'test'
+  ...
+# Subtest: maps finish reason content_filter before trying to parse JSON
+ok 17 - maps finish reason content_filter before trying to parse JSON
+  ---
+  duration_ms: 1.339215
+  type: 'test'
+  ...
+# Subtest: maps finish reason refusal before trying to parse JSON
+ok 18 - maps finish reason refusal before trying to parse JSON
+  ---
+  duration_ms: 1.573858
+  type: 'test'
+  ...
+# Subtest: maps refusal message without exposing provider text
+ok 19 - maps refusal message without exposing provider text
+  ---
+  duration_ms: 0.923131
+  type: 'test'
+  ...
+# Subtest: HTTP 400 fails once without logging or exposing response text
+ok 20 - HTTP 400 fails once without logging or exposing response text
+  ---
+  duration_ms: 0.983171
+  type: 'test'
+  ...
+# Subtest: retries HTTP 429 once
+ok 21 - retries HTTP 429 once
+  ---
+  duration_ms: 1.021011
+  type: 'test'
+  ...
+# Subtest: retries HTTP 503 once
+ok 22 - retries HTTP 503 once
+  ---
+  duration_ms: 0.89001
+  type: 'test'
+  ...
+# Subtest: persistent network failure is bounded and sanitized
+ok 23 - persistent network failure is bounded and sanitized
+  ---
+  duration_ms: 0.742489
+  type: 'test'
+  ...
+# Subtest: timeout covers stalled response body and does not retry
+ok 24 - timeout covers stalled response body and does not retry
+  ---
+  duration_ms: 25.487168
+  type: 'test'
+  ...
+# Subtest: timeout aborts stalled fetch even when mock ignores its signal
+ok 25 - timeout aborts stalled fetch even when mock ignores its signal
+  ---
+  duration_ms: 26.788503
+  type: 'test'
+  ...
+# Subtest: baza: szkic → publikacja → nowy szkic → publikacja, konflikty i dziennik
+ok 26 - baza: szkic → publikacja → nowy szkic → publikacja, konflikty i dziennik
+  ---
+  duration_ms: 166.225919
+  type: 'test'
+  ...
+# Subtest: waliduje wszystkie pięć oryginalnych lekcji
+ok 27 - waliduje wszystkie pięć oryginalnych lekcji
+  ---
+  duration_ms: 19.925265
+  type: 'test'
+  ...
+# Subtest: odrzuca puste pola, brak wersji łatwej i nieprawidłową odpowiedź quizu
+ok 28 - odrzuca puste pola, brak wersji łatwej i nieprawidłową odpowiedź quizu
+  ---
+  duration_ms: 3.862484
+  type: 'test'
+  ...
+# Subtest: źródła dopuszczają http(s) oraz lokalne ścieżki
+ok 29 - źródła dopuszczają http(s) oraz lokalne ścieżki
+  ---
+  duration_ms: 0.590207
+  type: 'test'
+  ...
+# Subtest: zapis szkicu nie ujawnia nowej lekcji, publikacja udostępnia ją od razu
+ok 30 - zapis szkicu nie ujawnia nowej lekcji, publikacja udostępnia ją od razu
+  ---
+  duration_ms: 0.398084
+  type: 'test'
+  ...
+# Subtest: edycja opublikowanej lekcji zachowuje poprzedni snapshot i bazowe lekcje
+ok 31 - edycja opublikowanej lekcji zachowuje poprzedni snapshot i bazowe lekcje
+  ---
+  duration_ms: 2.325586
+  type: 'test'
+  ...
+# Subtest: bazowa lekcja ma publiczną wersję także przy zapisanym szkicu
+ok 32 - bazowa lekcja ma publiczną wersję także przy zapisanym szkicu
+  ---
+  duration_ms: 0.841889
+  type: 'test'
+  ...
+# Subtest: fallback dotyczy tylko brakującej tabeli Akademii, nie awarii lub innych tabel
+ok 33 - fallback dotyczy tylko brakującej tabeli Akademii, nie awarii lub innych tabel
+  ---
+  duration_ms: 0.436165
+  type: 'test'
+  ...
+# Subtest: eksport nie uruchamia formuł dostarczonych przez zgłaszającego
+ok 34 - eksport nie uruchamia formuł dostarczonych przez zgłaszającego
+  ---
+  duration_ms: 1.857821
+  type: 'test'
+  ...
+# Subtest: brak sieci i odpowiedź HTML dają obsługiwalny błąd formularza
+ok 35 - brak sieci i odpowiedź HTML dają obsługiwalny błąd formularza
+  ---
+  duration_ms: 39.667889
+  type: 'test'
+  ...
+# Subtest: nieprawidłowe oceny i kanwa nie zatrują Centrali
+ok 36 - nieprawidłowe oceny i kanwa nie zatrują Centrali
+  ---
+  duration_ms: 9.242584
+  type: 'test'
+  ...
+# Subtest: fiszka maskuje kontakt również w pełnej kanwie
+ok 37 - fiszka maskuje kontakt również w pełnej kanwie
+  ---
+  duration_ms: 14.431284
+  type: 'test'
+  ...
+# Subtest: każdy pobrany dokument ma pochodzenie i prawidłową liczbę stron
+ok 38 - każdy pobrany dokument ma pochodzenie i prawidłową liczbę stron
+  ---
+  duration_ms: 2.011702
+  type: 'test'
+  ...
+# Subtest: cytowania zachowują Mapę i odrzucają wymyślone indeksy
+ok 39 - cytowania zachowują Mapę i odrzucają wymyślone indeksy
+  ---
+  duration_ms: 1.165613
+  type: 'test'
+  ...
+# Subtest: opinia dotyczy wyłącznie konkretnego testu albo innowacji
+ok 40 - opinia dotyczy wyłącznie konkretnego testu albo innowacji
+  ---
+  duration_ms: 4.828135
+  type: 'test'
+  ...
+# Subtest: wyszukiwanie respektuje aktualny katalog, także dodane i ukryte karty
+ok 41 - wyszukiwanie respektuje aktualny katalog, także dodane i ukryte karty
+  ---
+  duration_ms: 11.680972
+  type: 'test'
+  ...
+# Subtest: wniosek wymaga wszystkich pól, właściwych numerów i limitów
+ok 42 - wniosek wymaga wszystkich pól, właściwych numerów i limitów
+  ---
+  duration_ms: 6.014028
+  type: 'test'
+  ...
+# Subtest: nabór obowiązuje tylko w swoim przedziale dat w Polsce
+ok 43 - nabór obowiązuje tylko w swoim przedziale dat w Polsce
+  ---
+  duration_ms: 46.89761
+  type: 'test'
+  ...
+# Subtest: pamięć powiadomień nie uznaje powracającej starszej sprawy za nową
+ok 44 - pamięć powiadomień nie uznaje powracającej starszej sprawy za nową
+  ---
+  duration_ms: 22.225531
+  type: 'test'
+  ...
+# Subtest: odpytywanie po błędzie ponawia i nie wykonuje żądań jednocześnie
+ok 45 - odpytywanie po błędzie ponawia i nie wykonuje żądań jednocześnie
+  ---
+  duration_ms: 69.481586
+  type: 'test'
+  ...
+# Subtest: starsza sprawa spoza pierwszych 200 wyników nie powoduje nowego powiadomienia
+ok 46 - starsza sprawa spoza pierwszych 200 wyników nie powoduje nowego powiadomienia
+  ---
+  duration_ms: 3.860084
+  type: 'test'
+  ...
+# Subtest: two instances replace old cached data when shared audit version changes
+ok 47 - two instances replace old cached data when shared audit version changes
+  ---
+  duration_ms: 1.79694
+  type: 'test'
+  ...
+# Subtest: parallel readers share one probe and database errors are retried
+ok 48 - parallel readers share one probe and database errors are retried
+  ---
+  duration_ms: 0.84289
+  type: 'test'
+  ...
+# Subtest: probe started before local import cannot restore obsolete version
+ok 49 - probe started before local import cannot restore obsolete version
+  ---
+  duration_ms: 0.289324
+  type: 'test'
+  ...
+# Subtest: atomic upsert records audit and invalidates all IOSS views
+ok 50 - atomic upsert records audit and invalidates all IOSS views
+  ---
+  duration_ms: 97.477102
+  type: 'test'
+  ...
+# Subtest: invalid row prevents every write and audit entry
+ok 51 - invalid row prevents every write and audit entry
+  ---
+  duration_ms: 58.202098
+  type: 'test'
+  ...
+# Subtest: audit failure rolls back inserts and updates without invalidating cache
+ok 52 - audit failure rolls back inserts and updates without invalidating cache
+  ---
+  duration_ms: 74.472922
+  type: 'test'
+  ...
+# Subtest: version changes even when a lower audit id commits after a higher id
+ok 53 - version changes even when a lower audit id commits after a higher id
+  ---
+  duration_ms: 125.562779
+  type: 'test'
+  ...
+# Subtest: preview signature binds exact content and expires after 15 minutes
+ok 54 - preview signature binds exact content and expires after 15 minutes
+  ---
+  duration_ms: 1.859301
+  type: 'test'
+  ...
+# Subtest: reader enforces byte limit for requests without content-length
+ok 55 - reader enforces byte limit for requests without content-length
+  ---
+  duration_ms: 29.594175
+  type: 'test'
+  ...
+# Subtest: reader rejects invalid utf8 and accepts proper csv
+ok 56 - reader rejects invalid utf8 and accepts proper csv
+  ---
+  duration_ms: 1.729259
+  type: 'test'
+  ...
+# Subtest: imports source CSV without losing missing values
+ok 57 - imports source CSV without losing missing values
+  ---
+  duration_ms: 131.731009
+  type: 'test'
+  ...
+# Subtest: supports BOM, CRLF, quoting and semicolon decimal comma
+ok 58 - supports BOM, CRLF, quoting and semicolon decimal comma
+  ---
+  duration_ms: 0.369764
+  type: 'test'
+  ...
+# Subtest: returns no importable rows if any row is invalid
+ok 59 - returns no importable rows if any row is invalid
+  ---
+  duration_ms: 0.529646
+  type: 'test'
+  ...
+# Subtest: rejects future year
+ok 60 - rejects future year
+  ---
+  duration_ms: 0.292963
+  type: 'test'
+  ...
+# Subtest: rejects fractional year
+ok 61 - rejects fractional year
+  ---
+  duration_ms: 0.194122
+  type: 'test'
+  ...
+# Subtest: rejects unknown indicator
+ok 62 - rejects unknown indicator
+  ---
+  duration_ms: 0.210642
+  type: 'test'
+  ...
+# Subtest: rejects wrong indicator label
+ok 63 - rejects wrong indicator label
+  ---
+  duration_ms: 0.151001
+  type: 'test'
+  ...
+# Subtest: rejects wrong category
+ok 64 - rejects wrong category
+  ---
+  duration_ms: 0.137921
+  type: 'test'
+  ...
+# Subtest: rejects unknown county
+ok 65 - rejects unknown county
+  ---
+  duration_ms: 0.578446
+  type: 'test'
+  ...
+# Subtest: rejects non-finite number
+ok 66 - rejects non-finite number
+  ---
+  duration_ms: 0.91545
+  type: 'test'
+  ...
+# Subtest: rejects scientific notation
+ok 67 - rejects scientific notation
+  ---
+  duration_ms: 0.181442
+  type: 'test'
+  ...
+# Subtest: rejects negative population
+ok 68 - rejects negative population
+  ---
+  duration_ms: 0.179802
+  type: 'test'
+  ...
+# Subtest: rejects zero population
+ok 69 - rejects zero population
+  ---
+  duration_ms: 0.145481
+  type: 'test'
+  ...
+# Subtest: rejects duplicate indicator/county/year after county normalization
+ok 70 - rejects duplicate indicator/county/year after county normalization
+  ---
+  duration_ms: 0.219002
+  type: 'test'
+  ...
+# Subtest: accepts negative migration and zero facilities
+ok 71 - accepts negative migration and zero facilities
+  ---
+  duration_ms: 0.895971
+  type: 'test'
+  ...
+# Subtest: rejects extra units instead of silently converting source values
+ok 72 - rejects extra units instead of silently converting source values
+  ---
+  duration_ms: 0.414765
+  type: 'test'
+  ...
+# Subtest: rejects malformed quotes, extra fields and empty file
+ok 73 - rejects malformed quotes, extra fields and empty file
+  ---
+  duration_ms: 0.420965
+  type: 'test'
+  ...
+# Subtest: limits UTF-8 bytes before parsing
+ok 74 - limits UTF-8 bytes before parsing
+  ---
+  duration_ms: 1.374536
+  type: 'test'
+  ...
+# Subtest: rejects too many rows
+ok 75 - rejects too many rows
+  ---
+  duration_ms: 16.490067
+  type: 'test'
+  ...
+# Subtest: rejects a row consisting only of empty columns instead of skipping it
+ok 76 - rejects a row consisting only of empty columns instead of skipping it
+  ---
+  duration_ms: 0.320084
+  type: 'test'
+  ...
+# Subtest: an obsolete rejected loader cannot delete a newer cached value
+ok 77 - an obsolete rejected loader cannot delete a newer cached value
+  ---
+  duration_ms: 1.590338
+  type: 'test'
+  ...
+# Subtest: zero population does not create non-finite risks in any county
+ok 78 - zero population does not create non-finite risks in any county
+  ---
+  duration_ms: 14.16392
+  type: 'test'
+  ...
+# Subtest: Vercel uruchamia migracje przed buildem bez dodatkowego polecenia użytkownika
+ok 79 - Vercel uruchamia migracje przed buildem bez dodatkowego polecenia użytkownika
+  ---
+  duration_ms: 3.281397
+  type: 'test'
+  ...
+# Subtest: deploy stosuje migracje w transakcji, blokuje równoległe wykonanie i zapisuje dziennik
+ok 80 - deploy stosuje migracje w transakcji, blokuje równoległe wykonanie i zapisuje dziennik
+  ---
+  duration_ms: 2.68707
+  type: 'test'
+  ...
+# Subtest: kolejny deploy pomija zastosowane migracje i nie zmienia danych
+ok 81 - kolejny deploy pomija zastosowane migracje i nie zmienia danych
+  ---
+  duration_ms: 2.520629
+  type: 'test'
+  ...
+# Subtest: błąd drugiej migracji wycofuje pierwszą migrację i dziennik
+ok 82 - błąd drugiej migracji wycofuje pierwszą migrację i dziennik
+  ---
+  duration_ms: 0.765568
+  type: 'test'
+  ...
+# Subtest: zmieniona zastosowana migracja blokuje deploy przed wykonaniem nowego SQL
+ok 83 - zmieniona zastosowana migracja blokuje deploy przed wykonaniem nowego SQL
+  ---
+  duration_ms: 0.423565
+  type: 'test'
+  ...
+# Subtest: manifest zawiera tylko dwie nowe, addytywne migracje i rzeczywiste sumy SHA256
+ok 84 - manifest zawiera tylko dwie nowe, addytywne migracje i rzeczywiste sumy SHA256
+  ---
+  duration_ms: 27.736113
+  type: 'test'
+  ...
+# Subtest: brak konfiguracji blokuje migrację; połączenie lokalne jest bez TLS, zdalne z TLS
+ok 85 - brak konfiguracji blokuje migrację; połączenie lokalne jest bez TLS, zdalne z TLS
+  ---
+  duration_ms: 0.479726
+  type: 'test'
+  ...
+# Subtest: fresh schema and migrations support grant applications and assisted reports
+ok 86 - fresh schema and migrations support grant applications and assisted reports
+  ---
+  duration_ms: 297.536523
+  type: 'test'
+  ...
+# Subtest: reapplying migrations preserves a configured grant schema and existing data
+ok 87 - reapplying migrations preserves a configured grant schema and existing data
+  ---
+  duration_ms: 248.895813
+  type: 'test'
+  ...
+# Subtest: „działasz?” zachowuje pytanie, bez statystyk, przykładów i faktów obszaru
+ok 88 - „działasz?” zachowuje pytanie, bez statystyk, przykładów i faktów obszaru
+  ---
+  duration_ms: 75.655855
+  type: 'test'
+  ...
+# Subtest: pytanie o doprecyzowanie wyklucza kontekst także przy ogólnych potrzebach modelu
+ok 89 - pytanie o doprecyzowanie wyklucza kontekst także przy ogólnych potrzebach modelu
+  ---
+  duration_ms: 19.218137
+  type: 'test'
+  ...
+# Subtest: sama klasyfikacja obszaru bez potrzeby i dopasowań nie uruchamia kontekstu
+ok 90 - sama klasyfikacja obszaru bez potrzeby i dopasowań nie uruchamia kontekstu
+  ---
+  duration_ms: 9.616788
+  type: 'test'
+  ...
+# Subtest: rzeczywisty problem bez pasującej innowacji nadal otrzymuje kontekst obszaru
+ok 91 - rzeczywisty problem bez pasującej innowacji nadal otrzymuje kontekst obszaru
+  ---
+  duration_ms: 47.484897
+  type: 'test'
+  ...
+1..91
+# tests 91
+# suites 0
+# pass 91
+# fail 0
+# cancelled 0
+# skipped 0
+# todo 0
+# duration_ms 12849.562535

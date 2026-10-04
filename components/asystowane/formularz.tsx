@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import Link from "next/link";
@@ -34,7 +35,7 @@ export function FormularzAsystowany() {
     setKomunikat("");
     setWynik(null);
     try {
-      const r = await fetch("/api/swatka/dopasuj", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tekst: opis, powiat: powiat || undefined, rola: "mieszkaniec" }) });
+      const r = await apiFetch("/api/swatka/dopasuj", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tekst: opis, powiat: powiat || undefined, rola: "mieszkaniec" }) });
       const d = await r.json();
       if (!r.ok) throw new Error(d.komunikat);
       setWynik(d);
@@ -50,7 +51,7 @@ export function FormularzAsystowany() {
     if (!wynik) return;
     setStan("wysyla");
     setKomunikat("");
-    const r = await fetch("/api/zgloszenia", {
+    const r = await apiFetch("/api/zgloszenia", {
       method: "POST",
       headers: { "content-type": "application/json" },
       body: JSON.stringify({

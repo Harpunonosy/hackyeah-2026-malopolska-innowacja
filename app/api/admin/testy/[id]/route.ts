@@ -13,7 +13,8 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
   const t = (await db().query("select numer, tytul from testy where id=$1", [id])).rows[0];
   if (!t) return Response.json({ blad: "nie_znaleziono" }, { status: 404 });
   const akceptuj = w.data.decyzja === "akceptuj";
-  await db().query("update testy set status=$2 where id=$1", [id, akceptuj ? "otwarty" : "odrzucony"]);
+  const zmiana = await db().query("update testy set status=$2 where id=$1 and status='do_akceptacji' returning id", [id, akceptuj ? "otwarty" : "odrzucony"]);
+  if (!zmiana.rowCount) return Response.json({ blad: "juz_rozpatrzony" }, { status: 409 });
   if (t.numer) await powiadom({ adresat: "autor", typ: "odpowiedz", tresc: akceptuj ? `Twój test „${t.tytul}” został zaakceptowany i jest widoczny na liście testów.` : `Test „${t.tytul}” nie został zaakceptowany. Napisz do nas w tej sprawie, jeśli chcesz go poprawić.`, link: `/moje/${t.numer}`, numerSprawy: t.numer, kanal: "email" });
   const zaproszono = akceptuj ? await zaprosTesterow(id) : 0;
   return Response.json({ ok: true, zaproszono });

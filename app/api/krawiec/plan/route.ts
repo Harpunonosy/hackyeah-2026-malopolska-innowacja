@@ -1,3 +1,4 @@
+import { zamaskuj } from "@/lib/maskowanie";
 import { db } from "@/lib/db";
 import { przygotujPlan, ProfilInstytucji } from "@/lib/krawiec";
 import { czyWolno } from "@/lib/limit";
@@ -10,11 +11,12 @@ export async function POST(req: Request) {
   const w = ProfilInstytucji.safeParse(await req.json().catch(() => null));
   if (!w.success) return Response.json({ blad: "walidacja", komunikat: w.error.issues[0]?.message }, { status: 400 });
 
+  const profil = { ...w.data, partnerzy: zamaskuj(w.data.partnerzy).tekst };
   try {
-    const wynik = await przygotujPlan(w.data);
+    const wynik = await przygotujPlan(profil);
     const { rows } = await db().query(
       "insert into plany_wdrozenia (innowacja_id, profil, plan, kwalifikowalnosc) values ($1,$2,$3,$4) returning id",
-      [w.data.innowacjaId, JSON.stringify(w.data), JSON.stringify({ plan: wynik.plan, dane: wynik.dane }), JSON.stringify(wynik.kwalifikowalnosc)],
+      [w.data.innowacjaId, JSON.stringify(profil), JSON.stringify({ plan: wynik.plan, dane: wynik.dane }), JSON.stringify(wynik.kwalifikowalnosc)],
     );
     return Response.json({ id: rows[0].id });
   } catch (e) {

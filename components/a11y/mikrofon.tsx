@@ -73,7 +73,7 @@ export function Mikrofon({ onZdanie, jezyk, etykieta }: { onZdanie: (tekst: stri
       <p role="status" className="text-sm text-muted">
         {stan === "slucham" && t("mikrofonSluchamy")}
         {stan === "blad" && t("mikrofonBlad")}
-        {stan === "bezczynny" && <span className="zaawansowane">{t("mikrofonInfo")}</span>}
+        {stan === "bezczynny" && <span>{t("mikrofonInfo")}</span>}
       </p>
     </div>
   );

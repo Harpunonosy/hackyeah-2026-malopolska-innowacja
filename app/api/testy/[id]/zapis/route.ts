@@ -20,8 +20,8 @@ export async function POST(req: Request, ctx: { params: Promise<{ id: string }> 
     if (zajete >= t.liczba_miejsc) { await c.query("rollback"); return Response.json({ blad: "pelny" }, { status: 409 }); }
     const u = await c.query("insert into uzytkownicy (rola, email) values ('mieszkaniec', $1) returning id", [w.data.email || null]);
     await c.query("insert into zapisy_testy (test_id, uzytkownik_id) values ($1,$2)", [id, u.rows[0].id]);
+    const sprawa = await utworzSprawe({ typ: "zapis", tytul: `Zapis na test: ${t.tytul}`, tresc: `Zapis osoby na test „${t.tytul}” (${String(t.powiat ?? "").replace("powiat ", "")}).`, obiektId: id, powiat: t.powiat, obszar: t.obszar, email: w.data.email || undefined, autorId: u.rows[0].id }, c);
     await c.query("commit");
-    const sprawa = await utworzSprawe({ typ: "zapis", tytul: `Zapis na test: ${t.tytul}`, tresc: `Zapis osoby na test „${t.tytul}” (${String(t.powiat ?? "").replace("powiat ", "")}).`, obiektId: id, powiat: t.powiat, obszar: t.obszar, email: w.data.email || undefined });
     return Response.json({ ok: true, numer: sprawa.numer, wolne: t.liczba_miejsc - zajete - 1 });
   } catch (e) {
     await c.query("rollback");

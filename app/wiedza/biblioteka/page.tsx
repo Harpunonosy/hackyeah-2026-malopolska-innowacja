@@ -22,6 +22,7 @@ export default async function Biblioteka() {
   }));
   return (
     <Strona>
+      <p><Link href="/wiedza/materialy" className="inline-flex min-h-12 items-center font-semibold underline" lang="pl">Raporty i publikacje ROPS — pełny katalog materiałów</Link></p>
       <NaglowekStrony tytul={t("tytul")} nadtytul="Skarbnica wiedzy" opis={t("podtytul")} />
       <div className="flex flex-wrap gap-3">
         <Button asChild wariant="obrys"><Link href="/wiedza/malopolska">Kondycja Małopolski: raporty i mapa wskaźników</Link></Button>

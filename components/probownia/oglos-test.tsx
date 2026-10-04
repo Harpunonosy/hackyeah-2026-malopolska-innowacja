@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import Link from "next/link";
@@ -39,7 +40,7 @@ export function OglosTest() {
       onSubmit={async (e) => {
         e.preventDefault();
         setStan("pracuje");
-        const r = await fetch("/api/testy", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...f, zgoda }) });
+        const r = await apiFetch("/api/testy", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ ...f, zgoda }) });
         const d = await r.json().catch(() => ({}));
         if (!r.ok) { setKomunikat(d.komunikat ?? "Nie udało się wysłać ogłoszenia."); return setStan("blad"); }
         setNumer(d.numer);
@@ -50,7 +51,7 @@ export function OglosTest() {
         <textarea id="ot-luzny" rows={4} value={luzny} onChange={(e) => setLuzny(e.target.value)} className={POLE} />
         <Button type="button" wariant="zloty" disabled={ai === "pracuje" || luzny.trim().length < 15} onClick={async () => {
           setAi("pracuje");
-          const r = await fetch("/api/testy/ogloszenie-ai", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ opis: luzny }) });
+          const r = await apiFetch("/api/testy/ogloszenie-ai", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ opis: luzny }) });
           if (!r.ok) return setAi("blad");
           const d = await r.json();
           setF((x) => ({ ...x, tytul: d.tytul, opis: d.opis, kogo: d.kogo, dostepnosc: d.dostepnosc }));

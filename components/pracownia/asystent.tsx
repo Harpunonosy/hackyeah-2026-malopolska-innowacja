@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import { useTranslations } from "next-intl";
@@ -27,7 +28,7 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
   async function zapytaj(p: string) {
     if (p.trim().length < 3) return;
     setStan("pytanie");
-    const r = await fetch("/api/pracownia/asystent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tryb: "pytanie", fiszka: fiszkaTekst, pytanie: p }) });
+    const r = await apiFetch("/api/pracownia/asystent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tryb: "pytanie", fiszka: fiszkaTekst, pytanie: p }) });
     if (!r.ok) return setStan("blad");
     const d = await r.json();
     setOdpowiedz((o) => [...o, { pytanie: p, odpowiedz: d.odpowiedz }]);
@@ -37,14 +38,14 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
   }
   async function generujScenorys() {
     setStan("scenorys");
-    const r = await fetch("/api/pracownia/asystent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tryb: "scenorys", fiszka: fiszkaTekst }) });
+    const r = await apiFetch("/api/pracownia/asystent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tryb: "scenorys", fiszka: fiszkaTekst }) });
     if (!r.ok) return setStan("blad");
     setKadry((await r.json()).kadry);
     setStan("");
   }
   async function narysuj() {
     setStan("szkic");
-    const r = await fetch("/api/pracownia/asystent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tryb: "szkic", fiszka: fiszkaTekst }) });
+    const r = await apiFetch("/api/pracownia/asystent", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tryb: "szkic", fiszka: fiszkaTekst }) });
     if (!r.ok) return setStan("blad");
     setSzkic(await r.json());
     setStan("");
@@ -80,7 +81,7 @@ export function Asystent({ fiszkaTekst, tytul, opis, wskazniki, numer }: { fiszk
         {gotowe.map((g) => <Button key={g} type="button" wariant="obrys" disabled={stan === "pytanie"} onClick={() => zapytaj(g)}>{g}</Button>)}
       </div>
       <form className="flex flex-wrap items-end gap-3" onSubmit={(e) => { e.preventDefault(); void zapytaj(pytanie); }}>
-        <div className="min-w-64 flex-1 space-y-1">
+        <div className="min-w-0 basis-64 flex-1 space-y-1">
           <label htmlFor="as-pytanie" className="block font-bold">{t("asystentWlasne")}</label>
           <input id="as-pytanie" value={pytanie} onChange={(e) => setPytanie(e.target.value)} className="block min-h-12 w-full rounded-xl border-2 border-line bg-card px-4 text-lg hover:border-fg" />
         </div>

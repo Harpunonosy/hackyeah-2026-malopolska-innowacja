@@ -65,7 +65,7 @@ const PROG_PODOBIENSTWA = 0.55;
 type Pole = { waga: number; tokeny: string[] };
 type Indeks = { innowacja: Innowacja; pola: Pole[] };
 
-const indeks: Indeks[] = innowacje.map((i) => ({
+function zbudujIndeks(lista: Innowacja[]): Indeks[] { return lista.map((i) => ({
   innowacja: i,
   pola: [
     { waga: 3, tokeny: [...new Set(tokeny(i.nazwa))] },
@@ -75,7 +75,8 @@ const indeks: Indeks[] = innowacje.map((i) => ({
     { waga: 1, tokeny: [...new Set(tokeny(i.naCzymPolega))] },
     { waga: 0.5, tokeny: [...new Set(tokeny(i.ktoMozeSkorzystac))] },
   ],
-}));
+})); }
+const indeksy = new WeakMap<Innowacja[], Indeks[]>();
 
 function rozszerz(zapytanie: string[]): string[] {
   const wynik = new Set(zapytanie);
@@ -89,7 +90,9 @@ function rozszerz(zapytanie: string[]): string[] {
 
 export type TrafienieLeksykalne = { id: string; wynik: number; slowa: string[] };
 
-export function szukaj(tekst: string, limit = 8): TrafienieLeksykalne[] {
+export function szukaj(tekst: string, limit = 8, lista: Innowacja[] = innowacje): TrafienieLeksykalne[] {
+  let indeks = indeksy.get(lista);
+  if (!indeks) { indeks = zbudujIndeks(lista); indeksy.set(lista, indeks); }
   // znaczniki po maskowaniu danych ([telefon], [adres]) nie są słowami opisu
   const oryginalne = [...new Set(tokeny(tekst.replace(/\[[^\]]*\]/g, " ")))];
   if (oryginalne.length === 0) return [];

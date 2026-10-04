@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import { Loader2, Search } from "lucide-react";
@@ -14,7 +15,7 @@ export function Zapytaj() {
   async function wyslij(p: string) {
     setStan("pracuje");
     setOdp(null);
-    const r = await fetch("/api/wiedza/zapytaj", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pytanie: p }) });
+    const r = await apiFetch("/api/wiedza/zapytaj", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ pytanie: p }) });
     if (!r.ok) return setStan("blad");
     setOdp(await r.json());
     setStan("");

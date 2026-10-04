@@ -1,3 +1,4 @@
+import { Przeczytane } from "@/components/centrala/przeczytane";
 import type { Metadata } from "next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
@@ -17,7 +18,6 @@ export default async function Page() {
   const { rows } = await c.query(
     "select id, adresat, typ, tytul, tresc, link, kanal, symulowane, przeczytane_at, created_at from powiadomienia order by created_at desc limit 150",
   );
-  await c.query("update powiadomienia set przeczytane_at = now() where adresat='rops' and przeczytane_at is null");
   const rops = rows.filter((r) => r.adresat === "rops");
   const autorzy = rows.filter((r) => r.adresat === "autor");
   return (
@@ -32,6 +32,7 @@ export default async function Page() {
       </div>
       <section aria-labelledby="rops-h" className="space-y-3">
         <h2 id="rops-h" className="text-3xl font-extrabold">Dla ROPS ({rops.length})</h2>
+        <Przeczytane ids={rops.filter(r => !r.przeczytane_at).map(r => r.id)} />
         <ul className="space-y-2">
           {rops.map((r) => (
             <li key={r.id} className={`karta-mala space-y-1 p-4 ${r.przeczytane_at ? "" : "border-l-8 border-l-primary"}`}>

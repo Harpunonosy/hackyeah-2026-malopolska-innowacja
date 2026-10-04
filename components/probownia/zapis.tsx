@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import Link from "next/link";
@@ -23,7 +24,7 @@ export function Zapis({ id, wolne }: { id: string; wolne: number }) {
       onSubmit={async (e) => {
         e.preventDefault();
         setStan("pracuje");
-        const r = await fetch(`/api/testy/${id}/zapis`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email }) });
+        const r = await apiFetch(`/api/testy/${id}/zapis`, { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ email }) });
         if (r.ok) { setNumer((await r.json().catch(() => ({}))).numer ?? ""); return setStan("ok"); }
         const d = await r.json().catch(() => ({}));
         setKomunikat(r.status === 409 ? t("pelny") : d.komunikat ?? t("blad"));

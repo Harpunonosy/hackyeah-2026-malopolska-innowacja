@@ -1,0 +1,95 @@
+{
+  "uwaga": "Krótkie opracowania sprawdzonych stron źródłowych; numery wskazują strony pliku PDF. Nie są pełnym tekstem dokumentów.",
+  "fragmenty": [
+    {
+      "dokument": "c53060ba61dc9eba",
+      "strona": 12,
+      "tekst": "Około 70% badanych OPS/CUS w Małopolsce wskazało wzrost zapotrzebowania na opiekę w ciągu ostatnich pięciu lat. To wynik badania opisanego w raporcie z 2026 r., a nie pomiar wszystkich potrzeb mieszkańców.",
+      "sha256": "854a46e9d3691f0adf71f1c06a83e65e5736ff256071d16b62f5a0d43418133f"
+    },
+    {
+      "dokument": "c53060ba61dc9eba",
+      "strona": 12,
+      "tekst": "W badaniu brak wystarczającej liczby pracowników zgłosił co trzeci zleceniobiorca opieki, co czwarty OPS/CUS i niemal co piąty dom pomocy społecznej.",
+      "sha256": "854a46e9d3691f0adf71f1c06a83e65e5736ff256071d16b62f5a0d43418133f"
+    },
+    {
+      "dokument": "c53060ba61dc9eba",
+      "strona": 13,
+      "tekst": "Według raportu z 2026 r. gminne specjalistyczne usługi opiekuńcze świadczy 22% OPS/CUS w Małopolsce. Specjalistyczne usługi dla osób z zaburzeniami psychicznymi świadczy 40% OPS/CUS.",
+      "sha256": "854a46e9d3691f0adf71f1c06a83e65e5736ff256071d16b62f5a0d43418133f"
+    },
+    {
+      "dokument": "c53060ba61dc9eba",
+      "strona": 14,
+      "tekst": "Domy pomocy społecznej zatrudniały 2297 spośród 4017 opiekunów zidentyfikowanych w badaniu. Wynik dotyczy badanej grupy i nie opisuje wszystkich opiekunów, w tym rodzinnych.",
+      "sha256": "854a46e9d3691f0adf71f1c06a83e65e5736ff256071d16b62f5a0d43418133f"
+    },
+    {
+      "dokument": "4daeb424f245b3f1",
+      "strona": 6,
+      "tekst": "Włączenie społeczne obejmuje współdecydowanie. O potrzeby warto pytać bezpośrednio osoby, dla których powstaje rozwiązanie, i zapraszać je do współtworzenia.",
+      "sha256": "c64eec98735fea72946bc5fa2d8e7670b8ef3a0ba592273e62e1315dc98f9cf4"
+    },
+    {
+      "dokument": "4daeb424f245b3f1",
+      "strona": 5,
+      "tekst": "Współpraca mieszkańców, organizacji, administracji i biznesu pomaga tworzyć rozwiązania odpowiadające na lokalne potrzeby. Doświadczenie odbiorców jest ważnym zasobem projektu.",
+      "sha256": "c64eec98735fea72946bc5fa2d8e7670b8ef3a0ba592273e62e1315dc98f9cf4"
+    },
+    {
+      "dokument": "b37a74446a19474e",
+      "strona": 14,
+      "tekst": "Projektowanie uniwersalne uwzględnia prostą obsługę, czytelne informacje, tolerancję na błędy i niewielki wysiłek. Różne sposoby korzystania powinny pozwalać ludziom działać na równych zasadach.",
+      "sha256": "09789f9accbf6aae26b5cce0ff843fcefb13e6a41842ceccaaad6be2bedb4133"
+    },
+    {
+      "dokument": "b37a74446a19474e",
+      "strona": 15,
+      "tekst": "Czytniki ekranu, powiększenie i alternatywne sposoby komunikacji pomagają usuwać bariery. Samo zastosowanie zasad projektowania nie dowodzi jeszcze pełnej użyteczności dla osób z niepełnosprawnościami.",
+      "sha256": "09789f9accbf6aae26b5cce0ff843fcefb13e6a41842ceccaaad6be2bedb4133"
+    },
+    {
+      "dokument": "974abf59ed99d98b",
+      "strona": 5,
+      "tekst": "Zanim wybierzesz rozwiązanie, poznaj potrzeby odbiorców i sprawdź dane. Dobrze opisana potrzeba pomaga określić, jakiej zmiany rzeczywiście potrzebują ludzie.",
+      "sha256": "0752afc93f8971dd0ef9fb0d19b56ca3a96a803285568950dbe51298ae7f1283"
+    },
+    {
+      "dokument": "974abf59ed99d98b",
+      "strona": 6,
+      "tekst": "Rozmowa z seniorami, osobami z niepełnosprawnościami i ich opiekunami powinna poprzedzać projektowanie. Partnerzy i lokalni liderzy mogą pomóc rozwijać oraz testować rozwiązanie.",
+      "sha256": "0752afc93f8971dd0ef9fb0d19b56ca3a96a803285568950dbe51298ae7f1283"
+    },
+    {
+      "dokument": "7b2381c3ed665c63",
+      "strona": 1,
+      "tekst": "Pierwszy arkusz kanwy porządkuje problem, osoby wspierające i utrudniające zmianę, cechy rozwiązania oraz jego stałe i zmienne koszty.",
+      "sha256": "ae38f539b484a4c40ed91aced94847bbf09673634f1a382b7c177ad27a0dc8c0"
+    },
+    {
+      "dokument": "7b2381c3ed665c63",
+      "strona": 2,
+      "tekst": "Drugi arkusz oddziela użytkownika, płatnika i decydenta. Pomaga określić główne i dodatkowe źródła finansowania oraz korzyści emocjonalne i praktyczne.",
+      "sha256": "ae38f539b484a4c40ed91aced94847bbf09673634f1a382b7c177ad27a0dc8c0"
+    },
+    {
+      "dokument": "7b2381c3ed665c63",
+      "strona": 3,
+      "tekst": "Trzeci arkusz opisuje dotarcie do odbiorców, pomoc partnerów i wpływ na osobę, społeczność oraz środowisko. Przy partnerach warto zaznaczyć, czy współpraca jest potwierdzona, omawiana czy dopiero planowana.",
+      "sha256": "ae38f539b484a4c40ed91aced94847bbf09673634f1a382b7c177ad27a0dc8c0"
+    },
+    {
+      "dokument": "e4e6609faaae40ad",
+      "strona": 4,
+      "tekst": "Mapa Wyzwań wskazuje problemy rodzinnej pieczy zastępczej, w tym niedobór rodzin zastępczych i potrzebę współpracy gmin oraz powiatów. Przytoczone dane o wzroście liczby dzieci w pieczy dotyczą Polski.",
+      "sha256": "bc99f6e99656176bd87b1aa976f39691128d4b554bfc98ff5f2a157e217513e5"
+    },
+    {
+      "dokument": "e4e6609faaae40ad",
+      "strona": 5,
+      "tekst": "Wśród wyzwań Mapy są nierozdzielanie rodzeństw, rozwój rodzinnej pieczy oraz skracanie pobytu dzieci w pieczy, gdy ich sytuacja prawna pozwala na trwałe rozwiązanie.",
+      "sha256": "bc99f6e99656176bd87b1aa976f39691128d4b554bfc98ff5f2a157e217513e5"
+    }
+  ]
+}

@@ -133,7 +133,11 @@
         "tytul": "Zgłoś i śledź",
         "opis": "Wyślij zgłoszenie do ROPS, dostaniesz numer i zobaczysz odpowiedź."
       }
-    }
+    },
+    "pomocNawigacja": "Pomoc w korzystaniu",
+    "pomocGlos": "Wolę powiedzieć",
+    "pomocLatwy": "Proste instrukcje",
+    "pomocOsoba": "Pomagam innej osobie"
   },
   "swatka": {
     "tytul": "Opisz swój problem",
@@ -225,7 +229,8 @@
       "Opiekuję się chorą mamą, która wróciła ze szpitala. Nie daję rady.",
       "Mój syn zamknął się w sobie i całe dni siedzi przy komputerze.",
       "głusi alarm pożarowy"
-    ]
+    ],
+    "bladOceny": "Nie udało się zapisać oceny. Spróbuj ponownie."
   },
   "kryzys": {
     "tytulZycie": "Jeśli ktoś jest w niebezpieczeństwie lub myślisz o odebraniu sobie życia",
@@ -369,7 +374,8 @@
     },
     "sledzenie": "Śledzenie zgłoszenia",
     "bladSieci": "Nie udało się odświeżyć sprawy. Ponawiamy połączenie automatycznie. Ostatnie pobrane informacje pozostają widoczne.",
-    "ladowanie": "Ładujemy Twoją sprawę…"
+    "ladowanie": "Ładujemy Twoją sprawę…",
+    "bladWysylki": "Nie udało się zapisać. Treść została w polu — spróbuj ponownie."
   },
   "krawiec": {
     "nadtytul": "Krawiec: plan wdrożenia",
@@ -640,7 +646,7 @@
     "kadr": "Kadr {n}",
     "czuje": "Czuje",
     "scenorysAi": "Scenorys przygotowano z pomocą AI. Role zamiast imion, bez danych osobowych.",
-    "kanwaPelna": "Pełna kanwa: odbiorcy, wartość, kanały, partnerzy",
+    "kanwaPelna": "Pełna kanwa innowacji społecznych INNO AGH",
     "kanwaPelnaOpis": "Wybierz obszar, który chcesz dopracować. Nie musisz odpowiadać na wszystko.",
     "niewiem": "Nie wiem, pomóż",
     "propozycje": "Propozycje (kliknij, aby dodać)",
@@ -678,13 +684,14 @@
     "asystentSzczegoly": "Rozwiń pomysł z asystentem",
     "asystentSzczegolyOpis": "Zadaj pytanie, przygotuj scenorys lub szkic.",
     "kanwaSzczegoly": "Kanwa pomysłu",
-    "kanwaSzczegolyOpis": "Dopracuj odbiorców, partnerów i koszty. Możesz wrócić do tego później.",
+    "kanwaSzczegolyOpis": "Dopracuj problem, rozwiązanie, odbiorców, koszty i wpływ. Uzupełnij przed wysłaniem pomysłu.",
     "wniosekSzczegoly": "Wniosek do naboru",
     "wniosekSzczegolyOpis": "Dla osób, które chcą ubiegać się o finansowanie.",
     "rozwinSzczegoly": "Rozwiń szczegóły",
     "zwinSzczegoly": "Zwiń szczegóły",
     "liczbaZnalezisk": "{n, plural, one {# znalezisko} few {# znaleziska} many {# znalezisk} other {# znaleziska}}",
-    "wynikKrotki": "{suma}/50 pkt"
+    "wynikKrotki": "{suma}/50 pkt",
+    "wniosekRecznie": "Wypełnij samodzielnie (bez AI)"
   },
   "probownia": {
     "nadtytul": "Próbownia: tester innowacji",
@@ -725,7 +732,8 @@
     "oglosObszar": "Obszar",
     "oglosWyslij": "Wyślij do akceptacji ROPS",
     "oglosGotowe": "Ogłoszenie wysłane do ROPS. Po akceptacji pojawi się na liście testów, a pasujące osoby dostaną zaproszenie.",
-    "oglosAiInfo": "Tekst przygotowano z pomocą AI. Sprawdź go i popraw przed wysłaniem."
+    "oglosAiInfo": "Tekst przygotowano z pomocą AI. Sprawdź go i popraw przed wysłaniem.",
+    "ocenTenTest": "Brałem udział — oceń ten test"
   },
   "opinia": {
     "tytul": "Oceń to rozwiązanie",
@@ -839,7 +847,9 @@
   "postep": {
     "zrobione": "zrobione",
     "minelo": "Minęło {n} s z około {z} s.",
-    "dluzej": "To trwa dłużej niż zwykle. Prosimy jeszcze chwilę poczekać. Nie zamykaj strony."
+    "dluzej": "To trwa dłużej niż zwykle. Prosimy jeszcze chwilę poczekać. Nie zamykaj strony.",
+    "czekaj": "Przygotowuję odpowiedź…",
+    "szacunek": "Zwykle zajmuje to około {n} sekund. To szacowany czas oczekiwania."
   },
   "integracje": {
     "tytul": "Integracje",
@@ -871,7 +881,7 @@
     "status": "HTTP {status}",
     "czas": "{ms} ms",
     "apiTytul": "API i eksport",
-    "apiOpis": "Publiczne API tylko do odczytu (katalog innowacji, nabory, zbiorcze statystyki potrzeb bez danych osobowych) ma opis w standardzie OpenAPI. Eksporty dla pracowników ROPS wymagają zalogowania.",
+    "apiOpis": "Publiczne API udostępnia katalog, nabory i dopasowanie innowacji. Statystyki potrzeb i eksporty dla ROPS wymagają zalogowania administratora. Dokumentacja jest w standardzie OpenAPI.",
     "dokumentacja": "Dokumentacja dla integratorów",
     "openapi": "Opis API (OpenAPI, JSON)",
     "eksportZgloszen": "Eksport zgłoszeń (CSV, treść zamaskowana)",
@@ -891,7 +901,7 @@
     "webhookiPublOpis": "Webhooki konfiguruje pracownik ROPS w Centrali (Integracje). Każda wiadomość ma nagłówek X-Splot-Podpis. Odbiorca sprawdza go swoim sekretem:",
     "bezpieczenstwoTytul": "Bezpieczeństwo i dane",
     "bezp1": "Do modelu AI trafia tylko tekst po maskowaniu danych osobowych.",
-    "bezp2": "API publiczne nie zwraca treści zgłoszeń. Statystyki potrzeb ukrywają komórki z mniej niż 3 zgłoszeniami.",
+    "bezp2": "API publiczne nie zwraca treści zgłoszeń. Statystyki potrzeb są dostępne tylko dla administratora, z ukryciem komórek mniejszych niż 3 zgłoszenia.",
     "bezp3": "Webhooki nie zawierają treści zgłoszeń, tylko numer sprawy, typ zdarzenia i link. Podpis HMAC-SHA256 i znacznik czasu chronią przed podrobieniem i powtórzeniem.",
     "bezp4": "Eksporty dla bazy grantowej wymagają zalogowania pracownika ROPS. Każda zmiana treści trafia do dziennika zmian.",
     "skalaTytul": "Skalowanie i wdrożenie w innym województwie",
@@ -899,7 +909,7 @@
     "e0": "Katalog 115 innowacji ROPS. Filtry: q, kategoria, zFilmem.",
     "e1": "Jedna innowacja.",
     "e2": "Nabory grantowe: otwarte i zamknięte, z datą ostatniej zmiany.",
-    "e3": "Liczba zgłoszeń według obszaru i powiatu (12 miesięcy), bez treści.",
+    "e3": "Zbiorcze statystyki potrzeb — wyłącznie po zalogowaniu administratora ROPS.",
     "e4": "Matchmaking: opis problemu → propozycje innowacji z uzasadnieniem.",
     "e5": "Opis API w standardzie OpenAPI 3.1."
   },
@@ -1288,5 +1298,45 @@
     "walidacja_wartosc": "Podaj skończoną liczbę dziesiętną o wartości bezwzględnej do biliona. Ujemne wartości są dozwolone tylko dla przyrostu naturalnego i salda migracji.",
     "walidacja_ludnosc": "Ludność ogółem musi być większa od zera.",
     "walidacja_duplikat": "Powtórzono ten sam wskaźnik, powiat i rok. Zostaw jeden rekord."
+  },
+  "materialyRops": {
+    "nadtytul": "Skarbnica wiedzy",
+    "tytul": "Raporty i publikacje ROPS",
+    "opis": "Znajdź informacje o potrzebach mieszkańców i materiały, które pomogą rozwinąć pomysł. Wybierz temat lub wpisz słowo, np. opieka, piecza albo dostępność.",
+    "szukajEtykieta": "Czego chcesz się dowiedzieć?",
+    "szukaj": "Szukaj",
+    "filtr": "Rodzaj materiałów",
+    "wszystkie": "Wszystkie",
+    "raport": "Raporty z badań",
+    "publikacja": "Poradniki i publikacje",
+    "mapa": "Mapa Wyzwań",
+    "kanwa": "Kanwa pomysłu",
+    "liczba": "Znalezione materiały: {n}",
+    "strony": "Liczba stron: {n}",
+    "wydawca": "Źródło: ROPS Kraków",
+    "otworz": "Zobacz materiał",
+    "brak": "Nie znaleziono materiałów. Spróbuj krótszego słowa albo wybierz wszystkie rodzaje.",
+    "stronicowanie": "Strony wyników",
+    "poprzednia": "Poprzednia strona",
+    "nastepna": "Następna strona",
+    "strona": "Strona {n} z {max}",
+    "pochodzenie": "Skąd pochodzą materiały?",
+    "stan": "Kopia katalogu z {data}.",
+    "zakres": "Katalog jest zapisany lokalnie, dzięki czemu wyszukiwanie nie wymaga połączenia z serwisem ROPS. Oryginalne dokumenty otwierają się u wydawcy. Rok publikacji i rok danych mogą się różnić.",
+    "zrodlo0": "Raporty z badań ROPS",
+    "zrodlo1": "Publikacje ze świata innowacji",
+    "zrodlo2": "Mapa Wyzwań Społecznych",
+    "zrodlo3": "Kanwa INNO AGH",
+    "diagnoza": "Zobacz wyjaśnienia i dane o Małopolsce",
+    "akademia": "Ucz się w krótkich lekcjach",
+    "powrot": "Wróć do materiałów",
+    "pomoc": "Dokument możesz przeczytać lub pobrać. Jeśli potrzebujesz prostszego wyjaśnienia, skorzystaj z krótkich lekcji lub zapytaj pracownika Hubu.",
+    "czytajPdf": "Otwórz dokument PDF",
+    "pdfUwaga": "To dokument zewnętrzny. Jego dostępność zależy od wydawcy. W aplikacji możesz uzyskać pomoc w zrozumieniu treści.",
+    "dalej": "Co możesz zrobić dalej?",
+    "pomysl": "Rozwiń swój pomysł z kanwą INNO AGH",
+    "zapytaj": "Poproś ROPS lub eksperta o wyjaśnienie",
+    "pomocOsobista": "Pomóż osobie, która nie korzysta z internetu",
+    "oryginal": "Sprawdź aktualną wersję u wydawcy"
   }
 }

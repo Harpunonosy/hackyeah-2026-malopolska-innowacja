@@ -1,0 +1,7 @@
+PASS: statystyki tylko dla administratora; hasło eksperta nie trafia do HTML
+PASS: edycja bazowej karty ROPS jest natychmiast widoczna w publicznym katalogu
+PASS: zapis na test tworzy sprawę, opinia jest przypisana do konkretnego testu
+PASS: walidacja i maskowanie kanwy; zapis wyników testu i etapu
+PASS: daty naboru, kompletność, limity, duplikaty pól, eksport bez przedwczesnego potwierdzenia
+PASS: awaria historii wycofuje cały zapis fiszki (bez osieroconego pomysłu)
+PASS: filtrowanie i stronicowanie po stronie serwera

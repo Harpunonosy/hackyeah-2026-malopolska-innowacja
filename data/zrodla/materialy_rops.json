@@ -1,0 +1,888 @@
+{
+  "pobrano": "2026-10-04T00:55:06+00:00",
+  "wydawca": "ROPS Kraków",
+  "zakres": "Wszystkie dokumenty PDF znalezione w dwóch kolekcjach organizatora oraz Mapa Wyzwań i kanwa INNO AGH. Indeks zawiera metadane, bez danych osobowych autorów i respondentów.",
+  "zrodla": [
+    "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+    "https://rops.krakow.pl/innowacje-spoleczne/publikacje-ze-swiata-innowacji",
+    "https://rops.krakow.pl/mpliki/IS/IWS_20/za._nr_2._Mapa_Wyzwa_Spoecznych.pdf",
+    "https://rops.krakow.pl/mpliki/IS/Moj_folder/INNO_AGH_-_SOCIAL_CANVAS.pdf"
+  ],
+  "dokumenty": [
+    {
+      "id": "c53060ba61dc9eba",
+      "tytul": "2026 I Wyzwania i potrzeby sektora opiekuńczego w Małopolsce. Perspektywa opiekunów oraz podmiotów realizujących opiekę",
+      "rodzaj": "raport",
+      "rok": 2026,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2026-i-wyzwania-i-potrzeby-sektora-opiekunczego-w-malopolsce-perspektywa-opiekunow-oraz-podmiotow-realizujacych-opieke,1479",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2026-i-wyzwania-i-potrzeby-sektora-opiekunczego-w-malopolsce-perspektywa-opiekunow-oraz-podmiotow-realizujacych-opieke,1479",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 169,
+      "tematy": [
+        "opieka",
+        "wspolpraca",
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "854a46e9d3691f0adf71f1c06a83e65e5736ff256071d16b62f5a0d43418133f"
+    },
+    {
+      "id": "f834cbd58cb73d2d",
+      "tytul": "2025 | Usługi społeczne w Małopolsce – deficyty, potrzeby, potencjał rozwojowy. Zaktualizowane wnioski z diagnozy",
+      "rodzaj": "raport",
+      "rok": 2025,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2025-uslugi-spoleczne-w-malopolsce-deficyty-potrzeby-potencjal-rozwojowy-zaktualizowane-wnioski-z-diagnozy,1348",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2025-uslugi-spoleczne-w-malopolsce-deficyty-potrzeby-potencjal-rozwojowy-zaktualizowane-wnioski-z-diagnozy,1348",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 38,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "979092ddaadc969e7e2818c252ed1ebef78095b9d2e210c6ce4bfd6b60742f97"
+    },
+    {
+      "id": "3fe24169b904eb14",
+      "tytul": "2025 | Mieszkania wspomagane i treningowe w Małopolsce jako priorytet w rozwoju usług społecznych i deinstytucjonalizacji",
+      "rodzaj": "raport",
+      "rok": 2025,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2025-mieszkania-wspomagane-i-treningowe-w-malopolsce-jako-priorytet-w-rozwoju-uslug-spolecznych-i-deinstytucjonalizacji,1310",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2025-mieszkania-wspomagane-i-treningowe-w-malopolsce-jako-priorytet-w-rozwoju-uslug-spolecznych-i-deinstytucjonalizacji,1310",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 88,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "bdb19c8cb5cef3575721e24421f58ab47b2de8240c93a1f644c2537ce1679462"
+    },
+    {
+      "id": "871b07ce22a02258",
+      "tytul": "2025 | Domy pomocy społecznej w Małopolsce wobec wyzwań deinstytucjonalizacji opieki długoterminowej",
+      "rodzaj": "raport",
+      "rok": 2025,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2025-domy-pomocy-spolecznej-w-malopolsce-wobec-wyzwan-deinstytucjonalizacji-opieki-dlugoterminowej,1257",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2025-domy-pomocy-spolecznej-w-malopolsce-wobec-wyzwan-deinstytucjonalizacji-opieki-dlugoterminowej,1257",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 168,
+      "tematy": [
+        "opieka"
+      ],
+      "jezyk": "pl",
+      "sha256": "1991e89996f08f392f05387dd2eff67dfcf5af10188f4a304d9ec29aa0da216a"
+    },
+    {
+      "id": "69348bf759f08943",
+      "tytul": "2024 | Piecza zastępcza w Małopolsce. Stan, potrzeby, wyzwania",
+      "rodzaj": "raport",
+      "rok": 2024,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2024-piecza-zastepcza-w-malopolsce-stan-potrzeby-wyzwania,1105",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2024-piecza-zastepcza-w-malopolsce-stan-potrzeby-wyzwania,1105",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 113,
+      "tematy": [
+        "rodzina",
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "c6bb0d25eca1ddb337c22054b9ffe8c318493eae0a1e955dd5d6885eafd625fe"
+    },
+    {
+      "id": "1a44e46a8f62861b",
+      "tytul": "2023 | Diagnoza potrzeb, zasobów i potencjału rozwojowego (Załącznik do Programu Wsparcia Rodziny „Rodzinna Małopolska 2030”)",
+      "rodzaj": "raport",
+      "rok": 2023,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2023-diagnoza-potrzeb-zasobow-i-potencjalu-rozwojowego-zalacznik-do-programu-wsparcia-rodziny-rodzinna-malopolska-2030,856",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2023-diagnoza-potrzeb-zasobow-i-potencjalu-rozwojowego-zalacznik-do-programu-wsparcia-rodziny-rodzinna-malopolska-2030,856",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 137,
+      "tematy": [
+        "rodzina",
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "fe91ebcf99c31307e268e8f3681602bcfa92aee64841b5fa2caacdc942f93fbb"
+    },
+    {
+      "id": "75b9bdd42585d9c1",
+      "tytul": "2023 | Usługi społeczne w Małopolsce – deficyty, potrzeby, potencjał rozwojowy (Załącznik do \"Regionalnego planu rozwoju usług społecznych ... na lata 2023-2025 z perspektywą do 2030\")",
+      "rodzaj": "raport",
+      "rok": 2023,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2023-uslugi-spoleczne-w-malopolsce-deficyty-potrzeby-potencjal-rozwojowy-zalacznik-do-regionalnego-planu-rozwoju-uslug-spolecznych-na-lata-2023-2025-z-perspektywa-do-2030,855",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2023-uslugi-spoleczne-w-malopolsce-deficyty-potrzeby-potencjal-rozwojowy-zalacznik-do-regionalnego-planu-rozwoju-uslug-spolecznych-na-lata-2023-2025-z-perspektywa-do-2030,855",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 137,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "390f6bbfc9d778729fa5b38d6730df2022ed39291fb3739ea7ef930791e86a26"
+    },
+    {
+      "id": "91b1f6a36e137f1d",
+      "tytul": "2022 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2022,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-monitoring-wspolpracy-malopolskich-jst-z-pes,911",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-monitoring-wspolpracy-malopolskich-jst-z-pes,911",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 52,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "6d3db7b0f44383c5219fabb848dbf3cefe4aeeae6f7b6d08cfba79280fcb8803"
+    },
+    {
+      "id": "a035b23fad8215bd",
+      "tytul": "2022 | Badanie potencjału jednostek samorządu terytorialnego z woj. małopolskiego w zakresie rozwoju usług społecznych w środowiskach lokalnych w obszarach związanych z niezależnym życiem osób dorosłych",
+      "rodzaj": "raport",
+      "rok": 2022,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-badanie-potencjalu-jednostek-samorzadu-terytorialnego-z-woj-malopolskiego-w-zakresie-rozwoju-uslug-spolecznych-w-srodowiskach-lokalnych-w-obszarach-zwiazanych-z-niezaleznym-zyciem-osob-doroslych,834",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-badanie-potencjalu-jednostek-samorzadu-terytorialnego-z-woj-malopolskiego-w-zakresie-rozwoju-uslug-spolecznych-w-srodowiskach-lokalnych-w-obszarach-zwiazanych-z-niezaleznym-zyciem-osob-doroslych,834",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 106,
+      "tematy": [
+        "dostepnosc"
+      ],
+      "jezyk": "pl",
+      "sha256": "cc9c65ceadb0609254021d8d35cdc8bed3ac3207e3521e205c97ddc34e884bd8"
+    },
+    {
+      "id": "266492fdb7bb0d44",
+      "tytul": "2022 | Badanie potencjału jednostek samorządu terytorialnego z woj. małopolskiego w zakresie rozwoju usług społecznych w środowiskach lokalnych w obszarach związanych z niezależnym życiem osób dorosłych",
+      "rodzaj": "raport",
+      "rok": 2022,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-badanie-potencjalu-jednostek-samorzadu-terytorialnego-z-woj-malopolskiego-w-zakresie-rozwoju-uslug-spolecznych-w-srodowiskach-lokalnych-w-obszarach-zwiazanych-z-niezaleznym-zyciem-osob-doroslych-1,835",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-badanie-potencjalu-jednostek-samorzadu-terytorialnego-z-woj-malopolskiego-w-zakresie-rozwoju-uslug-spolecznych-w-srodowiskach-lokalnych-w-obszarach-zwiazanych-z-niezaleznym-zyciem-osob-doroslych-1,835",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 136,
+      "tematy": [
+        "dostepnosc"
+      ],
+      "jezyk": "pl",
+      "sha256": "8a77c649b4df8247364deb905d150b96fe2b46381b7367880521e3e0102c52ff"
+    },
+    {
+      "id": "abd3f2d675e5f00e",
+      "tytul": "2022 | Badanie potencjału jednostek samorządu terytorialnego z woj. małopolskiego w zakresie rozwoju usług społecznych w środowiskach lokalnych w obszarach związanych z niezależnym życiem osób dorosłych",
+      "rodzaj": "raport",
+      "rok": 2022,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-badanie-potencjalu-jednostek-samorzadu-terytorialnego-z-woj-malopolskiego-w-zakresie-rozwoju-uslug-spolecznych-w-srodowiskach-lokalnych-w-obszarach-zwiazanych-z-niezaleznym-zyciem-osob-doroslych-2,836",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2022-badanie-potencjalu-jednostek-samorzadu-terytorialnego-z-woj-malopolskiego-w-zakresie-rozwoju-uslug-spolecznych-w-srodowiskach-lokalnych-w-obszarach-zwiazanych-z-niezaleznym-zyciem-osob-doroslych-2,836",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 93,
+      "tematy": [
+        "dostepnosc"
+      ],
+      "jezyk": "pl",
+      "sha256": "7002e0141cfc47e390e70681ca10be9ce8efd81150f9dad102431cdc9e7195f4"
+    },
+    {
+      "id": "6a419f0f5382ea33",
+      "tytul": "2021 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2021,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2021-raport-z-badan-monitoring-malopolskich-ps,912",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2021-raport-z-badan-monitoring-malopolskich-ps,912",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 35,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "74ad42bcce869d6b040234334c43c6422fd944ece91e54c627b018bfc7391cd2"
+    },
+    {
+      "id": "153be73150a5bb3f",
+      "tytul": "2021 | Diagnoza sytuacji społecznej i gospodarczej oraz sektora ekonomii społecznej w Małopolsce",
+      "rodzaj": "raport",
+      "rok": 2021,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2021-diagnoza-sytuacji-spolecznej-i-gospodarczej-oraz-sektora-ekonomii-spolecznej-w-malopolsce,903",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2021-diagnoza-sytuacji-spolecznej-i-gospodarczej-oraz-sektora-ekonomii-spolecznej-w-malopolsce,903",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 53,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia",
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "d5a5637136f4e0488e738830345bdeeeaffeb0e8b07d8745c5115e1de3c4fdd7"
+    },
+    {
+      "id": "b3711bc7cdf70e67",
+      "tytul": "2020 | Usługi reintegracji społeczno-zawodowej w dobie pandemii. Monitoring małopolskich jednostek reintegracyjnych",
+      "rodzaj": "raport",
+      "rok": 2020,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2020-uslugi-reintegracji-spoleczno-zawodowej-w-dobie-pandemii-monitoring-malopolskich-jednostek-reintegracyjnych,905",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2020-uslugi-reintegracji-spoleczno-zawodowej-w-dobie-pandemii-monitoring-malopolskich-jednostek-reintegracyjnych,905",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 12,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "0a4b4a2e1dedf9bb26fe77a04d9ecc49c9b001afb427e40cccf17a4d7890c06e"
+    },
+    {
+      "id": "3b431442935dbd5e",
+      "tytul": "2020 | Sytuacja małopolskich przedsiębiorstw społecznych w okresie pandemii. Listopad 2020 r.",
+      "rodzaj": "raport",
+      "rok": 2020,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2020-sytuacja-malopolskich-przedsiebiorstw-spolecznych-w-okresie-pandemii-listopad-2020-r,904",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2020-sytuacja-malopolskich-przedsiebiorstw-spolecznych-w-okresie-pandemii-listopad-2020-r,904",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 12,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "32ae05cc090c2c5d00f230b08803e96260e381fd8d05c3b6d6913dbdbbc8df65"
+    },
+    {
+      "id": "449d80d8edc2fa6c",
+      "tytul": "2019 | Monitoring kondycji jednostek reintegracyjnych, zakładów pracy chronionej oraz spółdzielni inwalidów i niewidomych 2019",
+      "rodzaj": "raport",
+      "rok": 2019,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2019-monitoring-kondycji-jednostek-reintegracyjnych-zakladow-pracy-chronionej-oraz-spoldzielni-inwalidow-i-niewidomych-2019,916",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2019-monitoring-kondycji-jednostek-reintegracyjnych-zakladow-pracy-chronionej-oraz-spoldzielni-inwalidow-i-niewidomych-2019,916",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 77,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "60bfb758347d63c6fabe2409807fa244f948e38460914bf43c9905ad84da1844"
+    },
+    {
+      "id": "e0a5c48dbb55e302",
+      "tytul": "2019 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2019,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2019-monitoring-wspolpracy-malopolskich-jst-z-pes,910",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2019-monitoring-wspolpracy-malopolskich-jst-z-pes,910",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 47,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "7e3640535c34b8e0de1c2e81aedd6fc107c2709d1c40460b4f50653cbdd1a887"
+    },
+    {
+      "id": "c64223532abe6642",
+      "tytul": "2019 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2019,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2019-raport-z-badan-monitoring-malopolskich-ps,902",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2019-raport-z-badan-monitoring-malopolskich-ps,902",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 75,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "888845e4df42635242e207eccaadd8848d48c570f5e79abe4f065091a7ea6a22"
+    },
+    {
+      "id": "b91847fe23e58b5f",
+      "tytul": "2018 | Raport z monitoringu jednostek reintegracyjnych za rok 2018",
+      "rodzaj": "raport",
+      "rok": 2018,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2018-raport-z-monitoringu-jednostek-reintegracyjnych-za-rok-2018,915",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2018-raport-z-monitoringu-jednostek-reintegracyjnych-za-rok-2018,915",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 57,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "b5c97dfbe05e9a4c1c682b50cee82bad8e88ddfe34c02980dfb90fc8c3d87a99"
+    },
+    {
+      "id": "aa6e3da2fd5b7198",
+      "tytul": "2018 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2018,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2018-monitoring-wspolpracy-malopolskich-jst-z-pes,909",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2018-monitoring-wspolpracy-malopolskich-jst-z-pes,909",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 39,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "90186256bfc4d4bb89547555f55ed21f9a9772b002ddceb840d1540977a487af"
+    },
+    {
+      "id": "dd14fee0bce06cc5",
+      "tytul": "2018 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2018,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2018-raport-z-badan-monitoring-malopolskich-ps,901",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2018-raport-z-badan-monitoring-malopolskich-ps,901",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 42,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "ae94ab973c2435c74c2e05db20cd54aaa3fd06ddf969d5330ac102e7d24d29b8"
+    },
+    {
+      "id": "f5e4a1912d14b4ed",
+      "tytul": "2017 | Raport z monitoringu podmiotów ekonomii społecznej o charakterze reintegracyjnym",
+      "rodzaj": "raport",
+      "rok": 2017,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2017-raport-z-monitoringu-podmiotow-ekonomii-spolecznej-o-charakterze-reintegracyjnym,914",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2017-raport-z-monitoringu-podmiotow-ekonomii-spolecznej-o-charakterze-reintegracyjnym,914",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 42,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "e2f5db5275457ee805534e84949cc45b75922b564a7177ede6e09480fd01d31e"
+    },
+    {
+      "id": "b55f835533859e05",
+      "tytul": "2017 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2017,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2017-monitoring-wspolpracy-malopolskich-jst-z-pes,908",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2017-monitoring-wspolpracy-malopolskich-jst-z-pes,908",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 59,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "441b7623ba98e3c7d4652720fb29501e47c7ed8ce6075fa5150d2bd50f4c9076"
+    },
+    {
+      "id": "d0e5930892dbd02b",
+      "tytul": "2017 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2017,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2017-raport-z-badan-monitoring-malopolskich-ps,900",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2017-raport-z-badan-monitoring-malopolskich-ps,900",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 39,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "fe90899224cecac72da002013a4fd41faa7586606a1642d7ba2c331c818e9dd1"
+    },
+    {
+      "id": "2e834ec9a798dd40",
+      "tytul": "2016 | Raport z monitoringu podmiotów ekonomii społecznej o charakterze reintegracyjnym",
+      "rodzaj": "raport",
+      "rok": 2016,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2016-raport-z-monitoringu-podmiotow-ekonomii-spolecznej-o-charakterze-reintegracyjnym,913",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2016-raport-z-monitoringu-podmiotow-ekonomii-spolecznej-o-charakterze-reintegracyjnym,913",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 72,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "a2e9172f1e82acdf2ee711c03216dfe177bd1c9ac2a220978cce8bda1bc920f0"
+    },
+    {
+      "id": "efd75e7c3e466491",
+      "tytul": "2016 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2016,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2016-monitoring-wspolpracy-malopolskich-jst-z-pes,907",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2016-monitoring-wspolpracy-malopolskich-jst-z-pes,907",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 71,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "abb0056a0f0757e468eaf801d8165ee8db3ccaf81c2ed093ac5e1a7b5c4e883b"
+    },
+    {
+      "id": "75038d7806c29587",
+      "tytul": "2016 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2016,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2016-raport-z-badan-monitoring-malopolskich-ps,899",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2016-raport-z-badan-monitoring-malopolskich-ps,899",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 64,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "ce802e1523989f23db644b6cde39dcc5284b0cc7c72745497df7f4798759380c"
+    },
+    {
+      "id": "31550bbc909ff608",
+      "tytul": "2015 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2015,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-monitoring-wspolpracy-malopolskich-jst-z-pes,906",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-monitoring-wspolpracy-malopolskich-jst-z-pes,906",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 49,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "aadb064650647d158eded3e7d3785ccb18511b2079dc7cd7143f4f6c6f278e93"
+    },
+    {
+      "id": "0cf75b0e668123a3",
+      "tytul": "2015 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2015,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-raport-z-badan-monitoring-malopolskich-ps,898",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-raport-z-badan-monitoring-malopolskich-ps,898",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 56,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "54d3501db42c0b314a36223cf32397c246c9b77e968adf62bc88269e556b2592"
+    },
+    {
+      "id": "a28109b4702d79ff",
+      "tytul": "2015 | Opiekunowie rodzinni osób starszych – problemy, potrzeby, wyzwania dla polityki społecznej",
+      "rodzaj": "raport",
+      "rok": 2015,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-opiekunowie-rodzinni-osob-starszych-problemy-potrzeby-wyzwania-dla-polityki-spolecznej,842",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-opiekunowie-rodzinni-osob-starszych-problemy-potrzeby-wyzwania-dla-polityki-spolecznej,842",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 93,
+      "tematy": [
+        "opieka",
+        "rodzina",
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "e1732644a157fad324eefcc227cb7d6447bdee7218e38c5fb2412a64fae94d07"
+    },
+    {
+      "id": "1912d2fc6cfc26fb",
+      "tytul": "2015 | Mieszkania chronione dla osób opuszczających pieczę zastępczą w Małopolsce. Analiza dostępnej oferty i zapotrzebowania",
+      "rodzaj": "raport",
+      "rok": 2015,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-mieszkania-chronione-dla-osob-opuszczajacych-piecze-zastepcza-w-malopolsce-analiza-dostepnej-oferty-i-zapotrzebowania,843",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2015-mieszkania-chronione-dla-osob-opuszczajacych-piecze-zastepcza-w-malopolsce-analiza-dostepnej-oferty-i-zapotrzebowania,843",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 68,
+      "tematy": [
+        "rodzina",
+        "dostepnosc",
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "5eb90b4434cbe806b00e03f4797c12ba8741fd0837efc6dafe511d954098915f"
+    },
+    {
+      "id": "a1e998cbd4faad11",
+      "tytul": "2014 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2014,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2014-raport-z-badan-monitoring-malopolskich-ps,896",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2014-raport-z-badan-monitoring-malopolskich-ps,896",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 29,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "e64c0188dc5eb73d0ee02adeb4f3b21b0fb03e3e1718ace0f8e64809b44198fc"
+    },
+    {
+      "id": "f52a01d055a530c5",
+      "tytul": "2014 | Kondycja małopolskiej rodziny",
+      "rodzaj": "raport",
+      "rok": 2014,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2014-kondycja-malopolskiej-rodziny,854",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2014-kondycja-malopolskiej-rodziny,854",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 220,
+      "tematy": [
+        "rodzina"
+      ],
+      "jezyk": "pl",
+      "sha256": "c9b5cd2869bac36cc493b18a66e000d41a01d505003398d0723329f58744f11d"
+    },
+    {
+      "id": "b1acf7b4313ac3a3",
+      "tytul": "2013 | Wykluczenie społeczne w Małopolsce – strategie przeciwdziałania. Wnioski na przyszłość",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-wnioski-na-przyszlosc,844",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-wnioski-na-przyszlosc,844",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 70,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "b0f66d245c66ecbc5c28f0b2aa445c8745807dd44a7cd19a718a9503cbbb0db4"
+    },
+    {
+      "id": "89ffe1f821985609",
+      "tytul": "2013 | Wykluczenie społeczne w Małopolsce – strategie przeciwdziałania. Osoby opuszczające zakłady karne",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-opuszczajace-zaklady-karne,845",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-opuszczajace-zaklady-karne,845",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 82,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "0e5c18887814255a43491aafea187b44c19f87c8549b5230077a7c87c296ceb6"
+    },
+    {
+      "id": "7757c9a39aa54102",
+      "tytul": "2013 | Wykluczenie społeczne w Małopolsce – strategie przeciwdziałania. Osoby niepełnosprawne",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-niepelnosprawne,846",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-niepelnosprawne,846",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 90,
+      "tematy": [
+        "dostepnosc"
+      ],
+      "jezyk": "pl",
+      "sha256": "8377b7d66dc221dd6d58adda99ae59a72aa736eb1ea23819ec66250235942f03"
+    },
+    {
+      "id": "7ac4fbe8ac8e203a",
+      "tytul": "2013 | Wykluczenie społeczne w Małopolsce – strategie przeciwdziałania. Osoby chorujące psychicznie",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-chorujace-psychicznie,847",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-chorujace-psychicznie,847",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 86,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "62a570949756557c7bbf864fa9d01d244fbf0f1505ca3dda4f8435d321f46a6e"
+    },
+    {
+      "id": "338c73a10fe65f6c",
+      "tytul": "2013 | Wykluczenie społeczne w Małopolsce – strategie przeciwdziałania. Osoby opuszczające placówki opiekuńczo-wychowawcze",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-opuszczajace-placowki-opiekunczo-wychowawcze,848",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-opuszczajace-placowki-opiekunczo-wychowawcze,848",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 56,
+      "tematy": [
+        "opieka"
+      ],
+      "jezyk": "pl",
+      "sha256": "a6fbd10af27c0f779088ca8d1bb7974ac86715a465483604d91f1a9268a6730b"
+    },
+    {
+      "id": "6ab086d868909e5e",
+      "tytul": "2013 | Wykluczenie społeczne w Małopolsce – strategie przeciwdziałania. Osoby bezrobotne",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-bezrobotne,849",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-bezrobotne,849",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 126,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "b11ff7a3b180e83b86a1bda59316ced2bb1fb7060e46f421b3584cca598b9655"
+    },
+    {
+      "id": "2394c22b89f1e22a",
+      "tytul": "2013 | Wykluczenie społeczne w Małopolsce – strategie przeciwdziałania. Osoby bezdomne",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-bezdomne,850",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-wykluczenie-spoleczne-w-malopolsce-strategie-przeciwdzialania-osoby-bezdomne,850",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 70,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "b0f66d245c66ecbc5c28f0b2aa445c8745807dd44a7cd19a718a9503cbbb0db4"
+    },
+    {
+      "id": "5e7d62b88e061820",
+      "tytul": "2013 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-raport-z-badan-monitoring-malopolskich-ps,897",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-raport-z-badan-monitoring-malopolskich-ps,897",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 82,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "33934b1d8aa64b43f690e3fb844cddf7295838d370fcfbd97935360ca50f7989"
+    },
+    {
+      "id": "c632828664597327",
+      "tytul": "2013 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2013,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-monitoring-wspolpracy-malopolskich-jst-z-pes,891",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2013-monitoring-wspolpracy-malopolskich-jst-z-pes,891",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 66,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "49edf608f75677d1cc5c0aeab08ce9d4213f940c12f766bd0e91ed4c1a9c4796"
+    },
+    {
+      "id": "0d6a064af08e7b77",
+      "tytul": "2012 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2012,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2012-raport-z-badan-monitoring-malopolskich-ps,895",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2012-raport-z-badan-monitoring-malopolskich-ps,895",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 145,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "d7b707f6005d6d8201a38bf072f18161b22fa19ee4c76e8dc66ed410923a8f9d"
+    },
+    {
+      "id": "ad74352d97c78ff1",
+      "tytul": "2012 | Ewaluacja programów i przedsięwzięć społecznych. Katalog dobrych praktyk",
+      "rodzaj": "raport",
+      "rok": 2012,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2012-ewaluacja-programow-i-przedsiewziec-spolecznych-katalog-dobrych-praktyk,890",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2012-ewaluacja-programow-i-przedsiewziec-spolecznych-katalog-dobrych-praktyk,890",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 69,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "c1cea73d3e0adb810e63e7ddca35bdc5a59530ed7b4eaf6ad44714a3c1fdd978"
+    },
+    {
+      "id": "bd2bb702a99622eb",
+      "tytul": "2012 | Monitoring współpracy małopolskich JST z PES",
+      "rodzaj": "raport",
+      "rok": 2012,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2012-monitoring-wspolpracy-malopolskich-jst-z-pes,892",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2012-monitoring-wspolpracy-malopolskich-jst-z-pes,892",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 60,
+      "tematy": [
+        "wspolpraca",
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "10a216d137b9d43d9fa8ee57b0adb35672ee3033942664afa61120951c05acc0"
+    },
+    {
+      "id": "0ee4418d69437924",
+      "tytul": "2011 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2011,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2011-raport-z-badan-monitoring-malopolskich-ps,894",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2011-raport-z-badan-monitoring-malopolskich-ps,894",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 36,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "742b1005c7ec1f1f38b0d33d7e23b81cfa86ff0ba6ef8ab4f9c1cf594e7b2940"
+    },
+    {
+      "id": "798ce6001108d312",
+      "tytul": "2011 | Przemoc w rodzinie w opinii Małopolan",
+      "rodzaj": "raport",
+      "rok": 2011,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2011-przemoc-w-rodzinie-w-opinii-malopolan,1106",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2011-przemoc-w-rodzinie-w-opinii-malopolan,1106",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 85,
+      "tematy": [
+        "rodzina",
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "d595e6ddc70aa9f90b30a9e21e22c1ce3dbd04eca581aae5a654354d01625a5b"
+    },
+    {
+      "id": "ed4b6649f881dd01",
+      "tytul": "2010 | Potencjał małopolskich organizacji pozarządowych (część jakościowa)",
+      "rodzaj": "raport",
+      "rok": 2010,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-potencjal-malopolskich-organizacji-pozarzadowych-czesc-jakosciowa,851",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-potencjal-malopolskich-organizacji-pozarzadowych-czesc-jakosciowa,851",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 148,
+      "tematy": [
+        "wspolpraca"
+      ],
+      "jezyk": "pl",
+      "sha256": "71ad1ea3fa3cdbaf13e640095719f2569b799833c913457208611cd1ecb55bba"
+    },
+    {
+      "id": "a795b2fc2835186a",
+      "tytul": "2010 | Potencjał małopolskich organizacji pozarządowych (część ilościowa)",
+      "rodzaj": "raport",
+      "rok": 2010,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-potencjal-malopolskich-organizacji-pozarzadowych-czesc-ilosciowa,852",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-potencjal-malopolskich-organizacji-pozarzadowych-czesc-ilosciowa,852",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 148,
+      "tematy": [
+        "wspolpraca"
+      ],
+      "jezyk": "pl",
+      "sha256": "71ad1ea3fa3cdbaf13e640095719f2569b799833c913457208611cd1ecb55bba"
+    },
+    {
+      "id": "bdcda3d824aeb4a1",
+      "tytul": "2010 | Model ewaluacji w pomocy społecznej",
+      "rodzaj": "raport",
+      "rok": 2010,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-model-ewaluacji-w-pomocy-spolecznej,853",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-model-ewaluacji-w-pomocy-spolecznej,853",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 108,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "d891295cbf21e24f48b47ba55f4e5319494a8f4008083a38f00f196109338f0f"
+    },
+    {
+      "id": "d9eb7378fa26525e",
+      "tytul": "2010 | Raport z badań - Monitoring małopolskich PS",
+      "rodzaj": "raport",
+      "rok": 2010,
+      "url": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-raport-z-badan-monitoring-malopolskich-ps,893",
+      "plik": "https://rops.krakow.pl/pliki-do-pobrania/wpis,2010-raport-z-badan-monitoring-malopolskich-ps,893",
+      "kolekcja": "https://rops.krakow.pl/badania-analizy-raporty/raporty-z-badan",
+      "strony": 147,
+      "tematy": [
+        "ekonomia"
+      ],
+      "jezyk": "pl",
+      "sha256": "aeb94dcf4afc7414a104c39ff35518dd6a29710fc72f91c8294562a167d91668"
+    },
+    {
+      "id": "4daeb424f245b3f1",
+      "tytul": "Połącz kropki — publikacja Inkubatora Włączenia Społecznego",
+      "rodzaj": "publikacja",
+      "rok": null,
+      "url": "https://rops.krakow.pl/mpliki/IS/PUBLIKACJE_INKUBATOROW/Pocz_kropki_Publikacja_IWS.pdf",
+      "plik": "https://rops.krakow.pl/mpliki/IS/PUBLIKACJE_INKUBATOROW/Pocz_kropki_Publikacja_IWS.pdf",
+      "kolekcja": "https://rops.krakow.pl/innowacje-spoleczne/publikacje-ze-swiata-innowacji",
+      "strony": 29,
+      "tematy": [
+        "innowacje"
+      ],
+      "jezyk": "pl",
+      "sha256": "c64eec98735fea72946bc5fa2d8e7670b8ef3a0ba592273e62e1315dc98f9cf4"
+    },
+    {
+      "id": "b37a74446a19474e",
+      "tytul": "Innowacje społeczne dla dostępności",
+      "rodzaj": "publikacja",
+      "rok": null,
+      "url": "https://rops.krakow.pl/mpliki/IS/ikony_PUBLIKACJE/Innowacje_spoleczne_dla_dostepnosci.pdf",
+      "plik": "https://rops.krakow.pl/mpliki/IS/ikony_PUBLIKACJE/Innowacje_spoleczne_dla_dostepnosci.pdf",
+      "kolekcja": "https://rops.krakow.pl/innowacje-spoleczne/publikacje-ze-swiata-innowacji",
+      "strony": 48,
+      "tematy": [
+        "dostepnosc",
+        "innowacje"
+      ],
+      "jezyk": "pl",
+      "sha256": "09789f9accbf6aae26b5cce0ff843fcefb13e6a41842ceccaaad6be2bedb4133"
+    },
+    {
+      "id": "974abf59ed99d98b",
+      "tytul": "Przewodnik po innowacjach społecznych",
+      "rodzaj": "publikacja",
+      "rok": null,
+      "url": "https://rops.krakow.pl/mpliki/IS/ikony_PUBLIKACJE/InnMalopolska_przewodnik_po_innowacjach.pdf",
+      "plik": "https://rops.krakow.pl/mpliki/IS/ikony_PUBLIKACJE/InnMalopolska_przewodnik_po_innowacjach.pdf",
+      "kolekcja": "https://rops.krakow.pl/innowacje-spoleczne/publikacje-ze-swiata-innowacji",
+      "strony": 48,
+      "tematy": [
+        "innowacje"
+      ],
+      "jezyk": "pl",
+      "sha256": "0752afc93f8971dd0ef9fb0d19b56ca3a96a803285568950dbe51298ae7f1283"
+    },
+    {
+      "id": "c3603ffb8819843d",
+      "tytul": "Guide to social innovations",
+      "rodzaj": "publikacja",
+      "rok": null,
+      "url": "https://rops.krakow.pl/mpliki/IS/PUBLIKACJE_INKUBATOROW/InnMalopolska_Guide_to_social_innovations_MIIS_ENG.pdf",
+      "plik": "https://rops.krakow.pl/mpliki/IS/PUBLIKACJE_INKUBATOROW/InnMalopolska_Guide_to_social_innovations_MIIS_ENG.pdf",
+      "kolekcja": "https://rops.krakow.pl/innowacje-spoleczne/publikacje-ze-swiata-innowacji",
+      "strony": 48,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "en",
+      "sha256": "5937ce6623688fa2489887a7b40f000b765ab22010b594c3996f04ec312fc823"
+    },
+    {
+      "id": "7b2381c3ed665c63",
+      "tytul": "Kanwa innowacji społecznych INNO AGH",
+      "rodzaj": "kanwa",
+      "rok": null,
+      "url": "https://rops.krakow.pl/mpliki/IS/Moj_folder/INNO_AGH_-_SOCIAL_CANVAS.pdf",
+      "plik": "https://rops.krakow.pl/mpliki/IS/Moj_folder/INNO_AGH_-_SOCIAL_CANVAS.pdf",
+      "kolekcja": "https://rops.krakow.pl/innowacje-spoleczne/publikacje-ze-swiata-innowacji",
+      "strony": 3,
+      "tematy": [
+        "innowacje"
+      ],
+      "jezyk": "pl",
+      "sha256": "ae38f539b484a4c40ed91aced94847bbf09673634f1a382b7c177ad27a0dc8c0"
+    },
+    {
+      "id": "e4e6609faaae40ad",
+      "tytul": "Mapa Wyzwań Społecznych",
+      "rodzaj": "mapa",
+      "rok": null,
+      "url": "https://rops.krakow.pl/mpliki/IS/IWS_20/za._nr_2._Mapa_Wyzwa_Spoecznych.pdf",
+      "plik": "https://rops.krakow.pl/mpliki/IS/IWS_20/za._nr_2._Mapa_Wyzwa_Spoecznych.pdf",
+      "kolekcja": "https://rops.krakow.pl/mpliki/IS/IWS_20/za._nr_2._Mapa_Wyzwa_Spoecznych.pdf",
+      "strony": 44,
+      "tematy": [
+        "wyzwania"
+      ],
+      "jezyk": "pl",
+      "sha256": "bc99f6e99656176bd87b1aa976f39691128d4b554bfc98ff5f2a157e217513e5"
+    }
+  ]
+}

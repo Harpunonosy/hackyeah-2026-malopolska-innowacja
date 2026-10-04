@@ -12,6 +12,7 @@ export default async function Akademia() {
   const t = await getTranslations('akademiaPubliczna');
   const lekcje = await publiczneLekcje();
   return <Strona>
+      <p><Link href="/wiedza/materialy" className="inline-flex min-h-12 items-center font-semibold underline" lang="pl">Raporty i publikacje ROPS — pełny katalog materiałów</Link></p>
     <NaglowekStrony nadtytul={t('nadtytul')} tytul={t('tytul')} opis={t('opis')}/>
     <ul className="grid auto-rows-fr gap-5 md:grid-cols-2">
       {lekcje.map((l,i)=><li key={l.slug} className="flex">

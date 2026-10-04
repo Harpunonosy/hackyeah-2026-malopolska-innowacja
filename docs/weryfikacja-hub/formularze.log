@@ -1,0 +1,4 @@
+{ width: 320, overflow: [] }
+PASS: pełna kanwa, własne odpowiedzi ze spacjami, maks.3 wartości, 320px i axe po rozwinięciu
+PASS: po utracie sieci kanwa pokazuje błąd i odblokowuje pomoc
+PASS: wyszukiwanie lokalnych materiałów i odnośniki do stron źródła

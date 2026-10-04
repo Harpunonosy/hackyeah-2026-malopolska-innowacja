@@ -8,7 +8,7 @@ import { Mikrofon } from "@/components/a11y/mikrofon";
 import { Button } from "@/components/ui/button";
 import { Postep } from "@/components/ui/postep";
 import { Szczegoly } from "@/components/ui/szczegoly";
-import { Kanwa, wskaznikiDojrzalosci, type KanwaStan } from "@/components/pracownia/kanwa";
+import { wskaznikiDojrzalosci, type KanwaStan } from "@/components/pracownia/kanwa";
 import { Asystent } from "@/components/pracownia/asystent";
 import { KanwaPelna, type KanwaPelnaStan } from "@/components/pracownia/kanwa-pelna";
 import { Wniosek } from "@/components/pracownia/wniosek";
@@ -239,12 +239,13 @@ export function FormularzPomyslu() {
           {tekstFiszki.length >= 20 && <Szczegoly tytul={t("asystentSzczegoly")} opis={t("asystentSzczegolyOpis")}><Asystent fiszkaTekst={tekstFiszki} tytul={fiszka.tytul} opis={fiszka.krotki_opis} numer={numer} wskazniki={kanwa ? Object.entries(wskaznikiDojrzalosci(kanwa, fiszka.etap)).map(([k, v]) => ({ nazwa: t(`wsk.${k}`), v: v.v, max: v.max })) : []} /></Szczegoly>}
 
           <Szczegoly tytul={t("kanwaSzczegoly")} opis={t("kanwaSzczegolyOpis")}>
-            {kanwa && <Kanwa kanwa={kanwa} zmien={setKanwa} etap={fiszka.etap} />}
-            <KanwaPelna stan={pelna} zmien={setPelna} fiszkaTekst={tekstFiszki} />
+
+            <fieldset disabled={wysylka === "ok" || wysylka === "wysylam"}><legend className="sr-only">{t("kanwaPelna")}</legend><KanwaPelna stan={pelna} zmien={setPelna} fiszkaTekst={tekstFiszki} /></fieldset>
+            {wysylka === "ok" && <p lang="pl" className="mt-3">Kanwa została zapisana wraz z pomysłem. Uzupełnienia prześlij w wątku swojej sprawy.</p>}
           </Szczegoly>
 
           <Szczegoly tytul={t("wniosekSzczegoly")} opis={t("wniosekSzczegolyOpis")}>
-          <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik?.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik?.doUzupelnienia.join("; ") ?? ""}\nOdbiorcy i wartość: ${Object.values(pelna).filter(Boolean).join("; ")}`} />
+          <Wniosek dane={`Tytuł: ${fiszka.tytul}\nOpis: ${fiszka.krotki_opis}\nNa czym polega: ${fiszka.istota}\nDla kogo: ${fiszka.dla_kogo}\nEtap: ${fiszka.etap}\nPodobne w Bibliotece: ${wynik?.podobne.map((p) => `${p.nazwa} (${p.roznica})`).join("; ") || "brak"}\nKanwa: wspierają: ${kanwa?.kto_wspiera}; utrudniają: ${kanwa?.kto_utrudnia}; koszty stałe: ${kanwa?.koszty_stale}; zmienne: ${kanwa?.koszty_zmienne}\nDo uzupełnienia: ${wynik?.doUzupelnienia.join("; ") ?? ""}\nOdbiorcy i wartość: ${Object.entries(pelna).filter(([, v]) => v).map(([k, v]) => `${k}: ${v}`).join("; ")}`} />
 
           </Szczegoly>
         </div>

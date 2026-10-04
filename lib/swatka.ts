@@ -218,7 +218,7 @@ function awaryjnie(
   powod: string,
   czasMs: number,
 ): WynikSwatki {
-  const trafienia = szukaj(tekst, 5).filter((t) => t.wynik >= 0.25);
+  const trafienia = szukaj(tekst, 5, [...mapa.values()]).filter((t) => t.wynik >= 0.25);
   const karty = trafienia.map((t) =>
     karta(mapa, t.id, null, t.slowa.length ? `Pasuje do słów z Twojego opisu: ${t.slowa.join(", ")}.` : "Podobny temat do Twojego opisu."),
   );

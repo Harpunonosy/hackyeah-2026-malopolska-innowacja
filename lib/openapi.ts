@@ -23,9 +23,10 @@ export function opisApi(serwer: string) {
     info: {
       title: "Splot API",
       version: "1.0.0",
-      description: "Publiczne API Splotu, cyfrowego serca Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Odczyt katalogu innowacji, naborów i zbiorczych statystyk potrzeb oraz matchmaking. Odpowiedzi nie zawierają danych osobowych.",
+      description: "Publiczne API Splotu, cyfrowego serca Małopolskiego Hubu Innowacji Społecznych (ROPS Kraków). Odczyt katalogu innowacji i naborów oraz matchmaking. Statystyki potrzeb wymagają sesji administratora. Odpowiedzi nie zawierają danych osobowych.",
       license: { name: "Dane: Biblioteka Innowacji Społecznych ROPS Kraków" },
     },
+    components: { securitySchemes: { sesjaAdmin: { type: "apiKey", in: "cookie", name: "splot_admin", description: "Sesja administratora ROPS" } } },
     servers: [{ url: serwer }],
     paths: {
       "/api/v1/innowacje": {
@@ -54,9 +55,10 @@ export function opisApi(serwer: string) {
       },
       "/api/v1/potrzeby": {
         get: {
-          summary: "Zbiorcze statystyki potrzeb (12 miesięcy)",
+          summary: "Zbiorcze statystyki potrzeb — tylko administrator (12 miesięcy)",
+          security: [{ sesjaAdmin: [] }],
           description: "Liczba zgłoszeń według obszaru Mapy Wyzwań i powiatu. Komórki z mniej niż 3 zgłoszeniami są ukryte.",
-          responses: { 200: { description: "Statystyki", ...json({ type: "object", properties: { progUkrycia: { type: "integer" }, potrzeby: lista({ type: "object", properties: { obszar: tekst, powiat: tekst, liczba: { type: "integer" } } }) } }) } },
+          responses: { 200: { description: "Statystyki dostępne wyłącznie po zalogowaniu administratora", ...json({ type: "object", properties: { progUkrycia: { type: "integer" }, potrzeby: lista({ type: "object", properties: { obszar: tekst, powiat: tekst, liczba: { type: "integer" } } }) } }) } },
         },
       },
       "/api/v1/dopasuj": {

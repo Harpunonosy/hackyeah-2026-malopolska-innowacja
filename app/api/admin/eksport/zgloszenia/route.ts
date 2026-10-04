@@ -1,7 +1,7 @@
 import { db } from "@/lib/db";
 import { czyAdmin } from "@/lib/sesja";
 
-const csv = (v: unknown) => `"${String(v ?? "").replace(/"/g, '""').replace(/\r?\n/g, " ")}"`;
+import { komorkaCsv as csv } from "@/lib/csv";
 
 // Eksport zgłoszeń (treść już zamaskowana) do CSV, np. dla bazy grantowej lub raportów.
 export async function GET() {

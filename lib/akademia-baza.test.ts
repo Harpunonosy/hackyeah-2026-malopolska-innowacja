@@ -6,10 +6,12 @@ import { db } from './db';
 import { KonfliktAkademii, zapiszLekcje, publiczneLekcje, lekcjeDoEdycji } from './akademia-baza';
 
 // Tylko osobna lokalna baza; nigdy współdzielone demo.
-const url = process.env.DATABASE_URL;
+const url = process.env.AKADEMIA_TEST_DATABASE_URL;
 if (url) {
   const u = new URL(url);
-  if (u.hostname !== 'localhost' || u.port !== '55432' || u.pathname !== '/splot_test') throw new Error('Test wymaga lokalnej izolowanej bazy splot_test na porcie 55432.');
+  const lokalna = (u.port === '55432' && u.pathname === '/splot_test') || (u.port === '55433' && u.pathname.startsWith('/splot_compliance_'));
+  if (u.hostname !== 'localhost' || !lokalna) throw new Error('Test wymaga jawnie wskazanej izolowanej bazy lokalnej.');
+  process.env.DATABASE_URL = url;
 }
 test('baza: szkic → publikacja → nowy szkic → publikacja, konflikty i dziennik', {skip:!url}, async ()=>{
   const slug = `test-akademii-${randomBytes(8).toString('hex')}`;

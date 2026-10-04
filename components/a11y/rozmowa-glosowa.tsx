@@ -1,4 +1,5 @@
 "use client";
+import { apiFetch } from "@/lib/fetch-klient";
 
 import * as React from "react";
 import Link from "next/link";
@@ -36,26 +37,34 @@ export function RozmowaGlosowa() {
   const [wynik, setWynik] = React.useState<WynikSwatki | null>(null);
   const [numer, setNumer] = React.useState("");
   const [blad, setBlad] = React.useState("");
+  const generacja = React.useRef(0);
+  const zapytanie = React.useRef<AbortController | null>(null);
+  const [wysylanie, setWysylanie] = React.useState(false);
   const rozp = React.useRef<Rozpoznawanie | null>(null);
   const mowaDostepna = React.useSyncExternalStore(() => () => {}, () => konstruktor() !== null, () => true);
 
-  const mow = React.useCallback((tekst: string) => {
+  const mow = React.useCallback((tekst: string, potem?: () => void) => {
     setWpisy((w) => [...w, { kto: "splot", tekst }]);
     const s = typeof window !== "undefined" ? window.speechSynthesis : undefined;
-    if (!s) return;
+    if (!s) { potem?.(); return; }
     s.cancel();
     const u = new SpeechSynthesisUtterance(tekst);
     u.lang = lang;
+    const biezaca = generacja.current;
+    u.onend = () => { if (biezaca === generacja.current) potem?.(); };
     s.speak(u);
   }, [lang]);
 
   const zatrzymaj = React.useCallback(() => {
-    rozp.current?.abort();
+    generacja.current++;
+    zapytanie.current?.abort();
+    if (rozp.current) { rozp.current.onend = null; rozp.current.onresult = null; rozp.current.onerror = null; rozp.current.abort(); rozp.current = null; }
     window.speechSynthesis?.cancel();
   }, []);
   React.useEffect(() => zatrzymaj, [zatrzymaj]);
 
   function sluchaj(przy: (tekst: string) => void) {
+    zatrzymaj();
     const K = konstruktor();
     if (!K) return;
     const r = new K();
@@ -83,8 +92,8 @@ export function RozmowaGlosowa() {
   function zacznij() {
     setBlad("");
     setKrok("slucham");
-    mow(t("pytaniePoczatek"));
-    if (mowaDostepna) setTimeout(() => sluchaj(zrozumialem), 4500);
+    zatrzymaj();
+    mow(t("pytaniePoczatek"), () => { if (mowaDostepna) sluchaj(zrozumialem); });
   }
 
   function zrozumialem(tekst: string) {
@@ -95,24 +104,23 @@ export function RozmowaGlosowa() {
   }
 
   async function szukaj(tekst: string) {
+    zatrzymaj();
+    const biezaca = generacja.current;
+    zapytanie.current = new AbortController();
     setKrok("szukam");
     mow(t("szukam"));
     try {
-      const r = await fetch("/api/swatka/dopasuj", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tekst, rola: "mieszkaniec", jezyk }) });
+      const r = await apiFetch("/api/swatka/dopasuj", { method: "POST", headers: { "content-type": "application/json" }, body: JSON.stringify({ tekst, rola: "mieszkaniec", jezyk }), signal: zapytanie.current.signal });
+      if (generacja.current !== biezaca) return;
       if (!r.ok) throw new Error();
       const w = (await r.json()) as WynikSwatki;
       setWynik(w);
       setKrok("wyniki");
-      if (w.kryzys) mow(t("kryzys"));
       const karty = w.dopasowania.slice(0, 3);
-      if (karty.length === 0) mow(t("brak"));
-      else {
-        mow(t("znalazlem", { ile: karty.length }));
-        karty.forEach((k, i) => setTimeout(() => setWpisy((x) => [...x, { kto: "splot", tekst: t("propozycja", { n: i + 1, nazwa: k.nazwa, dlaczego: k.dlaczego }) }]), 0));
-        const s = window.speechSynthesis;
-        if (s) karty.slice(0, 1).forEach((k) => { const u = new SpeechSynthesisUtterance(t("propozycja", { n: 1, nazwa: k.nazwa, dlaczego: k.dlaczego })); u.lang = lang; s.speak(u); });
-      }
-      setTimeout(() => { setKrok("wyslac"); mow(t("czyWyslac")); }, 300);
+      const odczyt = [w.kryzys ? t("kryzys") : "", karty.length ? t("znalazlem", { ile: karty.length }) : t("brak"),
+        ...karty.map((k, i) => t("propozycja", { n: i + 1, nazwa: k.nazwa, dlaczego: k.dlaczego })), t("czyWyslac")].filter(Boolean).join(" ");
+      setKrok("wyslac");
+      mow(odczyt);
     } catch {
       setBlad(t("blad"));
       setKrok("potwierdz");
@@ -120,11 +128,13 @@ export function RozmowaGlosowa() {
   }
 
   async function wyslij() {
-    if (!wynik) return;
-    const r = await fetch("/api/zgloszenia", {
+    if (!wynik || wysylanie) return;
+    setWysylanie(true);
+    const r = await apiFetch("/api/zgloszenia", {
       method: "POST", headers: { "content-type": "application/json" },
       body: JSON.stringify({ tekst: opis, rola: "mieszkaniec", zgoda: true, kanal: "glos", obszar: wynik.tryb === "ai" ? wynik.zrozumiano.obszar : undefined, najlepsze: wynik.dopasowania[0]?.trafnosc ?? null, dopasowania: [...wynik.dopasowania, ...wynik.najblizsze].map((d) => ({ id: d.id, trafnosc: d.trafnosc, dlaczego: d.dlaczego })) }),
     });
+    setWysylanie(false);
     if (!r.ok) return setBlad(t("blad"));
     const { numer: n } = await r.json();
     setNumer(n);
@@ -162,18 +172,18 @@ export function RozmowaGlosowa() {
         {krok === "start" && <Button rozmiar="lg" onClick={zacznij}><Mic aria-hidden className="size-6" />{t("start")}</Button>}
         {krok === "slucham" && (
           <>
-            {mowaDostepna && <Button rozmiar="lg" wariant="obrys" onClick={() => { rozp.current?.stop(); sluchaj(zrozumialem); }}><Mic aria-hidden className="size-5" />{t("slucham")}</Button>}
+            {mowaDostepna && <Button rozmiar="lg" wariant="obrys" onClick={() => { sluchaj(zrozumialem); }}><Mic aria-hidden className="size-5" />{t("slucham")}</Button>}
           </>
         )}
         {krok === "potwierdz" && (
           <>
             <Button rozmiar="lg" onClick={() => szukaj(opis)}>{t("tak")}</Button>
-            <Button rozmiar="lg" wariant="obrys" onClick={() => { setKrok("slucham"); mow(t("pytaniePoczatek")); if (mowaDostepna) setTimeout(() => sluchaj(zrozumialem), 4500); }}>{t("nie")}</Button>
+            <Button rozmiar="lg" wariant="obrys" onClick={zacznij}>{t("nie")}</Button>
           </>
         )}
         {krok === "wyslac" && (
           <>
-            <Button rozmiar="lg" onClick={wyslij}>{t("wyslij")}</Button>
+            <Button rozmiar="lg" onClick={wyslij} disabled={wysylanie}>{t("wyslij")}</Button>
             <Button rozmiar="lg" wariant="obrys" onClick={() => { setKrok("koniec"); mow(t("koniec")); }}>{t("niewysylaj")}</Button>
           </>
         )}
@@ -183,13 +193,13 @@ export function RozmowaGlosowa() {
             <Button rozmiar="lg" wariant="obrys" onClick={() => { zatrzymaj(); setWpisy([]); setWynik(null); setNumer(""); setOpis(""); setKrok("start"); }}>{t("odNowa")}</Button>
           </>
         )}
-        {krok !== "start" && krok !== "koniec" && <Button rozmiar="lg" wariant="cichy" onClick={zatrzymaj}><Square aria-hidden className="size-5" />{t("stop")}</Button>}
+        {krok !== "start" && krok !== "koniec" && <Button rozmiar="lg" wariant="cichy" onClick={() => { zatrzymaj(); if (krok === "szukam") setKrok("potwierdz"); }}><Square aria-hidden className="size-5" />{t("stop")}</Button>}
       </div>
 
       {(krok === "slucham" || krok === "potwierdz") && (
         <form className="karta max-w-2xl space-y-3 p-5" onSubmit={(e) => { e.preventDefault(); if (tekstReczny.trim().length >= 3) { zatrzymaj(); zrozumialem(tekstReczny.trim()); setTekstReczny(""); } }}>
           <label htmlFor="rg-tekst" className="block text-lg font-bold">{t("napisCoSie")}</label>
-          <textarea id="rg-tekst" rows={3} value={tekstReczny} onChange={(e) => setTekstReczny(e.target.value)} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
+          <textarea id="rg-tekst" rows={3} maxLength={1500} value={tekstReczny} onChange={(e) => setTekstReczny(e.target.value)} className="block w-full rounded-xl border-2 border-line bg-card p-3 text-lg hover:border-fg" />
           <Button type="submit" wariant="obrys">{t("wyslijTekst")}</Button>
         </form>
       )}

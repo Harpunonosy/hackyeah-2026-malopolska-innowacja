@@ -5,7 +5,7 @@ import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
 import { Chip } from "@/components/ui/chip";
 import { db } from "@/lib/db";
-import { aktualnyEkspert, HASLO_DEMO_EKSPERTA } from "@/lib/ekspert";
+import { aktualnyEkspert } from "@/lib/ekspert";
 import { ETYKIETY_TYPOW, type TypSprawy } from "@/lib/sprawy-etykiety";
 import { ETYKIETY_STATUSOW, type Status } from "@/lib/statusy";
 
@@ -21,7 +21,7 @@ export default async function Page() {
     return (
       <Strona>
         <NaglowekStrony nadtytul="Dla ekspertów i mentorów" tytul="Panel eksperta" opis="Tu eksperci odpowiadają na pytania i oceniają pomysły. Autor widzi odpowiedź pod swoim numerem sprawy." />
-        <LogowanieEksperta eksperci={rows} haslo={HASLO_DEMO_EKSPERTA} />
+        <LogowanieEksperta eksperci={rows} />
       </Strona>
     );
   }

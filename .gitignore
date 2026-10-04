@@ -19,3 +19,7 @@ docs/eval/*.local.json
 
 # system
 .DS_Store
+
+# cache lokalnych narzędzi Pythona
+__pycache__/
+*.pyc

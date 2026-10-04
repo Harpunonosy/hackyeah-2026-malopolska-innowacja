@@ -24,6 +24,11 @@ export default async function Start() {
           <h1 className="text-balance text-[clamp(2.5rem,1.4rem+3.6vw,4.25rem)] font-extrabold leading-[1.05]">{t("hero.tytul")}</h1>
           <p className="max-w-xl text-balance text-xl text-muted sm:text-2xl">{t("hero.opis")}</p>
           <PoleOpisu />
+          <nav aria-label={t("pomocNawigacja")} className="flex flex-wrap gap-3">
+            <Link href="/rozmowa" className="inline-flex min-h-12 items-center rounded-full border-2 border-line px-4 font-semibold">{t("pomocGlos")}</Link>
+            <Link href="/latwy" className="inline-flex min-h-12 items-center rounded-full border-2 border-line px-4 font-semibold">{t("pomocLatwy")}</Link>
+            <Link href="/asystowane" className="inline-flex min-h-12 items-center px-4 underline">{t("pomocOsoba")}</Link>
+          </nav>
         </div>
 
         <div aria-hidden="true" className="relative mx-auto hidden aspect-square w-full max-w-lg lg:block">

@@ -10,11 +10,11 @@ export async function powiadomONaborze(naborId: string, typ: Extract<TypPowiadom
   if (!n) return 0;
   const { rows } = await c.query(
     `select f.tytul, f.numer, z.obszar from fiszki f left join zgloszenia z on z.numer = f.numer
-     where f.numer is not null and f.status <> 'odrzucona' limit 300`,
+     where f.numer is not null and f.status <> 'odrzucona' order by f.created_at, f.id`,
   );
   const temat = String(n.temat ?? "").toLowerCase();
-  const wszystkie = !temat || !temat.includes(";");
-  const pasujace = rows.filter((f) => wszystkie || (f.obszar && temat.includes(nazwaObszaru(f.obszar as ObszarId).toLowerCase())));
+  const wszystkie = !temat.trim() || ["ogólny", "ogolny", "wszystkie"].includes(temat.trim());
+  const pasujace = rows.filter((f) => wszystkie || (f.obszar && (temat.includes(f.obszar) || temat.includes(nazwaObszaru(f.obszar as ObszarId).toLowerCase()))));
   const doKiedy = n.otwarty_do ? ` Termin: ${new Date(n.otwarty_do).toLocaleDateString("pl-PL")}.` : "";
   const tresci = {
     nabor_otwarty: (t: string) => `Nabór „${n.nazwa}” jest otwarty. Twój pomysł „${t}” może do niego pasować: w Pracowni przygotujesz wniosek.${doKiedy}`,
@@ -24,6 +24,6 @@ export async function powiadomONaborze(naborId: string, typ: Extract<TypPowiadom
   for (const f of pasujace) {
     await powiadom({ adresat: "autor", typ, tresc: tresci[typ](f.tytul), link: typ === "nabor_zamkniety" ? `/moje/${f.numer}` : "/pomysl", numerSprawy: f.numer, kanal: "email" });
   }
-  await powiadom({ adresat: "rops", typ, tytul: `Nabór „${n.nazwa}”: wysłano ${pasujace.length} powiadomień`, tresc: `Zdarzenie: ${typ.replace("nabor_", "")}. Autorzy pasujących pomysłów dostali wiadomość.`, link: "/centrala/nabory" });
+  await powiadom({ adresat: "rops", typ, tytul: `Nabór „${n.nazwa}”: wysłano ${pasujace.length} powiadomień`, tresc: `Zdarzenie: ${typ.replace("nabor_", "")}. Zapisano powiadomienia dla autorów pasujących pomysłów. E-mail i SMS są w tej wersji symulowane.`, link: "/centrala/nabory" });
   return pasujace.length;
 }

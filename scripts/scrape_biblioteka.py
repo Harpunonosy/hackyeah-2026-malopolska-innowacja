@@ -42,16 +42,14 @@ FIELDS = [
 ]
 
 
-def get(url: str) -> str:
-    r = subprocess.run(["curl", "-sSL", "-A", UA, "--max-time", "30", url], capture_output=True)
-    time.sleep(0.4)  # grzecznie wobec serwera ROPS
-    return r.stdout.decode("utf-8", "ignore")
+from source_fetch import get, atomic_json, atomic_csv
 
 
 def clean(fragment: str) -> str:
     fragment = re.sub(r"(?is)<br\s*/?>", "\n", fragment)
     fragment = re.sub(r"(?is)</(p|li|div|h\d)>", "\n", fragment)
     text = html.unescape(re.sub(r"(?s)<[^>]+>", "", fragment)).replace("​", "")
+    text = re.sub(r"[\w.+-]+@[\w.-]+\.[a-zA-Z]{2,}", "[kontakt w źródle ROPS]", text)
     lines = [re.sub(r"[ \t\xa0]+", " ", line).strip() for line in text.split("\n")]
     return "\n".join(line for line in lines if line and line not in ("Powrót", "Drukuj"))
 
@@ -99,7 +97,7 @@ def main() -> None:
                 "grupa_docelowa": pick("Grupa docelowa"),
                 "kto_moze_skorzystac": pick("Kto może"),
                 "czy_to_dziala": pick("Czy to działa"),
-                "autor_organizacja": "; ".join(authors),
+                "autor_organizacja": "; ".join("Instytut HR" if a.startswith("Instytut HR") else a for a in authors),
                 "upowszechniana_w_projekcie": [
                     re.sub(r"^INNOWACJA WYBRANA DO UPOWSZECHNIANIA W RAMACH PROJEKTU\s*", "", b).strip('" ')
                     for b in re.findall(r"INNOWACJA WYBRANA[^<]*", body)
@@ -110,13 +108,12 @@ def main() -> None:
                 "url": BASE + link,
             })
 
+    for item in items:
+        item["autor_organizacja"] = item.pop("autor_organizacja")
     OUT.mkdir(parents=True, exist_ok=True)
-    (OUT / "biblioteka_innowacji_rops.json").write_text(json.dumps(items, ensure_ascii=False, indent=2), encoding="utf-8")
-    with open(OUT / "biblioteka_innowacji_rops.csv", "w", encoding="utf-8", newline="") as f:
-        writer = csv.writer(f)
-        writer.writerow(FIELDS)
-        for item in items:
-            writer.writerow(["; ".join(item[k]) if isinstance(item[k], list) else item[k] for k in FIELDS])
+    atomic_json(OUT / "biblioteka_innowacji_rops.json", items, minimum=90)
+    atomic_csv(OUT / "biblioteka_innowacji_rops.csv", FIELDS,
+               [["; ".join(item[k]) if isinstance(item[k], list) else item[k] for k in FIELDS] for item in items])
     print("Zapisano", len(items), "innowacji")
 
 

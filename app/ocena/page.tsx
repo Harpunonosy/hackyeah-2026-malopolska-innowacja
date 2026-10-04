@@ -6,7 +6,7 @@ import { PrzykladLink } from "@/components/ocena/przyklad-link";
 import { NaglowekStrony } from "@/components/naglowek-strony";
 import { Strona } from "@/components/strona";
 import { Button } from "@/components/ui/button";
-import { HASLO_DEMO_EKSPERTA } from "@/lib/ekspert";
+
 
 export const metadata: Metadata = { title: "Jak ocenić Splot w 5 minut" };
 
@@ -102,7 +102,7 @@ export default async function Ocena() {
             <thead><tr><th scope="col" className="p-3">Rola</th><th scope="col" className="p-3">Gdzie</th><th scope="col" className="p-3">Logowanie</th></tr></thead>
             <tbody>
               <tr className="border-t border-line-soft"><th scope="row" className="p-3">Mieszkaniec, innowator, gmina</th><td className="p-3"><Link href="/">cała strona publiczna</Link></td><td className="p-3">bez logowania</td></tr>
-              <tr className="border-t border-line-soft"><th scope="row" className="p-3">Ekspert</th><td className="p-3"><Link href="/ekspert">/ekspert</Link></td><td className="p-3">wybór profilu i hasło <code>{HASLO_DEMO_EKSPERTA}</code></td></tr>
+              <tr className="border-t border-line-soft"><th scope="row" className="p-3">Ekspert</th><td className="p-3"><Link href="/ekspert">/ekspert</Link></td><td className="p-3">wybór profilu i hasło przekazane przez koordynatora</td></tr>
               <tr className="border-t border-line-soft"><th scope="row" className="p-3">Pracownik ROPS</th><td className="p-3"><Link href="/centrala">/centrala</Link></td><td className="p-3">hasło w opisie zgłoszenia na HackTribe</td></tr>
             </tbody>
           </table>
