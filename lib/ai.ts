@@ -1,8 +1,6 @@
-// Jedyne miejsce, w którym aplikacja rozmawia z modelem AI. Zmiana dostawcy (PLLuM, Bielik)
-// oznacza podmianę tego pliku, reszta kodu zna tylko zapytajJson().
-import Anthropic from "@anthropic-ai/sdk";
-import { zodOutputFormat } from "@anthropic-ai/sdk/helpers/zod";
-import type { z } from "zod";
+// Jedyne miejsce, w którym aplikacja rozmawia z modelem AI.
+// Moduły korzystają z zapytajJson(); dostawca i format transportu pozostają tutaj.
+import { z } from "zod";
 
 export type Effort = "low" | "medium" | "high";
 
@@ -23,19 +21,25 @@ export type UzycieAi = {
   cacheOdczyt: number;
 };
 
-export const DOMYSLNY_MODEL = () => process.env.AI_MODEL || "claude-haiku-4-5";
-
-// Haiku 4.5 nie przyjmuje parametru effort (zwraca błąd 400), więc wysyłamy go tylko nowszym modelom.
-const obslugujeEffort = (model: string) => !model.includes("haiku");
-
-let klient: Anthropic | null = null;
-function pobierzKlienta(): Anthropic {
-  if (!process.env.ANTHROPIC_API_KEY) throw new AiNiedostepneError("brak_klucza");
-  klient ??= new Anthropic({ maxRetries: 1, timeout: 50_000 });
-  return klient;
-}
+const DEEPSEEK_URL = "https://api.deepseek.com/chat/completions";
+const MODEL = "deepseek-flash";
+const modelDeepSeek = (model: string | undefined) => model?.trim().startsWith("deepseek-") ? model.trim() : null;
+/** Stare AI_MODEL=claude-* nie blokuje przełączenia całej aplikacji na DeepSeek. */
+export const DOMYSLNY_MODEL = () => modelDeepSeek(process.env.AI_MODEL) ?? MODEL;
 
 export type BlokSystemowy = { tekst: string; cache?: "5m" | "1h" };
+
+const Tokeny = z.number().int().nonnegative();
+const OdpowiedzDeepSeek = z.object({
+  choices: z.array(z.object({
+    finish_reason: z.string().nullable(),
+    message: z.object({ content: z.string().nullable().optional(), refusal: z.string().nullable().optional() }),
+  })).min(1),
+  usage: z.object({
+    prompt_tokens: Tokeny.optional(), completion_tokens: Tokeny.optional(),
+    prompt_cache_hit_tokens: Tokeny.optional(), prompt_cache_miss_tokens: Tokeny.optional(),
+  }).optional(),
+});
 
 export async function zapytajJson<S extends z.ZodType>(opcje: {
   schemat: S;
@@ -46,44 +50,87 @@ export async function zapytajJson<S extends z.ZodType>(opcje: {
   maxTokens?: number;
   timeoutMs?: number;
 }): Promise<{ dane: z.infer<S>; uzycie: UzycieAi }> {
-  const model = opcje.model ?? DOMYSLNY_MODEL();
-  let odpowiedz;
+  const klucz = process.env.DEEPSEEK_API_KEY?.trim();
+  if (!klucz) throw new AiNiedostepneError("brak_klucza");
+  const model = modelDeepSeek(opcje.model) ?? DOMYSLNY_MODEL();
+  let body: string;
   try {
-    odpowiedz = await pobierzKlienta().messages.parse({
+    body = JSON.stringify({
       model,
       max_tokens: opcje.maxTokens ?? 8000,
-      system: opcje.system.map((b) => ({
-        type: "text" as const,
-        text: b.tekst,
-        ...(b.cache
-          ? { cache_control: b.cache === "1h" ? { type: "ephemeral" as const, ttl: "1h" as const } : { type: "ephemeral" as const } }
-          : {}),
-      })),
-      messages: [{ role: "user", content: opcje.uzytkownik }],
-      output_config: {
-        ...(obslugujeEffort(model) ? { effort: opcje.effort ?? "low" } : {}),
-        format: zodOutputFormat(opcje.schemat),
-      },
-    }, opcje.timeoutMs ? { timeout: opcje.timeoutMs } : undefined);
-  } catch (e) {
-    if (e instanceof AiNiedostepneError) throw e;
-    if (e instanceof Anthropic.APIError) throw new AiNiedostepneError("blad", `API ${e.status}: ${e.message}`);
-    throw new AiNiedostepneError("blad", e instanceof Error ? e.message : "nieznany błąd");
-  }
+      thinking: { type: "disabled" },
+      response_format: { type: "json_object" },
+      messages: [
+        { role: "system", content: [
+          ...opcje.system.map(b => b.tekst),
+          "Zwróć wyłącznie obiekt JSON zgodny z poniższym schematem JSON Schema, bez Markdown ani dodatkowego tekstu.",
+          JSON.stringify(z.toJSONSchema(opcje.schemat)),
+        ].join("\n\n") },
+        { role: "user", content: opcje.uzytkownik },
+      ],
+    });
+  } catch { throw new AiNiedostepneError("zly_format"); }
 
-  if (odpowiedz.stop_reason === "refusal") throw new AiNiedostepneError("odmowa");
-  if (odpowiedz.stop_reason === "max_tokens") throw new AiNiedostepneError("przerwane");
-  if (!odpowiedz.parsed_output) throw new AiNiedostepneError("zly_format");
-
-  const u = odpowiedz.usage;
-  return {
-    dane: odpowiedz.parsed_output,
-    uzycie: {
-      model,
-      wejscie: u.input_tokens,
-      wyjscie: u.output_tokens,
-      cacheZapis: u.cache_creation_input_tokens ?? 0,
-      cacheOdczyt: u.cache_read_input_tokens ?? 0,
-    },
-  };
+  const timeoutMs = opcje.timeoutMs ?? 50_000;
+  if (!Number.isFinite(timeoutMs) || timeoutMs <= 0) throw new AiNiedostepneError("przerwane");
+  const kontroler = new AbortController();
+  let timer: ReturnType<typeof setTimeout>;
+  // Race ogranicza również odczyt body oraz transport, który nie zareaguje na abort.
+  const limit = new Promise<never>((_, reject) => {
+    timer = setTimeout(() => {
+      kontroler.abort();
+      reject(new AiNiedostepneError("przerwane"));
+    }, timeoutMs);
+  });
+  const zLimitem = <T>(p: Promise<T>): Promise<T> => Promise.race([p, limit]);
+  try {
+    for (let proba = 0; proba < 2; proba++) {
+      let odpowiedz: Response;
+      let json: unknown;
+      try {
+        odpowiedz = await zLimitem(fetch(DEEPSEEK_URL, {
+          method: "POST",
+          headers: { "content-type": "application/json", authorization: `Bearer ${klucz}` },
+          body, signal: kontroler.signal,
+        }));
+        if (!odpowiedz.ok) {
+          // Nie odczytujemy ani nie logujemy błędów dostawcy: mogą zawierać dane lub klucz.
+          void odpowiedz.body?.cancel().catch(() => {});
+          if (proba === 0 && (odpowiedz.status === 429 || odpowiedz.status >= 500)) continue;
+          throw new AiNiedostepneError("blad");
+        }
+        json = await zLimitem(odpowiedz.json());
+      } catch (e) {
+        if (kontroler.signal.aborted) throw new AiNiedostepneError("przerwane");
+        if (e instanceof AiNiedostepneError) throw e;
+        if (e instanceof SyntaxError) throw new AiNiedostepneError("zly_format");
+        if (proba === 0) continue;
+        throw new AiNiedostepneError("blad");
+      }
+      const wynik = OdpowiedzDeepSeek.safeParse(json);
+      if (!wynik.success) throw new AiNiedostepneError("zly_format");
+      const wybor = wynik.data.choices[0];
+      if (wybor.finish_reason === "refusal" || wybor.finish_reason === "content_filter" || wybor.message.refusal) throw new AiNiedostepneError("odmowa");
+      if (["length", "aborted", "insufficient_system_resource"].includes(wybor.finish_reason ?? "")) throw new AiNiedostepneError("przerwane");
+      if (!wybor.message.content?.trim()) throw new AiNiedostepneError("zly_format");
+      let dane: z.infer<S>;
+      try {
+        const walidacja = opcje.schemat.safeParse(JSON.parse(wybor.message.content));
+        if (!walidacja.success) throw new AiNiedostepneError("zly_format");
+        dane = walidacja.data;
+      } catch { throw new AiNiedostepneError("zly_format"); }
+      const usage = wynik.data.usage;
+      return {
+        dane,
+        uzycie: {
+          model,
+          wejscie: usage?.prompt_tokens ?? 0,
+          wyjscie: usage?.completion_tokens ?? 0,
+          cacheZapis: 0, // DeepSeek nie podaje osobnego kosztu tworzenia cache.
+          cacheOdczyt: usage?.prompt_cache_hit_tokens ?? 0,
+        },
+      };
+    }
+    throw new AiNiedostepneError("blad");
+  } finally { clearTimeout(timer!); }
 }

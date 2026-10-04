@@ -35,7 +35,7 @@ export default function Zaufanie() {
           <li>Nie wykrywa kryzysu samodzielnie: numery pomocy pokazują reguły bez AI, więc działają także wtedy, gdy model nie odpowiada.</li>
         </ul>
         <h3 className="text-xl font-bold">Dokąd trafiają dane</h3>
-        <p className="text-lg">Przed wysłaniem do modelu opis przechodzi maskowanie: ukrywamy PESEL, telefony, adresy e-mail, adresy zamieszkania, numery kont i dokumentów, kody pocztowe oraz imiona i nazwiska ze słownika popularnych imion. Maskowanie nie jest doskonałe: rzadkie imiona mogą zostać niezamaskowane, dlatego prosimy, by ich nie wpisywać. Model Claude (Anthropic) działa przez API. Warstwa <code>lib/ai.ts</code> pozwala podmienić go na model w polskiej infrastrukturze (PLLuM, Bielik). W logach serwera nie zapisujemy treści zgłoszeń.</p>
+        <p className="text-lg">Przed wysłaniem do modelu opis przechodzi maskowanie: ukrywamy PESEL, telefony, adresy e-mail, adresy zamieszkania, numery kont i dokumentów, kody pocztowe oraz imiona i nazwiska ze słownika popularnych imion. Maskowanie nie jest doskonałe: rzadkie imiona mogą zostać niezamaskowane, dlatego prosimy, by ich nie wpisywać. Model DeepSeek działa przez API. Warstwa <code>lib/ai.ts</code> pozwala podmienić go na model w polskiej infrastrukturze (PLLuM, Bielik). W logach serwera nie zapisujemy treści zgłoszeń.</p>
         <h3 className="text-xl font-bold">Nadzór człowieka i oznaczenia</h3>
         <p className="text-lg">Treści przygotowane przez AI są oznaczone (zgodnie z art. 50 AI Act). Odpowiedzi dla mieszkańców zatwierdza pracownik ROPS. Wstępna ocena pomysłów to pomoc, a nie decyzja komisji.</p>
         <h3 className="text-xl font-bold">Jak mierzymy jakość</h3>
