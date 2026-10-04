@@ -41,6 +41,22 @@ const OdpowiedzDeepSeek = z.object({
   }).optional(),
 });
 
+/**
+ * Klucze schematów są bez polskich znaków, a model czasem pisze je z ogonkami („wskazówka” zamiast „wskazowka”).
+ * Zmieniamy tylko nazwy kluczy (wartości zostają), i tylko gdy wersja bez ogonków nie istnieje.
+ */
+export function kluczeBezOgonkow(wartosc: unknown): unknown {
+  if (Array.isArray(wartosc)) return wartosc.map(kluczeBezOgonkow);
+  if (!wartosc || typeof wartosc !== "object") return wartosc;
+  const wynik: Record<string, unknown> = {};
+  const obiekt = wartosc as Record<string, unknown>;
+  for (const [klucz, w] of Object.entries(obiekt)) {
+    const ascii = klucz.normalize("NFD").replace(/[̀-ͯ]/g, "").replace(/ł/g, "l").replace(/Ł/g, "L");
+    wynik[ascii !== klucz && !(ascii in obiekt) ? ascii : klucz] = kluczeBezOgonkow(w);
+  }
+  return wynik;
+}
+
 export async function zapytajJson<S extends z.ZodType>(opcje: {
   schemat: S;
   system: BlokSystemowy[];
@@ -115,7 +131,7 @@ export async function zapytajJson<S extends z.ZodType>(opcje: {
       if (!wybor.message.content?.trim()) throw new AiNiedostepneError("zly_format");
       let dane: z.infer<S>;
       try {
-        const walidacja = opcje.schemat.safeParse(JSON.parse(wybor.message.content));
+        const walidacja = opcje.schemat.safeParse(kluczeBezOgonkow(JSON.parse(wybor.message.content)));
         if (!walidacja.success) throw new AiNiedostepneError("zly_format");
         dane = walidacja.data;
       } catch { throw new AiNiedostepneError("zly_format"); }

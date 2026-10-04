@@ -171,3 +171,9 @@ test('timeout aborts stalled fetch even when mock ignores its signal', async t =
   await assert.rejects(() => zapytajJson({ ...opcje, timeoutMs: 25 }), powod('przerwane'));
   assert.equal(mocked.mock.callCount(), 1);
 });
+
+test('accepts schema keys written with Polish diacritics, values untouched', async t => {
+  mockFetch(t, async () => poprawna('{"lista":[{"wskazówka":"Zróbcie próbę","kryterium":"łączność"}],"pełne":true}'));
+  const wynik = await zapytajJson({ ...opcje, schemat: z.object({ lista: z.array(z.object({ wskazowka: z.string(), kryterium: z.string() })), pelne: z.boolean() }) });
+  assert.deepEqual(wynik.dane, { lista: [{ wskazowka: 'Zróbcie próbę', kryterium: 'łączność' }], pelne: true });
+});
